@@ -4,7 +4,7 @@
 
 ## Multilingual Editions of this Article
 
-- [简体中文版文档](ReadMe.zh-hans-CN.md)
+- [简体中文版文档](./ReadMe.zh-hans-CN.md)
 
 
 
