@@ -8,9 +8,8 @@ module.exports = {
         ecmaVersion: 2018,
         ecmaFeatures: {
             experimentalObjectRestSpread: true,
-            jsx: true,
         },
-        sourceType: 'module',
+        sourceType: 'script',
     },
     rules: {
         indent: [ 'error', 4, {

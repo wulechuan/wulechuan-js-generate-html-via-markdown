@@ -1,4 +1,5 @@
 const {
+    readFileSync,
     writeFileSync,
 } = require('fs')
 
@@ -40,7 +41,13 @@ const htmlContent3 = markdownToHTMLConverter(markdownContent, {
     },
 })
 
+const readMeHTMLContent = markdownToHTMLConverter(
+    readFileSync('./ReadMe.zh-hans-CN.md').toString()
+)
+
 writeFileSync('./test/output/test1.html', htmlContent1)
 writeFileSync('./test/output/test2.html', htmlContent2)
 writeFileSync('./test/output/test3.html', htmlContent3)
+
+writeFileSync('./test/output/readme.zh-hans-cn.html', readMeHTMLContent)
 
