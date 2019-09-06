@@ -35,11 +35,11 @@
 
 > 尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。
 
-简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。
+**简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。**
 
 ### 内嵌样式
 
-内嵌样式来源于本人创建和为何的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。其文档中亦有若干截图，直观展示一篇文档在应用默认样式后之样貌。见 [该文档](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/zh-hans-CN/application-examples.md).
+内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。其文档中亦有若干截图，直观展示一篇文档在应用默认样式后之样貌。见 [该文档](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/zh-hans-CN/application-examples.md)。
 
 ## 用法
 
@@ -129,7 +129,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             shouldNotBuildHeadingPermanentLinks: false,
             headingPermanentLinkSymbolChar: '§',
 
-            cssClassNameOfHeadingPermanentLinks: '', // Take the default value of "markdown-it-anchor"'s "permalinkClass"
+            cssClassNameOfHeadingPermanentLinks: undefined, // Take the default value of "markdown-it-anchor"'s "permalinkClass"
 
             cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
             cssClassNameOfArticleTOCLists:       undefined, // <ul>s and <ol>s

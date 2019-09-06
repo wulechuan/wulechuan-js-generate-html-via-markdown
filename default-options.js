@@ -9,7 +9,7 @@ module.exports = {
         shouldNotBuildHeadingPermanentLinks: false,
         headingPermanentLinkSymbolChar: '§',
 
-        cssClassNameOfHeadingPermanentLinks: '', // Take the default value of "markdown-it-anchor"'s "permalinkClass"
+        cssClassNameOfHeadingPermanentLinks: undefined, // Take the default value of "markdown-it-anchor"'s "permalinkClass"
 
         cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
         cssClassNameOfArticleTOCLists:       undefined, // <ul>s and <ol>s

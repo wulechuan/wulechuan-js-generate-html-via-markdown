@@ -35,11 +35,11 @@ Yet another tool for converting MarkDown content into corresponding HTML content
 
 This tool utilizes the ecosystem of the famous tool, "[markdownIt](https://www.npmjs.com/package/markdown-it)".
 
-You provide a string of MarkDown, you get a string of HTML.
+**You provide a string of MarkDown, you get a string of HTML.**
 
 ### Built-in Themes
 
-The CSS file for the built-in theming is from another NPM package of mine, aka "[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)". See some pictures of an example article with the default theme applied [there](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/en-US/application-examples.md).
+The CSS file for the built-in theming is from another NPM package of mine, named "[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)". See some pictures of an example article with the default theme applied [there](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/en-US/application-examples.md).
 
 ## Usage
 
@@ -129,7 +129,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             shouldNotBuildHeadingPermanentLinks: false,
             headingPermanentLinkSymbolChar: '§',
 
-            cssClassNameOfHeadingPermanentLinks: '', // Take the default value of "markdown-it-anchor"'s "permalinkClass"
+            cssClassNameOfHeadingPermanentLinks: undefined, // Take the default value of "markdown-it-anchor"'s "permalinkClass"
 
             cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
             cssClassNameOfArticleTOCLists:       undefined, // <ul>s and <ol>s

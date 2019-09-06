@@ -149,12 +149,20 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         markdownItParser.use(markdownItPluginHighlightJs)
         markdownItParser.use(markdownItPluginCheckbox)
 
-        markdownItParser.use(markdownItPluginAnchor, {
+        const markdownItPluginAnchorOptions = {
             permalink: !shouldNotBuildHeadingPermanentLinks,
-            permalinkClass: cssClassNameOfHeadingPermanentLinks,
             permalinkBefore: true,
-            permalinkSymbol: headingPermanentLinkSymbolChar,
-        })
+        }
+
+        if (headingPermanentLinkSymbolChar) {
+            markdownItPluginAnchorOptions.permalinkSymbol = headingPermanentLinkSymbolChar
+        }
+
+        if (cssClassNameOfHeadingPermanentLinks) {
+            markdownItPluginAnchorOptions.permalinkClass = cssClassNameOfHeadingPermanentLinks
+        }
+
+        markdownItParser.use(markdownItPluginAnchor, markdownItPluginAnchorOptions)
 
         if (markdownContentHasTOCPlaceholder) {
             markdownItParser.use(markdownItPluginTOCDoneRight, {
