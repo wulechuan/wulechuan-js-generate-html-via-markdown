@@ -2,12 +2,14 @@
 
 # Wulechuan's Tool for Generating HTMLs via Markdowns
 
-[简体中文版文档](./ReadMe.zh-hans-cn.md)
+## Multilingual Editions of this Article
+
+- [简体中文版文档](./ReadMe.zh-hans-CN.md)
 
 
 
 
-## npm Page
+## NPM Page
 
 <dl>
 <dt>Package Name</dt>

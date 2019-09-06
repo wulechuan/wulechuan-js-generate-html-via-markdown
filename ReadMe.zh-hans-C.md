@@ -3,15 +3,17 @@
 # 吴乐川的 MarkDown 文件样式集
 
 
-[English version of this ReadMe](./ReadMe.md)
+## Multilingual Editions of this Article
+
+- [English version of this ReadMe](./ReadMe.md)
 
 
 
 
-## npm 页
+## NPM 页
 
 <dl>
-<dt>npm 包名</dt>
+<dt>NPM 包名</dt>
 <dd>
 
 [@wulechuan/generate-html-via-markdown](https://www.npmjs.com/package/@wulechuan/generate-html-via-markdown)
