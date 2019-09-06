@@ -114,9 +114,11 @@ function syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin(options) {
     } = options
 
     if (markdownArticleHasTOC) {
-        return `\n</head>\n<body class="${
-            cssClassNameOfBodyTagWhenMarkdownArticleHasTOC
-        }">\n`
+        return {
+            content: `\n</head>\n<body class="${
+                cssClassNameOfBodyTagWhenMarkdownArticleHasTOC
+            }">\n`,
+        }
     }
 
     return standardSnippetEntryOfHTMLFromHeadEndToBodyBegin
