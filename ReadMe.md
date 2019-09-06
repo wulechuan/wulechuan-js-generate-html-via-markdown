@@ -4,7 +4,7 @@
 
 ## Multilingual Editions of this Article
 
-- [简体中文版文档](./ReadMe.zh-hans-CN.md)
+- [简体中文版文档](ReadMe.zh-hans-CN.md)
 
 
 
@@ -32,6 +32,8 @@ Yet another tool for converting MarkDown content into corresponding HTML content
 > The Javascript codes are for the behviours of the table of contents(TOC) part.
 
 > Note that even if the CSS and Javascript are all embeded, images are still external resources to the HTML.
+
+This tool utilizes the ecosystem of the famous tool, "[markdownIt](https://www.npmjs.com/package/markdown-it)".
 
 You provide a string of MarkDown, you get a string of HTML.
 

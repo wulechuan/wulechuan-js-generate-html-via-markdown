@@ -2,7 +2,7 @@
   "name": "@wulechuan/generate-html-via-markdown",
   "author": "wulechuan <wulechuan@live.com>",
   "license": "WTFPL",
-  "version": "1.0.0-beta2",
+  "version": "1.0.0-beta3",
   "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
   "main": "index.js",
   "scripts": {
