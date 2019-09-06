@@ -99,7 +99,9 @@ function syncGetSnippetEntryOfHTMLBeginning(options) {
             )
         }
 
-        snippetsDict[entryKey] = htmlBeginning
+        snippetsDict[entryKey] = {
+            content: htmlBeginning,
+        }
     }
 
     return snippetsDict[entryKey]

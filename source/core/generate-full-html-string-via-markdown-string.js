@@ -38,10 +38,15 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
 
     return function buildFullHTMLStringViaMarkDownString(markdownContent, options = {}) {
+        const {
+            shouldLogVerbosely,
+        } = options
+
         let {
             conversionPreparations = {},
             conversionOptions = {},
             manipulationsOverHTML = {},
+            sundries = {},
         } = options
 
 
@@ -64,19 +69,34 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
             ...manipulationsOverHTML,
         }
 
+        sundries = {
+            ...defaultOptionValues.sundries,
+            ...sundries,
+        }
+
         const {
             shouldNotAutoInsertTOCPlaceholderIntoMarkdown,
         } = conversionPreparations
 
         const {
+            shouldNotBuildHeadingPermanentLinks,
             headingPermanentLinkSymbolChar,
-            cssClassNameOfMarkdownTOCRootTag,
-            tocBuildingHeadingLevelStartsFrom,
+            cssClassNameOfHeadingPermanentLinks,
+
+            cssClassNameOfArticleTOCRootTag,
+            cssClassNameOfArticleTOCLists,
+            cssClassNameOfArticleTOCListItems,
+            cssClassNameOfArticleTOCItemAnchors,
+            articleTOCListTagNameIsUL,
+            articleTOCBuildingHeadingLevelStartsFrom,
         } = conversionOptions
 
         const {
             shouldNotInsertBackToTopAnchor,
             shouldNotUseInternalCSSThemingFiles,
+
+            htmlTagLanguage,
+            htmlTitleString,
 
             moduleCSSFileNameOfDefaultThemeWithTOC,
             moduleCSSFileNameOfDefaultTheme,
@@ -90,7 +110,17 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
             absolutePathsOfExtraFilesToEmbedIntoHTML,
         } = manipulationsOverHTML
 
+        const {
+            shouldConsoleLogsInChinese,
+        } = sundries
 
+
+        if (shouldLogVerbosely) {
+            console.log('\nconversionPreparations:', conversionPreparations)
+            console.log('\nconversionOptions:', conversionOptions)
+            console.log('\nmanipulationsOverHTML:', manipulationsOverHTML)
+            console.log('\nsundries:', sundries)
+        }
 
 
 
@@ -118,16 +148,22 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
         markdownItParser.use(markdownItPluginHighlightJs)
         markdownItParser.use(markdownItPluginCheckbox)
+
         markdownItParser.use(markdownItPluginAnchor, {
-            permalink: true,
+            permalink: !shouldNotBuildHeadingPermanentLinks,
+            permalinkClass: cssClassNameOfHeadingPermanentLinks,
             permalinkBefore: true,
             permalinkSymbol: headingPermanentLinkSymbolChar,
         })
 
         if (markdownContentHasTOCPlaceholder) {
             markdownItParser.use(markdownItPluginTOCDoneRight, {
-                level: tocBuildingHeadingLevelStartsFrom,
-                containerClass: cssClassNameOfMarkdownTOCRootTag,
+                level: articleTOCBuildingHeadingLevelStartsFrom,
+                containerClass: cssClassNameOfArticleTOCRootTag,
+                listType: articleTOCListTagNameIsUL ? 'ul' : 'ol',
+                listClass: cssClassNameOfArticleTOCLists,
+                itemClass: cssClassNameOfArticleTOCListItems,
+                linkClass: cssClassNameOfArticleTOCItemAnchors,
             })
         }
 
@@ -142,7 +178,10 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
         /* ****** Extract HTML title out of generated HTML raw contents ******* */
 
-        const snippetStringOfHTMLTitle = buildHTMLTitleSnippetString(htmlContentViaMarkDownContent)
+        const snippetStringOfHTMLTitle = buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, {
+            specifiedArticleTitle: htmlTitleString,
+            shouldConsoleLogsInChinese,
+        })
 
 
 
@@ -159,7 +198,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
             {
                 cssClassNameOfMarkdownChiefContentWrappingArticleTag,
-                cssClassNameOfMarkdownTOCRootTag,
+                cssClassNameOfArticleTOCRootTag,
                 markdownArticleHasTOC,
             }
         )
@@ -177,7 +216,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
         const snippetEntryOfHTMLBeginning = syncGetSnippetEntryOfHTMLBeginning({
             thisModuleRootFolderPath,
-            // htmlTagLanguage: 'en-US',
+            htmlTagLanguage,
         })
 
         const snippetEntryOfHTMLEnding = syncGetSnippetEntryOfHTMLEnding()
@@ -316,8 +355,20 @@ function getTextContentOfFirstH1Tag(htmlSnippetToSearchContentIn) {
     return ''
 }
 
-function buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, shouldConsoleLogsInChinese) {
-    const articleTitle = getTextContentOfFirstH1Tag(htmlContentViaMarkDownContent)
+function buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, options) {
+    const {
+        specifiedArticleTitle,
+        shouldConsoleLogsInChinese,
+    } = options
+
+    let articleTitle
+
+    if (specifiedArticleTitle) {
+        articleTitle = specifiedArticleTitle
+    } else {
+        articleTitle = getTextContentOfFirstH1Tag(htmlContentViaMarkDownContent)
+    }
+
 
     console.log('')
 
@@ -348,17 +399,23 @@ function buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, shouldConsol
 function wrapHTMLChiefContentWithAnArticleTag(htmlOldChiefContent, options) {
     const {
         cssClassNameOfMarkdownChiefContentWrappingArticleTag,
-        cssClassNameOfMarkdownTOCRootTag,
+        cssClassNameOfArticleTOCRootTag,
         markdownArticleHasTOC,
     } = options
 
-    let htmlNewChiefContent = `${tab1}<article class="${cssClassNameOfMarkdownChiefContentWrappingArticleTag}">\n${
+    let articleStartTag
 
-        htmlOldChiefContent
-    }`
+    if (cssClassNameOfMarkdownChiefContentWrappingArticleTag) {
+        articleStartTag = `<article class="${cssClassNameOfMarkdownChiefContentWrappingArticleTag}">`
+    } else {
+        articleStartTag = '<article>'
+    }
+
+
+    let htmlNewChiefContent = `${tab1}${articleStartTag}\n${htmlOldChiefContent}`
 
     if (markdownArticleHasTOC) {
-        const fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight = `<nav class="${cssClassNameOfMarkdownTOCRootTag}">`
+        const fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight = `<nav class="${cssClassNameOfArticleTOCRootTag}">`
 
         htmlNewChiefContent = htmlNewChiefContent.replace(
             fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight,
