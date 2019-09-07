@@ -45,13 +45,18 @@
 
 ### 示例 1
 
+不需要带任何参数。输出完整的 HTML 内容，一切都自动包含其中。
+
 ```js
 const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
-const markdownContent = '# Test article\n\n## this is heading 2\n\n### this is heading 3\n\nthis is a sentence.\n\n'
+const markdownContent = '# 测试文章\n\n## 此为二级标题\n\n### 此为三级标题\n\n一个句子。\n\n'
 const htmlContent = markdownToHTMLConverter(markdownContent)
 ```
 
+
 ### 示例 2
+
+输出一个“纯净”的 HTML 文档字符串。无 CSS、无纲要列表、无“返回顶部”按钮（实则一个链接）、无 Javascript，什么都没有。
 
 ```js
 const {
@@ -60,10 +65,14 @@ const {
 } = require('fs')
 
 const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
-const markdownContent = readFileSync('my-article.md').toString()
+const markdownContent = readFileSync('我的文章.md').toString()
 
 const htmlContent = markdownToHTMLConverter(markdownContent, {
     shouldLogVerbosely: true,
+
+    conversionPreparations: {
+        shouldNotAutoInsertTOCPlaceholderIntoMarkdown: true,
+    },
 
     conversionOptions: {
         shouldNotBuildHeadingPermanentLinks: true,
@@ -71,19 +80,45 @@ const htmlContent = markdownToHTMLConverter(markdownContent, {
 
     manipulationsOverHTML: {
         shouldNotUseInternalCSSThemingFiles: true,
-        htmlTitleString: 'Test 3',
-        htmlTagLanguage: 'en-US',
+        htmlTitleString: '一份极简的 HTML 文档',
         shouldNotInsertBackToTopAnchor: true,
+    },
+})
+
+writeFileSync('我的文章.html', htmlContent)
+```
+
+### 示例 3
+
+采用你自己设计的 CSS 文件，嵌入输出 HTML 内容中，控制其样式。
+
+```js
+const {
+    readFileSync,
+    writeFileSync,
+} = require('fs')
+
+const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
+const markdownContent = readFileSync('一篇好文.md').toString()
+
+const htmlContent = markdownToHTMLConverter(markdownContent, {
+    manipulationsOverHTML: {
+        // 1) 禁用内部 CSS 主题文件。
+        shouldNotUseInternalCSSThemingFiles: true,
     },
 
     absolutePathsOfExtraFilesToEmbedIntoHTML: [
+        // 2) 引入你自己设计的 CSS 文件。
         '/d/my/work/folder/some/theme/my-splendid-theme.css',
+
+        // 3) 或许你也须引入你自己的 Javascript 文件。
         '/d/my/work/folder/some/theme/my-splendid-theme.actions.js',
     ],
 })
 
-writeFileSync('my-article.html', htmlContent)
+writeFileSync('一篇好文.html', htmlContent)
 ```
+
 
 
 ## API

@@ -53,6 +53,8 @@ const htmlContent = markdownToHTMLConverter(markdownContent)
 
 ### Example 2
 
+To output a really "pure" HTML document. No CSS, no TOC, no "back-to-top" button(anchor in fact), no Javascript, no nothing.
+
 ```js
 const {
     readFileSync,
@@ -65,25 +67,56 @@ const markdownContent = readFileSync('my-article.md').toString()
 const htmlContent = markdownToHTMLConverter(markdownContent, {
     shouldLogVerbosely: true,
 
+    conversionPreparations: {
+        shouldNotAutoInsertTOCPlaceholderIntoMarkdown: true,
+    },
+
     conversionOptions: {
         shouldNotBuildHeadingPermanentLinks: true,
     },
 
     manipulationsOverHTML: {
         shouldNotUseInternalCSSThemingFiles: true,
-        htmlTitleString: 'Test 3',
+        htmlTitleString: 'A really simple HTML document',
         htmlTagLanguage: 'en-US',
         shouldNotInsertBackToTopAnchor: true,
     },
-
-    absolutePathsOfExtraFilesToEmbedIntoHTML: [
-        '/d/my/work/folder/some/theme/my-splendid-theme.css',
-        '/d/my/work/folder/some/theme/my-splendid-theme.actions.js',
-    ],
 })
 
 writeFileSync('my-article.html', htmlContent)
 ```
+
+### Example 3
+
+To use your custom CSS file as an embed theme in the output HTML string.
+
+```js
+const {
+    readFileSync,
+    writeFileSync,
+} = require('fs')
+
+const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
+const markdownContent = readFileSync('my-writings.md').toString()
+
+const htmlContent = markdownToHTMLConverter(markdownContent, {
+    manipulationsOverHTML: {
+        // 1) Disable internal CSS
+        shouldNotUseInternalCSSThemingFiles: true,
+    },
+
+    absolutePathsOfExtraFilesToEmbedIntoHTML: [
+        // 2) Use your own CSS
+        '/d/my/work/folder/some/theme/my-splendid-theme.css',
+
+        // 3) [Optional] Maybe you also need to use your own js
+        '/d/my/work/folder/some/theme/my-splendid-theme.actions.js',
+    ],
+})
+
+writeFileSync('my-writings.html', htmlContent)
+```
+
 
 
 ## API

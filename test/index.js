@@ -6,7 +6,7 @@ const {
 const markdownToHTMLConverter = require('..')
 
 
-const markdownContent = '# Test article\n\n## this is heading 2\n\n### this is heading 3\n\nthis is a sentence.\n\n'
+const markdownContent = '# Test article\n\n## This is heading 2\n\n### This is heading 3\n\nThis is a sentence.\n\n'
 
 
 
@@ -31,7 +31,7 @@ const htmlContent3 = markdownToHTMLConverter(markdownContent, {
 
     manipulationsOverHTML: {
         shouldNotUseInternalCSSThemingFiles: true,
-        htmlTitleString: 'Test 3',
+        htmlTitleString: 'A really simple HTML document',
         htmlTagLanguage: 'en-US',
         shouldNotInsertBackToTopAnchor: true,
     },
