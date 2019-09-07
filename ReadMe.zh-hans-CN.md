@@ -164,22 +164,33 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             shouldNotBuildHeadingPermanentLinks: false,
             headingPermanentLinkSymbolChar: '§',
 
-            cssClassNameOfHeadingPermanentLinks: undefined, // Take the default value of "markdown-it-anchor"'s "permalinkClass"
+            /*
+                该参数对应 “markdown-it-anchor” 插件的 “permalinkClass” 参数。
+                其默认值为 “'header-anchor'”。
+
+                我的所谓内部 CSS 采用其默认值。
+            */
+            cssClassNameOfHeadingPermanentLinks: undefined,
 
             cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
-            cssClassNameOfArticleTOCLists:       undefined, // <ul>s and <ol>s
-            cssClassNameOfArticleTOCListItems:   undefined, // <li>s
-            cssClassNameOfArticleTOCItemAnchors: undefined, // <a>s under <li>s
+            cssClassNameOfArticleTOCLists:       undefined, // 作用于 <ul> 或 <ol>。
+            cssClassNameOfArticleTOCListItems:   undefined, // 作用于 <li>。
+            cssClassNameOfArticleTOCItemAnchors: undefined, // 作用于 <li> 内层的 <a>。
 
             /*
-                To build TOC from heading of this level downwards.
+                “articleTOCBuildingHeadingLevelStartsFrom”：该参数
+                对应 “markdown-it-toc-done-right” 插件的 “level” 参数，
+                意为，从第几级标题开始往下，会构建对应的纲要列表项。
 
-                For example:
-                    Say this value is 2.
-                    Then NONE of the <h1/>s will have its corresponding item in the TOC.
-                    While all <h2/>s, <h3/>s, ... etc, will have theirs in the TOC.
+                例如：
+                    假定 “articleTOCBuildingHeadingLevelStartsFrom” 取值为 2。
+                    则**不会**为文章中的任何 <h1> 构建对应的纲要列表项。
+                    而从第二级标题开始的所有标题，即 <h2/>、<h3/>……等，均会构建对应纲要列表项。
+
+                    另，我设计的默认 CSS，会故意隐藏较深层的纲要列表项。即，这些列表项的 HTML
+                    标签明明存在，但被 CSS 强行隐藏不见。
             */
-            articleTOCBuildingHeadingLevelStartsFrom: 2,
+            articleTOCBuildingHeadingLevelStartsFrom: 2, // 我令其默认取 2。
             articleTOCListTagNameIsUL: false,
         },
 
@@ -187,8 +198,8 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             shouldNotInsertBackToTopAnchor: false,
             shouldNotUseInternalCSSThemingFiles: false,
 
-            htmlTagLanguage: '', // Which means `'zh-hans-CN'`, according to the `begin.html`.
-            htmlTitleString: '', // Which means to extract content of the first met <h1/>.
+            htmlTagLanguage: '', // 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。
+            htmlTitleString: '', // 默认取空字符串。此即意味着自动从文字中第一个 <h1> 标签中提前内容文字，作为 HTML 文档的标题（<title>）。
 
             moduleCSSFileNameOfDefaultTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             moduleCSSFileNameOfDefaultThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
@@ -198,12 +209,24 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             cssClassNameOfBackToTopAnchor:                        'markdown-article-back-to-top',
 
             desiredReplacementsInHTML: [
-                /*
-                    {
-                        from: <string or RegExp>,
-                        to:   <string>,
-                    },
-                */
+            /*
+                {
+                    from: <string or RegExp>,
+                    to:   <string>,
+                },
+
+                例 1：另所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
+                {
+                    from: /\s+href="([!#])/gi,
+                    to: ' target="_blank" href="$1',
+                },
+
+                例 2：批量转换链接地址。
+                {
+                    from: /\s+href="\.\/course-examples\//gi,
+                    to: ' href="../public/assets/course-examples/',
+                },
+            */
             ],
 
             absolutePathsOfExtraFilesToEmbedIntoHTML: [],
