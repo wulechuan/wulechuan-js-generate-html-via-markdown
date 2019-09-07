@@ -49,6 +49,11 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
             sundries = {},
         } = options
 
+        const newVerionPropertyProvided = {
+            internalCSSFileNameOfThemeWithTOC: manipulationsOverHTML.internalCSSFileNameOfThemeWithTOC !== undefined,
+            internalCSSFileNameOfTheme:        manipulationsOverHTML.internalCSSFileNameOfTheme        !== undefined,
+        }
+
 
 
 
@@ -94,9 +99,14 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         const {
             shouldNotInsertBackToTopAnchor,
             shouldNotUseInternalCSSThemingFiles,
+            shouldUseUnminifiedVersionOfInternalCSS,
+            shouldUseUnminifiedVersionOfInternalJavascriptIfAny,
 
             htmlTagLanguage,
             htmlTitleString,
+
+            internalCSSFileNameOfThemeWithTOC,
+            internalCSSFileNameOfTheme,
 
             moduleCSSFileNameOfDefaultThemeWithTOC,
             moduleCSSFileNameOfDefaultTheme,
@@ -235,7 +245,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         })
 
 
-        let allEmbeddingSnippetEntries = []
+        let allSnippetEntriesToEmbed = []
 
 
 
@@ -245,9 +255,21 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
         if (!shouldNotUseInternalCSSThemingFiles) {
             if (markdownArticleHasTOC) {
-                themingCSSFileEntryKey = moduleCSSFileNameOfDefaultThemeWithTOC
+                if (newVerionPropertyProvided.internalCSSFileNameOfThemeWithTOC) {
+                    themingCSSFileEntryKey = internalCSSFileNameOfThemeWithTOC
+                } else {
+                    themingCSSFileEntryKey = moduleCSSFileNameOfDefaultThemeWithTOC
+                }
             } else {
-                themingCSSFileEntryKey = moduleCSSFileNameOfDefaultTheme
+                if (newVerionPropertyProvided.internalCSSFileNameOfTheme) {
+                    themingCSSFileEntryKey = internalCSSFileNameOfTheme
+                } else {
+                    themingCSSFileEntryKey = moduleCSSFileNameOfDefaultTheme
+                }
+            }
+
+            if (shouldUseUnminifiedVersionOfInternalCSS) {
+                themingCSSFileEntryKey = themingCSSFileEntryKey.replace(/\.min\.css$/, '.css')
             }
         }
 
@@ -255,29 +277,35 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         if (themingCSSFileEntryKey) {
             const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneModuleFileEntry(themingCSSFileEntryKey)
 
-            allEmbeddingSnippetEntries = [
-                ...allEmbeddingSnippetEntries,
+            allSnippetEntriesToEmbed = [
+                ...allSnippetEntriesToEmbed,
                 snippetEntryOfThemingCSS,
             ]
 
-            if (snippetEntryOfThemingCSS.pairingJavascriptSnippetEntries) {
-                allEmbeddingSnippetEntries = [
-                    ...allEmbeddingSnippetEntries,
-                    ...snippetEntryOfThemingCSS.pairingJavascriptSnippetEntries,
+            if (snippetEntryOfThemingCSS.pairingJavascriptSnippetEntryPairs) {
+                allSnippetEntriesToEmbed = [
+                    ...allSnippetEntriesToEmbed,
+                    ...snippetEntryOfThemingCSS.pairingJavascriptSnippetEntryPairs.map(entryPair => {
+                        if (shouldUseUnminifiedVersionOfInternalJavascriptIfAny) {
+                            return entryPair.unminified
+                        } else {
+                            return entryPair.minified
+                        }
+                    }),
                 ]
             }
         }
 
 
-        allEmbeddingSnippetEntries = [
-            ...allEmbeddingSnippetEntries,
+        allSnippetEntriesToEmbed = [
+            ...allSnippetEntriesToEmbed,
             ...absolutePathsOfExtraFilesToEmbedIntoHTML
                 .map(syncGetSnippetEntryOfOneExternalFile)
                 .filter(entry => !!entry),
         ]
 
-        const allSnippetEntriesOfAllCSS         = allEmbeddingSnippetEntries.filter(entry =>  entry.isStyleTag)
-        const allSnippetEntriesOfAllJavascripts = allEmbeddingSnippetEntries.filter(entry => !entry.isStyleTag)
+        const allSnippetEntriesOfAllCSS         = allSnippetEntriesToEmbed.filter(entry =>  entry.isStyleTag)
+        const allSnippetEntriesOfAllJavascripts = allSnippetEntriesToEmbed.filter(entry => !entry.isStyleTag)
 
 
 

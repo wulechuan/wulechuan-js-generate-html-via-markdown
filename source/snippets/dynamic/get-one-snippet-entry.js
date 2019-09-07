@@ -151,9 +151,25 @@ function syncGetSnippetEntryOfOneModuleFileEntry(fileName) {
         const { pairingJavascriptFileNames } = fileEntry
 
         if (pairingJavascriptFileNames) {
-            snippetEntry.pairingJavascriptSnippetEntries = pairingJavascriptFileNames.map(
-                syncGetSnippetEntryOfOneModuleFileEntry
-            )
+            snippetEntry.pairingJavascriptSnippetEntryPairs = pairingJavascriptFileNames.map(jsFileName => {
+                const jsFileNameIsOfMinifiedVersion = !!jsFileName.match(/\.min\.js$/)
+
+                let jsFileNameOfMinifiedVersion
+                let jsFileNameOfUnminifiedVersion
+
+                if (jsFileNameIsOfMinifiedVersion) {
+                    jsFileNameOfMinifiedVersion   = jsFileName
+                    jsFileNameOfUnminifiedVersion = jsFileName.replace(/\.min\.js$/, '.js')
+                } else {
+                    jsFileNameOfUnminifiedVersion = jsFileName
+                    jsFileNameOfMinifiedVersion   = jsFileName.replace(/\.js$/, '.min.js')
+                }
+
+                return {
+                    minified:   syncGetSnippetEntryOfOneModuleFileEntry(jsFileNameOfMinifiedVersion),
+                    unminified: syncGetSnippetEntryOfOneModuleFileEntry(jsFileNameOfUnminifiedVersion),
+                }
+            })
         }
 
         optionalEntries[fileName] = snippetEntry

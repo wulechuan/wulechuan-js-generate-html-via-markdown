@@ -37,9 +37,11 @@
 
 **简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。**
 
+
 ### 内嵌样式
 
 内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。其文档中亦有若干截图，直观展示一篇文档在应用默认样式后之样貌。见 [该文档](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/zh-hans-CN/application-examples.md)。
+
 
 ## 用法
 
@@ -49,8 +51,12 @@
 
 ```js
 const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
+
 const markdownContent = '# 测试文章\n\n## 此为二级标题\n\n### 此为三级标题\n\n一个句子。\n\n'
-const htmlContent = markdownToHTMLConverter(markdownContent)
+
+/********************************************************************/
+/**/ const htmlContent = markdownToHTMLConverter(markdownContent) /**/
+/********************************************************************/
 ```
 
 
@@ -187,20 +193,30 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                     则**不会**为文章中的任何 <h1> 构建对应的纲要列表项。
                     而从第二级标题开始的所有标题，即 <h2/>、<h3/>……等，均会构建对应纲要列表项。
 
-                    另，我设计的默认 CSS，会故意隐藏较深层的纲要列表项。即，这些列表项的 HTML
-                    标签明明存在，但被 CSS 强行隐藏不见。
+                另，我所设计的默认 CSS，会【故意】隐藏较深层的纲要列表项。即，这些列表项的 HTML
+                标签明明存在，但被 CSS 强行隐藏不见。
             */
-            articleTOCBuildingHeadingLevelStartsFrom: 2, // 我令其默认取 2。
+            articleTOCBuildingHeadingLevelStartsFrom: 2, // 注意：我令其默认取 2。
             articleTOCListTagNameIsUL: false,
         },
 
         manipulationsOverHTML: {
             shouldNotInsertBackToTopAnchor: false,
             shouldNotUseInternalCSSThemingFiles: false,
+            shouldUseUnminifiedVersionOfInternalCSS: false,
+            shouldUseUnminifiedVersionOfInternalJavascriptIfAny: false,
 
             htmlTagLanguage: '', // 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。
             htmlTitleString: '', // 默认取空字符串。此即意味着自动从文字中第一个 <h1> 标签中提前内容文字，作为 HTML 文档的标题（<title>）。
 
+            internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
+            internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
+
+            /*
+                下列两项参数已被弃用。实则更名为上方两个参数。请尽量采用上方使用新名称的两个参数。
+                一旦上方某参数配置了值，则下方对应参数的值会被忽略。
+                未来，或许我干脆不再支持使用下方两个参数名。
+            */
             moduleCSSFileNameOfDefaultTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             moduleCSSFileNameOfDefaultThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
 

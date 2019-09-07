@@ -42,7 +42,13 @@ const htmlContent3 = markdownToHTMLConverter(markdownContent, {
 })
 
 const readMeHTMLContent = markdownToHTMLConverter(
-    readFileSync('./ReadMe.zh-hans-CN.md').toString()
+    readFileSync('./ReadMe.zh-hans-CN.md').toString(),
+    {
+        manipulationsOverHTML: {
+            shouldUseUnminifiedVersionOfInternalCSS: false,
+            shouldUseUnminifiedVersionOfInternalJavascriptIfAny: true,
+        },
+    }
 )
 
 writeFileSync('./test/output/test1.html', htmlContent1)

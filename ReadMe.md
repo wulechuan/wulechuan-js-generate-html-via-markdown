@@ -45,15 +45,21 @@ The CSS file for the built-in theming is from another NPM package of mine, named
 
 ### Example 1
 
+Use it without any options. By default, you get everything, the CSS theming, the TOC with behaviours, the "back-to-top" button(an anchor in fact), etc.
+
 ```js
 const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
+
 const markdownContent = '# Test article\n\n## this is heading 2\n\n### this is heading 3\n\nthis is a sentence.\n\n'
-const htmlContent = markdownToHTMLConverter(markdownContent)
+
+/********************************************************************/
+/**/ const htmlContent = markdownToHTMLConverter(markdownContent) /**/
+/********************************************************************/
 ```
 
 ### Example 2
 
-To output a really "pure" HTML document. No CSS, no TOC, no "back-to-top" button(anchor in fact), no Javascript, no nothing.
+To output a really "pure" HTML document. No CSS, no TOC, no "back-to-top" button(an anchor in fact), no Javascript, no nothing.
 
 ```js
 const {
@@ -186,18 +192,31 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                     Say this value is 2.
                     Then NONE of the <h1/>s will have its corresponding item in the TOC.
                     While all <h2/>s, <h3/>s, ... etc, will have theirs in the TOC.
+
+                What's more, I perposely hide level 4 or deeper items in the TOC, via CSS rules.
+                This means although the HTML tags of ALL LEVELS DO EXIST, but from level 4 onwards,
+                their are not visible.
             */
-            articleTOCBuildingHeadingLevelStartsFrom: 2, // I take 2 as default value.
+            articleTOCBuildingHeadingLevelStartsFrom: 2, // Pay attention that I take 2 as a default value.
             articleTOCListTagNameIsUL: false,
         },
 
         manipulationsOverHTML: {
             shouldNotInsertBackToTopAnchor: false,
             shouldNotUseInternalCSSThemingFiles: false,
+            shouldUseUnminifiedVersionOfInternalCSS: false,
+            shouldUseUnminifiedVersionOfInternalJavascriptIfAny: false,
 
             htmlTagLanguage: '', // By default it's an emepty string. This means it will be `'zh-hans-CN'`, according to the `begin.html`.
             htmlTitleString: '', // By default it's an emepty string. This means to extract content of the first met <h1/> as the content of the <title/> tag.
 
+            internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
+            internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
+
+            /*
+                These two properties are deprecated. Take the two above instead.
+                Once the corresnponding property shown above is set, the one shown below is ignored.
+            */
             moduleCSSFileNameOfDefaultTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             moduleCSSFileNameOfDefaultThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
 
