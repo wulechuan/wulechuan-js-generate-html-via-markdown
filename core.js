@@ -10,18 +10,9 @@ const markdownItPluginTOCDoneRight = require('markdown-it-toc-done-right')
 const {
     tab1,
     // tab2,
-} = require('../snippets/static/tabs')
+} = require('./source/snippets/static/tabs')
 
-const { // Reading these files only once is enough. Saving time.
-    syncGetSnippetEntryOfHTMLBeginning,
-    syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin,
-    syncGetSnippetEntryOfHTMLEnding,
-
-    syncGetSnippetEntryOfOneModuleFileEntry,
-    syncGetSnippetEntryOfOneExternalFile,
-} = require('../snippets/dynamic/get-one-snippet-entry')
-
-const defaultOptionValues = require('../../default-options')
+const defaultOptionValues = require('./default-options')
 
 
 
@@ -31,13 +22,40 @@ const defaultOptionValues = require('../../default-options')
 
 
 
+
+
+
+/**
+ * @param {object} options
+ * @param {string} options.thisModuleRootFolderPath
+ * @param {object} options.themesPeerModuleAllFileEntriesKeyingByFileNames
+ * @param {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
+ * @returns {function} - The core converter function
+ */
 module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
     const {
         thisModuleRootFolderPath,
+        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = options
 
 
-    return function buildFullHTMLStringViaMarkDownString(markdownContent, options = {}) {
+    const { // Reading these files only once is enough. Saving time.
+        syncGetSnippetEntryOfHTMLBeginning,
+        syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin,
+        syncGetSnippetEntryOfHTMLEnding,
+
+        syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes,
+        syncGetSnippetEntryOfOneExternalFile,
+    } = require('./source/snippets/dynamic/create-snippet-entry-getters')({
+        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+    })
+
+
+
+
+    return function generateFullHTMLStringViaMarkdownString(markdownContent, options = {}) {
         const {
             shouldLogVerbosely,
         } = options
@@ -87,7 +105,6 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
             shouldNotBuildHeadingPermanentLinks,
             headingPermanentLinkSymbolChar,
             cssClassNameOfHeadingPermanentLinks,
-
             cssClassNameOfArticleTOCRootTag,
             cssClassNameOfArticleTOCLists,
             cssClassNameOfArticleTOCListItems,
@@ -275,7 +292,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
 
         if (themingCSSFileEntryKey) {
-            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneModuleFileEntry(themingCSSFileEntryKey)
+            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(themingCSSFileEntryKey)
 
             allSnippetEntriesToEmbed = [
                 ...allSnippetEntriesToEmbed,
