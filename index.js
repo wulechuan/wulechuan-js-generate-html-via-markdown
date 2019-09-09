@@ -1,7 +1,5 @@
 const chalk = require('chalk')
-const path = require('path')
 
-const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
 const packageJSONOfThisModule = require('./package.json')
 
 const peerDependencyModuleName = '@wulechuan/css-stylus-markdown-themes'
@@ -17,7 +15,6 @@ try {
     } = require(peerDependencyModuleName)
 
     generateFullHTMLStringViaMarkdownString = createOneMarkdownToHTMLConerter({
-        thisModuleRootFolderPath,
         themesPeerModuleAllFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })

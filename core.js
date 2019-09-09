@@ -1,4 +1,5 @@
 const chalk = require('chalk')
+const path = require('path')
 
 const MarkDownIt = require('markdown-it')
 
@@ -15,6 +16,7 @@ const {
 const defaultOptionValues = require('./default-options')
 
 
+const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
 
 
 
@@ -27,14 +29,12 @@ const defaultOptionValues = require('./default-options')
 
 /**
  * @param {object} options
- * @param {string} options.thisModuleRootFolderPath
  * @param {object} options.themesPeerModuleAllFileEntriesKeyingByFileNames
  * @param {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
  * @returns {function} - The core converter function
  */
 module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
     const {
-        thisModuleRootFolderPath,
         themesPeerModuleAllFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = options
