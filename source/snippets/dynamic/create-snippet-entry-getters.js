@@ -155,7 +155,7 @@ function createSnippetEntryGetters(options) {
     function syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(fileName, shouldDisableCachingForInternalThemeFiles) {
         const { optional: optionalEntries } = allSnippetEntries
 
-        if (!optionalEntries[fileName]) {
+        if (!optionalEntries[fileName] || shouldDisableCachingForInternalThemeFiles) {
             const fileEntry = themesPeerModuleAllFileEntriesKeyingByFileNames[fileName]
 
             const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileName)
@@ -193,8 +193,15 @@ function createSnippetEntryGetters(options) {
                     }
 
                     return {
-                        minified:   syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(jsFileNameOfMinifiedVersion),
-                        unminified: syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(jsFileNameOfUnminifiedVersion),
+                        minified:   syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+                            jsFileNameOfMinifiedVersion,
+                            shouldDisableCachingForInternalThemeFiles
+                        ),
+
+                        unminified: syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+                            jsFileNameOfUnminifiedVersion,
+                            shouldDisableCachingForInternalThemeFiles
+                        ),
                     }
                 })
             }
