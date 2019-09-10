@@ -80,6 +80,7 @@ try {
 /**
  * @typedef {object} converterSundryOptions
  * @property {boolean} shouldConsoleLogsInChinese
+ * @property {boolean} shouldDisableCachingForInternalThemeFiles
  */
 
 

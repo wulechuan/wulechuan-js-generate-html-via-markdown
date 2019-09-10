@@ -139,6 +139,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
         const {
             shouldConsoleLogsInChinese,
+            shouldDisableCachingForInternalThemeFiles,
         } = sundries
 
 
@@ -292,7 +293,10 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
 
         if (themingCSSFileEntryKey) {
-            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(themingCSSFileEntryKey)
+            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+                themingCSSFileEntryKey,
+                shouldDisableCachingForInternalThemeFiles
+            )
 
             allSnippetEntriesToEmbed = [
                 ...allSnippetEntriesToEmbed,

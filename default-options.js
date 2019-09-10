@@ -93,5 +93,6 @@ module.exports = {
 
     sundries: {
         shouldConsoleLogsInChinese: false,
+        shouldDisableCachingForInternalThemeFiles: false,
     },
 }
