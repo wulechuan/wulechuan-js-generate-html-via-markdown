@@ -152,16 +152,16 @@ function createSnippetEntryGetters(options) {
     }
 
     /** The said peer module below is the "@wulechuan/css-stylus-markdown-themes" */
-    function syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(fileName, shouldDisableCachingForInternalThemeFiles) {
+    function syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(fileName, shouldIgnoreCachedContent) {
         const { optional: optionalEntries } = allSnippetEntries
 
-        if (!optionalEntries[fileName] || shouldDisableCachingForInternalThemeFiles) {
+        if (!optionalEntries[fileName] || shouldIgnoreCachedContent) {
             const fileEntry = themesPeerModuleAllFileEntriesKeyingByFileNames[fileName]
 
             const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileName)
             const fileRawContent = syncGetContentStringOfOneFileOfThePeerModuleOfThemes(
                 fileName,
-                shouldDisableCachingForInternalThemeFiles
+                shouldIgnoreCachedContent
             )
 
             const fileWrappedContent = wrapContentsWithAPairOfHTMLTags({
@@ -195,12 +195,12 @@ function createSnippetEntryGetters(options) {
                     return {
                         minified:   syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
                             jsFileNameOfMinifiedVersion,
-                            shouldDisableCachingForInternalThemeFiles
+                            shouldIgnoreCachedContent
                         ),
 
                         unminified: syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
                             jsFileNameOfUnminifiedVersion,
-                            shouldDisableCachingForInternalThemeFiles
+                            shouldIgnoreCachedContent
                         ),
                     }
                 })
@@ -212,10 +212,10 @@ function createSnippetEntryGetters(options) {
         return optionalEntries[fileName]
     }
 
-    function syncGetSnippetEntryOfOneExternalFile(fileAbsolutePath) {
+    function syncGetSnippetEntryOfOneExternalFile(fileAbsolutePath, shouldIgnoreCachedContent) {
         const { optional: optionalEntries } = allSnippetEntries
 
-        if (!optionalEntries[fileAbsolutePath]) {
+        if (!optionalEntries[fileAbsolutePath] || shouldIgnoreCachedContent) {
             const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileAbsolutePath)
             const fileRawContent = syncReadOneTextFile(fileAbsolutePath)
             const fileWrappedContent = wrapContentsWithAPairOfHTMLTags({

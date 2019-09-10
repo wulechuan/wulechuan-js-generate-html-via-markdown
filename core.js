@@ -140,6 +140,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         const {
             shouldConsoleLogsInChinese,
             shouldDisableCachingForInternalThemeFiles,
+            shouldDisableCachingForExternalFiles,
         } = sundries
 
 
@@ -321,7 +322,12 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         allSnippetEntriesToEmbed = [
             ...allSnippetEntriesToEmbed,
             ...absolutePathsOfExtraFilesToEmbedIntoHTML
-                .map(syncGetSnippetEntryOfOneExternalFile)
+                .map(filePath => {
+                    return syncGetSnippetEntryOfOneExternalFile(
+                        filePath,
+                        shouldDisableCachingForExternalFiles
+                    )
+                })
                 .filter(entry => !!entry),
         ]
 

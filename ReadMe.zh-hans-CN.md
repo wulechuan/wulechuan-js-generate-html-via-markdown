@@ -255,6 +255,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         sundries: {
             shouldConsoleLogsInChinese: false,
             shouldDisableCachingForInternalThemeFiles: false,
+            shouldDisableCachingForExternalFiles: false,
         },
     }
     ```
