@@ -29,7 +29,7 @@ Yet another tool for converting MarkDown content into corresponding HTML content
 
 > The Javascript codes are for the behviours of the table of contents(TOC) part.
 
-> Note that even if the CSS and Javascript are all embeded, images are still external resources to the HTML.
+> Note that although all CSS and Javascript contents are embeded, images are still external resources to the HTML.
 
 This tool utilizes the ecosystem of the famous tool, "[markdownIt](https://www.npmjs.com/package/markdown-it)".
 
@@ -155,7 +155,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - markdownString
 
-    A string, treated as an article write in MarkDown language.
+    A string, treated as an article written in MarkDown language.
 
 
 - options
