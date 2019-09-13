@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="./dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
-
 # Wulechuan's Tool for Generating HTMLs via Markdowns
 
 ## Multilingual Editions of this Article
@@ -45,6 +43,11 @@ There're plenty of options which provide full controls over the ouptut HTML cont
 ### Built-in Themes
 
 The CSS file for the built-in theming is from another NPM package of mine, named "[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)". See some pictures of an example article with the default theme applied [there](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/en-US/application-examples.md).
+
+
+### Gulpjs Workflow Adaptor
+
+Alongside this npm package, I also maintain another npm package, named [@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html). Let's call it package A. The package perfectly fit the workflows provided by the [Gulpjs](https://gulpjs.com) ecosystem. The package A utilizes this npm package internally to convert Markdown files into HTML files in batch.
 
 ## Usage
 

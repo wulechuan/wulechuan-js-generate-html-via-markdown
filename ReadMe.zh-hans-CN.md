@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="./dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
-
 # 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具
 
 
@@ -45,6 +43,11 @@
 ### 内嵌样式
 
 内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。其文档中亦有若干截图，直观展示一篇文档在应用默认样式后之样貌。见 [该文档](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/zh-hans-CN/application-examples.md)。
+
+
+### 用于 Gulpjs 生态的适配版本
+
+本人还另行构建和维护了一个 npm 项目，名为《[@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html)》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 [Gulpjs](https://gulpjs.com) 生态中的工作流的工具软件。甲软件内部会调用本软件，实现从 Markdown 文件到 HTML 文件的批量转换。
 
 
 ## 用法
