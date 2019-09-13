@@ -230,6 +230,19 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
             htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(pair.from, pair.to)
         })
 
+        const tokenTypesToAddWrapperTo = [
+            'hljs-keyword',
+            'hljs-built_in',
+            'hljs-literal',
+        ]
+
+        tokenTypesToAddWrapperTo.forEach(tokenType => {
+            htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(
+                new RegExp(`<span class="${tokenType}">(\\w+)</span>`, 'gi'),
+                `<span class="${tokenType} $1">$1</span>`
+            )
+        })
+
         htmlContentViaMarkDownContent = wrapHTMLChiefContentWithAnArticleTag(
             htmlContentViaMarkDownContent,
 
