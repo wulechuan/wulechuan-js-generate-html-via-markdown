@@ -238,7 +238,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
 
         tokenTypesToAddWrapperTo.forEach(tokenType => {
             htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(
-                new RegExp(`<span class="${tokenType}">(\\w+)</span>`, 'gi'),
+                new RegExp(`<span class="${tokenType}">(\\w+)</span>`, 'g'),
                 `<span class="${tokenType} $1">$1</span>`
             )
         })
