@@ -3,7 +3,8 @@ const through = require('through2')
 const GulpPluginError = require('plugin-error')
 const replaceFileExt  = require('replace-ext')
 
-const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
+// const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
+const markdownToHTMLConverter = require('../..')
 
 
 function createNewGulpError(rawError) {
@@ -45,6 +46,10 @@ function markdownProcessorPipe() {
             return callback(createNewGulpError(error))
         }
 
+        console.log('-'.repeat(60))
+        console.log(htmlContent.slice(0, 256))
+        console.log('-'.repeat(60))
+
         file.path = replaceFileExt(file.path, '.html')
         file.contents = Buffer.from(htmlContent)
 
@@ -56,7 +61,7 @@ function markdownProcessorPipe() {
 
 
 const taskCycleOptionsForMarkdownConversions = {
-    descriptionOfInputsOfCoreTask: 'Example HTMLs',
+    descriptionOfInputsOfCoreTask: 'Peer dependency example Markdowns',
 
     sourceGlobs: {
         rootFolderPath: sourceMarkdownFilesFolderPath,
