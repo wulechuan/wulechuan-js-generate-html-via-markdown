@@ -476,7 +476,7 @@ module.exports = function createOneAbstractTaskCycle(options) {
     }
 
 
-    const taskSettings = {
+    const taskCycle = {
         taskSetDescription,
         taskSetSourceDescription, // Simply a backup, not likely to use.
 
@@ -507,7 +507,9 @@ module.exports = function createOneAbstractTaskCycle(options) {
         taskBodies,
     }
 
-    return taskSettings
+    // console.log(taskCycle)
+
+    return taskCycle
 
 
 
