@@ -7,7 +7,8 @@
   "main": "index.js",
   "scripts": {
     "eslint": "eslint    ./.eslintrc.js    ./test/*.js    ./source/**/*.js    ./default-options.js    ./core.js    ./index.js",
-    "test": "npm  run  eslint    &&    node    ./test/index.js"
+    "test": "npm  run  eslint    &&    node    ./test/index.js",
+    "start": "gulp    buildExamplesInThemingNPMPackage"
   },
   "keywords": [
     "markdown",
@@ -44,6 +45,14 @@
     "markdown-it-toc-done-right": "^4.0.2"
   },
   "devDependencies": {
-    "@wulechuan/css-stylus-markdown-themes": "^5.7.4"
+    "@wulechuan/css-stylus-markdown-themes": "^5.7.4",
+    "@wulechuan/generate-html-via-markdown": ".",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-pipe": "^1.0.4",
+    "gulp-rename": "^1.4.0",
+    "plugin-error": "^1.0.1",
+    "replace-ext": "^1.0.0",
+    "through2": "^3.0.1"
   }
 }
