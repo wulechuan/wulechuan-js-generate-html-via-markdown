@@ -264,8 +264,8 @@ module.exports = function createOneAbstractTaskCycle(options) {
 
 
     let {
-        taskSetDescription,       // [optional] Should be a string if provided.
-        taskSetSourceDescription, // [optional] Should be a string if provided.
+        descriptionOfCoreTask,       // [optional] Should be a string if provided.
+        descriptionOfInputsOfCoreTask, // [optional] Should be a string if provided.
 
         compressions, /*
             [optional] Should be an object if provided.
@@ -412,35 +412,50 @@ module.exports = function createOneAbstractTaskCycle(options) {
     shouldNotOutputCompressedVersion   = !!shouldNotOutputCompressedVersion
 
 
-    const willOutputTwoFiles          = !shouldNotOutputUncompressedVersion && !shouldNotOutputCompressedVersion
-    const willOutputMininfiedFileOnly =  shouldNotOutputUncompressedVersion && !shouldNotOutputCompressedVersion
+    const willOutputTwoVersionsOfFiles = !shouldNotOutputUncompressedVersion && !shouldNotOutputCompressedVersion
+    const willOutputMininfiedFilesOnly =  shouldNotOutputUncompressedVersion && !shouldNotOutputCompressedVersion
 
-    if (!taskSetDescription) {
-        taskSetDescription = ''
+    if (!descriptionOfCoreTask) {
+        descriptionOfCoreTask = ''
 
+        descriptionOfInputsOfCoreTask = descriptionOfInputsOfCoreTask || ''
 
-        if (taskSetSourceDescription) {
-            taskSetDescription += [
-                `From    ${chalk.black.bgMagenta(taskSetSourceDescription)}`,
-                '',
-            ].join('\n')
+        if (descriptionOfInputsOfCoreTask) {
+            descriptionOfCoreTask += `From    ${chalk.black.bgMagenta(descriptionOfInputsOfCoreTask)}\n`
+        }
+
+        if (outputFilesAreInABatch) {
+            descriptionOfCoreTask += `Produce ${
+                chalk.black.bgGreen(
+                    `${
+                        relativeGlobsOfAllPossibleOutputs.join(', ')
+                    }${
+                        chalk.black.bgRed(willOutputMininfiedFilesOnly ? '(all min)' : '')
+                    }`
+                )
+            }`
+
+            if (willOutputTwoVersionsOfFiles) {
+                descriptionOfCoreTask += ' (+ all min)'
+            }
         } else {
-            taskSetSourceDescription = ''
+            descriptionOfCoreTask += `Produce ${
+                chalk.black.bgGreen(
+                    `${
+                        outputFileBaseName
+                    }${
+                        chalk.black.bgRed(willOutputMininfiedFilesOnly ? '.min' : '')
+                    }.${outputFileExtWithoutDot}`
+                )
+            }`
+
+            if (willOutputTwoVersionsOfFiles) {
+                descriptionOfCoreTask += ' (+ .min)'
+            }
         }
 
 
-        taskSetDescription += [
-            `Produce ${
-                chalk.black.bgGreen(
-                    `${outputFileBaseName}${
-                        chalk.black.bgRed(willOutputMininfiedFileOnly ? '.min' : '')
-                    }.${outputFileExtWithoutDot}`
-                )
-            }${
-                willOutputTwoFiles ? ' (+ .min)' : ''
-            }`,
-            '',
-        ].join('\n')
+        descriptionOfCoreTask += '\n'
     }
 
 
@@ -477,8 +492,8 @@ module.exports = function createOneAbstractTaskCycle(options) {
 
 
     const taskCycle = {
-        taskSetDescription,
-        taskSetSourceDescription, // Simply a backup, not likely to use.
+        descriptionOfCoreTask,
+        descriptionOfInputsOfCoreTask, // Simply a backup, not likely to use.
 
         outputFolderPath,
         outputFilesAreInABatch,
@@ -522,7 +537,7 @@ module.exports = function createOneAbstractTaskCycle(options) {
     }
 
     function toBuildSourceFilesTheDefaultWay() {
-        console.log(`\n${taskSetDescription}`)
+        console.log(`\n${descriptionOfCoreTask}`)
 
         const pipe = [ gulpRead(sourceGlobs) ]
 

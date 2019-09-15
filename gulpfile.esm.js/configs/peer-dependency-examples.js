@@ -56,7 +56,7 @@ function markdownProcessorPipe() {
 
 
 const taskCycleOptionsForMarkdownConversions = {
-    taskSetSourceDescription: 'Example HTMLs',
+    descriptionOfInputsOfCoreTask: 'Example HTMLs',
 
     sourceGlobs: {
         rootFolderPath: sourceMarkdownFilesFolderPath,
@@ -74,7 +74,9 @@ const taskCycleOptionsForMarkdownConversions = {
         },
     },
 
-    compressions: null,
+    compressions: {
+        shouldNotOutputCompressedVersion: true,
+    },
 
     sourceContentFirstProcessor: markdownProcessorPipe,
 }

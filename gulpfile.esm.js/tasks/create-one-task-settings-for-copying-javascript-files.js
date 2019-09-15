@@ -5,16 +5,16 @@ import gulpTerser from 'gulp-terser'
 
 export default function createOneSetOfTasksForCopyingJavascriptFiles(options) {
     const {
-        taskSetDescription,
-        taskSetSourceDescription,
+        descriptionOfCoreTask,
+        descriptionOfInputsOfCoreTask,
         sourceGlobs,
         outputFiles,
         compressions, // is a required property here, for simplicity
     } = options
 
     return createOneAbstractTaskSet({
-        taskSetDescription,
-        taskSetSourceDescription,
+        descriptionOfCoreTask,
+        descriptionOfInputsOfCoreTask,
 
         sourceGlobs,
         outputFiles,
