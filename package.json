@@ -2,13 +2,13 @@
   "name": "@wulechuan/generate-html-via-markdown",
   "author": "wulechuan <wulechuan@live.com>",
   "license": "WTFPL",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
   "main": "index.js",
   "scripts": {
     "prepublishOnly": "npm run examples",
-    "eslint": "eslint    ./.eslintrc.js    ./test/*.js    ./gulpfile.js/**/*.js    ./source/**/*.js    ./default-options.js    ./core.js    ./index.js",
-    "test": "npm     run eslint    &&    node    ./test/index.js",
+    "eslint": "eslint    ./.eslintrc.js    ./tests/*.js    ./gulpfile.js/**/*.js    ./source/**/*.js    ./default-options.js    ./core.js    ./index.js",
+    "test": "npm     run eslint    &&    node    ./tests/index.js",
     "start2": "npm   run eslint    &&    gulp",
     "start": "npm    run eslint    &&    gulp    --silent",
     "examples": "npm run eslint    &&    gulp    --silent   buildExamplesOnce"
@@ -26,7 +26,7 @@
   ],
   "directories": {
     "source": "source",
-    "test": "test"
+    "test": "tests"
   },
   "homepage": "https://github.com/wulechuan/wulechuan-generate-html-via-markdown#readme",
   "repository": {
@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@wulechuan/css-stylus-markdown-themes": "^5.7.6",
+    "@wulechuan/gulp-classical-task-cycle": "^0.1.1",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-pipe": "^1.0.4",

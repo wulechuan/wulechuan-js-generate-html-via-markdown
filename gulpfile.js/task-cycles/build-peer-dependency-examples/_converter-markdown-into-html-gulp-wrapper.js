@@ -61,6 +61,8 @@ module.exports = function createAPipeForConvertingMarkdownsIntoHTMLs(converterOp
                 return callback(createNewGulpError(error))
             }
 
+            // console.log(`${htmlContent.slice(0, 300)}\n...\n${'-'.repeat(79)}\n`)
+
             file.path = replaceFileExt(file.path, '.html')
             file.contents = Buffer.from(htmlContent)
 

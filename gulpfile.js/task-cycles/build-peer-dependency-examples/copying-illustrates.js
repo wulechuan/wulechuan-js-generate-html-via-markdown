@@ -1,5 +1,7 @@
 const path = require('path')
-const createATaskCycle = require('../../utils/create-a-task-cycle')
+const {
+    createATaskCycle,
+} = require('@wulechuan/gulp-classical-task-cycle')
 
 
 const {
@@ -11,7 +13,7 @@ const {
     copyingIllustrates: {
         descriptionOfInputsOfCoreTask,
         sourceFilesFolderPath,
-        sourceFilesRelativeGlobsInPeerDepPackage,
+        sourceFilesRelativeGlobs,
         outputRootFolderSubPath,
         relativeGlobsOfAllPossibleOutputs,
     },
@@ -27,8 +29,8 @@ const taskCycleForCopyingIllustrates = createATaskCycle({
     sourceGlobs: {
         rootFolderPath: sourceFilesFolderPath,
 
-        // relativeGlobsSharedWithOtherTaskSets: [],
-        relativeGlobsSpecificallyForThisTaskSet: sourceFilesRelativeGlobsInPeerDepPackage,
+        // relativeGlobsSharedWithOtherTaskCycles: [],
+        relativeGlobsSpecificallyForThisTaskCycle: sourceFilesRelativeGlobs,
         // extraSourceGlobsToWatch: [],
     },
 

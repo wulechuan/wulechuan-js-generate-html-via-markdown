@@ -1,6 +1,8 @@
 const chalk = require('chalk')
 
-const buildHighOrderTasksForABatchOfTaskSettings = require('../utils/build-3-types-of-high-order-tasks')
+const {
+    create3HighOrderTasksUponMultipleTaskCycles,
+} = require('@wulechuan/gulp-classical-task-cycle')
 
 const taskCycleForMarkdownConversions = require(
     '../task-cycles/build-peer-dependency-examples/building-htmls'
@@ -10,8 +12,7 @@ const taskCycleForCopyingIllustrates = require(
     '../task-cycles/build-peer-dependency-examples/copying-illustrates'
 )
 
-
-module.exports = buildHighOrderTasksForABatchOfTaskSettings({
+module.exports = create3HighOrderTasksUponMultipleTaskCycles({
     taskCyclesInPallarel: [
         taskCycleForMarkdownConversions,
         taskCycleForCopyingIllustrates,

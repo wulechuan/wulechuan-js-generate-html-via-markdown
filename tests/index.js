@@ -1,7 +1,11 @@
 const {
     readFileSync,
     writeFileSync,
+    existsSync,
+    mkdirSync,
 } = require('fs')
+
+const path = require('path')
 
 const markdownToHTMLConverter = require('..')
 
@@ -51,9 +55,20 @@ const readMeHTMLContent = markdownToHTMLConverter(
     }
 )
 
-writeFileSync('./test/output/test1.html', htmlContent1)
-writeFileSync('./test/output/test2.html', htmlContent2)
-writeFileSync('./test/output/test3.html', htmlContent3)
+const joinPathPOSIX = path.posix.join
+const testsOutputPath1 = './tests/output'
+const testsOutputPath2 = joinPathPOSIX(testsOutputPath1, 'other-tests')
 
-writeFileSync('./test/output/readme.zh-hans-cn.html', readMeHTMLContent)
+if (!existsSync(testsOutputPath1)) {
+    mkdirSync(testsOutputPath1)
+}
 
+if (!existsSync(testsOutputPath2)) {
+    mkdirSync(testsOutputPath2)
+}
+
+writeFileSync(joinPathPOSIX(testsOutputPath2, 'test1.html'), htmlContent1)
+writeFileSync(joinPathPOSIX(testsOutputPath2, 'test2.html'), htmlContent2)
+writeFileSync(joinPathPOSIX(testsOutputPath2, 'test3.html'), htmlContent3)
+
+writeFileSync(joinPathPOSIX(testsOutputPath1, 'readme.zh-hans-cn.html'), readMeHTMLContent)

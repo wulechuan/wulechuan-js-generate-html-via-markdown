@@ -1,4 +1,4 @@
-const outputRootFolderSubPath = 'test/output/examples-from-peer-dependency'
+const outputRootFolderSubPath = 'tests/output/examples-from-peer-dependency'
 
 module.exports = {
     buildingHTMLs: {
@@ -14,9 +14,9 @@ module.exports = {
     },
 
     copyingIllustrates: {
-        descriptionOfInputsOfCoreTask: 'Peer dependency example images',
-        sourceFilesFolderPath: 'test',
-        sourceFilesRelativeGlobsInPeerDepPackage: [ 'illustrates/**/*' ],
+        descriptionOfInputsOfCoreTask: 'Example images (manually copied from peer dep package)',
+        sourceFilesFolderPath: 'tests/source-assets',
+        sourceFilesRelativeGlobs: [ 'illustrates/**/*' ],
         outputRootFolderSubPath,
         relativeGlobsOfAllPossibleOutputs: [ 'illustrates/**/*' ],
     },

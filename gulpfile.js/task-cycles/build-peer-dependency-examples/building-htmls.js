@@ -1,5 +1,7 @@
 const path = require('path')
-const createATaskCycle = require('../../utils/create-a-task-cycle')
+const {
+    createATaskCycle,
+} = require('@wulechuan/gulp-classical-task-cycle')
 const createAPipeForConvertingMarkdownsIntoHTMLs = require('./_converter-markdown-into-html-gulp-wrapper')
 
 
@@ -33,8 +35,8 @@ const taskCycleForMarkdownConversions = createATaskCycle({
             sourceFilesFolderSubPathInPeerDepPackage
         ),
 
-        // relativeGlobsSharedWithOtherTaskSets: [],
-        relativeGlobsSpecificallyForThisTaskSet: sourceFilesRelativeGlobsInPeerDepPackage,
+        // relativeGlobsSharedWithOtherTaskCycles: [],
+        relativeGlobsSpecificallyForThisTaskCycle: sourceFilesRelativeGlobsInPeerDepPackage,
         extraSourceGlobsToWatch,
     },
 
@@ -49,7 +51,7 @@ const taskCycleForMarkdownConversions = createATaskCycle({
         shouldNotOutputCompressedVersion: true,
     },
 
-    sourceContentFirstProcessor: createAPipeForConvertingMarkdownsIntoHTMLs({}),
+    firstPipeForProcessingSources: createAPipeForConvertingMarkdownsIntoHTMLs({}),
 })
 
 module.exports = taskCycleForMarkdownConversions

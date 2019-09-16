@@ -7,7 +7,7 @@ module.exports = {
 
     conversionOptions: {
         shouldNotBuildHeadingPermanentLinks: false,
-        headingPermanentLinkSymbolChar: '§',
+        headingPermanentLinkSymbolChar: '§1',
 
         /*
             This property is mapped on the "permalinkClass" property
