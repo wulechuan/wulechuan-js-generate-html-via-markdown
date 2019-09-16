@@ -2,3 +2,4 @@
 test
 .eslintignore
 .eslintrc.js
+.markdownlint.json
