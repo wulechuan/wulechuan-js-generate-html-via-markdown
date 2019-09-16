@@ -37,7 +37,7 @@ const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
  * @param {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
  * @returns {function} - The core converter function
  */
-module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
+module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     const {
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,

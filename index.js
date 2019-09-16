@@ -4,7 +4,7 @@ const packageJSONOfThisModule = require('./package.json')
 
 const peerDependencyModuleName = '@wulechuan/css-stylus-markdown-themes'
 
-const createOneMarkdownToHTMLConerter = require('./core')
+const createOneConverterOfMarkdownToHTML = require('./core')
 
 let generateFullHTMLStringViaMarkdownString
 
@@ -14,7 +14,7 @@ try {
         syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = require(peerDependencyModuleName)
 
-    generateFullHTMLStringViaMarkdownString = createOneMarkdownToHTMLConerter({
+    generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHTML({
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })

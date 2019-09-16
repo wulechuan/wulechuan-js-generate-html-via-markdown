@@ -13,15 +13,28 @@
 const through = require('through2')
 const GulpPluginError = require('plugin-error')
 const replaceFileExt  = require('replace-ext')
+const createOneConverterOfMarkdownToHTML = require('../../../core')
 
-// const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
-const markdownToHTMLConverter = require('../../..')
+// const {
+//     thisModuleRootFolderPath,
+// } = require('../../configs/common')
+
+const {
+    allFileEntriesKeyingByFileNames: themesPeerPackageAllDistFileEntriesKeyingByFileNames,
+    syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+} = require('@wulechuan/css-stylus-markdown-themes')
+
 
 function createNewGulpError(rawError) {
     return new GulpPluginError('@wulechuan/generate-html-via-markdown', rawError)
 }
 
 module.exports = function createAPipeForConvertingMarkdownsIntoHTMLs(converterOptions) {
+    const markdownToHTMLConverter = createOneConverterOfMarkdownToHTML({
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
+        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+    })
+
     return function pipeForConvertingMarkdownsIntoHTMLs() {
         return through.obj(function (file, fileEncoding, callback) {
             // if (file.isStream()) {
