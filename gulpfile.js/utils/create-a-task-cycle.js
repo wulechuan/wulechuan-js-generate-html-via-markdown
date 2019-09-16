@@ -172,9 +172,13 @@ module.exports = function createATaskCycle(options) {
             [
                 `Of the "${chalk.rgb(255, 255, 255)('options.outputFiles')}",`,
 
-                `neither "${
+                `${
+                    chalk.blue('neither')
+                } "${
                     chalk.yellow('forSingleOrTwoOutputFiles')
-                }" nor "${
+                }" ${
+                    chalk.blue('nor')
+                } "${
                     chalk.yellow('forBatchOutputFiles')
                 }" is provided.`,
 
@@ -186,7 +190,9 @@ module.exports = function createATaskCycle(options) {
             [
                 `Of the "${chalk.rgb(255, 255, 255)('options.outputFiles')}",`,
 
-                `both "${
+                `${
+                    chalk.yellow('both')
+                } "${
                     chalk.yellow('forSingleOrTwoOutputFiles')
                 }" and "${
                     chalk.yellow('forBatchOutputFiles')
