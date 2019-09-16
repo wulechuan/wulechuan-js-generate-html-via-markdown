@@ -1,5 +1,5 @@
 /**
- * Contents of this file is almost identical to
+ * The chief contents of this file are almost identical to
  * those of `@wulechuan/gulp-markdown-to-html/index.js`.
  *
  * I copy them here, simply because I don't want
@@ -10,40 +10,49 @@
  */
 
 
+const path = require('path')
 const through = require('through2')
 const GulpPluginError = require('plugin-error')
 const replaceFileExt  = require('replace-ext')
-const createOneConverterOfMarkdownToHTML = require('../../../core')
+const { rerequire } = require('../../../source/utils/rerequired-file')
 
-// const {
-//     thisModuleRootFolderPath,
-// } = require('../../configs/common')
+const {
+    thisModuleRootFolderPath,
+} = require('../../configs/common')
 
 const {
     allFileEntriesKeyingByFileNames: themesPeerPackageAllDistFileEntriesKeyingByFileNames,
     syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
 } = require('@wulechuan/css-stylus-markdown-themes')
 
+const joinPath = path.join
+// const joinPathPOSIX = path.posix.join
 
 function createNewGulpError(rawError) {
     return new GulpPluginError('@wulechuan/generate-html-via-markdown', rawError)
 }
 
 module.exports = function createAPipeForConvertingMarkdownsIntoHTMLs(converterOptions) {
-    const markdownToHTMLConverter = createOneConverterOfMarkdownToHTML({
-        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-    })
-
     return function pipeForConvertingMarkdownsIntoHTMLs() {
         return through.obj(function (file, fileEncoding, callback) {
-            // if (file.isStream()) {
-            //     return callback(createNewGulpError('Streaming is not supported.'))
-            // }
+            if (file.isStream()) {
+                return callback(createNewGulpError('Streaming is not supported.'))
+            }
 
             if (file.isNull()) {
                 return callback(null, file)
             }
+
+            const createOneConverterOfMarkdownToHTML = rerequire(
+                joinPath(thisModuleRootFolderPath, 'core.js')
+            )
+
+            const markdownToHTMLConverter = createOneConverterOfMarkdownToHTML({
+                themesPeerPackageAllDistFileEntriesKeyingByFileNames,
+                syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+                shouldReloadDefaultOptionValuesForDebuggingContinuously: true,
+            })
+
 
             let htmlContent
             try {

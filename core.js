@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const path = require('path')
+const { rerequire } = require('./source/utils/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
 
@@ -17,11 +18,10 @@ const {
     // tab2,
 } = require('./source/snippets/static/tabs')
 
-const defaultOptionValues = require('./default-options')
 
 
 const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
-
+const filePathOfDefaultOptions = path.join(thisModuleRootFolderPath, 'default-options.js')
 
 
 
@@ -41,6 +41,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     const {
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+        shouldReloadDefaultOptionValuesForDebuggingContinuously,
     } = options
 
 
@@ -74,6 +75,14 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         const newVerionPropertyProvided = {
             internalCSSFileNameOfThemeWithTOC: manipulationsOverHTML.internalCSSFileNameOfThemeWithTOC !== undefined,
             internalCSSFileNameOfTheme:        manipulationsOverHTML.internalCSSFileNameOfTheme        !== undefined,
+        }
+
+
+        let defaultOptionValues
+        if (shouldReloadDefaultOptionValuesForDebuggingContinuously) {
+            defaultOptionValues = rerequire(filePathOfDefaultOptions)
+        } else {
+            defaultOptionValues = require(filePathOfDefaultOptions)
         }
 
 
