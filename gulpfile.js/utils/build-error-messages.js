@@ -27,7 +27,7 @@ module.exports = function createErrorMessageBuildersFor(errorMessageCategory) {
         return chalk.red(`${messageLines.join('\n    ')}\n`)
     }
 
-    function buildErrorMessageSaysThatSomethingMustBe(thingToBe, theThing, accessingPathOfTheThing, contextDescription) {
+    function buildErrorMessageSaysThatSomethingMustBe(expectedTypeOfTheThing, theThing, accessingPathOfTheThing, contextDescription) {
         let providedType = typeof theThing
         if (Array.isArray(theThing)) {
             providedType = 'array'
@@ -45,14 +45,14 @@ module.exports = function createErrorMessageBuildersFor(errorMessageCategory) {
                 providedType = `a ${providedType}`
         }
 
-        switch (thingToBe) {
+        switch (expectedTypeOfTheThing) {
             case 'object':
-                thingToBe = `a non-array ${thingToBe}`
+                expectedTypeOfTheThing = `a non-array ${expectedTypeOfTheThing}`
                 break
 
             case 'array':
             case 'undefined':
-                thingToBe = `an ${thingToBe}`
+                expectedTypeOfTheThing = `an ${expectedTypeOfTheThing}`
                 break
         }
 
@@ -83,7 +83,7 @@ module.exports = function createErrorMessageBuildersFor(errorMessageCategory) {
             `    the "${
                 chalk.yellow(nameOfTheThing)
             }" must be "${
-                chalk.green(thingToBe)
+                chalk.green(expectedTypeOfTheThing)
             }" instead of "${
                 chalk.gray(providedType)
             }".`,

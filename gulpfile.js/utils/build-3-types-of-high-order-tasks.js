@@ -1,10 +1,10 @@
-import chalk from 'chalk'
+const chalk = require('chalk')
 
-import {
-    series   as gulpBuildTaskSeries,
-    parallel as gulpBuildParallelTasks,
-    watch    as gulpWatch,
-} from 'gulp'
+const {
+    series:   gulpBuildTaskSeries,
+    parallel: gulpBuildParallelTasks,
+    watch:    gulpWatch,
+} = require('gulp')
 
 
 
@@ -16,15 +16,18 @@ function nothingToDo(cb) {
 }
 
 
-export default function buildHighOrderTasksForABatchOfTaskSettings({
-    taskSettingsArray,
+module.exports = function buildHighOrderTasksForABatchOfTaskSettings({
+    taskCyclesInPallarel,
+
     beforeCleaningEveryThing,
     afterCleaningEveryThing,
+
     beforeBuildingEveryThingOnce,
     afterBuildingEveryThingOnce,
+
     beforeWatchingEveryThing,
 }) {
-    if (!Array.isArray(taskSettingsArray) || taskSettingsArray.length === 0) {
+    if (!Array.isArray(taskCyclesInPallarel) || taskCyclesInPallarel.length === 0) {
         return {
             cleanAllOldOuputs:   nothingToDo,
             buildEverythingOnce: nothingToDo,
@@ -32,16 +35,36 @@ export default function buildHighOrderTasksForABatchOfTaskSettings({
         }
     }
 
+
+
+    if (typeof beforeCleaningEveryThing !== 'function') {
+        beforeCleaningEveryThing = function() {
+            console.log(`\n正在${chalk.red('删除')}旧有的输出文件`)
+        }
+    }
+
+    if (typeof beforeBuildingEveryThingOnce !== 'function') {
+        beforeBuildingEveryThingOnce = function() {
+            console.log(`\n正在${chalk.black.bgBlue('构建')}新的输出文件`)
+        }
+    }
+
+    if (typeof beforeWatchingEveryThing !== 'function') {
+        beforeWatchingEveryThing = function() {
+            console.log(`\n正在${chalk.black.bgBlue('监视')} 文件变动`)
+        }
+    }
+
+
+
     const cleanAllOldOuputs = gulpBuildTaskSeries(
         function _beforeCleaningEveryThing(cb) {
-            if (typeof beforeCleaningEveryThing === 'function') {
-                beforeCleaningEveryThing()
-            }
+            beforeCleaningEveryThing()
             cb()
         },
 
         gulpBuildParallelTasks(
-            ...taskSettingsArray.map(taskSettings => taskSettings.taskBodies.cleanOldOutputs)
+            ...taskCyclesInPallarel.map(taskSettings => taskSettings.taskBodies.cleanOldOutputs)
         ),
 
         function _afterCleaningEveryThing(cb) {
@@ -54,14 +77,12 @@ export default function buildHighOrderTasksForABatchOfTaskSettings({
 
     const buildEverythingOnce = gulpBuildTaskSeries(
         function _beforeBuildingEveryThingOnce(cb) {
-            if (typeof beforeBuildingEveryThingOnce === 'function') {
-                beforeBuildingEveryThingOnce()
-            }
+            beforeBuildingEveryThingOnce()
             cb()
         },
 
         gulpBuildParallelTasks(
-            ...taskSettingsArray.map(taskSettings => taskSettings.taskBodies.buildNewOutputs)
+            ...taskCyclesInPallarel.map(taskSettings => taskSettings.taskBodies.buildNewOutputs)
         ),
 
         function _afterBuildingEveryThingOnce(cb) {
@@ -74,11 +95,9 @@ export default function buildHighOrderTasksForABatchOfTaskSettings({
 
     const watchEverything = gulpBuildTaskSeries(
         function startAllWatchers(cb) {
-            if (typeof beforeWatchingEveryThing === 'function') {
-                beforeWatchingEveryThing()
-            }
+            beforeWatchingEveryThing()
 
-            taskSettingsArray.forEach(taskSettings => {
+            taskCyclesInPallarel.forEach(taskSettings => {
                 gulpWatch(
                     taskSettings.sourceGlobsToWatch,
                     { ignoreInitial: false },

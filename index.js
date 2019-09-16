@@ -10,12 +10,12 @@ let generateFullHTMLStringViaMarkdownString
 
 try {
     const {
-        allFileEntriesKeyingByFileNames: themesPeerModuleAllFileEntriesKeyingByFileNames,
+        allFileEntriesKeyingByFileNames: themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = require(peerDependencyModuleName)
 
     generateFullHTMLStringViaMarkdownString = createOneMarkdownToHTMLConerter({
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })
 } catch (err) {

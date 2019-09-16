@@ -42,8 +42,8 @@ const joinPathPOSIX = path.posix.join
 
 
 
-module.exports = function createOneAbstractTaskCycle(options) {
-    const errorContext = 'createOneAbstractTaskCycle'
+module.exports = function createATaskCycle(options) {
+    const errorContext = 'createATaskCycle'
 
     if (isNotANonArrayObject(options)) {
         throw new TypeError(buildErrorMessageSaysThatSomethingMustBe(

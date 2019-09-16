@@ -33,13 +33,13 @@ const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
 
 /**
  * @param {object} options
- * @param {object} options.themesPeerModuleAllFileEntriesKeyingByFileNames
+ * @param {object} options.themesPeerPackageAllDistFileEntriesKeyingByFileNames
  * @param {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
  * @returns {function} - The core converter function
  */
 module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
     const {
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = options
 
@@ -52,7 +52,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
     } = require('./source/snippets/dynamic/create-snippet-entry-getters')({
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })
 
