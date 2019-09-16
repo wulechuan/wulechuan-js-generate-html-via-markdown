@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const path = require('path')
+const { rerequire } = require('./source/utils/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
 
@@ -8,16 +9,19 @@ const markdownItPluginCheckbox     = require('markdown-it-checkbox')
 const markdownItPluginAnchor       = require('markdown-it-anchor')
 const markdownItPluginTOCDoneRight = require('markdown-it-toc-done-right')
 
+const buildHTMLTitleSnippetString = require('./source/html-string-processors/build-html-title-tag')
+
+
+
 const {
     tab1,
     // tab2,
 } = require('./source/snippets/static/tabs')
 
-const defaultOptionValues = require('./default-options')
 
 
 const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
-
+const filePathOfDefaultOptions = path.join(thisModuleRootFolderPath, 'default-options.js')
 
 
 
@@ -29,14 +33,15 @@ const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
 
 /**
  * @param {object} options
- * @param {object} options.themesPeerModuleAllFileEntriesKeyingByFileNames
+ * @param {object} options.themesPeerPackageAllDistFileEntriesKeyingByFileNames
  * @param {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
  * @returns {function} - The core converter function
  */
-module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
+module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     const {
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+        shouldReloadDefaultOptionValuesForDebuggingContinuously,
     } = options
 
 
@@ -48,7 +53,7 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
     } = require('./source/snippets/dynamic/create-snippet-entry-getters')({
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })
 
@@ -70,6 +75,14 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
         const newVerionPropertyProvided = {
             internalCSSFileNameOfThemeWithTOC: manipulationsOverHTML.internalCSSFileNameOfThemeWithTOC !== undefined,
             internalCSSFileNameOfTheme:        manipulationsOverHTML.internalCSSFileNameOfTheme        !== undefined,
+        }
+
+
+        let defaultOptionValues
+        if (shouldReloadDefaultOptionValuesForDebuggingContinuously) {
+            defaultOptionValues = rerequire(filePathOfDefaultOptions)
+        } else {
+            defaultOptionValues = require(filePathOfDefaultOptions)
         }
 
 
@@ -203,9 +216,9 @@ module.exports = function createOneMarkdownToHTMLConerter(options = {}) {
                 linkClass: cssClassNameOfArticleTOCItemAnchors,
             })
         }
+        const markdownArticleHasTOC = markdownContentHasTOCPlaceholder
 
         let htmlContentViaMarkDownContent = markdownItParser.render(finalMarkdownContent)
-        const markdownArticleHasTOC = markdownContentHasTOCPlaceholder
         /*                                                                      */
         /*                                                                      */
         /* ******************************************************************** */
@@ -421,58 +434,6 @@ function insertTOCMarkDownTagIfNecessary(markdownContent, shouldNotAutoInsertTOC
     }
 }
 
-function getTextContentOfFirstH1Tag(htmlSnippetToSearchContentIn) {
-    const matchingResultOfH1TagContent = htmlSnippetToSearchContentIn.match(
-        /<h1( id=".+".*)?>(<a.+>.*<\/a>)?(.*)<\/h1>/
-    )
-
-    if (matchingResultOfH1TagContent) {
-        return matchingResultOfH1TagContent[3].trim()
-    }
-
-    return ''
-}
-
-function buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, options) {
-    const {
-        specifiedArticleTitle,
-        shouldConsoleLogsInChinese,
-    } = options
-
-    let articleTitle
-
-    if (specifiedArticleTitle) {
-        articleTitle = specifiedArticleTitle
-    } else {
-        articleTitle = getTextContentOfFirstH1Tag(htmlContentViaMarkDownContent)
-    }
-
-
-    console.log('')
-
-    let htmlTitleSnippet = ''
-    if (articleTitle) {
-        htmlTitleSnippet = `<title>${articleTitle}</title>`
-
-        if (shouldConsoleLogsInChinese) {
-            console.log(`文章标题为：${chalk.green('《' + articleTitle + '》')}`)
-        } else {
-            console.log(`Article title: ${chalk.green(articleTitle)}`)
-        }
-    } else {
-        htmlTitleSnippet = '<title>HTML via MarkDown (by markdownIt)</title>'
-
-        if (shouldConsoleLogsInChinese) {
-            console.log(chalk.red('未找到文章标题'))
-        } else {
-            console.log(chalk.red('Article title not found.'))
-        }
-    }
-
-    console.log('')
-
-    return htmlTitleSnippet
-}
 
 function wulechuanAddExtraMarkupsToHTML(html) {
     const tokenTypesToAddWrapperTo = [

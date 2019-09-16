@@ -4,19 +4,20 @@ const packageJSONOfThisModule = require('./package.json')
 
 const peerDependencyModuleName = '@wulechuan/css-stylus-markdown-themes'
 
-const createOneMarkdownToHTMLConerter = require('./core')
+const createOneConverterOfMarkdownToHTML = require('./core')
 
 let generateFullHTMLStringViaMarkdownString
 
 try {
     const {
-        allFileEntriesKeyingByFileNames: themesPeerModuleAllFileEntriesKeyingByFileNames,
+        allFileEntriesKeyingByFileNames: themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = require(peerDependencyModuleName)
 
-    generateFullHTMLStringViaMarkdownString = createOneMarkdownToHTMLConerter({
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+    generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHTML({
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+        shouldReloadDefaultOptionValuesForDebuggingContinuously: false,
     })
 } catch (err) {
     console.log('-'.repeat(79))

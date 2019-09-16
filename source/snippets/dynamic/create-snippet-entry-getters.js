@@ -63,14 +63,14 @@ module.exports = createSnippetEntryGetters
 /**
  * @function createSnippetEntryGetters
  * @argument {object} options
- * @argument {object} options.themesPeerModuleAllFileEntriesKeyingByFileNames
+ * @argument {object} options.themesPeerPackageAllDistFileEntriesKeyingByFileNames
  * @argument {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
  *
  * @returns {SnippetEntryGetters}
  */
 function createSnippetEntryGetters(options) {
     const {
-        themesPeerModuleAllFileEntriesKeyingByFileNames,
+        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     } = options
 
@@ -156,7 +156,7 @@ function createSnippetEntryGetters(options) {
         const { optional: optionalEntries } = allSnippetEntries
 
         if (!optionalEntries[fileName] || shouldIgnoreCachedContent) {
-            const fileEntry = themesPeerModuleAllFileEntriesKeyingByFileNames[fileName]
+            const fileEntry = themesPeerPackageAllDistFileEntriesKeyingByFileNames[fileName]
 
             const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileName)
             const fileRawContent = syncGetContentStringOfOneFileOfThePeerModuleOfThemes(
