@@ -40,6 +40,7 @@
     "@wulechuan/css-stylus-markdown-themes": ">= 5.7.6"
   },
   "dependencies": {
+    "@wulechuan/meaningful-error-messages": "^0.1.1",
     "chalk": "^2.4.2",
     "markdown-it": "^9.1.0",
     "markdown-it-anchor": "^5.2.4",

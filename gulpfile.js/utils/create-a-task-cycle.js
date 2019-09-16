@@ -18,8 +18,7 @@ const gulpArrayPipe = require('gulp-pipe')
 const rename = require('gulp-rename')
 const del = require('del')
 
-
-const createErrorMessageBuildersFor = require('./build-error-messages')
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
 
 const {
     // isNotAnValidNumber,
