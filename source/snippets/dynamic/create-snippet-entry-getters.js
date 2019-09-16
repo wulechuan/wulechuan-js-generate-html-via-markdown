@@ -1,7 +1,7 @@
 const path = require('path')
 const syncReadOneTextFile = require('../../utils/sync-read-one-text-file')
 const chooseWrappingHTMLTagNameViaFileExt = require('../../utils/choose-wrapping-html-tag-name-via-file-ext')
-const wrapContentsWithAPairOfHTMLTags = require('../../utils/wrap-file-content-with-an-pair-of-html-tags')
+const wrapContentsWithAPairOfHTMLTags = require('../../html-string-processors/wrap-file-content-with-an-pair-of-html-tags')
 
 const joinPathPOSIX = path.posix.join
 

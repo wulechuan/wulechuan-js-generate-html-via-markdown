@@ -1,4 +1,8 @@
 .vscode
+gulpfile.js
+gulpfile.esm.js
 test
+tests
 .eslintignore
 .eslintrc.js
+.markdownlint.json
