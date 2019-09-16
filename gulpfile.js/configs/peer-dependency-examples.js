@@ -15,7 +15,7 @@ module.exports = {
 
     copyingIllustrates: {
         descriptionOfInputsOfCoreTask: 'Peer dependency example images',
-        sourceFilesFolderSubPathInPeerDepPackage: 'docs/examples/source-markdown-files',
+        sourceFilesFolderPath: 'test',
         sourceFilesRelativeGlobsInPeerDepPackage: [ 'illustrates/**/*' ],
         outputRootFolderSubPath,
         relativeGlobsOfAllPossibleOutputs: [ 'illustrates/**/*' ],

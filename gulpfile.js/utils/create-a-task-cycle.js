@@ -1,3 +1,10 @@
+/**
+ * TODO: `options.sourceGlobs.extraSourceGlobsToWatch`
+ * members of above are not relative paths to `options.sourceGlobs.rootFolderPath`,
+ * so as `gulp.src` (renamed as `gulpRead` within this js file) process
+ * those memebers, I'm not sure what kind of output sub paths would be.
+ */
+
 const path = require('path')
 const chalk = require('chalk')
 
@@ -539,7 +546,9 @@ module.exports = function createATaskCycle(options) {
     function toBuildSourceFilesTheDefaultWay() {
         console.log(`\n${descriptionOfCoreTask}`)
 
-        const pipe = [ gulpRead(sourceGlobs) ]
+        const pipe = [ gulpRead(sourceGlobs, {
+            base: sourceGlobsRootFolderPath,
+        }) ]
 
         if (sourceContentFirstProcessorIsProvided) {
             pipe.push(sourceContentFirstProcessor())

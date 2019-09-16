@@ -6,15 +6,15 @@ const taskCycleForMarkdownConversions = require(
     '../task-cycles/build-peer-dependency-examples/building-htmls'
 )
 
-// const taskCycleForCopyingIllustrates = require(
-//     '../task-cycles/build-peer-dependency-examples/copying-illustrates'
-// )
+const taskCycleForCopyingIllustrates = require(
+    '../task-cycles/build-peer-dependency-examples/copying-illustrates'
+)
 
 
 module.exports = buildHighOrderTasksForABatchOfTaskSettings({
     taskCyclesInPallarel: [
         taskCycleForMarkdownConversions,
-        // taskCycleForCopyingIllustrates,
+        taskCycleForCopyingIllustrates,
     ],
 
     beforeBuildingEveryThingOnce: function() {

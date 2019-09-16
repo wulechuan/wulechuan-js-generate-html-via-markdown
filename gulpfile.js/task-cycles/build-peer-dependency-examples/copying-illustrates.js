@@ -3,7 +3,6 @@ const createATaskCycle = require('../../utils/create-a-task-cycle')
 
 
 const {
-    peerDepThemingNPMPackageRootPath,
     thisModuleRootFolderPath,
 } = require('../../configs/common')
 
@@ -11,7 +10,7 @@ const {
 const {
     copyingIllustrates: {
         descriptionOfInputsOfCoreTask,
-        sourceFilesFolderSubPathInPeerDepPackage,
+        sourceFilesFolderPath,
         sourceFilesRelativeGlobsInPeerDepPackage,
         outputRootFolderSubPath,
         relativeGlobsOfAllPossibleOutputs,
@@ -26,10 +25,7 @@ const taskCycleForCopyingIllustrates = createATaskCycle({
     descriptionOfInputsOfCoreTask,
 
     sourceGlobs: {
-        rootFolderPath: joinPathPOSIX(
-            peerDepThemingNPMPackageRootPath,
-            sourceFilesFolderSubPathInPeerDepPackage
-        ),
+        rootFolderPath: sourceFilesFolderPath,
 
         // relativeGlobsSharedWithOtherTaskSets: [],
         relativeGlobsSpecificallyForThisTaskSet: sourceFilesRelativeGlobsInPeerDepPackage,
