@@ -50,7 +50,7 @@ module.exports = function createAPipeForConvertingMarkdownsIntoHTMLs(converterOp
             const markdownToHTMLConverter = createOneConverterOfMarkdownToHTML({
                 themesPeerPackageAllDistFileEntriesKeyingByFileNames,
                 syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-                shouldReloadDefaultOptionValuesForDebuggingContinuously: true,
+                shouldReloadModulesForDevWatchingMode: true,
             })
 
 

@@ -17,7 +17,7 @@ try {
     generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHTML({
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-        shouldReloadDefaultOptionValuesForDebuggingContinuously: false,
+        shouldReloadModulesForDevWatchingMode: false,
     })
 } catch (err) {
     console.log('-'.repeat(79))

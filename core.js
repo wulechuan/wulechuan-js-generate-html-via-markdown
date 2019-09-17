@@ -9,32 +9,12 @@ const markdownItPluginAnchor       = require('markdown-it-anchor')
 const markdownItPluginTOCDoneRight = require('markdown-it-toc-done-right')
 
 
-const insertTOCMarkDownTagIfNecessary = require(
-    './source/0-markdown-string-processors/insert-toc-placeholder'
-)
-
-const buildHTMLTitleSnippetString = require(
-    './source/1-html-string-processors/build-html-title-tag'
-)
-
-const wrapHTMLChiefContentWithAnArticleTag = require(
-    './source/1-html-string-processors/wrap-chief-content-with-article-tag'
-)
-
-const processAllContentsOfAllPreTagsOfHTMLString = require(
-    './source/1-html-string-processors/process-contents-of-all-pre-tags'
-)
-
-
-const {
-    tab1,
-    // tab2,
-} = require('./source/snippets/static/tabs')
-
-
+const joinPathOSLocalStyle = path.join
 
 const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
-const filePathOfDefaultOptions = path.join(thisModuleRootFolderPath, 'default-options.js')
+
+
+
 
 
 
@@ -54,8 +34,43 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     const {
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-        shouldReloadDefaultOptionValuesForDebuggingContinuously,
+        shouldReloadModulesForDevWatchingMode,
     } = options
+
+    let defaultOptionValues
+    let tab1
+
+    let insertTOCMarkDownTagIfNecessary
+    let buildHTMLTitleSnippetString
+    let wrapHTMLChiefContentWithAnArticleTag
+    let processAllContentsOfAllPreTagsOfHTMLString
+
+    if (!shouldReloadModulesForDevWatchingMode) {
+        defaultOptionValues = require('./default-options')
+
+        const tabs = require('./source/snippets/static/tabs')
+        tab1 = tabs.tab1
+
+
+        insertTOCMarkDownTagIfNecessary = require(
+            './source/0-markdown-string-processors/insert-toc-placeholder'
+        )
+
+        buildHTMLTitleSnippetString = require(
+            './source/1-html-string-processors/build-html-title-tag'
+        )
+
+        wrapHTMLChiefContentWithAnArticleTag = require(
+            './source/1-html-string-processors/wrap-chief-content-with-article-tag'
+        )
+
+        processAllContentsOfAllPreTagsOfHTMLString = require(
+            './source/1-html-string-processors/process-contents-of-all-pre-tags'
+        )
+    }
+
+
+
 
 
     const { // Reading these files only once is enough. Saving time.
@@ -91,13 +106,38 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         }
 
 
-        let defaultOptionValues
-        if (shouldReloadDefaultOptionValuesForDebuggingContinuously) {
-            defaultOptionValues = rerequire(filePathOfDefaultOptions)
-        } else {
-            defaultOptionValues = require(filePathOfDefaultOptions)
-        }
+        if (shouldReloadModulesForDevWatchingMode) {
+            defaultOptionValues = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                'default-options.js'
+            ))
 
+            const tabs = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                '/source/snippets/static/tabs.js'
+            ))
+            tab1 = tabs.tab1
+
+            insertTOCMarkDownTagIfNecessary = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/0-markdown-string-processors/insert-toc-placeholder.js'
+            ))
+
+            buildHTMLTitleSnippetString = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/build-html-title-tag.js'
+            ))
+
+            wrapHTMLChiefContentWithAnArticleTag = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/wrap-chief-content-with-article-tag.js'
+            ))
+
+            processAllContentsOfAllPreTagsOfHTMLString = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/process-contents-of-all-pre-tags.js'
+            ))
+        }
 
 
 
@@ -176,6 +216,11 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             console.log('\nmanipulationsOverHTML:', manipulationsOverHTML)
             console.log('\nsundries:', sundries)
         }
+
+
+
+
+
 
 
 
