@@ -34,11 +34,15 @@ function parseASTIntoString(input) {
 
 function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shouldLogSampleContentsForDevMode, slicingWidth) {
     if (typeof string !== 'string') {
-        throw new TypeError('@wulechuan/generate-html-via-markdown: html must be an string!')
+        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[0] must be an string!')
     }
 
     if (typeof openMark !== 'string') {
-        throw new TypeError('@wulechuan/generate-html-via-markdown: openMark must be an string!')
+        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[1] must be an string!')
+    }
+
+    if (typeof closeMark !== 'string') {
+        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[2] must be an string!')
     }
 
     if (!string) {
@@ -46,7 +50,16 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
     }
 
     if (!openMark) {
-        return [ string ]
+        return [{
+            isEnclosured: false,
+            openMark: '',
+            closeMark: '',
+            content: string,
+        }]
+    }
+
+    if (!closeMark) {
+        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[3] must be a non empty string!')
     }
 
     const arrayOfStage1 = string.split(openMark)
@@ -66,6 +79,7 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
     const arrayOfStage2 = arrayOfStage1.reduce((a2, a1Item) => {
         const a2NewSegs = a1Item.split(closeMark)
         const firstNewSeg = a2NewSegs.shift()
+
 
         // hopefully only one member in a2NewSegs now,
         // as long as the open/close tags are html tag,

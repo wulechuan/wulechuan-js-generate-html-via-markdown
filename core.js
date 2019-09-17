@@ -1,5 +1,8 @@
 const path = require('path')
-const { rerequire } = require('./source/utils/rerequired-file')
+const {
+    clearCacheOfRequiredFile,
+    rerequire,
+} = require('./source/utils/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
 
@@ -107,6 +110,23 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
         if (shouldReloadModulesForDevWatchingMode) {
+            clearCacheOfRequiredFile(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/split-string-by-open-and-close-marks.js'
+            ))
+
+            clearCacheOfRequiredFile(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/parse-one-regexp-into-html.js'
+            ))
+
+            clearCacheOfRequiredFile(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/parse-one-string-into-html.js'
+            ))
+
+            // ----------------------------------------------
+
             defaultOptionValues = rerequire(joinPathOSLocalStyle(
                 thisModuleRootFolderPath,
                 'default-options.js'
