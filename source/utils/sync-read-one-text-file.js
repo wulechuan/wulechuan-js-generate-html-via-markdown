@@ -1,5 +1,16 @@
-const { readFileSync } = require('fs')
+const chalk = require('chalk')
+const { readFileSync, existsSync } = require('fs')
 
 module.exports = function syncReadOneTextFile(filePath) {
-    return readFileSync(filePath).toString()
+    if (existsSync(filePath)) {
+        return readFileSync(filePath).toString()
+    } else {
+        console.log(`\n${
+            chalk.yellow('File not found:')
+        }\n    ${
+            chalk.red(filePath)
+        }\n`)
+    }
+
+    return ''
 }
