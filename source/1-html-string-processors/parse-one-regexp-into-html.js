@@ -1,6 +1,7 @@
 const regexpControlChars = [
     { char: '-',   cssClassName: 'regexp-control-range-sign' }, // always replace dash first!!!
 
+    { char: '^',   cssClassName: 'regexp-control-invert' },
     { char: '(',   cssClassName: 'regexp-control-parenthesis parenthesis-open' },
     { char: ')',   cssClassName: 'regexp-control-parenthesis parenthesis-close' },
     { char: '[',   cssClassName: 'regexp-control-square-bracket square-bracket-open' },
@@ -24,12 +25,17 @@ const regexpControlChars = [
     { char: '\\B', cssClassName: 'regexp-selector-non-boundary' },
 ]
 
+
 const regexpEscapedLiteralChars = [
-    // { escapedChar: '\\', cssClassName: 'regexp-selector-backward-slash' },
     {
         escapedChar: '-',
         cssClassName: 'regexp-literal-minus-sign',
         unwantedControlCssClassName: 'regexp-control-range-sign',
+    },
+    {
+        escapedChar: '^',
+        cssClassName: 'regexp-literal-caret',
+        unwantedControlCssClassName: 'regexp-control-invert',
     },
     {
         escapedChar: '?',
@@ -89,6 +95,17 @@ const regexpEscapedLiteralChars = [
 ]
 
 
+const regexpEscapedLiteralCharsDirectSearch = [
+    {
+        escapedChar: '\\',
+        cssClassName: 'regexp-literal-backward-slash',
+    },
+    {
+        escapedChar: '$',
+        cssClassName: 'regexp-literal-dollar',
+    },
+]
+
 
 
 
@@ -145,6 +162,18 @@ module.exports = function parseOnRegExpIntoHTML(originalString) {
             '<span class="wlc-escape-char regexp-literal-less-than-mark">\\<span class="escaped-char"><</span></span>'
         )
 
+        regexpEscapedLiteralCharsDirectSearch.forEach(relcds => {
+            const char = relcds.escapedChar
+            console.log(`\\\\${char}`)
+
+            regexpBody = regexpBody.replace(
+                new RegExp(`\\\\\\${char}`, 'g'),
+                `<span class="wlc-escape-char ${relcds.cssClassName}"><span class="slash">\\</span><span class="escaped-char">${
+                    char
+                }</span></span>`
+            )
+
+        })
 
 
         regexpBody = regexpBody.replace(
