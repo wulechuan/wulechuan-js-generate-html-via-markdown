@@ -6,7 +6,7 @@ const cleanAll          = highOrderTasksForBuildingPeerDependencyExamples.cleanA
 const buildExamplesOnce = highOrderTasksForBuildingPeerDependencyExamples.buildEverythingOnce
 const buildAndWatch     = highOrderTasksForBuildingPeerDependencyExamples.watchEverything
 
-module.exports ={
+module.exports = {
     cleanAll,
     buildExamplesOnce,
     buildAndWatch,
