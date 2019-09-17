@@ -116,20 +116,20 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
                 stringASTNode1.content = parseOneStringASTNodeIntoHTML(stringASTNode1)
             })
 
-            // notStringOrUnsafeStringHTMLs1.forEach(nonStringASTNode1 => {
-            //     const stringOrNotASTNodes2 = splitStringIntoASTByOpenAndCloseMarks(
-            //         nonStringASTNode1.content,
-            //         '<span class="hljs-string">"',
-            //         '"</span>',
-            //         false
-            //     )
+            notStringOrUnsafeStringHTMLs1.forEach((/* nonStringASTNode1 */) => {
+                // const stringOrNotASTNodes2 = splitStringIntoASTByOpenAndCloseMarks(
+                //     nonStringASTNode1.content,
+                //     '<span class="hljs-string">"',
+                //     '"</span>',
+                //     false
+                // )
 
-            //     stringOrNotASTNodes2.filter(n =>  n.isEnclosured).forEach(stringASTNode2 => {
-            //         stringASTNode2.content = parseOneStringASTNodeIntoHTML(stringASTNode2)
-            //     })
+                // stringOrNotASTNodes2.filter(n =>  n.isEnclosured).forEach(stringASTNode2 => {
+                //     stringASTNode2.content = parseOneStringASTNodeIntoHTML(stringASTNode2)
+                // })
 
-            //     nonStringASTNode1.content = stringOrNotASTNodes2
-            // })
+                // nonStringASTNode1.content = stringOrNotASTNodes2
+            })
 
             nonRegexpASTNode.content = stringOrNotASTNodes1
         })

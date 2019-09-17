@@ -29,7 +29,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(stringASTNode) {
         const coreChar = char.startsWith('\\') ? char.slice(1) : char
         content = content.replace(
             new RegExp(`(\\\\${char})`, 'g'),
-            `<span class="wlc-escape-char ${sec.cssClassName}">\\<span class="escaped-char">${coreChar}</span></span>`
+            `<span class="wlc-escape-char ${sec.cssClassName}"><span class="slash">\\</span><span class="escaped-char">${coreChar}</span></span>`
         )
     })
 
