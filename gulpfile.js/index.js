@@ -1,10 +1,14 @@
-const highOrderTasksForBuildingPeerDependencyExamples = require(
+const {
+    cleanAllOldOuputs,
+    buildExampleHTMLsOnce,
+    buildExampleHTMLsAndStartWatching,
+} = require(
     './tasks/build-peer-dependency-examples'
 )
 
-const cleanAll          = highOrderTasksForBuildingPeerDependencyExamples.cleanAllOldOuputs
-const buildExamplesOnce = highOrderTasksForBuildingPeerDependencyExamples.buildEverythingOnce
-const buildAndWatch     = highOrderTasksForBuildingPeerDependencyExamples.watchEverything
+const cleanAll          = cleanAllOldOuputs
+const buildExamplesOnce = buildExampleHTMLsOnce
+const buildAndWatch     = buildExampleHTMLsAndStartWatching
 
 module.exports = {
     cleanAll,
