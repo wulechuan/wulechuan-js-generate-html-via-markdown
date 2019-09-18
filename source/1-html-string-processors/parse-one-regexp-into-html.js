@@ -164,7 +164,6 @@ module.exports = function parseOnRegExpIntoHTML(originalString) {
 
         regexpEscapedLiteralCharsDirectSearch.forEach(relcds => {
             const char = relcds.escapedChar
-            console.log(`\\\\${char}`)
 
             regexpBody = regexpBody.replace(
                 new RegExp(`\\\\\\${char}`, 'g'),
