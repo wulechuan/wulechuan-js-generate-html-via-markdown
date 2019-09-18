@@ -1,28 +1,28 @@
 const regexpControlChars = [
-    { char: '-',   cssClassName: 'regexp-control-range-sign' }, // always replace dash first!!!
+    { char: '-',   cssClassName: 'regexp-control-char regexp-control-range-sign' }, // always replace dash first!!!
 
-    { char: '^',   cssClassName: 'regexp-control-invert' },
-    { char: '(',   cssClassName: 'regexp-control-parenthesis parenthesis-open' },
-    { char: ')',   cssClassName: 'regexp-control-parenthesis parenthesis-close' },
-    { char: '[',   cssClassName: 'regexp-control-square-bracket square-bracket-open' },
-    { char: ']',   cssClassName: 'regexp-control-square-bracket square-bracket-close' },
-    { char: '{',   cssClassName: 'regexp-control-curly-brace curly-brace-open' },
-    { char: '}',   cssClassName: 'regexp-control-curly-brace curly-brace-close' },
-    { char: '?',   cssClassName: 'regexp-control-question-mark' },
-    { char: '*',   cssClassName: 'regexp-control-asterisk' },
-    { char: '+',   cssClassName: 'regexp-control-plus-sign' },
-    { char: '|',   cssClassName: 'regexp-control-logic-or' },
+    { char: '^',   cssClassName: 'regexp-control-char regexp-control-invert' },
+    { char: '(',   cssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-open' },
+    { char: ')',   cssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-close' },
+    { char: '[',   cssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-open' },
+    { char: ']',   cssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-close' },
+    { char: '{',   cssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-open' },
+    { char: '}',   cssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-close' },
+    { char: '?',   cssClassName: 'regexp-control-char regexp-control-question-mark' },
+    { char: '*',   cssClassName: 'regexp-control-char regexp-control-asterisk' },
+    { char: '+',   cssClassName: 'regexp-control-char regexp-control-plus-sign' },
+    { char: '|',   cssClassName: 'regexp-control-char regexp-control-logic-or' },
 
-    { char: '.',   cssClassName: 'regexp-selector-any-char' },
+    { char: '.',   cssClassName: 'regexp-selector-char regexp-selector-any-char' },
 
-    { char: '\\w', cssClassName: 'regexp-selector-word' },
-    { char: '\\W', cssClassName: 'regexp-selector-non-word' },
-    { char: '\\d', cssClassName: 'regexp-selector-digit' },
-    { char: '\\D', cssClassName: 'regexp-selector-non-digit' },
-    { char: '\\s', cssClassName: 'regexp-selector-whitespace' },
-    { char: '\\S', cssClassName: 'regexp-selector-non-whitespace' },
-    { char: '\\b', cssClassName: 'regexp-selector-boundary' },
-    { char: '\\B', cssClassName: 'regexp-selector-non-boundary' },
+    { char: '\\w', cssClassName: 'regexp-selector-char regexp-selector-word' },
+    { char: '\\W', cssClassName: 'regexp-selector-char regexp-selector-non-word' },
+    { char: '\\d', cssClassName: 'regexp-selector-char regexp-selector-digit' },
+    { char: '\\D', cssClassName: 'regexp-selector-char regexp-selector-non-digit' },
+    { char: '\\s', cssClassName: 'regexp-selector-char regexp-selector-whitespace' },
+    { char: '\\S', cssClassName: 'regexp-selector-char regexp-selector-non-whitespace' },
+    { char: '\\b', cssClassName: 'regexp-selector-char regexp-selector-boundary' },
+    { char: '\\B', cssClassName: 'regexp-selector-char regexp-selector-non-boundary' },
 ]
 
 
@@ -30,67 +30,67 @@ const regexpEscapedLiteralChars = [
     {
         escapedChar: '-',
         cssClassName: 'regexp-literal-minus-sign',
-        unwantedControlCssClassName: 'regexp-control-range-sign',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-range-sign',
     },
     {
         escapedChar: '^',
         cssClassName: 'regexp-literal-caret',
-        unwantedControlCssClassName: 'regexp-control-invert',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-invert',
     },
     {
         escapedChar: '?',
         cssClassName: 'regexp-literal-question-mark',
-        unwantedControlCssClassName: 'regexp-control-question-mark',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-question-mark',
     },
     {
         escapedChar: '*',
         cssClassName: 'regexp-literal-asterisk',
-        unwantedControlCssClassName: 'regexp-control-asterisk',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-asterisk',
     },
     {
         escapedChar: '+',
         cssClassName: 'regexp-literal-plus-sign',
-        unwantedControlCssClassName: 'regexp-control-plus-sign',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-plus-sign',
     },
     {
         escapedChar: '|',
         cssClassName: 'regexp-literal-pipe',
-        unwantedControlCssClassName: 'regexp-control-logic-or',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-logic-or',
     },
     {
         escapedChar: '.',
         cssClassName: 'regexp-literal-period',
-        unwantedControlCssClassName: 'regexp-selector-any-char',
+        unwantedControlCssClassName: 'regexp-selector-char regexp-selector-any-char',
     },
     {
         escapedChar: '(',
         cssClassName: 'regexp-literal-parenthesis parenthesis-open',
-        unwantedControlCssClassName: 'regexp-control-parenthesis parenthesis-open',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-open',
     },
     {
         escapedChar: ')',
         cssClassName: 'regexp-literal-parenthesis parenthesis-close',
-        unwantedControlCssClassName: 'regexp-control-parenthesis parenthesis-close',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-close',
     },
     {
         escapedChar: '[',
         cssClassName: 'regexp-literal-square-bracket square-bracket-open',
-        unwantedControlCssClassName: 'regexp-control-square-bracket square-bracket-open',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-open',
     },
     {
         escapedChar: ']',
         cssClassName: 'regexp-literal-square-bracket square-bracket-close',
-        unwantedControlCssClassName: 'regexp-control-square-bracket square-bracket-close',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-close',
     },
     {
         escapedChar: '{',
         cssClassName: 'regexp-literal-curly-brace curly-brace-open',
-        unwantedControlCssClassName: 'regexp-control-curly-brace curly-brace-open',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-open',
     },
     {
         escapedChar: '}',
         cssClassName: 'regexp-literal-curly-brace curly-brace-close',
-        unwantedControlCssClassName: 'regexp-control-curly-brace curly-brace-close',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-close',
     },
 ]
 
@@ -138,7 +138,7 @@ module.exports = function parseOnRegExpIntoHTML(originalString) {
 
             regexpBody = regexpBody.replace(
                 new RegExp(`\\${char}`, 'g'),
-                `<span class="regexp-control-char ${rcc.cssClassName}${ isEscapeChar ? ' wlc-escape-char' : '' }">${
+                `<span class="${rcc.cssClassName}${ isEscapeChar ? ' wlc-escape-char' : '' }">${
                     isEscapeChar ? '<span class="slash">\\</span>' : ''
                 }<span class="control-char${ isEscapeChar ? ' escaped-char' : '' }">${
                     coreChar
@@ -150,7 +150,7 @@ module.exports = function parseOnRegExpIntoHTML(originalString) {
             const char = relc.escapedChar
 
             regexpBody = regexpBody.replace(
-                new RegExp(`\\\\<span class="regexp-control-char ${relc.unwantedControlCssClassName}"><span class="control-char">\\${char}</span></span>`, 'g'),
+                new RegExp(`\\\\<span class="${relc.unwantedControlCssClassName}"><span class="control-char">\\${char}</span></span>`, 'g'),
                 `<span class="wlc-escape-char ${relc.cssClassName}"><span class="slash">\\</span><span class="escaped-char">${
                     char
                 }</span></span>`

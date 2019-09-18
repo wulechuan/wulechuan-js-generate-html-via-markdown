@@ -78,16 +78,8 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
 
     const arrayOfStage2 = arrayOfStage1.reduce((a2, a1Item) => {
         const a2NewSegs = a1Item.split(closeMark)
+
         const firstNewSeg = a2NewSegs.shift()
-
-
-        // hopefully only one member in a2NewSegs now,
-        // as long as the open/close tags are html tag,
-        // and the original html string is out of error structures.
-
-        const lastNewSeg = a2NewSegs.pop()
-
-        // hopefully zero members in a2NewSegs now.
 
         a2 = [
             ...a2,
@@ -99,26 +91,11 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
                 content: firstNewSeg,
             },
 
-            ...a2NewSegs.reduce((restNewASTs, newSeg) => {
-                restNewASTs = [
-                    ...restNewASTs,
-
-                    {
-                        isEnclosured: false,
-                        openMark: '',
-                        closeMark,
-                        content: newSeg,
-                    },
-                ]
-
-                return restNewASTs
-            }, []),
-
             {
                 isEnclosured: false,
                 openMark: '',
                 closeMark: '',
-                content: lastNewSeg,
+                content: a2NewSegs.join(closeMark),
             },
         ]
         return a2
@@ -127,7 +104,7 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
 
     if (shouldLogSampleContentsForDevMode) {
         if (!slicingWidth > 0) {
-            slicingWidth = 100
+            slicingWidth = 319
         }
 
 
@@ -168,7 +145,9 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
         if (printedNodesCount > 0) {
             printLine()
         }
+
     }
+
 
     return arrayOfStage2
 }

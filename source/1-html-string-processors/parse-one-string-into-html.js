@@ -10,19 +10,7 @@ const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
 
 
 module.exports = function parseOneStringASTNodeIntoHTML(stringASTNode) {
-    const {
-        closeMark,
-    } = stringASTNode
-
-    let {
-        content,
-    } = stringASTNode
-
-    if        (content.slice(-1) === '\'' && closeMark.slice(0, 1) === '\'') {
-        content = content.slice(0, -1)
-    } else if (content.slice(-1) === '"'  && closeMark.slice(0, 1) === '"') {
-        content = content.slice(0, -1)
-    }
+    let { content } = stringASTNode
 
     STANDARD_ESPACED_CHARS_IN_STRING_LITERALS.forEach(sec => {
         const char = sec.escapedChar
@@ -32,8 +20,6 @@ module.exports = function parseOneStringASTNodeIntoHTML(stringASTNode) {
             `<span class="wlc-escape-char ${sec.cssClassName}"><span class="slash">\\</span><span class="escaped-char">${coreChar}</span></span>`
         )
     })
-
-    // console.log('"'+content+'"')
 
     return content
 }

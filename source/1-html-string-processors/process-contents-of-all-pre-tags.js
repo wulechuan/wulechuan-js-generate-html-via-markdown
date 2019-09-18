@@ -6,7 +6,7 @@ const {
 const parseOneRegExpIntoHTML = require('./parse-one-regexp-into-html')
 const parseOneStringASTNodeIntoHTML = require('./parse-one-string-into-html')
 
-function processAnyContextInPreTagsOfHTMLString(html) {
+function processAnyNotStringNonRegExpContextOfHTMLString(html) {
     const tokenTypesToAddWrapperTo = [
         'hljs-keyword',
         'hljs-built_in',
@@ -20,49 +20,30 @@ function processAnyContextInPreTagsOfHTMLString(html) {
         )
     })
 
-
     html = html.replace(
         /([\w_$][\w_$\d]*)(\s*=\s*<span class="hljs-function)/g,
         '<span class="wlc-function-name hljs-title wlc-var-name">$1</span>$2'
     )
 
-
     html = html.replace(
-        /([^\\])\(/g,
-        '$1<span class="wlc-parenthesis wlc-parenthesis-open">(</span>'
+        /\(/g,
+        '<span class="wlc-parenthesis wlc-parenthesis-open">(</span>'
+    ).replace(
+        /\)/g,
+        '<span class="wlc-parenthesis wlc-parenthesis-close">)</span>'
+    ).replace(
+        /\[/g,
+        '<span class="wlc-square-bracket wlc-square-bracket-open">[</span>'
+    ).replace(
+        /\]/g,
+        '<span class="wlc-square-bracket wlc-square-bracket-close">]</span>'
+    ).replace(
+        /\{/g,
+        '<span class="wlc-curly-brace wlc-curly-brace-open">{</span>'
+    ).replace(
+        /\}/g,
+        '<span class="wlc-curly-brace wlc-curly-brace-close">}</span>'
     )
-
-    html = html.replace(
-        /([^\\])\)/g,
-        '$1<span class="wlc-parenthesis wlc-parenthesis-close">)</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\[/g,
-        '$1<span class="wlc-square-bracket wlc-square-bracket-open">[</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\]/g,
-        '$1<span class="wlc-square-bracket wlc-square-bracket-close">]</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\{/g,
-        '$1<span class="wlc-curly-brace wlc-curly-brace-open">{</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\}/g,
-        '$1<span class="wlc-curly-brace wlc-curly-brace-close">}</span>'
-    )
-
-
-
-
-
-
-
 
     return html
 }
@@ -91,8 +72,6 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
         })
 
         regexpOrNotASTNodes.filter(n => !n.isEnclosured).forEach(nonRegexpASTNode => {
-            nonRegexpASTNode.content = processAnyContextInPreTagsOfHTMLString(nonRegexpASTNode.content)
-
             const stringOrNotASTNodes1 = splitStringIntoASTByOpenAndCloseMarks(
                 nonRegexpASTNode.content,
                 '<span class="hljs-string">\'',
@@ -100,36 +79,56 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
                 false
             )
 
-            // console.log(stringOrNotASTNodes1.length)
-            let safeStringSpanHTMLs1
-            let notStringOrUnsafeStringHTMLs1
+            const safeStringSpanHTMLs1 = stringOrNotASTNodes1.filter(n => {
+                return n.isEnclosured && !n.content.match(/<span|<\/span>/)
+            })
+            const unsafeStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
+                return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
+            })
 
-            if (stringOrNotASTNodes1.length > 3) {
-                safeStringSpanHTMLs1 = []
-                notStringOrUnsafeStringHTMLs1 = stringOrNotASTNodes1
-            } else {
-                safeStringSpanHTMLs1          = stringOrNotASTNodes1.filter(n =>  n.isEnclosured)
-                notStringOrUnsafeStringHTMLs1 = stringOrNotASTNodes1.filter(n => !n.isEnclosured)
-            }
+            unsafeStringHTMLs1.forEach(console.log)
+
+            const notStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
+                return !n.isEnclosured && n.content
+            })
 
             safeStringSpanHTMLs1.forEach(stringASTNode1 => {
                 stringASTNode1.content = parseOneStringASTNodeIntoHTML(stringASTNode1)
             })
 
-            notStringOrUnsafeStringHTMLs1.forEach((/* nonStringASTNode1 */) => {
-                // const stringOrNotASTNodes2 = splitStringIntoASTByOpenAndCloseMarks(
-                //     nonStringASTNode1.content,
-                //     '<span class="hljs-string">"',
-                //     '"</span>',
-                //     false
-                // )
+            notStringHTMLs1.forEach(nonStringASTNode1 => {
+                const stringOrNotASTNodes2 = splitStringIntoASTByOpenAndCloseMarks(
+                    nonStringASTNode1.content,
+                    '<span class="hljs-string">"',
+                    '"</span>',
+                    false
+                )
 
-                // stringOrNotASTNodes2.filter(n =>  n.isEnclosured).forEach(stringASTNode2 => {
-                //     stringASTNode2.content = parseOneStringASTNodeIntoHTML(stringASTNode2)
-                // })
+                const safeStringSpanHTMLs2 = stringOrNotASTNodes2.filter(n => {
+                    return n.isEnclosured && !n.content.match(/<span|<\/span>/)
+                })
+                const unsafeStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
+                    return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
+                })
 
-                // nonStringASTNode1.content = stringOrNotASTNodes2
+                unsafeStringHTMLs2.forEach(console.log)
+
+                const notStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
+                    return !n.isEnclosured
+                })
+
+                safeStringSpanHTMLs2.forEach(stringASTNode1 => {
+                    stringASTNode1.content = parseOneStringASTNodeIntoHTML(stringASTNode1)
+                })
+
+                notStringHTMLs2.forEach(nonStringASTNode2 => {
+                    nonStringASTNode2.content = processAnyNotStringNonRegExpContextOfHTMLString(nonStringASTNode2.content)
+                })
+
+
+                nonStringASTNode1.content = stringOrNotASTNodes2
             })
+
 
             nonRegexpASTNode.content = stringOrNotASTNodes1
         })
