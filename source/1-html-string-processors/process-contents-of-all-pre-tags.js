@@ -82,11 +82,11 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
             const safeStringSpanHTMLs1 = stringOrNotASTNodes1.filter(n => {
                 return n.isEnclosured && !n.content.match(/<span|<\/span>/)
             })
-            const unsafeStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
-                return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
-            })
+            // const unsafeStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
+            //     return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
+            // })
 
-            unsafeStringHTMLs1.forEach(console.log)
+            // unsafeStringHTMLs1.forEach(console.log)
 
             const notStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
                 return !n.isEnclosured && n.content
@@ -107,11 +107,11 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
                 const safeStringSpanHTMLs2 = stringOrNotASTNodes2.filter(n => {
                     return n.isEnclosured && !n.content.match(/<span|<\/span>/)
                 })
-                const unsafeStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
-                    return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
-                })
+                // const unsafeStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
+                //     return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
+                // })
 
-                unsafeStringHTMLs2.forEach(console.log)
+                // unsafeStringHTMLs2.forEach(console.log)
 
                 const notStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
                     return !n.isEnclosured

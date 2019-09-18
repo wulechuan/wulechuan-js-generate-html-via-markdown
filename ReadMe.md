@@ -44,6 +44,12 @@ There're plenty of options which provide full controls over the ouptut HTML cont
 
 The CSS file for the built-in theming is from another NPM package of mine, named "[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)". See some pictures of an example article with the default theme applied [there](https://github.com/wulechuan/wulechuan-themes-for-htmls-via-markdowns/blob/master/docs/refs/en-US/application-examples.md).
 
+> IMPORTANT:
+>
+> This package "@wulechuan/generate-html-via-markdown"(package A) peer-denpendts upon the css theming pacakge(package B) said above.
+> This means will we install pacakge A, npm will **NOT** automatically install package B as well, but rather print some warning messages after installation of package A. **YOU MUST INSTALL PACKAGE B MANUALLY YOURSELF**.
+
+
 
 ### Gulpjs Workflow Adaptor
 
