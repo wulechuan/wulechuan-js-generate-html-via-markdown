@@ -3,50 +3,15 @@ const {
     parseASTIntoString,
 } = require('./split-string-by-open-and-close-marks')
 
-const parseOneRegExpIntoHTML = require('./parse-one-regexp-into-html')
-const parseOneStringASTNodeIntoHTML = require('./parse-one-string-into-html')
-
-function processAnyNotStringNonRegExpContextOfHTMLString(html) {
-    const tokenTypesToAddWrapperTo = [
-        'hljs-keyword',
-        'hljs-built_in',
-        'hljs-literal',
-    ]
-
-    tokenTypesToAddWrapperTo.forEach(tokenType => {
-        html = html.replace(
-            new RegExp(`<span class="${tokenType}">(\\w+)</span>`, 'g'),
-            `<span class="${tokenType} $1">$1</span>`
-        )
-    })
-
-    html = html.replace(
-        /([\w_$][\w_$\d]*)(\s*=\s*<span class="hljs-function)/g,
-        '<span class="wlc-function-name hljs-title wlc-var-name">$1</span>$2'
-    )
-
-    html = html.replace(
-        /\(/g,
-        '<span class="wlc-parenthesis wlc-parenthesis-open">(</span>'
-    ).replace(
-        /\)/g,
-        '<span class="wlc-parenthesis wlc-parenthesis-close">)</span>'
-    ).replace(
-        /\[/g,
-        '<span class="wlc-square-bracket wlc-square-bracket-open">[</span>'
-    ).replace(
-        /\]/g,
-        '<span class="wlc-square-bracket wlc-square-bracket-close">]</span>'
-    ).replace(
-        /\{/g,
-        '<span class="wlc-curly-brace wlc-curly-brace-open">{</span>'
-    ).replace(
-        /\}/g,
-        '<span class="wlc-curly-brace wlc-curly-brace-close">}</span>'
-    )
-
-    return html
-}
+const parseOneRegExpIntoHTML = require(
+    './parse-one-regexp-into-html'
+)
+const parseOneStringASTNodeIntoHTML = require(
+    './parse-one-string-into-html'
+)
+const processAnyNonStringNonRegExpContextOfHTMLString = require(
+    './parse-any-non-string-non-regexp-codes-into-html'
+)
 
 module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
     const preTagsOrNotASTNodes = splitStringIntoASTByOpenAndCloseMarks(
@@ -122,7 +87,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
                 })
 
                 notStringHTMLs2.forEach(nonStringASTNode2 => {
-                    nonStringASTNode2.content = processAnyNotStringNonRegExpContextOfHTMLString(nonStringASTNode2.content)
+                    nonStringASTNode2.content = processAnyNonStringNonRegExpContextOfHTMLString(nonStringASTNode2.content)
                 })
 
 
