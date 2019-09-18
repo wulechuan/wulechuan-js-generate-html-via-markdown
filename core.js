@@ -1,6 +1,8 @@
-const chalk = require('chalk')
 const path = require('path')
-const { rerequire } = require('./source/utils/rerequired-file')
+const {
+    clearCacheOfRequiredFile,
+    rerequire,
+} = require('./source/utils/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
 
@@ -9,19 +11,13 @@ const markdownItPluginCheckbox     = require('markdown-it-checkbox')
 const markdownItPluginAnchor       = require('markdown-it-anchor')
 const markdownItPluginTOCDoneRight = require('markdown-it-toc-done-right')
 
-const buildHTMLTitleSnippetString = require('./source/html-string-processors/build-html-title-tag')
 
-
-
-const {
-    tab1,
-    // tab2,
-} = require('./source/snippets/static/tabs')
-
-
+const joinPathOSLocalStyle = path.join
 
 const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
-const filePathOfDefaultOptions = path.join(thisModuleRootFolderPath, 'default-options.js')
+
+
+
 
 
 
@@ -41,8 +37,43 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     const {
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-        shouldReloadDefaultOptionValuesForDebuggingContinuously,
+        shouldReloadModulesForDevWatchingMode,
     } = options
+
+    let defaultOptionValues
+    let tab1
+
+    let insertTOCMarkDownTagIfNecessary
+    let buildHTMLTitleSnippetString
+    let wrapHTMLChiefContentWithAnArticleTag
+    let processAllContentsOfAllPreTagsOfHTMLString
+
+    if (!shouldReloadModulesForDevWatchingMode) {
+        defaultOptionValues = require('./default-options')
+
+        const tabs = require('./source/snippets/static/tabs')
+        tab1 = tabs.tab1
+
+
+        insertTOCMarkDownTagIfNecessary = require(
+            './source/0-markdown-string-processors/insert-toc-placeholder'
+        )
+
+        buildHTMLTitleSnippetString = require(
+            './source/1-html-string-processors/build-html-title-tag'
+        )
+
+        wrapHTMLChiefContentWithAnArticleTag = require(
+            './source/1-html-string-processors/wrap-chief-content-with-article-tag'
+        )
+
+        processAllContentsOfAllPreTagsOfHTMLString = require(
+            './source/1-html-string-processors/process-contents-of-all-pre-tags'
+        )
+    }
+
+
+
 
 
     const { // Reading these files only once is enough. Saving time.
@@ -78,13 +109,55 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         }
 
 
-        let defaultOptionValues
-        if (shouldReloadDefaultOptionValuesForDebuggingContinuously) {
-            defaultOptionValues = rerequire(filePathOfDefaultOptions)
-        } else {
-            defaultOptionValues = require(filePathOfDefaultOptions)
-        }
+        if (shouldReloadModulesForDevWatchingMode) {
+            clearCacheOfRequiredFile(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/split-string-by-open-and-close-marks.js'
+            ))
 
+            clearCacheOfRequiredFile(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/parse-one-regexp-into-html.js'
+            ))
+
+            clearCacheOfRequiredFile(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/parse-one-string-into-html.js'
+            ))
+
+            // ----------------------------------------------
+
+            defaultOptionValues = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                'default-options.js'
+            ))
+
+            const tabs = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                '/source/snippets/static/tabs.js'
+            ))
+            tab1 = tabs.tab1
+
+            insertTOCMarkDownTagIfNecessary = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/0-markdown-string-processors/insert-toc-placeholder.js'
+            ))
+
+            buildHTMLTitleSnippetString = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/build-html-title-tag.js'
+            ))
+
+            wrapHTMLChiefContentWithAnArticleTag = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/wrap-chief-content-with-article-tag.js'
+            ))
+
+            processAllContentsOfAllPreTagsOfHTMLString = rerequire(joinPathOSLocalStyle(
+                thisModuleRootFolderPath,
+                './source/1-html-string-processors/process-contents-of-all-pre-tags.js'
+            ))
+        }
 
 
 
@@ -166,6 +239,11 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
 
+
+
+
+
+
         /* *************** Modify markdown content if necessary *************** */
 
         const {
@@ -244,7 +322,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         })
 
 
-        htmlContentViaMarkDownContent = wulechuanAddExtraMarkupsToHTML(
+        htmlContentViaMarkDownContent = processAllContentsOfAllPreTagsOfHTMLString(
             htmlContentViaMarkDownContent
         )
 
@@ -397,224 +475,4 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         return htmlFullContent
     }
-}
-
-
-
-
-
-function insertTOCMarkDownTagIfNecessary(markdownContent, shouldNotAutoInsertTOCPlaceholderIntoMarkdown) {
-    if (typeof markdownContent !== 'string') {
-        throw new TypeError(`@wulechuan/generate-html-via-markdown:\n    ${
-            chalk.red('Invalid markdownContent. It must be a string')
-        }.\n    ${
-            chalk.yellow(`If you read it from a file, please use "${
-                chalk.magenta('.toString')
-            }" method to convert its contents first.`)
-        }\n`)
-    }
-
-    let processedMarkdownContent = markdownContent
-
-    let markdownContentHasTOCPlaceholder = processedMarkdownContent
-        .match(/\$\{toc\}|\[\[toc\]\]|\[toc\]|\[\[_toc_\]\]/i)
-
-    if (!markdownContentHasTOCPlaceholder && !shouldNotAutoInsertTOCPlaceholderIntoMarkdown) {
-        processedMarkdownContent += [
-            '\n',
-            '[[toc]]',
-        ].join('\n\n')
-
-        markdownContentHasTOCPlaceholder = true
-    }
-
-    return {
-        markdownContentHasTOCPlaceholder,
-        processedMarkdownContent,
-    }
-}
-
-
-function wulechuanAddExtraMarkupsToHTML(html) {
-    const tokenTypesToAddWrapperTo = [
-        'hljs-keyword',
-        'hljs-built_in',
-        'hljs-literal',
-    ]
-
-
-    html = html.replace(
-        /\/(g|gi|ig|i)?<\/span>/g,
-        [
-            '<span class="regexp-end">/</span>',
-            '<span class="regexp-options">$1</span>',
-            '</span>',
-        ].join('')
-    )
-
-    html = html.replace(
-        /([^\\])(\$)?<span class="regexp-end">/g,
-        [
-            '$1</span>',
-            '<span class="regexp-selector-input-end">$2</span>',
-            '<span class="regexp-end">',
-        ].join('')
-    )
-
-    html = html.replace(
-        /<span class="hljs-regexp">\/(\^)?/g,
-        [
-            '<span class="hljs-regexp">',
-            '<span class="regexp-begin">/</span>',
-            '<span class="regexp-selector-input-begin">$1</span>',
-            '<span class="regexp-body">',
-        ].join('')
-    )
-
-
-
-    tokenTypesToAddWrapperTo.forEach(tokenType => {
-        html = html.replace(
-            new RegExp(`<span class="${tokenType}">(\\w+)</span>`, 'g'),
-            `<span class="${tokenType} $1">$1</span>`
-        )
-    })
-
-
-
-    html = html.replace(
-        /([\w_$][\w_$\d]*)(\s*=\s*<span class="hljs-function)/g,
-        '<span class="wlc-function-name hljs-title wlc-var-name">$1</span>$2'
-    )
-
-    // html = html.replace(
-    //     /([^\\])\(/g,
-    //     '$1<span class="wlc-parenthesis wlc-parenthesis-open">(</span>'
-    // )
-
-    // html = html.replace(
-    //     /([^\\])\)/g,
-    //     '$1<span class="wlc-parenthesis wlc-parenthesis-close">)</span>'
-    // )
-
-    html = html.replace(
-        /([^\\])\[/g,
-        '$1<span class="wlc-square-bracket wlc-square-bracket-open">[</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\]/g,
-        '$1<span class="wlc-square-bracket wlc-square-bracket-close">]</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\{/g,
-        '$1<span class="wlc-curly-brace wlc-curly-brace-open">{</span>'
-    )
-
-    html = html.replace(
-        /([^\\])\}/g,
-        '$1<span class="wlc-curly-brace wlc-curly-brace-close">}</span>'
-    )
-
-
-
-    const standardEscapeChars = [
-        { escapedChar: 'n', cssClassName: 'new-line' },
-        { escapedChar: 'r', cssClassName: 'carriage-return' },
-        { escapedChar: 't', cssClassName: 'tab' },
-        { escapedChar: '\'', cssClassName: 'single-quote' },
-        { escapedChar: '"', cssClassName: 'double-quote' },
-        { escapedChar: '/', cssClassName: 'forward-mark' },
-        { escapedChar: '\\\\', cssClassName: 'backward-slash' },
-    ]
-
-    const regExpEscapeChars = [
-        { escapedChar: 'w', cssClassName: 'regexp-selector-word' },
-        { escapedChar: 'W', cssClassName: 'regexp-selector-non-word' },
-        { escapedChar: 'd', cssClassName: 'regexp-selector-digit' },
-        { escapedChar: 'D', cssClassName: 'regexp-selector-non-digit' },
-        { escapedChar: 's', cssClassName: 'regexp-selector-whitespace' },
-        { escapedChar: 'S', cssClassName: 'regexp-selector-non-whitespace' },
-        { escapedChar: 'b', cssClassName: 'regexp-selector-boundary' },
-        { escapedChar: 'B', cssClassName: 'regexp-selector-non-boundary' },
-        // { escapedChar: '\\\\', cssClassName: 'regexp-selector-backward-slash' },
-        { escapedChar: '\\?', cssClassName: 'regexp-selector-question-mark' },
-        { escapedChar: '\\*', cssClassName: 'regexp-selector-asterisk' },
-        { escapedChar: '\\+', cssClassName: 'regexp-selector-plus-sign' },
-        { escapedChar: '\\.', cssClassName: 'regexp-selector-period' },
-        { escapedChar: '\\(', cssClassName: 'regexp-selector-parenthesis parenthesis-open' },
-        { escapedChar: '\\)', cssClassName: 'regexp-selector-parenthesis parenthesis-close' },
-        { escapedChar: '\\[', cssClassName: 'regexp-selector-square-bracket square-bracket-open' },
-        { escapedChar: '\\]', cssClassName: 'regexp-selector-square-bracket square-bracket-close' },
-        { escapedChar: '\\{', cssClassName: 'regexp-selector-curly-brace curly-brace-open' },
-        { escapedChar: '\\}', cssClassName: 'regexp-selector-curly-brace curly-brace-close' },
-    ]
-
-    const allEscapeChars = [
-        ...standardEscapeChars,
-        ...regExpEscapeChars,
-    ]
-
-    allEscapeChars.forEach(ec => {
-        html = html.replace(
-            new RegExp(`(\\\\${ec.escapedChar})`, 'g'),
-            `<span class="wlc-escape-char ${ec.cssClassName}">\\<span class="escaped-char">${
-                ec.escapedChar.startsWith('\\') ? ec.escapedChar.slice(1) : ec.escapedChar
-            }</span></span>`
-        )
-    })
-
-    html = html.replace(
-        /<span class="wlc-curly-brace wlc-curly-brace-open">\{<\/span>(\d+)((,)(\d*))?<span class="wlc-curly-brace wlc-curly-brace-close">\}<\/span>/g,
-        [
-            '<span class="wlc-curly-brace wlc-curly-brace-open">{</span>',
-            '<span class="wlc-digit-pair-between-curly-braces">',
-            '<span class="digit digit-1">$1</span>',
-            '<span class="comma">$3</span>',
-            '<span class="digit digit-2">$4</span>',
-            '</span>',
-            '<span class="wlc-curly-brace wlc-curly-brace-close">}</span>',
-        ].join('')
-    )
-
-    return html
-}
-
-function wrapHTMLChiefContentWithAnArticleTag(htmlOldChiefContent, options) {
-    const {
-        cssClassNameOfMarkdownChiefContentWrappingArticleTag,
-        cssClassNameOfArticleTOCRootTag,
-        markdownArticleHasTOC,
-    } = options
-
-    let articleStartTag
-
-    if (cssClassNameOfMarkdownChiefContentWrappingArticleTag) {
-        articleStartTag = `<article class="${cssClassNameOfMarkdownChiefContentWrappingArticleTag}">`
-    } else {
-        articleStartTag = '<article>'
-    }
-
-
-    let htmlNewChiefContent = `${tab1}${articleStartTag}\n${htmlOldChiefContent}`
-
-    if (markdownArticleHasTOC) {
-        const fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight = `<nav class="${cssClassNameOfArticleTOCRootTag}">`
-
-        htmlNewChiefContent = htmlNewChiefContent.replace(
-            fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight,
-
-            `\n${
-                tab1}</article>\n${
-                tab1}${fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight
-            }`
-        )
-    } else {
-        htmlNewChiefContent = `${
-            htmlNewChiefContent
-        }\n${tab1}</article>\n`
-    }
-
-    return htmlNewChiefContent
 }
