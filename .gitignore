@@ -1,2 +1,4 @@
 node_modules
-tests/output
+tests/output/**/*.md
+tests/output/**/*.png
+tests/output/**/*.jpg
