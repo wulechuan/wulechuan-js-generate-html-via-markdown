@@ -17,8 +17,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
     const preTagsOrNotASTNodes = splitStringIntoASTByOpenAndCloseMarks(
         html,
         '<pre>',
-        '</pre>',
-        false
+        '</pre>'
     )
 
     preTagsOrNotASTNodes.filter(n => n.isEnclosured).forEach(preTagASTNode => {
@@ -28,8 +27,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
         const regexpOrNotASTNodes = splitStringIntoASTByOpenAndCloseMarks(
             preTagASTNode.content,
             '<span class="hljs-regexp">',
-            '</span>',
-            false
+            '</span>'
         )
 
         regexpOrNotASTNodes.filter(n =>  n.isEnclosured).forEach(regexpASTNode => {
@@ -40,8 +38,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
             const stringOrNotASTNodes1 = splitStringIntoASTByOpenAndCloseMarks(
                 nonRegexpASTNode.content,
                 '<span class="hljs-string">\'',
-                '\'</span>',
-                false
+                '\'</span>'
             )
 
             const safeStringSpanHTMLs1 = stringOrNotASTNodes1.filter(n => {
@@ -65,8 +62,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
                 const stringOrNotASTNodes2 = splitStringIntoASTByOpenAndCloseMarks(
                     nonStringASTNode1.content,
                     '<span class="hljs-string">"',
-                    '"</span>',
-                    false
+                    '"</span>'
                 )
 
                 const safeStringSpanHTMLs2 = stringOrNotASTNodes2.filter(n => {

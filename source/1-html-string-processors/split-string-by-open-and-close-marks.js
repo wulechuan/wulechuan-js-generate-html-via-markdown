@@ -32,7 +32,7 @@ function parseASTIntoString(input) {
 }
 
 
-function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shouldLogSampleContentsForDevMode, slicingWidth) {
+function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, options) {
     if (typeof string !== 'string') {
         throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[0] must be an string!')
     }
@@ -60,6 +60,28 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
 
     if (!closeMark) {
         throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[3] must be a non empty string!')
+    }
+
+    if (!options) {
+        options = {
+            shouldLogSampleContentsForDevMode: false,
+            logContentSlicingWidth: 515,
+        }
+    } else if (typeof options === 'number') {
+        options = {
+            shouldLogSampleContentsForDevMode: true,
+            logContentSlicingWidth: options,
+        }
+    } else if (typeof options !== 'object') {
+        options = {
+            shouldLogSampleContentsForDevMode: true,
+            logContentSlicingWidth: 515,
+        }
+    } else if (Array.isArray(options)) {
+        options = {
+            shouldLogSampleContentsForDevMode: options[0],
+            logContentSlicingWidth: options[1],
+        }
     }
 
     const arrayOfStage1 = string.split(openMark)
@@ -102,55 +124,66 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, shou
     }, initArrayOfStage2)
 
 
+    const {
+        shouldLogSampleContentsForDevMode,
+        logContentSlicingWidth,
+    } = options
+
     if (shouldLogSampleContentsForDevMode) {
-        if (!slicingWidth > 0) {
-            slicingWidth = 319
-        }
-
-
-        let printedNodesCount = 0
-
-
-        arrayOfStage2.forEach(astNode => {
-            if (!astNode.isEnclosured) { return }
-
-            printLine()
-
-            printedNodesCount++
-
-            const {
-                openMark,
-                closeMark,
-                content,
-            } = astNode
-
-
-            const slicingWidth1 = Math.min(slicingWidth, Math.ceil(content.length / 2))
-            const slicingWidth2 = Math.min(slicingWidth, content.length - slicingWidth1)
-
-
-            console.log(`${
-                openMark
-            }${
-                content.slice(0, slicingWidth1)
-            }${
-                content.length > (slicingWidth1 + slicingWidth2) ? '|||...|||' : ''
-            }${
-                content.slice(-slicingWidth2)
-            }${
-                closeMark
-            }`)
-        })
-
-        if (printedNodesCount > 0) {
-            printLine()
-        }
-
+        printASTContentsForDebugging(arrayOfStage2, logContentSlicingWidth)
     }
 
 
     return arrayOfStage2
 }
 
+
+
+
 function printLine() { console.log('='.repeat(79)) }
+
+function printASTContentsForDebugging(arrayOfStage2, logContentSlicingWidth) {
+    if (!logContentSlicingWidth > 0) {
+        logContentSlicingWidth = 319
+    }
+
+
+    let printedNodesCount = 0
+
+
+    arrayOfStage2.forEach(astNode => {
+        if (!astNode.isEnclosured) { return }
+
+        printLine()
+
+        printedNodesCount++
+
+        const {
+            openMark,
+            closeMark,
+            content,
+        } = astNode
+
+
+        const slicingWidth1 = Math.min(logContentSlicingWidth, Math.ceil(content.length / 2))
+        const slicingWidth2 = Math.min(logContentSlicingWidth, content.length - slicingWidth1)
+
+
+        console.log(`${
+            openMark
+        }${
+            content.slice(0, slicingWidth1)
+        }${
+            content.length > (slicingWidth1 + slicingWidth2) ? '|||...|||' : ''
+        }${
+            content.slice(-slicingWidth2)
+        }${
+            closeMark
+        }`)
+    })
+
+    if (printedNodesCount > 0) {
+        printLine()
+    }
+}
 
