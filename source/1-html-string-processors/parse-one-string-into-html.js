@@ -9,8 +9,8 @@ const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
 ]
 
 
-module.exports = function parseOneStringASTNodeIntoHTML(stringASTNode) {
-    let { content } = stringASTNode
+module.exports = function parseOneStringASTNodeIntoHTML(astNode) {
+    let { content } = astNode
 
     STANDARD_ESPACED_CHARS_IN_STRING_LITERALS.forEach(sec => {
         const char = sec.escapedChar

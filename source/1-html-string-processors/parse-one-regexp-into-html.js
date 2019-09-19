@@ -109,8 +109,9 @@ const regexpEscapedLiteralCharsDirectSearch = [
 
 
 
-module.exports = function parseOnRegExpIntoHTML(originalString) {
-    const match = originalString.match(/\/(\^?)([\s\S]*)\/(g|gi|ig|i)?$/)
+module.exports = function parseOnRegExpIntoHTML(astNode) {
+    const { content } = astNode
+    const match = content.match(/\/(\^?)([\s\S]*)\/(g|gi|ig|i)?$/)
 
     // console.log('match[1]', match[1])
     // console.log('match[2]', match[2])

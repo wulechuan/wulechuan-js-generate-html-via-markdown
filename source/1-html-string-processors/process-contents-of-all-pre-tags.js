@@ -33,7 +33,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
         )
 
         regexpOrNotASTNodes.filter(n =>  n.isEnclosured).forEach(regexpASTNode => {
-            regexpASTNode.content = parseOneRegExpIntoHTML(regexpASTNode.content)
+            regexpASTNode.content = parseOneRegExpIntoHTML(regexpASTNode)
         })
 
         regexpOrNotASTNodes.filter(n => !n.isEnclosured).forEach(nonRegexpASTNode => {
@@ -87,7 +87,7 @@ module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
                 })
 
                 notStringHTMLs2.forEach(nonStringASTNode2 => {
-                    nonStringASTNode2.content = processAnyNonStringNonRegExpContextOfHTMLString(nonStringASTNode2.content)
+                    nonStringASTNode2.content = processAnyNonStringNonRegExpContextOfHTMLString(nonStringASTNode2)
                 })
 
 

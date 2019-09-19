@@ -101,7 +101,9 @@ const PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
     },
 ]
 
-module.exports = function processAnyNonStringNonRegExpContextOfHTMLString(html) {
+module.exports = function processAnyNonStringNonRegExpContextOfHTMLString(astNode) {
+    var html = astNode.content
+
     const tokenTypesToAddWrapperTo = [
         'hljs-keyword',
         'hljs-built_in',
