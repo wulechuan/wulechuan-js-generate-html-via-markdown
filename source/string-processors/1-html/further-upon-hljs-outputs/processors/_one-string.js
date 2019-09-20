@@ -52,5 +52,14 @@ function parseOneStringOfEitherType(content) {
 }
 
 function parseOneTemplatedString(content) {
+    // content = content.replace(
+    //     /\${/g,
+    //     [
+    //         '<span class="string-template-interpolation-begin">',
+    //         '<span class="dollar-sign">$</span>',
+    //         '<span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>',
+    //         '</span>',
+    //     ].join('')
+    // )
     return content
 }

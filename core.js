@@ -56,19 +56,19 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
         insertTOCMarkDownTagIfNecessary = require(
-            './source/0-markdown-string-processors/insert-toc-placeholder'
+            './source/string-processors/0-markdown/insert-toc-placeholder'
         )
 
         buildHTMLTitleSnippetString = require(
-            './source/1-html-string-processors/build-html-title-tag'
+            './source/string-processors/1-html/build-html-title-tag'
         )
 
         wrapHTMLChiefContentWithAnArticleTag = require(
-            './source/1-html-string-processors/wrap-chief-content-with-article-tag'
+            './source/string-processors/1-html/wrap-chief-content-with-article-tag'
         )
 
         processAllContentsOfAllPreTagsOfHTMLString = require(
-            './source/1-html-string-processors/process-contents-of-all-pre-tags'
+            './source/string-processors/1-html/process-contents-of-all-pre-tags'
         )
     }
 
@@ -111,13 +111,13 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         if (shouldReloadModulesForDevWatchingMode) {
             [
-                './source/1-html-string-processors/split-string-by-open-and-close-marks.js',
-                './source/1-html-string-processors/parse-one-comment-into-html.js',
-                './source/1-html-string-processors/parse-one-regexp-into-html.js',
-                './source/1-html-string-processors/parse-one-string-into-html.js',
-                './source/1-html-string-processors/parse-all-punctuations-into-html.js',
-                './source/1-html-string-processors/parse-language-specific-stuffs-javascript-family.js',
-                './source/1-html-string-processors/parse-language-specific-stuffs-css-family.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/simple-ast.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_all-punctuations.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-comment.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-regexp.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-string.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-css-family.js',
             ].forEach(subPath => {
                 clearCacheOfRequiredFile(joinPathOSLocalStyle(thisModuleRootFolderPath, subPath))
             })
@@ -131,28 +131,28 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
             const tabs = rerequire(joinPathOSLocalStyle(
                 thisModuleRootFolderPath,
-                '/source/snippets/static/tabs.js'
+                './source/snippets/static/tabs.js'
             ))
             tab1 = tabs.tab1
 
             insertTOCMarkDownTagIfNecessary = rerequire(joinPathOSLocalStyle(
                 thisModuleRootFolderPath,
-                './source/0-markdown-string-processors/insert-toc-placeholder.js'
+                './source/string-processors/0-markdown/insert-toc-placeholder.js'
             ))
 
             buildHTMLTitleSnippetString = rerequire(joinPathOSLocalStyle(
                 thisModuleRootFolderPath,
-                './source/1-html-string-processors/build-html-title-tag.js'
+                './source/string-processors/1-html/direct/build-html-title-tag.js'
             ))
 
             wrapHTMLChiefContentWithAnArticleTag = rerequire(joinPathOSLocalStyle(
                 thisModuleRootFolderPath,
-                './source/1-html-string-processors/wrap-chief-content-with-article-tag.js'
+                './source/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
             ))
 
             processAllContentsOfAllPreTagsOfHTMLString = rerequire(joinPathOSLocalStyle(
                 thisModuleRootFolderPath,
-                './source/1-html-string-processors/process-contents-of-all-pre-tags.js'
+                './source/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
             ))
         }
 

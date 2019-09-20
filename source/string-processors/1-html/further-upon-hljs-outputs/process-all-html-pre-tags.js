@@ -1,7 +1,7 @@
 const {
     splitOneASTNodeByOpenAndCloseMarks,
     parseASTIntoString,
-} = require('./split-string-by-open-and-close-marks')
+} = require('./simple-ast')
 
 const {
     codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
@@ -10,17 +10,17 @@ const {
 
 
 const parseOneASTNodeOfCommentIntoHTML = require(
-    './parse-one-comment-into-html'
+    './processors/_one-comment'
 )
 
 
 const parseOneRegExpASTNodeIntoHTML = require(
-    './parse-one-regexp-into-html'
+    './processors/_one-regexp'
 )
 
 
 const parseOneStringASTNodeIntoHTML = require(
-    './parse-one-string-into-html'
+    './processors/_one-string'
 )
 
 
@@ -28,7 +28,7 @@ const {
     parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
     parseAllRestPunctuationsInAnASTNodeIntoHTML,
 } = require(
-    './parse-all-punctuations-into-html'
+    './processors/_all-punctuations'
 )
 
 
@@ -36,12 +36,12 @@ const {
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations,
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterPunctuations,
 } = require(
-    './parse-language-specific-stuffs-css-family'
+    './processors/language-css-family'
 )
 
 
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
-    './parse-language-specific-stuffs-javascript-family'
+    './processors/language-javascript-family'
 )
 
 

@@ -1,7 +1,7 @@
 const {
     tab1,
     // tab2,
-} = require('../snippets/static/tabs')
+} = require('../../../snippets/static/tabs')
 
 module.exports = function wrapHTMLChiefContentWithAnArticleTag(htmlOldChiefContent, options) {
     const {

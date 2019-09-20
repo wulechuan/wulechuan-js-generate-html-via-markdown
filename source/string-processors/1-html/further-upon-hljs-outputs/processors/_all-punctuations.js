@@ -1,7 +1,7 @@
 const {
     codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
     codeLanguageIsNotAnyOf, // eslint-disable-line no-unused-vars
-} = require('./code-language-matchers')
+} = require('../code-language-matchers')
 
 
 const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [

@@ -6,7 +6,7 @@ const chooseWrappingHTMLTagNameViaFileExt = require(
 )
 
 const wrapContentsWithAPairOfHTMLTags = require(
-    '../../1-html-string-processors/wrap-file-content-with-an-pair-of-html-tags'
+    '../../string-processors/1-html/direct/wrap-file-content-with-an-pair-of-html-tags'
 )
 
 

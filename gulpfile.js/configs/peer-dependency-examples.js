@@ -10,7 +10,7 @@ module.exports = {
         extraSourceGlobsToWatch: [
             'core.js',
             'default-options.js',
-            'source/1-html-string-processors/**/*',
+            'source/string-processors/1-html/further-upon-hljs-outputs/**/*',
         ],
     },
 

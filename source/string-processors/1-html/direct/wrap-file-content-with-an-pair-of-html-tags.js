@@ -1,7 +1,7 @@
 const {
     tab1,
     tab2,
-} = require('../snippets/static/tabs')
+} = require('../../../snippets/static/tabs')
 
 module.exports = function wrapContentsWithAPairOfHTMLTags({ fileRawContent, wrappingTagName, shouldIndentContentsBy2Levels }) {
     if (!fileRawContent.trim()) {
