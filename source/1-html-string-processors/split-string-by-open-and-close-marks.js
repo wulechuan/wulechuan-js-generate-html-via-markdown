@@ -62,25 +62,32 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
         throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[3] must be a non empty string!')
     }
 
+
+    const logContentSlicingDefaultWidth = 515
+
     if (!options) {
         options = {
+            shouldNotForcePairing: false,
             shouldLogSampleContentsForDevMode: false,
-            logContentSlicingWidth: 515,
+            logContentSlicingWidth: logContentSlicingDefaultWidth,
         }
     } else if (typeof options === 'number') {
         options = {
+            shouldNotForcePairing: false,
             shouldLogSampleContentsForDevMode: true,
             logContentSlicingWidth: options,
         }
     } else if (typeof options !== 'object') {
         options = {
-            shouldLogSampleContentsForDevMode: true,
-            logContentSlicingWidth: 515,
+            shouldNotForcePairing: true,
+            shouldLogSampleContentsForDevMode: false,
+            logContentSlicingWidth: logContentSlicingDefaultWidth,
         }
     } else if (Array.isArray(options)) {
         options = {
-            shouldLogSampleContentsForDevMode: options[0],
-            logContentSlicingWidth: options[1],
+            shouldNotForcePairing: !!options[0],
+            shouldLogSampleContentsForDevMode: !!options[1],
+            logContentSlicingWidth: options[2],
         }
     }
 
@@ -98,28 +105,82 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
         })
     }
 
+
+    const {
+        shouldNotForcePairing,
+    } = options
+
     const arrayOfStage2 = arrayOfStage1.reduce((a2, a1Item) => {
-        const a2NewSegs = a1Item.split(closeMark)
+        if (!a1Item) { // two or more openMarks side by side during stage1
+            a2.push({
+                isEnclosured: false,
+                openMark,
+                closeMark: '',
+                content: '',
+            })
 
-        const firstNewSeg = a2NewSegs.shift()
+        } else {
 
-        a2 = [
-            ...a2,
+            const a2NewSegs = a1Item.split(closeMark)
+            const firstNewSeg = a2NewSegs.shift()
 
-            {
+            a2.push({
                 isEnclosured: true,
                 openMark,
                 closeMark,
                 content: firstNewSeg,
-            },
+            })
 
-            {
-                isEnclosured: false,
-                openMark: '',
-                closeMark: '',
-                content: a2NewSegs.join(closeMark),
-            },
-        ]
+            if (a2NewSegs.length > 0) { // might not exist at all.
+                if (!shouldNotForcePairing) {
+
+                    const restContent = a2NewSegs.join(closeMark)
+                    if (restContent) {
+                        a2.push({
+                            isEnclosured: false,
+                            openMark: '',
+                            closeMark: '',
+                            content: restContent,
+                        })
+                    }
+
+                } else {
+
+                    /*
+                        Let's don't prevent a closeMark to be an openMark.
+                        So we have to deal with the last segments, as it
+                        might have no closeMark.
+                    */
+
+                    const lastNewSeg = a2NewSegs.pop()
+
+                    a2 = [
+                        ...a2,
+
+                        ...a2NewSegs.map(seg => {
+                            return {
+                                isEnclosured: false,
+                                openMark: '',
+                                closeMark,
+                                content: seg,
+                            }
+                        }),
+                    ]
+
+                    if (lastNewSeg) {
+                        a2.push({
+                            isEnclosured: false,
+                            openMark: '',
+                            closeMark: '',
+                            content: lastNewSeg,
+                        })
+                    }
+
+                }
+            }
+        }
+
+
         return a2
     }, initArrayOfStage2)
 
@@ -134,7 +195,11 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
     }
 
 
-    return arrayOfStage2
+    return {
+        allNodesInOriginalOrder: arrayOfStage2,
+        nodesEnclosured:    arrayOfStage2.filter(n =>  n.isEnclosured),
+        nodesNotEnclosured: arrayOfStage2.filter(n => !n.isEnclosured),
+    }
 }
 
 

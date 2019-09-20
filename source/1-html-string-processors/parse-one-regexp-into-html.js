@@ -190,7 +190,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         )
     }
 
-    return [
+    astNode.content = [
         regexpOpen,
         regexpBeginSelector,
         '<span class="regexp-body">',

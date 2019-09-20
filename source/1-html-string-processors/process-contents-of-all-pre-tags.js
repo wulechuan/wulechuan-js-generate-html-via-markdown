@@ -13,91 +13,161 @@ const processAnyNonStringNonRegExpContextOfHTMLString = require(
     './parse-any-non-string-non-regexp-codes-into-html'
 )
 
-module.exports = function processAllContentsOfAllPreTagsOfHTMLString(html) {
-    const preTagsOrNotASTNodes = splitStringIntoASTByOpenAndCloseMarks(
+module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
+    const {
+        allNodesInOriginalOrder: rootLevelASTNodes,
+        nodesEnclosured: astNodesHTMLPreTag,
+    } = splitStringIntoASTByOpenAndCloseMarks(
         html,
         '<pre>',
         '</pre>'
     )
 
-    preTagsOrNotASTNodes.filter(n => n.isEnclosured).forEach(preTagASTNode => {
-        if (!preTagASTNode.content) { return }
 
-
-        const regexpOrNotASTNodes = splitStringIntoASTByOpenAndCloseMarks(
-            preTagASTNode.content,
-            '<span class="hljs-regexp">',
+    astNodesHTMLPreTag.forEach(astNodeHTMLPreTag => {
+        const {
+            allNodesInOriginalOrder,
+            // nodesEnclosured: astNodesForComments,
+            nodesNotEnclosured: astNodesForNonComments,
+        } = splitStringIntoASTByOpenAndCloseMarks(
+            astNodeHTMLPreTag.content,
+            '<span class="hljs-comment">',
             '</span>'
         )
 
-        regexpOrNotASTNodes.filter(n =>  n.isEnclosured).forEach(regexpASTNode => {
-            regexpASTNode.content = parseOneRegExpIntoHTML(regexpASTNode)
-        })
+        astNodeHTMLPreTag.content = allNodesInOriginalOrder
 
-        regexpOrNotASTNodes.filter(n => !n.isEnclosured).forEach(nonRegexpASTNode => {
-            const stringOrNotASTNodes1 = splitStringIntoASTByOpenAndCloseMarks(
-                nonRegexpASTNode.content,
-                '<span class="hljs-string">\'',
-                '\'</span>'
-            )
+        // astNodesForComments.forEach(parseOneCommentASTNodeIntoHTML)
 
-            const safeStringSpanHTMLs1 = stringOrNotASTNodes1.filter(n => {
-                return n.isEnclosured && !n.content.match(/<span|<\/span>/)
-            })
-            // const unsafeStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
-            //     return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
-            // })
 
-            // unsafeStringHTMLs1.forEach(console.log)
 
-            const notStringHTMLs1 = stringOrNotASTNodes1.filter(n => {
-                return !n.isEnclosured && n.content
-            })
 
-            safeStringSpanHTMLs1.forEach(stringASTNode1 => {
-                stringASTNode1.content = parseOneStringASTNodeIntoHTML(stringASTNode1)
-            })
 
-            notStringHTMLs1.forEach(nonStringASTNode1 => {
-                const stringOrNotASTNodes2 = splitStringIntoASTByOpenAndCloseMarks(
-                    nonStringASTNode1.content,
-                    '<span class="hljs-string">"',
-                    '"</span>'
+
+        function processRestASTNodes(astNodesRest, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
+            return astNodesRest.reduce((restNodes, astNode) => {
+                const {
+                    allNodesInOriginalOrder,
+                    nodesEnclosured: astNodesForRegExps,
+                    nodesNotEnclosured,
+                } = splitStringIntoASTByOpenAndCloseMarks(
+                    astNode.content,
+                    openMark,
+                    closeMark,
+                    optionsForSplitting
                 )
 
-                const safeStringSpanHTMLs2 = stringOrNotASTNodes2.filter(n => {
-                    return n.isEnclosured && !n.content.match(/<span|<\/span>/)
-                })
-                // const unsafeStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
-                //     return n.isEnclosured &&  n.content.match(/<span|<\/span>/)
-                // })
+                astNode.content = allNodesInOriginalOrder
 
-                // unsafeStringHTMLs2.forEach(console.log)
+                astNodesForRegExps.forEach(enclosuredContentsProcessor)
 
-                const notStringHTMLs2 = stringOrNotASTNodes2.filter(n => {
-                    return !n.isEnclosured
-                })
+                restNodes = [
+                    ...restNodes,
+                    ...nodesNotEnclosured,
+                ]
 
-                safeStringSpanHTMLs2.forEach(stringASTNode1 => {
-                    stringASTNode1.content = parseOneStringASTNodeIntoHTML(stringASTNode1)
-                })
-
-                notStringHTMLs2.forEach(nonStringASTNode2 => {
-                    nonStringASTNode2.content = processAnyNonStringNonRegExpContextOfHTMLString(nonStringASTNode2)
-                })
+                return restNodes
+            }, [])
+        }
 
 
-                nonStringASTNode1.content = stringOrNotASTNodes2
-            })
 
 
-            nonRegexpASTNode.content = stringOrNotASTNodes1
-        })
+        let astNodesRest = astNodesForNonComments
 
 
-        preTagASTNode.content = regexpOrNotASTNodes
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-regexp">',
+            '</span>',
+            parseOneRegExpIntoHTML
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-string">\'',
+            '\'</span>',
+            parseOneStringASTNodeIntoHTML
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-string">"',
+            '"</span>',
+            parseOneStringASTNodeIntoHTML
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-string">`',
+            '`</span>',
+            function (astNode) {
+                if (astNode.content.match(/<span|<\/span>/)) {
+                    return
+                }
+                parseOneStringASTNodeIntoHTML(astNode)
+            }
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-keyword">',
+            '</span>',
+            function (astNode) {
+                const { content } = astNode
+                astNode.openMark = `<span class="hljs-keyword ${content}">`
+            }
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-built_in">',
+            '</span>',
+            function (astNode) {
+                const { content } = astNode
+                astNode.openMark = `<span class="hljs-built_in ${content}">`
+            }
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-literal">',
+            '</span>',
+            function (astNode) {
+                const { content } = astNode
+                astNode.openMark = `<span class="hljs-literal ${content}">`
+            }
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-number">',
+            '</span>',
+            function (astNode) {
+                let { content } = astNode
+
+                content = content.replace(
+                    /-/g,
+                    '<span class="wlc-punctuation wlc-negative-sign">-</span>'
+                ).replace(
+                    /\+/g,
+                    '<span class="wlc-punctuation wlc-positive-sign">+</span>'
+                )
+
+                astNode.content = content
+            }
+        )
+
+
+
+
+
+
+        // astNodesRest.forEach(astNode => {
+        //     astNode.content = processAnyNonStringNonRegExpContextOfHTMLString(astNode)
+        // })
     })
 
 
-    return parseASTIntoString(preTagsOrNotASTNodes)
+    return parseASTIntoString(rootLevelASTNodes)
 }

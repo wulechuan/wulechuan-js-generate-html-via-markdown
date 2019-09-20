@@ -21,5 +21,5 @@ module.exports = function parseOneStringASTNodeIntoHTML(astNode) {
         )
     })
 
-    return content
+    astNode.content = content
 }

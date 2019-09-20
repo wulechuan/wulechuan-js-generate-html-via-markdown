@@ -103,19 +103,9 @@ const PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
 
 module.exports = function processAnyNonStringNonRegExpContextOfHTMLString(astNode) {
     var html = astNode.content
+    console.log(html)
+    console.log('-'.repeat(79))
 
-    const tokenTypesToAddWrapperTo = [
-        'hljs-keyword',
-        'hljs-built_in',
-        'hljs-literal',
-    ]
-
-    tokenTypesToAddWrapperTo.forEach(tokenType => {
-        html = html.replace(
-            new RegExp(`<span class="${tokenType}">(\\w+)</span>`, 'g'),
-            `<span class="${tokenType} $1">$1</span>`
-        )
-    })
 
     html = html.replace(
         /([\w_$][\w_$\d]*)(\s*=\s*<span class="hljs-function)/g,
@@ -165,15 +155,6 @@ module.exports = function processAnyNonStringNonRegExpContextOfHTMLString(astNod
         '$1<span class="wlc-punctuation wlc-exclamation-marks odd-count">!$3</span>$4'
     )
 
-    html = html.replace(
-        /(<span class="hljs-number">[^-]*)-(\d+)/g,
-        '$1<span class="wlc-punctuation wlc-negative-sign">-</span>$2'
-    )
-
-    html = html.replace(
-        /(<span class="hljs-number">[^+]*)\+(\d+)/g,
-        '$1<span class="wlc-punctuation wlc-positive-sign">+</span>$2'
-    )
 
     /*
         below will match:
@@ -213,5 +194,5 @@ module.exports = function processAnyNonStringNonRegExpContextOfHTMLString(astNod
     )
 
 
-    return html
+    astNode.content = html
 }
