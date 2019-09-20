@@ -13,6 +13,36 @@ const processAnyNonStringNonRegExpContextOfHTMLString = require(
     './parse-any-non-string-non-regexp-codes-into-html'
 )
 
+function processRestASTNodes(astNodesRest, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
+    return astNodesRest.reduce((restNodes, astNode) => {
+        const {
+            allNodesInOriginalOrder,
+            nodesEnclosured: astNodesForRegExps,
+            nodesNotEnclosured,
+        } = splitStringIntoASTByOpenAndCloseMarks(
+            astNode.content,
+            openMark,
+            closeMark,
+            optionsForSplitting
+        )
+
+        astNode.content = allNodesInOriginalOrder
+
+        if (typeof enclosuredContentsProcessor === 'function') {
+            astNodesForRegExps.forEach(enclosuredContentsProcessor)
+        }
+
+        restNodes = [
+            ...restNodes,
+            ...nodesNotEnclosured,
+        ]
+
+        return restNodes
+    }, [])
+}
+
+
+
 module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     const {
         allNodesInOriginalOrder: rootLevelASTNodes,
@@ -24,18 +54,93 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     )
 
 
-    astNodesHTMLPreTag.forEach(astNodeHTMLPreTag => {
+
+    const astNodesForHTMLCodeTagsWithinAPreTag = astNodesHTMLPreTag.reduce((astNodesForCodeTags, astNodeHTMLPreTag) => {
+        const segments = astNodeHTMLPreTag.content.split(/<code class="hljs(\s*)(language-[\w_\d-]+)?">/)
+        if (segments.length !== 4) {
+            throw new Error('Unhandled situation that a <pre> tag contains more than one <code> tags, or zero <code> tags.')
+        }
+
+        // console.log(`0:"${segments[0]}"`)
+        // console.log(`1:"${segments[1]}"`)
+        // console.log(`2:"${segments[2]}"`)
+        // console.log(`3:"${segments[3].slice(0, 256)}"`)
+        // console.log('-'.repeat(51))
+
+        const [
+            contentBeforeHTMLCodeTag,
+            optionalSpace,
+            optionalLangugaeType,
+            contentOfHTMLCodeTagWithEndTag,
+        ] = segments
+
+        const allASTNodes = []
+
+        if (contentBeforeHTMLCodeTag) {
+            allASTNodes.push({
+                isEnclosured: false,
+                openMark: '',
+                closeMark: '',
+                content: contentBeforeHTMLCodeTag,
+            })
+        }
+
+        const contentSegments = contentOfHTMLCodeTagWithEndTag.split(/<\/code>/)
+        const [
+            contentOfHTMLCodeTag,
+            contentAfterHTMLCodeTag,
+        ] = contentSegments
+
+        const astNodeForHTMLCodeTag = {
+            isHTMLCodeTagWithinAnPreTag: true,
+            codeLanguage: optionalLangugaeType,
+            isEnclosured: true,
+            openMark: `<code class="hljs${optionalSpace}${optionalLangugaeType}">`,
+            closeMark: '</code>',
+            content: contentOfHTMLCodeTag,
+        }
+
+        allASTNodes.push(astNodeForHTMLCodeTag)
+
+
+        if (contentAfterHTMLCodeTag) {
+            allASTNodes.push({
+                isEnclosured: false,
+                openMark: '',
+                closeMark: '',
+                content: contentAfterHTMLCodeTag,
+            })
+        }
+
+
+        // allASTNodes.forEach(ast => {
+        //     console.log(ast.codeLanguage)
+        //     console.log(ast.content.slice(0, 256))
+        // })
+        // console.log('-'.repeat(79))
+
+
+        astNodeHTMLPreTag.content = allASTNodes
+
+        astNodesForCodeTags.push(astNodeForHTMLCodeTag)
+
+        return astNodesForCodeTags
+    }, [])
+
+
+
+    astNodesForHTMLCodeTagsWithinAPreTag.forEach(astNodeHTMLCodeTag => {
         const {
             allNodesInOriginalOrder,
             // nodesEnclosured: astNodesForComments,
             nodesNotEnclosured: astNodesForNonComments,
         } = splitStringIntoASTByOpenAndCloseMarks(
-            astNodeHTMLPreTag.content,
+            astNodeHTMLCodeTag.content,
             '<span class="hljs-comment">',
             '</span>'
         )
 
-        astNodeHTMLPreTag.content = allNodesInOriginalOrder
+        astNodeHTMLCodeTag.content = allNodesInOriginalOrder
 
         // astNodesForComments.forEach(parseOneCommentASTNodeIntoHTML)
 
@@ -44,37 +149,25 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
 
-        function processRestASTNodes(astNodesRest, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
-            return astNodesRest.reduce((restNodes, astNode) => {
-                const {
-                    allNodesInOriginalOrder,
-                    nodesEnclosured: astNodesForRegExps,
-                    nodesNotEnclosured,
-                } = splitStringIntoASTByOpenAndCloseMarks(
-                    astNode.content,
-                    openMark,
-                    closeMark,
-                    optionsForSplitting
-                )
-
-                astNode.content = allNodesInOriginalOrder
-
-                astNodesForRegExps.forEach(enclosuredContentsProcessor)
-
-                restNodes = [
-                    ...restNodes,
-                    ...nodesNotEnclosured,
-                ]
-
-                return restNodes
-            }, [])
-        }
-
 
 
 
         let astNodesRest = astNodesForNonComments
 
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-tag">&lt;<span class="hljs-name">',
+            '</span>&gt;</span>',
+            null
+        )
+
+        astNodesRest = processRestASTNodes(
+            astNodesRest,
+            '<span class="hljs-tag">&lt;/<span class="hljs-name">',
+            '</span>&gt;</span>',
+            null
+        )
 
         astNodesRest = processRestASTNodes(
             astNodesRest,
@@ -101,7 +194,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             astNodesRest,
             '<span class="hljs-string">`',
             '`</span>',
-            function (astNode) {
+            astNode => {
                 if (astNode.content.match(/<span|<\/span>/)) {
                     return
                 }
@@ -113,7 +206,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             astNodesRest,
             '<span class="hljs-keyword">',
             '</span>',
-            function (astNode) {
+            astNode => {
                 const { content } = astNode
                 astNode.openMark = `<span class="hljs-keyword ${content}">`
             }
@@ -123,7 +216,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             astNodesRest,
             '<span class="hljs-built_in">',
             '</span>',
-            function (astNode) {
+            astNode => {
                 const { content } = astNode
                 astNode.openMark = `<span class="hljs-built_in ${content}">`
             }
@@ -133,7 +226,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             astNodesRest,
             '<span class="hljs-literal">',
             '</span>',
-            function (astNode) {
+            astNode => {
                 const { content } = astNode
                 astNode.openMark = `<span class="hljs-literal ${content}">`
             }
@@ -143,7 +236,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             astNodesRest,
             '<span class="hljs-number">',
             '</span>',
-            function (astNode) {
+            astNode => {
                 let { content } = astNode
 
                 content = content.replace(
