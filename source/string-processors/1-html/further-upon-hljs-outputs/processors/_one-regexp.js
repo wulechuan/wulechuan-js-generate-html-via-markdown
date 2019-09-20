@@ -1,28 +1,32 @@
 const defaultCSSClassNamesRegExp = {
     // `ccn` means (C)SS (C)lass (N)ame
 
-    ccnIllegal:                       'wlc-regexp-illegal',
+    ccnIllegal:                        'wlc-regexp-illegal',
 
-    ccnQuote:                         'regexp-quote',
-    ccnQuoteOpen:                     'regexp-open-quote',
-    ccnQuoteClose:                    'regexp-close-quote',
+    ccnQuote:                          'regexp-quote',
+    ccnQuoteOpen:                      'regexp-open-quote',
+    ccnQuoteClose:                     'regexp-close-quote',
 
-    ccnBody:                          'regexp-body',
-    ccnOptions:                       'regexp-options', // g, i
+    ccnBody:                           'regexp-body',
+    ccnOptions:                        'regexp-options', // g, i
 
-    ccnInputBeginSign:                'regexp-selector-input-begin',
-    ccnInputEndSign:                  'regexp-selector-input-end',
+    ccnInputBeginSign:                 'regexp-selector-input-begin',
+    ccnInputEndSign:                   'regexp-selector-input-end',
 
-    ccnEscapeChar:                    'wlc-escape-char',
-    ccnEscapeCharSlash:               'slash',
-    ccnEscapeCharTheEscapedChar:      'escaped-char',
+    ccnEscapeChar:                     'wlc-escape-char',
+    ccnEscapeCharSlash:                'slash',
+    ccnEscapeCharTheEscapedChar:       'escaped-char',
 
-    ccnControlChar:                   'regexp-control-char',
-    ccnControlCharSpecificNamePrefix: 'regexp-control',
-    ccnControlCharTheChar:            'control-char',
+    ccnControlChar:                    'regexp-control-char',
+    ccnControlCharSpecificNamePrefix:  'regexp-control',
+    ccnControlCharTheChar:             'control-char',
 
-    ccnLiteral:                       'regexp-literal-char',
-    ccnLiteralSpecificNamePrefix:     'regexp-literal',
+    ccnSelectorChar:                   'regexp-selector-char',
+    ccnSelectorCharSpecificNamePrefix: 'regexp-selector',
+    ccnSelectorCharTheChar:            'selector-char',
+
+    ccnLiteral:                        'regexp-literal-char',
+    ccnLiteralSpecificNamePrefix:      'regexp-literal',
 }
 
 
@@ -94,30 +98,16 @@ const signleMeaningControlChars = [
     },
 ]
 
-const regexpControlChars = [
-    // // { char: '+',   cssClassName: 'regexp-control-char regexp-control-plus-sign' },
-    // // { char: '*',   cssClassName: 'regexp-control-char regexp-control-asterisk' },
-    // { char: '?',   cssClassName: 'regexp-control-char regexp-control-question-mark' },
-    // // { char: '^',   cssClassName: 'regexp-control-char regexp-control-invert' },
-    // { char: '(',   cssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-open' },
-    // { char: ')',   cssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-close' },
-    // { char: '[',   cssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-open' },
-    // { char: ']',   cssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-close' },
-    // { char: '{',   cssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-open' },
-    // { char: '}',   cssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-close' },
-    // { char: '|',   cssClassName: 'regexp-control-char regexp-control-logic-or' },
-
-    { char: '.',   cssClassName: 'regexp-selector-char regexp-selector-any-char' },
-
-    { char: '\\w', cssClassName: 'regexp-selector-char regexp-selector-word' },
-    { char: '\\W', cssClassName: 'regexp-selector-char regexp-selector-non-word' },
-    { char: '\\d', cssClassName: 'regexp-selector-char regexp-selector-digit' },
-    { char: '\\D', cssClassName: 'regexp-selector-char regexp-selector-non-digit' },
-    { char: '\\s', cssClassName: 'regexp-selector-char regexp-selector-whitespace' },
-    { char: '\\S', cssClassName: 'regexp-selector-char regexp-selector-non-whitespace' },
-    { char: '\\b', cssClassName: 'regexp-selector-char regexp-selector-boundary' },
-    { char: '\\B', cssClassName: 'regexp-selector-char regexp-selector-non-boundary' },
-]
+// const regexpSelectorChars = [
+//     { char: '\\w', cssClassNameKeyword: 'word' },
+//     { char: '\\W', cssClassNameKeyword: 'non-word' },
+//     { char: '\\d', cssClassNameKeyword: 'digit' },
+//     { char: '\\D', cssClassNameKeyword: 'non-digit' },
+//     { char: '\\s', cssClassNameKeyword: 'whitespace' },
+//     { char: '\\S', cssClassNameKeyword: 'non-whitespace' },
+//     { char: '\\b', cssClassNameKeyword: 'boundary' },
+//     { char: '\\B', cssClassNameKeyword: 'non-boundary' },
+// ]
 
 
 // TODO:
@@ -190,6 +180,123 @@ const regexpEscapedLiteralChars = [ //eslint-disable-line no-unused-vars
 ]
 
 
+function regExpASTSplitter(astNode) {
+    const { content } = astNode
+
+    const segs = content.split('[')
+    const subASTs = []
+
+    const seg1 = segs.shift()
+
+    if (seg1) { // Is an empty string if '[' is the first char of original content
+        subASTs.push({
+            isEnclosured: false,
+            openMark: '',
+            closeMark: '',
+            content: seg1,
+        })
+    }
+
+
+    if (segs.length > 0) {
+        let currentMergedSeg = ''
+        let currentMergedSegIsPairedCorrectly = false
+        let openMarksCountInsideOneBraketPair = 0
+
+        for (let i = 0; i < segs.length; i++) {
+            // a new '[' presents
+
+            const currentSeg = segs[i]
+            const segParts = currentSeg.split(']')
+            const closeMarksCount = segParts.length
+
+            if (closeMarksCount > 2) {
+                throw new Error('@wulechuan/regexp-to-html: [] not pairing well.')
+            }
+
+            const unescapedCloseMarksCount = segParts.reduce((c, s) => {
+                if (s.slice(-1) !== '\\') {
+                    c++
+                }
+                return c
+            }, 0) - 1
+
+
+            if (unescapedCloseMarksCount > 1) {
+                throw new Error('@wulechuan/regexp-to-html: [] not pairing well.')
+            }
+
+            for (let j = 0; j < segParts.length; j++) {
+                const segPart = segParts[j]
+
+                currentMergedSeg += segPart
+
+                if (segPart.slice(-1) === '\\') {
+                    // a literal `]`, that is a '\]'
+                    currentMergedSeg += ']'
+                } else {
+                    // a valid closing braket, a ]
+                    subASTs.push({
+                        isEnclosured: true,
+                        openMark:  '[',
+                        closeMark: ']',
+                        content: currentMergedSeg,
+                    })
+
+                    currentMergedSegIsPairedCorrectly = true
+                    openMarksCountInsideOneBraketPair = 0
+
+                    currentMergedSeg = ''
+                }
+            }
+
+            if (!currentMergedSegIsPairedCorrectly) {
+                // Seg parts all processed, but the open '[' still not paired yet.
+                // We are still inside a [] pair.
+
+                currentMergedSeg += '[' // The splitter behide this seg was a literal `[`, although not escaped.
+                openMarksCountInsideOneBraketPair++
+
+            } else {
+                if (currentMergedSeg) { // paired correctly, and have tail string outside the [] pair.
+                    if (currentMergedSeg.slice(-1) === '\\') {
+                        // The tail ends will a '\\'.
+                        // So The splitter behide this seg was a literal `[`, and was escaped.
+
+                        currentMergedSeg += '['
+                        openMarksCountInsideOneBraketPair++
+
+                    } else {
+                        // The tail does NOT end will a '\\'.
+                        // So the next(in the next loop) '[' will be a begining of a new [] pair.
+                        subASTs.push({
+                            isEnclosured: false,
+                            openMark: '',
+                            closeMark: '',
+                            content: currentMergedSeg,
+                        })
+                        currentMergedSegIsPairedCorrectly = false
+                    }
+                } else {
+                    // Paired and no tail. Clean.
+
+                }
+            }
+
+            if (openMarksCountInsideOneBraketPair > 1) {
+                throw new Error('@wulechuan/regexp-to-html: Too many "[" within on pair of "[]".')
+            }
+
+        }
+
+        // console.log('RegExp AST:')
+        // subASTs.filter(a => a.isEnclosured).forEach(a => console.log(a))
+        // console.log('-'.repeat(59))
+
+        astNode.content = subASTs
+    }
+}
+
 
 module.exports = function parseOnRegExpIntoHTML(astNode) {
     const cssClassNames = {
@@ -211,6 +318,9 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         ccnControlChar,
         ccnControlCharSpecificNamePrefix,
         ccnControlCharTheChar,
+        // ccnSelectorChar,
+        // ccnSelectorCharSpecificNamePrefix,
+        // ccnSelectorCharTheChar,
         ccnLiteral,
         ccnLiteralSpecificNamePrefix,
     } = cssClassNames
@@ -266,9 +376,25 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
     }
 
 
-    let regexpBody = content
 
-    if (regexpBody) {
+
+    const regExpBodyASTNode = {
+        isEnclosured: true,
+        openMark: '/',
+        closeMark: '/',
+        content,
+    }
+
+    if (content) {
+        regExpASTSplitter(regExpBodyASTNode)
+
+        console.log('RegExp AST:')
+        console.log(regExpBodyASTNode)
+        console.log('-'.repeat(59))
+
+        let regexpBody = content
+
+
         // '-' as char range control
         regexpBody = regexpBody.replace(
             /(\[[^a-z\]]*(\\\])?[^a-z\]]*[a-z])-([a-z])/g,
@@ -358,8 +484,18 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
                 cssClassNameExtra: ce,
             } = ccib
 
+            // All control chars have been incorrectly treated as control chars
+            // even if they are escaped.
+            const incorrectInputRegExpBody = [
+                '\\\\',
+                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
+                `<span class="${ccnControlCharTheChar}">\\${char}<\\/span>`,
+                '<\\/span>',
+            ].join('')
+
+            // Now lets recover them back to escaped literals.
             regexpBody = regexpBody.replace(
-                new RegExp(`\\\\\\${char}`, 'g'),
+                new RegExp(incorrectInputRegExpBody, 'g'),
                 [
                     `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">`,
                     `<span class="${ccnEscapeCharSlash}">\\</span>`,
@@ -429,22 +565,23 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
 
 
 
+        // { char: '.',   cssClassName: 'regexp-selector-char regexp-selector-any-char' },
 
 
-        regexpControlChars.forEach(rcc => {
-            const { char } = rcc
-            const isEscapeChar = char.startsWith('\\')
-            const coreChar = isEscapeChar ? char.slice(1) : char
+        // regexpSelectorChars.forEach(rcc => {
+        //     const { char } = rcc
+        //     const isEscapeChar = char.startsWith('\\')
+        //     const coreChar = isEscapeChar ? char.slice(1) : char
 
-            regexpBody = regexpBody.replace(
-                new RegExp(`\\${char}`, 'g'),
-                `<span class="${ccnControlChar} ${rcc.cssClassName}${ isEscapeChar ? ` ${ccnEscapeChar}` : '' }">${
-                    isEscapeChar ? `<span class="${ccnEscapeCharSlash}">\\</span>` : ''
-                }<span class="${ccnControlCharTheChar}${ isEscapeChar ? ` ${ccnEscapeCharTheEscapedChar}` : '' }">${
-                    coreChar
-                }</span></span>`
-            )
-        })
+        //     regexpBody = regexpBody.replace(
+        //         new RegExp(`\\${char}`, 'g'),
+        //         `<span class="${ccnControlChar} ${rcc.cssClassName}${ isEscapeChar ? ` ${ccnEscapeChar}` : '' }">${
+        //             isEscapeChar ? `<span class="${ccnEscapeCharSlash}">\\</span>` : ''
+        //         }<span class="${ccnControlCharTheChar}${ isEscapeChar ? ` ${ccnEscapeCharTheEscapedChar}` : '' }">${
+        //             coreChar
+        //         }</span></span>`
+        //     )
+        // })
 
         // regexpEscapedLiteralChars.forEach(relc => {
         //     const char = relc.escapedChar
@@ -538,7 +675,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
     astNode.content = [
         regexpOpen,
         `<span class="${ccnBody}">`,
-        regexpBody,
+        regExpBodyASTNode.content,
         '</span>',
         regexpClose,
         regexpOptions,
