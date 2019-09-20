@@ -114,7 +114,8 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 './source/1-html-string-processors/split-string-by-open-and-close-marks.js',
                 './source/1-html-string-processors/parse-one-regexp-into-html.js',
                 './source/1-html-string-processors/parse-one-string-into-html.js',
-                './source/1-html-string-processors/parse-any-non-string-non-regexp-codes-into-html.js',
+                './source/1-html-string-processors/parse-punctuations-common-into-html.js',
+                './source/1-html-string-processors/parse-punctuations-special-into-html.js',
             ].forEach(subPath => {
                 clearCacheOfRequiredFile(joinPathOSLocalStyle(thisModuleRootFolderPath, subPath))
             })

@@ -3,18 +3,23 @@ const {
     parseASTIntoString,
 } = require('./split-string-by-open-and-close-marks')
 
-const parseOneRegExpIntoHTML = require(
+const parseOneRegExpASTNodeIntoHTML = require(
     './parse-one-regexp-into-html'
 )
 const parseOneStringASTNodeIntoHTML = require(
     './parse-one-string-into-html'
 )
-const processAnyNonStringNonRegExpContextOfHTMLString = require(
-    './parse-any-non-string-non-regexp-codes-into-html'
+const parseSepcialPunctuationsIntoHTML = require(
+    './parse-punctuations-special-into-html'
+)
+const parseCommonPunctuationsIntoHTML = require(
+    './parse-punctuations-common-into-html'
 )
 
-function processRestASTNodes(astNodesRest, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
-    return astNodesRest.reduce((restNodes, astNode) => {
+
+
+function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
+    return astNodes.reduce((restNodes, astNode) => {
         const {
             allNodesInOriginalOrder,
             nodesEnclosured: astNodesForRegExps,
@@ -41,7 +46,61 @@ function processRestASTNodes(astNodesRest, openMark, closeMark, enclosuredConten
     }, [])
 }
 
+function codeLanguageIsOneOf(codeLanguage, languageNames) {
+    if (!codeLanguage) {
+        return false
+    }
 
+    if (!codeLanguage || typeof codeLanguage !== 'string') {
+        throw new TypeError('@wulechuan/hljs-plus: codeLanguage must be a non-empty string')
+    }
+
+    if (!Array.isArray(languageNames)) {
+        throw new TypeError('@wulechuan/hljs-plus: languageNames must be an array')
+    }
+
+    let cl1
+    // let cl2
+
+    const matchingResult = codeLanguage.match(/^language-([\w_\d-]+)/)
+    if (matchingResult) {
+        cl1 = matchingResult[1]
+        // cl2 = codeLanguage
+    } else {
+        cl1 = codeLanguage
+        // cl2 = `language-${codeLanguage}`
+    }
+
+    for (let i = 0; i < languageNames.length; i++) {
+        const provided = languageNames[i]
+
+        if (!provided || typeof provided !== 'string') {
+            throw new TypeError('@wulechuan/hljs-plus: languageName must be a non-empty string')
+        }
+
+        let l1
+        // let l2
+
+        const matchingResult = provided.match(/^language-([\w_\d-]+)/)
+        if (matchingResult) {
+            l1 = matchingResult[1]
+            // l2 = provided
+        } else {
+            l1 = provided
+            // l2 = `language-${provided}`
+        }
+
+        if (cl1 === l1) {
+            return true
+        }
+    }
+
+    return false
+}
+
+function codeLanguageIsNotAnyOf(codeLanguage, languageNames) { // eslint-disable-line no-unused-vars
+    return !codeLanguageIsOneOf(codeLanguage, languageNames)
+}
 
 module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     const {
@@ -56,8 +115,8 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
     const astNodesForHTMLCodeTagsWithinAPreTag = astNodesHTMLPreTag.reduce((astNodesForCodeTags, astNodeHTMLPreTag) => {
-        const segments = astNodeHTMLPreTag.content.split(/<code class="hljs(\s*)(language-[\w_\d-]+)?">/)
-        if (segments.length !== 4) {
+        const segments = astNodeHTMLPreTag.content.split(/<code class="hljs(\s*)(language-)?([\w_\d-]+)?">/)
+        if (segments.length !== 5) {
             throw new Error('Unhandled situation that a <pre> tag contains more than one <code> tags, or zero <code> tags.')
         }
 
@@ -70,6 +129,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         const [
             contentBeforeHTMLCodeTag,
             optionalSpace,
+            optionalLangugaeTypePrefix,
             optionalLangugaeType,
             contentOfHTMLCodeTagWithEndTag,
         ] = segments
@@ -91,11 +151,13 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             contentAfterHTMLCodeTag,
         ] = contentSegments
 
+        const codeLanguage = `${optionalLangugaeTypePrefix || ''}${optionalLangugaeType || ''}`
+
         const astNodeForHTMLCodeTag = {
             isHTMLCodeTagWithinAnPreTag: true,
-            codeLanguage: optionalLangugaeType,
+            codeLanguage,
             isEnclosured: true,
-            openMark: `<code class="hljs${optionalSpace}${optionalLangugaeType}">`,
+            openMark: `<code class="hljs${optionalSpace}${codeLanguage}">`,
             closeMark: '</code>',
             content: contentOfHTMLCodeTag,
         }
@@ -131,6 +193,11 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
     astNodesForHTMLCodeTagsWithinAPreTag.forEach(astNodeHTMLCodeTag => {
         const {
+            codeLanguage,
+        } = astNodeHTMLCodeTag
+
+
+        const {
             allNodesInOriginalOrder,
             // nodesEnclosured: astNodesForComments,
             nodesNotEnclosured: astNodesForNonComments,
@@ -152,45 +219,70 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
 
-        let astNodesRest = astNodesForNonComments
+        let astNodesRest = astNodesForNonComments // eslint-disable-line no-unused-vars
 
 
-        astNodesRest = processRestASTNodes(
-            astNodesRest,
-            '<span class="hljs-tag">&lt;<span class="hljs-name">',
-            '</span>&gt;</span>',
-            null
-        )
+        if (
+            codeLanguageIsOneOf(codeLanguage, [
+                'xml',
+                'html',
+            ])
+        ) {
+            astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+                astNodesRest,
+                '<span class="hljs-meta">', // <!DOCTYPE html>
+                '</span>',
+                null
+            )
 
-        astNodesRest = processRestASTNodes(
-            astNodesRest,
-            '<span class="hljs-tag">&lt;/<span class="hljs-name">',
-            '</span>&gt;</span>',
-            null
-        )
+            astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+                astNodesRest,
+                '<span class="hljs-tag">&lt;/<span class="hljs-name">',
+                '</span>&gt;</span>',
+                null
+            )
 
-        astNodesRest = processRestASTNodes(
-            astNodesRest,
-            '<span class="hljs-regexp">',
-            '</span>',
-            parseOneRegExpIntoHTML
-        )
+            astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+                astNodesRest,
+                '<span class="hljs-tag">&lt;/<span class="hljs-name">',
+                '</span>&gt;</span>',
+                null
+            )
+        }
 
-        astNodesRest = processRestASTNodes(
+
+        if (true || // eslint-disable-line no-constant-condition
+            codeLanguageIsOneOf(codeLanguage, [
+                'javascript',
+                'typescript',
+                'python',
+                'java',
+            ])
+        ) {
+            astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+                astNodesRest,
+                '<span class="hljs-regexp">',
+                '</span>',
+                parseOneRegExpASTNodeIntoHTML
+            )
+        }
+
+
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">\'',
             '\'</span>',
             parseOneStringASTNodeIntoHTML
         )
 
-        astNodesRest = processRestASTNodes(
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">"',
             '"</span>',
             parseOneStringASTNodeIntoHTML
         )
 
-        astNodesRest = processRestASTNodes(
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">`',
             '`</span>',
@@ -202,7 +294,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             }
         )
 
-        astNodesRest = processRestASTNodes(
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-keyword">',
             '</span>',
@@ -212,7 +304,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             }
         )
 
-        astNodesRest = processRestASTNodes(
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-built_in">',
             '</span>',
@@ -222,7 +314,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             }
         )
 
-        astNodesRest = processRestASTNodes(
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-literal">',
             '</span>',
@@ -232,7 +324,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             }
         )
 
-        astNodesRest = processRestASTNodes(
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-number">',
             '</span>',
@@ -253,12 +345,26 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
 
+        if (
+            codeLanguageIsNotAnyOf(codeLanguage, [
+                'css',
+                'stylus',
+                'less',
+                'sass',
+            ])
+        ) {
+            // ++ -- % etc
+            astNodesRest.forEach(astNode => {
+                parseSepcialPunctuationsIntoHTML(astNode)
+            })
+        }
 
 
 
-        // astNodesRest.forEach(astNode => {
-        //     astNode.content = processAnyNonStringNonRegExpContextOfHTMLString(astNode)
-        // })
+        astNodesRest.forEach(astNode => {
+            // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
+            parseCommonPunctuationsIntoHTML(astNode)
+        })
     })
 
 

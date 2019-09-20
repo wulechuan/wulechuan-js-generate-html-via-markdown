@@ -10,6 +10,7 @@ const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
 
 
 module.exports = function parseOneStringASTNodeIntoHTML(astNode) {
+    const { openMark, closeMark } = astNode
     let { content } = astNode
 
     STANDARD_ESPACED_CHARS_IN_STRING_LITERALS.forEach(sec => {
@@ -21,5 +22,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(astNode) {
         )
     })
 
-    astNode.content = content
+    astNode.openMark  = `${openMark.slice(0, -1)}<span class="wlc-string-quote open-quote">${openMark.slice(-1)}</span>`
+    astNode.content = `<span class="wlc-string-body">${content}</span>`
+    astNode.closeMark = `<span class="wlc-string-quote close-quote">${closeMark.slice(0, 1)}</span>${closeMark.slice(1)}`
 }
