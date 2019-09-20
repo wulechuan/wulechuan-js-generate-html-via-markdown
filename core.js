@@ -112,6 +112,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         if (shouldReloadModulesForDevWatchingMode) {
             [
                 './source/1-html-string-processors/split-string-by-open-and-close-marks.js',
+                './source/1-html-string-processors/parse-one-comment-into-html.js',
                 './source/1-html-string-processors/parse-one-regexp-into-html.js',
                 './source/1-html-string-processors/parse-one-string-into-html.js',
                 './source/1-html-string-processors/parse-all-punctuations-into-html.js',

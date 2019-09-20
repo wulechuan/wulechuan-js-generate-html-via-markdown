@@ -9,6 +9,11 @@ const {
 } = require('./code-language-matchers')
 
 
+const parseOneASTNodeOfCommentIntoHTML = require(
+    './parse-one-comment-into-html'
+)
+
+
 const parseOneRegExpASTNodeIntoHTML = require(
     './parse-one-regexp-into-html'
 )
@@ -36,20 +41,12 @@ const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
 function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
     return astNodes.reduce((restNodes, astNode) => {
         const {
-            allNodesInOriginalOrder,
-            nodesEnclosured: astNodesForRegExps,
+            nodesEnclosured,
             nodesNotEnclosured,
-        } = splitOneASTNodeByOpenAndCloseMarks(
-            astNode.content,
-            openMark,
-            closeMark,
-            optionsForSplitting
-        )
-
-        astNode.content = allNodesInOriginalOrder
+        } = splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, optionsForSplitting)
 
         if (typeof enclosuredContentsProcessor === 'function') {
-            astNodesForRegExps.forEach(enclosuredContentsProcessor)
+            nodesEnclosured.forEach(enclosuredContentsProcessor)
         }
 
         restNodes = [
@@ -63,11 +60,17 @@ function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark,
 
 
 module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
+    const rootLevelASTNodes = {
+        isRoot: true, // Not used. Maybe use in the future.
+        openMark: '',
+        closeMark: '',
+        content: html,
+    }
+
     const {
-        allNodesInOriginalOrder: rootLevelASTNodes,
         nodesEnclosured: astNodesHTMLPreTag,
     } = splitOneASTNodeByOpenAndCloseMarks(
-        html,
+        rootLevelASTNodes,
         '<pre>',
         '</pre>'
     )
@@ -158,18 +161,15 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
         const {
-            allNodesInOriginalOrder,
-            // nodesEnclosured: astNodesForComments,
+            nodesEnclosured: astNodesForComments,
             nodesNotEnclosured: astNodesForNonComments,
         } = splitOneASTNodeByOpenAndCloseMarks(
-            astNodeHTMLCodeTag.content,
+            astNodeHTMLCodeTag,
             '<span class="hljs-comment">',
             '</span>'
         )
 
-        astNodeHTMLCodeTag.content = allNodesInOriginalOrder
-
-        // astNodesForComments.forEach(parseOneCommentASTNodeIntoHTML)
+        astNodesForComments.forEach(parseOneASTNodeOfCommentIntoHTML)
 
 
 

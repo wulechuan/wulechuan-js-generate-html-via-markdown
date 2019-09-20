@@ -9,11 +9,7 @@ const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
 ]
 
 
-module.exports = parseOneStringASTNodeIntoHTML
-
-
-
-function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae */) {
+module.exports = function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae */) {
     let { content, openMark, closeMark } = astNode
     const quoteSign = openMark.slice(-1)
 
