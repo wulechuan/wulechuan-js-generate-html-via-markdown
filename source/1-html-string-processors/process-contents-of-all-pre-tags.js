@@ -3,17 +3,32 @@ const {
     parseASTIntoString,
 } = require('./split-string-by-open-and-close-marks')
 
+const {
+    codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
+    codeLanguageIsNotAnyOf, // eslint-disable-line no-unused-vars
+} = require('./code-language-matchers')
+
+
 const parseOneRegExpASTNodeIntoHTML = require(
     './parse-one-regexp-into-html'
 )
+
+
 const parseOneStringASTNodeIntoHTML = require(
     './parse-one-string-into-html'
 )
-const parseSepcialPunctuationsIntoHTML = require(
-    './parse-punctuations-special-into-html'
+
+
+const {
+    parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
+    parseAllRestPunctuationsInAnASTNodeIntoHTML,
+} = require(
+    './parse-all-punctuations-into-html'
 )
-const parseCommonPunctuationsIntoHTML = require(
-    './parse-punctuations-common-into-html'
+
+
+const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
+    './parse-javascript-family-stuffs-into-html'
 )
 
 
@@ -46,61 +61,6 @@ function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark,
     }, [])
 }
 
-function codeLanguageIsOneOf(codeLanguage, languageNames) {
-    if (!codeLanguage) {
-        return false
-    }
-
-    if (!codeLanguage || typeof codeLanguage !== 'string') {
-        throw new TypeError('@wulechuan/hljs-plus: codeLanguage must be a non-empty string')
-    }
-
-    if (!Array.isArray(languageNames)) {
-        throw new TypeError('@wulechuan/hljs-plus: languageNames must be an array')
-    }
-
-    let cl1
-    // let cl2
-
-    const matchingResult = codeLanguage.match(/^language-([\w_\d-]+)/)
-    if (matchingResult) {
-        cl1 = matchingResult[1]
-        // cl2 = codeLanguage
-    } else {
-        cl1 = codeLanguage
-        // cl2 = `language-${codeLanguage}`
-    }
-
-    for (let i = 0; i < languageNames.length; i++) {
-        const provided = languageNames[i]
-
-        if (!provided || typeof provided !== 'string') {
-            throw new TypeError('@wulechuan/hljs-plus: languageName must be a non-empty string')
-        }
-
-        let l1
-        // let l2
-
-        const matchingResult = provided.match(/^language-([\w_\d-]+)/)
-        if (matchingResult) {
-            l1 = matchingResult[1]
-            // l2 = provided
-        } else {
-            l1 = provided
-            // l2 = `language-${provided}`
-        }
-
-        if (cl1 === l1) {
-            return true
-        }
-    }
-
-    return false
-}
-
-function codeLanguageIsNotAnyOf(codeLanguage, languageNames) { // eslint-disable-line no-unused-vars
-    return !codeLanguageIsOneOf(codeLanguage, languageNames)
-}
 
 module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     const {
@@ -230,7 +190,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         ) {
             astNodesRest = processASTNodesAndCollectUnprocessedOnes(
                 astNodesRest,
-                '<span class="hljs-meta">', // <!DOCTYPE html>
+                '<span class="hljs-meta">', // html: <!DOCTYPE html>, css: !important, etc.
                 '</span>',
                 null
             )
@@ -282,17 +242,17 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             parseOneStringASTNodeIntoHTML
         )
 
-        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
-            astNodesRest,
-            '<span class="hljs-string">`',
-            '`</span>',
-            astNode => {
-                if (astNode.content.match(/<span|<\/span>/)) {
-                    return
-                }
-                parseOneStringASTNodeIntoHTML(astNode)
-            }
-        )
+        // astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+        //     astNodesRest,
+        //     '<span class="hljs-string">`',
+        //     '`</span>',
+        //     astNode => {
+        //         if (astNode.content.match(/<span|<\/span>/)) {
+        //             return
+        //         }
+        //         parseOneStringASTNodeIntoHTML(astNode)
+        //     }
+        // )
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
@@ -344,27 +304,57 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         )
 
 
+        astNodesRest.forEach(astNode => {
+            // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
+            parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
+        })
+
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+            astNodesRest,
+            '<span class="wlc-punctuation',
+            '</span>',
+            null
+        )
+
+
+
+        astNodesRest.forEach(astNode => {
+            parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
+        })
+
 
         if (
             codeLanguageIsNotAnyOf(codeLanguage, [
                 'css',
                 'stylus',
-                'less',
                 'sass',
+                'less',
+                'ini',
+                'json',
             ])
         ) {
-            // ++ -- % etc
             astNodesRest.forEach(astNode => {
-                parseSepcialPunctuationsIntoHTML(astNode)
+                let { content } = astNode
+
+                content = content.replace(
+                    /([\w_$][\w_$\d]*)(\s*=\s*<span class="hljs-function)/g,
+                    '<span class="wlc-function-name hljs-title wlc-var-name">$1</span>$2'
+                )
+
+                astNode.content = content
             })
         }
 
 
-
-        astNodesRest.forEach(astNode => {
-            // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
-            parseCommonPunctuationsIntoHTML(astNode)
-        })
+        if (
+            codeLanguageIsOneOf(codeLanguage, [
+                'javascript',
+                'typescript',
+                // 'coffeescript',
+            ])
+        ) {
+            astNodesRest.forEach(parseJavascriptFamilyStuffsInAnASTNodeIntoHTML, codeLanguage)
+        }
     })
 
 
