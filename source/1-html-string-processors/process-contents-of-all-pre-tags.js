@@ -1,5 +1,5 @@
 const {
-    splitStringIntoASTByOpenAndCloseMarks,
+    splitOneASTNodeByOpenAndCloseMarks,
     parseASTIntoString,
 } = require('./split-string-by-open-and-close-marks')
 
@@ -28,7 +28,7 @@ const {
 
 
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
-    './parse-javascript-family-stuffs-into-html'
+    './parse-language-specific-stuffs-javascript-family'
 )
 
 
@@ -39,7 +39,7 @@ function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark,
             allNodesInOriginalOrder,
             nodesEnclosured: astNodesForRegExps,
             nodesNotEnclosured,
-        } = splitStringIntoASTByOpenAndCloseMarks(
+        } = splitOneASTNodeByOpenAndCloseMarks(
             astNode.content,
             openMark,
             closeMark,
@@ -66,7 +66,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     const {
         allNodesInOriginalOrder: rootLevelASTNodes,
         nodesEnclosured: astNodesHTMLPreTag,
-    } = splitStringIntoASTByOpenAndCloseMarks(
+    } = splitOneASTNodeByOpenAndCloseMarks(
         html,
         '<pre>',
         '</pre>'
@@ -161,7 +161,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             allNodesInOriginalOrder,
             // nodesEnclosured: astNodesForComments,
             nodesNotEnclosured: astNodesForNonComments,
-        } = splitStringIntoASTByOpenAndCloseMarks(
+        } = splitOneASTNodeByOpenAndCloseMarks(
             astNodeHTMLCodeTag.content,
             '<span class="hljs-comment">',
             '</span>'
@@ -242,17 +242,19 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             parseOneStringASTNodeIntoHTML
         )
 
-        // astNodesRest = processASTNodesAndCollectUnprocessedOnes(
-        //     astNodesRest,
-        //     '<span class="hljs-string">`',
-        //     '`</span>',
-        //     astNode => {
-        //         if (astNode.content.match(/<span|<\/span>/)) {
-        //             return
-        //         }
-        //         parseOneStringASTNodeIntoHTML(astNode)
-        //     }
-        // )
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+            astNodesRest,
+            '<span class="hljs-string">`',
+            '`</span>',
+            parseOneStringASTNodeIntoHTML,
+            {
+                splittingResultValidator: content => {
+                    const countOfSpans      = (content.match(/<span(\s|$)/g)     || []).length
+                    const countOfSlashSpans = (content.match(/<\/span(\s|>|$)/g) || []).length
+                    return countOfSpans === countOfSlashSpans
+                },
+            }
+        )
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
@@ -304,25 +306,6 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         )
 
 
-        astNodesRest.forEach(astNode => {
-            // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
-            parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
-        })
-
-        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
-            astNodesRest,
-            '<span class="wlc-punctuation',
-            '</span>',
-            null
-        )
-
-
-
-        astNodesRest.forEach(astNode => {
-            parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
-        })
-
-
         if (
             codeLanguageIsNotAnyOf(codeLanguage, [
                 'css',
@@ -344,6 +327,27 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
                 astNode.content = content
             })
         }
+
+
+
+        astNodesRest.forEach(astNode => {
+            // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
+            parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
+        })
+
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+            astNodesRest,
+            '<span class="wlc-punctuation',
+            '</span>',
+            null
+        )
+
+
+
+        astNodesRest.forEach(astNode => {
+            parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
+        })
+
 
 
         if (

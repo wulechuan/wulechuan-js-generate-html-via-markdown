@@ -223,17 +223,18 @@ function processStandaloneEqualSigns(html, codeLanguage) {
 }
 
 function processExclamationMarks(html, codeLanguage) {
-    if (html.match(/!/)) {
-        console.log(html)
-        console.log('-'.repeat(79))
-    }
-
+    /**
+     * Snippets like "!!<span" will finally produce ".*!!"
+     * Thus !! might be at tail of a content string.
+     * So we need to consider the "$" in our regexps used below.
+     * The same as the "^".
+     */
     html = html.replace(
-        /([^!])((!!)+)([^!])/g,
-        '$1<span class="wlc-punctuation wlc-exclamation-marks even-count">$2</span>$4'
+        /(^|([^!]))((!!)+)(([^!])|$)/g,
+        '$2<span class="wlc-punctuation wlc-exclamation-marks even-count">$3</span>$6'
     ).replace(
-        /([^!])!((!!)*)([^!])/g,
-        '$1<span class="wlc-punctuation wlc-exclamation-marks odd-count">!$3</span>$4'
+        /(^|([^!]))!((!!)*)(([^!])|$)/g,
+        '$2<span class="wlc-punctuation wlc-exclamation-marks odd-count">!$4</span>$6'
     )
 
     if (
@@ -245,8 +246,8 @@ function processExclamationMarks(html, codeLanguage) {
         ])
     ) {
         html = html.replace(
-            /<span class="hljs-meta"><span class="wlc-punctuation wlc-exclamation-marks odd-count">!<\/span>important<\/span>/g,
-            '<span class="hljs-meta css-exclamation-important>!important</span>'
+            /<span class="hljs-meta"><span class="wlc-punctuation wlc-exclamation-marks odd-count">!<\/span>important/g,
+            '<span class="hljs-meta css-exclamation-important>!important'
         )
     }
 

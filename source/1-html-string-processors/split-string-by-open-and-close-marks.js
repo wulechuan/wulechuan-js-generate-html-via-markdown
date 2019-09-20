@@ -1,5 +1,5 @@
 module.exports = {
-    splitStringIntoASTByOpenAndCloseMarks,
+    splitOneASTNodeByOpenAndCloseMarks,
     parseASTIntoString,
 }
 
@@ -32,7 +32,7 @@ function parseASTIntoString(input) {
 }
 
 
-function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, options) {
+function splitOneASTNodeByOpenAndCloseMarks(string, openMark, closeMark, options) {
     if (typeof string !== 'string') {
         throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[0] must be an string!')
     }
@@ -91,6 +91,13 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
         }
     }
 
+    const {
+        shouldNotForcePairing,
+        splittingResultValidator,
+    } = options
+
+
+
     const arrayOfStage1 = string.split(openMark)
     const firstSegOfStage1 = arrayOfStage1.shift()
 
@@ -105,10 +112,7 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
         })
     }
 
-
-    const {
-        shouldNotForcePairing,
-    } = options
+    let decidedEnclosuredContent = ''
 
     const arrayOfStage2 = arrayOfStage1.reduce((a2, a1Item) => {
         if (!a1Item) { // two or more openMarks side by side during stage1
@@ -123,6 +127,8 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
 
             const a2NewSegs = a1Item.split(closeMark)
             const firstNewSeg = a2NewSegs.shift()
+
+            decidedEnclosuredContent = firstNewSeg
 
             a2.push({
                 isEnclosured: true,
@@ -184,6 +190,19 @@ function splitStringIntoASTByOpenAndCloseMarks(string, openMark, closeMark, opti
         return a2
     }, initArrayOfStage2)
 
+
+    let enclosuredContentIsValid = true
+
+    if (decidedEnclosuredContent && typeof splittingResultValidator === 'function') {
+        enclosuredContentIsValid = splittingResultValidator(decidedEnclosuredContent)
+    }
+
+    if (enclosuredContentIsValid) {
+        // TODO: afoaldjwoihfsdl'
+        // return {
+
+        // }
+    }
 
     const {
         shouldLogSampleContentsForDevMode,
