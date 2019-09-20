@@ -47,9 +47,9 @@
 <h2 id="%E7%94%A8%E6%B3%95"><a class="header-anchor" href="#%E7%94%A8%E6%B3%95" aria-hidden="true">§</a> 用法</h2>
 <h3 id="%E7%A4%BA%E4%BE%8B-1"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-1" aria-hidden="true">§</a> 示例 1</h3>
 <p>不需要带任何参数。输出完整的 HTML 内容，一切都自动包含其中。</p>
-<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'@wulechuan/generate-html-via-markdown'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">@wulechuan/generate-html-via-markdown</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
-<span class="hljs-keyword const">const</span> markdownContent <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-string">'# 测试文章<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>## 此为二级标题<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>### 此为三级标题<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>一个句子。<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>'</span>
+<span class="hljs-keyword const">const</span> markdownContent <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body"># 测试文章<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>## 此为二级标题<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>### 此为三级标题<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span>一个句子。<span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="wlc-escape-char new-line"><span class="slash">\</span><span class="escaped-char">n</span></span></span><span class="wlc-string-quote close-quote">'</span></span>
 
 <span class="hljs-comment">/********************************************************************/</span>
 <span class="hljs-comment">/**/</span> <span class="hljs-keyword const">const</span> htmlContent <span class="wlc-punctuation wlc-equal-sign">=</span> markdownToHTMLConverter<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span>markdownContent<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span> <span class="hljs-comment">/**/</span>
@@ -60,10 +60,10 @@
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
     readFileSync<span class="wlc-punctuation wlc-comma">,</span>
     writeFileSync<span class="wlc-punctuation wlc-comma">,</span>
-<span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span> <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'fs'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span> <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">fs</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
-<span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'@wulechuan/generate-html-via-markdown'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
-<span class="hljs-keyword const">const</span> markdownContent <span class="wlc-punctuation wlc-equal-sign">=</span> readFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'我的文章.md'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span><span class="wlc-punctuation wlc-period">.</span>toString<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">@wulechuan/generate-html-via-markdown</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<span class="hljs-keyword const">const</span> markdownContent <span class="wlc-punctuation wlc-equal-sign">=</span> readFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">我的文章.md</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span><span class="wlc-punctuation wlc-period">.</span>toString<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
 <span class="hljs-keyword const">const</span> htmlContent <span class="wlc-punctuation wlc-equal-sign">=</span> markdownToHTMLConverter<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span>markdownContent<span class="wlc-punctuation wlc-comma">,</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
     <span class="hljs-attr">shouldLogVerbosely</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal true">true</span><span class="wlc-punctuation wlc-comma">,</span>
@@ -78,45 +78,45 @@
 
     <span class="hljs-attr">manipulationsOverHTML</span><span class="wlc-punctuation wlc-colon">:</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
         <span class="hljs-attr">shouldNotUseInternalCSSThemingFiles</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal true">true</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">htmlTitleString</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">'一份极简的 HTML 文档'</span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">htmlTitleString</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">一份极简的 HTML 文档</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
         <span class="hljs-attr">shouldNotInsertBackToTopAnchor</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal true">true</span><span class="wlc-punctuation wlc-comma">,</span>
     <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-comma">,</span>
 <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
-writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'我的文章.html'</span><span class="wlc-punctuation wlc-comma">,</span> htmlContent<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">我的文章.html</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span> htmlContent<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 </code></pre>
 <h3 id="%E7%A4%BA%E4%BE%8B-3"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-3" aria-hidden="true">§</a> 示例 3</h3>
 <p>采用你自己设计的 CSS 文件，嵌入输出 HTML 内容中，控制其样式。</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
     readFileSync<span class="wlc-punctuation wlc-comma">,</span>
     writeFileSync<span class="wlc-punctuation wlc-comma">,</span>
-<span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span> <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'fs'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span> <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">fs</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
-<span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'@wulechuan/generate-html-via-markdown'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
-<span class="hljs-keyword const">const</span> markdownContent <span class="wlc-punctuation wlc-equal-sign">=</span> readFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'一篇好文.md'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span><span class="wlc-punctuation wlc-period">.</span>toString<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">@wulechuan/generate-html-via-markdown</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<span class="hljs-keyword const">const</span> markdownContent <span class="wlc-punctuation wlc-equal-sign">=</span> readFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">一篇好文.md</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span><span class="wlc-punctuation wlc-period">.</span>toString<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
 <span class="hljs-keyword const">const</span> htmlContent <span class="wlc-punctuation wlc-equal-sign">=</span> markdownToHTMLConverter<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span>markdownContent<span class="wlc-punctuation wlc-comma">,</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
     <span class="hljs-attr">manipulationsOverHTML</span><span class="wlc-punctuation wlc-colon">:</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
-        <span class="hljs-comment">// 1<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span> 禁用内部 CSS 主题文件。</span>
+        <span class="hljs-comment">// 1) 禁用内部 CSS 主题文件。</span>
         shouldNotUseInternalCSSThemingFiles<span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal true">true</span><span class="wlc-punctuation wlc-comma">,</span>
     <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-comma">,</span>
 
     <span class="hljs-attr">absolutePathsOfExtraFilesToEmbedIntoHTML</span><span class="wlc-punctuation wlc-colon">:</span> <span class="wlc-punctuation wlc-square-bracket wlc-square-bracket-open">[</span>
-        <span class="hljs-comment">// 2<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span> 引入你自己设计的 CSS 文件。</span>
-        <span class="hljs-string">'/d/my/work/folder/some/theme/my-splendid-theme.css'</span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-comment">// 2) 引入你自己设计的 CSS 文件。</span>
+        <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">/d/my/work/folder/some/theme/my-splendid-theme.css</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
 
-        <span class="hljs-comment">// 3<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span> 或许你也须引入你自己的 Javascript 文件。</span>
-        <span class="hljs-string">'/d/my/work/folder/some/theme/my-splendid-theme.actions.js'</span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-comment">// 3) 或许你也须引入你自己的 Javascript 文件。</span>
+        <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">/d/my/work/folder/some/theme/my-splendid-theme.actions.js</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
     <span class="wlc-punctuation wlc-square-bracket wlc-square-bracket-close">]</span><span class="wlc-punctuation wlc-comma">,</span>
 <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 
-writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'一篇好文.html'</span><span class="wlc-punctuation wlc-comma">,</span> htmlContent<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">一篇好文.html</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span> htmlContent<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 </code></pre>
 <h2 id="api"><a class="header-anchor" href="#api" aria-hidden="true">§</a> API</h2>
 <h3 id="%E4%B8%BB%E5%87%BD%E6%95%B0"><a class="header-anchor" href="#%E4%B8%BB%E5%87%BD%E6%95%B0" aria-hidden="true">§</a> 主函数</h3>
 <p>主函数为一个<strong>匿名函数</strong>。因此，欲调用之，不妨先将其命名。</p>
 <p>如下例所示，我将其命名为 <code>mardownToHTMLConverter</code>。</p>
-<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string">'@wulechuan/generate-html-via-markdown'</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
+<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="wlc-punctuation wlc-equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">@wulechuan/generate-html-via-markdown</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
 </code></pre>
 <h3 id="%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><a class="header-anchor" href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3" aria-hidden="true">§</a> 主函数接口</h3>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> htmlString <span class="wlc-punctuation wlc-equal-sign">=</span> markdownToHTMLConverter<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span>markdownString<span class="wlc-punctuation wlc-comma">,</span> options<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>
@@ -140,7 +140,7 @@ writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">
 
     <span class="hljs-attr">conversionOptions</span><span class="wlc-punctuation wlc-colon">:</span> <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
         <span class="hljs-attr">shouldNotBuildHeadingPermanentLinks</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal false">false</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">headingPermanentLinkSymbolChar</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">'§'</span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">headingPermanentLinkSymbolChar</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">§</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
 
         <span class="hljs-comment">/*
             该参数对应 “markdown-it-anchor” 插件的 “permalinkClass” 参数。
@@ -150,10 +150,10 @@ writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">
         */</span>
         cssClassNameOfHeadingPermanentLinks<span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span>
 
-        <span class="hljs-attr">cssClassNameOfArticleTOCRootTag</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">'markdown-article-toc'</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">cssClassNameOfArticleTOCLists</span><span class="wlc-punctuation wlc-colon">:</span>       <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 作用于 <span class="wlc-punctuation wlc-less-than-sign"><</span>ul<span class="wlc-punctuation wlc-greater-than-sign">></span> 或 <span class="wlc-punctuation wlc-less-than-sign"><</span>ol<span class="wlc-punctuation wlc-greater-than-sign">></span>。</span>
-        cssClassNameOfArticleTOCListItems<span class="wlc-punctuation wlc-colon">:</span>   <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 作用于 <span class="wlc-punctuation wlc-less-than-sign"><</span>li<span class="wlc-punctuation wlc-greater-than-sign">></span>。</span>
-        cssClassNameOfArticleTOCItemAnchors<span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 作用于 <span class="wlc-punctuation wlc-less-than-sign"><</span>li<span class="wlc-punctuation wlc-greater-than-sign">></span> 内层的 <span class="wlc-punctuation wlc-less-than-sign"><</span>a<span class="wlc-punctuation wlc-greater-than-sign">></span>。</span>
+        <span class="hljs-attr">cssClassNameOfArticleTOCRootTag</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">markdown-article-toc</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">cssClassNameOfArticleTOCLists</span><span class="wlc-punctuation wlc-colon">:</span>       <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 作用于 &lt;ul&gt; 或 &lt;ol&gt;。</span>
+        cssClassNameOfArticleTOCListItems<span class="wlc-punctuation wlc-colon">:</span>   <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 作用于 &lt;li&gt;。</span>
+        cssClassNameOfArticleTOCItemAnchors<span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal undefined">undefined</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 作用于 &lt;li&gt; 内层的 &lt;a&gt;。</span>
 
         <span class="hljs-comment">/*
             “articleTOCBuildingHeadingLevelStartsFrom”：该参数
@@ -162,8 +162,8 @@ writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">
 
             例如：
                 假定 “articleTOCBuildingHeadingLevelStartsFrom” 取值为 2。
-                则**不会**为文章中的任何 <span class="wlc-punctuation wlc-less-than-sign"><</span>h1<span class="wlc-punctuation wlc-greater-than-sign">></span> 构建对应的纲要列表项。
-                而从第二级标题开始的所有标题，即 <span class="wlc-punctuation wlc-less-than-sign"><</span>h2/<span class="wlc-punctuation wlc-greater-than-sign">></span>、<span class="wlc-punctuation wlc-less-than-sign"><</span>h3/<span class="wlc-punctuation wlc-greater-than-sign">></span>……等，均会构建对应纲要列表项。
+                则**不会**为文章中的任何 &lt;h1&gt; 构建对应的纲要列表项。
+                而从第二级标题开始的所有标题，即 &lt;h2/&gt;、&lt;h3/&gt;……等，均会构建对应纲要列表项。
 
             另，我所设计的默认 CSS，会【故意】隐藏较深层的纲要列表项。即，这些列表项的 HTML
             标签明明存在，但被 CSS 强行隐藏不见。
@@ -178,42 +178,42 @@ writeFileSync<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">
         <span class="hljs-attr">shouldUseUnminifiedVersionOfInternalCSS</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal false">false</span><span class="wlc-punctuation wlc-comma">,</span>
         <span class="hljs-attr">shouldUseUnminifiedVersionOfInternalJavascriptIfAny</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-literal false">false</span><span class="wlc-punctuation wlc-comma">,</span>
 
-        <span class="hljs-attr">htmlTagLanguage</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">''</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin<span class="wlc-punctuation wlc-period">.</span>html”。</span>
-        htmlTitleString<span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">''</span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着自动从文字中第一个 <span class="wlc-punctuation wlc-less-than-sign"><</span>h1<span class="wlc-punctuation wlc-greater-than-sign">></span> 标签中提前内容文字，作为 HTML 文档的标题（<span class="wlc-punctuation wlc-less-than-sign"><</span>title<span class="wlc-punctuation wlc-greater-than-sign">></span>）。</span>
+        <span class="hljs-attr">htmlTagLanguage</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string empty-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body"></span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。</span>
+        htmlTitleString<span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string empty-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body"></span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着自动从文字中第一个 &lt;h1&gt; 标签中提前内容文字，作为 HTML 文档的标题（&lt;title&gt;）。</span>
 
-        internalCSSFileNameOfTheme<span class="wlc-punctuation wlc-colon">:</span>        <span class="hljs-string">'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css'</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">internalCSSFileNameOfThemeWithTOC</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css'</span><span class="wlc-punctuation wlc-comma">,</span>
+        internalCSSFileNameOfTheme<span class="wlc-punctuation wlc-colon">:</span>        <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">wulechuan-styles-for-html-via-markdown.default--no-toc.min.css</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">internalCSSFileNameOfThemeWithTOC</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">wulechuan-styles-for-html-via-markdown.default--with-toc.min.css</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
 
         <span class="hljs-comment">/*
             下列两项参数已被弃用。实则更名为上方两个参数。请尽量采用上方使用新名称的两个参数。
             一旦上方某参数配置了值，则下方对应参数的值会被忽略。
             未来，或许我干脆不再支持使用下方两个参数名。
         */</span>
-        moduleCSSFileNameOfDefaultTheme<span class="wlc-punctuation wlc-colon">:</span>        <span class="hljs-string">'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css'</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">moduleCSSFileNameOfDefaultThemeWithTOC</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css'</span><span class="wlc-punctuation wlc-comma">,</span>
+        moduleCSSFileNameOfDefaultTheme<span class="wlc-punctuation wlc-colon">:</span>        <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">wulechuan-styles-for-html-via-markdown.default--no-toc.min.css</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">moduleCSSFileNameOfDefaultThemeWithTOC</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">wulechuan-styles-for-html-via-markdown.default--with-toc.min.css</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
 
-        <span class="hljs-attr">cssClassNameOfMarkdownChiefContentWrappingArticleTag</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string">'markdown-article'</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">cssClassNameOfBodyTagWhenMarkdownArticleHasTOC</span><span class="wlc-punctuation wlc-colon">:</span>       <span class="hljs-string">'markdown-article-toc-exists'</span><span class="wlc-punctuation wlc-comma">,</span>
-        <span class="hljs-attr">cssClassNameOfBackToTopAnchor</span><span class="wlc-punctuation wlc-colon">:</span>                        <span class="hljs-string">'markdown-article-back-to-top'</span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">cssClassNameOfMarkdownChiefContentWrappingArticleTag</span><span class="wlc-punctuation wlc-colon">:</span> <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">markdown-article</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">cssClassNameOfBodyTagWhenMarkdownArticleHasTOC</span><span class="wlc-punctuation wlc-colon">:</span>       <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">markdown-article-toc-exists</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
+        <span class="hljs-attr">cssClassNameOfBackToTopAnchor</span><span class="wlc-punctuation wlc-colon">:</span>                        <span class="hljs-string"><span class="wlc-string-quote open-quote">'</span><span class="wlc-string-body">markdown-article-back-to-top</span><span class="wlc-string-quote close-quote">'</span></span><span class="wlc-punctuation wlc-comma">,</span>
 
         <span class="hljs-attr">desiredReplacementsInHTML</span><span class="wlc-punctuation wlc-colon">:</span> <span class="wlc-punctuation wlc-square-bracket wlc-square-bracket-open">[</span>
         <span class="hljs-comment">/*
-            <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
-                from<span class="wlc-punctuation wlc-colon">:</span> <span class="wlc-punctuation wlc-less-than-sign"><</span>string or RegExp<span class="wlc-punctuation wlc-greater-than-sign">></span><span class="wlc-punctuation wlc-comma">,</span>
-                to<span class="wlc-punctuation wlc-colon">:</span>   <span class="wlc-punctuation wlc-less-than-sign"><</span>string<span class="wlc-punctuation wlc-greater-than-sign">></span><span class="wlc-punctuation wlc-comma">,</span>
-            <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-comma">,</span>
+            {
+                from: &lt;string or RegExp&gt;,
+                to:   &lt;string&gt;,
+            },
 
             例 1：另所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
-            <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
-                from<span class="wlc-punctuation wlc-colon">:</span> /\s+href="<span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-open">(</span><span class="wlc-punctuation wlc-square-bracket wlc-square-bracket-open">[</span><span class="wlc-punctuation wlc-exclamation-marks odd-count">!</span>#<span class="wlc-punctuation wlc-square-bracket wlc-square-bracket-close">]</span><span class="wlc-punctuation wlc-parenthesis wlc-parenthesis-close">)</span>/gi<span class="wlc-punctuation wlc-comma">,</span>
-                to<span class="wlc-punctuation wlc-colon">:</span> ' target="_blank" href="$1'<span class="wlc-punctuation wlc-comma">,</span>
-            <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-comma">,</span>
+            {
+                from: /\s+href="([!#])/gi,
+                to: ' target="_blank" href="$1',
+            },
 
             例 2：批量转换链接地址。
-            <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>
-                from<span class="wlc-punctuation wlc-colon">:</span> /\s+href="\<span class="wlc-punctuation wlc-period">.</span>\/course-examples\//gi<span class="wlc-punctuation wlc-comma">,</span>
-                to<span class="wlc-punctuation wlc-colon">:</span> ' href="<span class="wlc-punctuation wlc-period">.</span><span class="wlc-punctuation wlc-period">.</span>/public/assets/course-examples/'<span class="wlc-punctuation wlc-comma">,</span>
-            <span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-close">}</span><span class="wlc-punctuation wlc-comma">,</span>
+            {
+                from: /\s+href="\.\/course-examples\//gi,
+                to: ' href="../public/assets/course-examples/',
+            },
         */</span>
         <span class="wlc-punctuation wlc-square-bracket wlc-square-bracket-close">]</span><span class="wlc-punctuation wlc-comma">,</span>
 

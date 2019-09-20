@@ -12,7 +12,7 @@ const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
 module.exports = function parseOneStringASTNodeIntoHTML(astNode) {
     let { content, openMark, closeMark } = astNode
 
-    const stringIsEmpty = !!content
+    const stringIsEmpty = !content
 
     if (!stringIsEmpty) {
         STANDARD_ESPACED_CHARS_IN_STRING_LITERALS.forEach(sec => {
