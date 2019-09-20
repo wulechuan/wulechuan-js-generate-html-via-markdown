@@ -117,6 +117,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 './source/1-html-string-processors/parse-one-string-into-html.js',
                 './source/1-html-string-processors/parse-all-punctuations-into-html.js',
                 './source/1-html-string-processors/parse-language-specific-stuffs-javascript-family.js',
+                './source/1-html-string-processors/parse-language-specific-stuffs-css-family.js',
             ].forEach(subPath => {
                 clearCacheOfRequiredFile(joinPathOSLocalStyle(thisModuleRootFolderPath, subPath))
             })

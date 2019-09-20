@@ -1,3 +1,4 @@
-module.exports = function parseJavascriptFamilyStuffsIntoHTML(/* astNode, codeLanguage */ ) {
-    // Nothing at present
+module.exports = function parseJavascriptFamilyStuffsIntoHTML(astNode/*, codeLanguage */ ) {
+    let { content } = astNode // eslint-disable-line prefer-const
+    if (!content) { return }
 }

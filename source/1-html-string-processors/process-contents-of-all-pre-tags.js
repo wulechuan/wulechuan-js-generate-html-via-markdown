@@ -32,6 +32,14 @@ const {
 )
 
 
+const {
+    parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations,
+    parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterPunctuations,
+} = require(
+    './parse-language-specific-stuffs-css-family'
+)
+
+
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
     './parse-language-specific-stuffs-javascript-family'
 )
@@ -211,6 +219,11 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         }
 
 
+        astNodesRest.forEach(astNode => {
+            parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, codeLanguage)
+        })
+
+
         if (true || // eslint-disable-line no-constant-condition
             codeLanguageIsOneOf(codeLanguage, [
                 'javascript',
@@ -352,12 +365,29 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
         if (
             codeLanguageIsOneOf(codeLanguage, [
+                'css',
+                'stylus',
+                'sass',
+                'less',
+            ])
+        ) {
+            astNodesRest.forEach(astNode => {
+                parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterPunctuations(astNode, codeLanguage)
+            })
+        }
+
+
+
+        if (
+            codeLanguageIsOneOf(codeLanguage, [
                 'javascript',
                 'typescript',
                 // 'coffeescript',
             ])
         ) {
-            astNodesRest.forEach(parseJavascriptFamilyStuffsInAnASTNodeIntoHTML, codeLanguage)
+            astNodesRest.forEach(astNode => {
+                parseJavascriptFamilyStuffsInAnASTNodeIntoHTML(astNode, codeLanguage)
+            })
         }
     })
 
