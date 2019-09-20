@@ -1,4 +1,4 @@
-const defaultCSSClassNamesRegExp = { // eslint-disable-line no-unused-vars
+const defaultCSSClassNamesRegExp = {
     // `ccn` means (C)SS (C)lass (N)ame
 
     ccnIllegal:                       'wlc-regexp-illegal',
