@@ -47,6 +47,16 @@ const defaultCSSClassNamesRegExp = {
 */
 const signleMeaningControlChars = [
     {
+        char: '^', // with the help of AST splitter, this one also treated as "single" meaning char.
+        cssClassNameKeyword: 'caret',
+        cssClassNameExtra:   '',
+    },
+    {
+        char: '$',
+        cssClassNameKeyword: 'dollar',
+        cssClassNameExtra:   '',
+    },
+    {
         char: '?',
         cssClassNameKeyword: 'question-mark',
         cssClassNameExtra:   '',
@@ -104,16 +114,16 @@ const signleMeaningControlChars = [
     },
 ]
 
-// const regexpSelectorChars = [
-//     { char: '\\w', cssClassNameKeyword: 'word' },
-//     { char: '\\W', cssClassNameKeyword: 'non-word' },
-//     { char: '\\d', cssClassNameKeyword: 'digit' },
-//     { char: '\\D', cssClassNameKeyword: 'non-digit' },
-//     { char: '\\s', cssClassNameKeyword: 'whitespace' },
-//     { char: '\\S', cssClassNameKeyword: 'non-whitespace' },
-//     { char: '\\b', cssClassNameKeyword: 'boundary' },
-//     { char: '\\B', cssClassNameKeyword: 'non-boundary' },
-// ]
+const regexpSelectorChars = [
+    { char: '\\w', cssClassNameKeyword: 'word' },
+    { char: '\\W', cssClassNameKeyword: 'non-word' },
+    { char: '\\d', cssClassNameKeyword: 'digit' },
+    { char: '\\D', cssClassNameKeyword: 'non-digit' },
+    { char: '\\s', cssClassNameKeyword: 'whitespace' },
+    { char: '\\S', cssClassNameKeyword: 'non-whitespace' },
+    { char: '\\b', cssClassNameKeyword: 'boundary' },
+    { char: '\\B', cssClassNameKeyword: 'non-boundary' },
+]
 
 
 // TODO:
@@ -187,7 +197,8 @@ const regexpEscapedLiteralChars = [ //eslint-disable-line no-unused-vars
 
 
 
-module.exports = function parseOnRegExpIntoHTML(astNode) {
+
+module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
     const cssClassNames = {
         ...defaultCSSClassNamesRegExp,
     }
@@ -207,15 +218,18 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         ccnControlChar,
         ccnControlCharSpecificNamePrefix,
         ccnControlCharTheChar,
-        // ccnSelectorChar,
-        // ccnSelectorCharSpecificNamePrefix,
-        // ccnSelectorCharTheChar,
+        ccnSelectorChar,
+        ccnSelectorCharSpecificNamePrefix,
+        ccnSelectorCharTheChar,
         ccnLiteral,
         ccnLiteralSpecificNamePrefix,
     } = cssClassNames
 
 
-    let { content } = astNode
+    const htmlSnippetSlashChar = `<span class="${ccnEscapeCharSlash}">\\</span>`
+
+
+    let { content: contentForRegExpBody } = astNodeForRegExpBody
 
     let regexpOpen = ''
     let regexpClose = ''
@@ -223,14 +237,14 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
     let regexpBothQuotesPresent = true
 
 
-    const matchingResult1 = content.match(/^(\/)/)
+    const matchingResult1 = contentForRegExpBody.match(/^(\/)/)
     if (matchingResult1) {
         const [
             ,
             regexpOpenMark, // in case an illegal regexp provided, without open mark
         ] = matchingResult1
 
-        content = content.slice(regexpOpenMark.length)
+        contentForRegExpBody = contentForRegExpBody.slice(regexpOpenMark.length)
 
         if (regexpOpenMark) {
             regexpOpen = `<span class="${ccnQuote} ${ccnQuoteOpen}">${regexpOpenMark}</span>`
@@ -240,7 +254,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
     }
 
 
-    const matchingResult2 = content.match(/(\/)([a-z]*)$/)
+    const matchingResult2 = contentForRegExpBody.match(/(\/)([a-z]*)$/)
     if (matchingResult2) {
         const [
             tailIncludingRegexpCloseMark, // in case an illegal regexp provided, without close mark
@@ -248,7 +262,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
             regexpOptionsRaw,
         ] = matchingResult2
 
-        content = content.slice(0, -tailIncludingRegexpCloseMark.length)
+        contentForRegExpBody = contentForRegExpBody.slice(0, -tailIncludingRegexpCloseMark.length)
 
         if (regexpCloseMark) {
             regexpClose = `<span class="${ccnQuote} ${ccnQuoteClose}">${regexpCloseMark}</span>`
@@ -261,21 +275,19 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
 
 
     if (!regexpBothQuotesPresent) {
-        astNode.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
+        astNodeForRegExpBody.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
     }
 
 
 
-    let bodyContent = content
 
-
-    if (content) {
+    if (contentForRegExpBody) {
         // '\\' This is ALWAYS the first escape char to deal with.
-        content = content.replace(
+        contentForRegExpBody = contentForRegExpBody.replace(
             new RegExp('\\\\\\\\', 'g'),
             [
                 `<span class="${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-backward-slash">`,
-                `<span class="${ccnEscapeCharSlash}">\\</span>`,
+                htmlSnippetSlashChar,
                 `<span class="${ccnEscapeCharTheEscapedChar}">\\</span>`,
                 '</span>',
             ].join('')
@@ -286,7 +298,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
             isEnclosured: true,
             openMark: '/',
             closeMark: '/',
-            content,
+            content: contentForRegExpBody,
         }
 
         const {
@@ -295,47 +307,67 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         } = splitRegExpASTByBraketPairs(regExpBodyASTNode)
 
 
-        astNodesInsideBraketPairs.forEach(astNode => {
+        const astNodesForContentsInsideBraketPairs = astNodesInsideBraketPairs.reduce((astNodesForContents, astNode) => {
+            const { content } = astNode
+
+            astNodesInsideBraketPairs.openMark  = [
+                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-braket braket-open"></span>`,
+            ]
+
+            astNodesInsideBraketPairs.closeMark = [
+                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-braket braket-close"></span>`,
+            ]
+
+
+            if (content.match(/^\^/)) {
+                const astNode1 = {
+                    isEnclosured: false,
+                    openMark: '',
+                    closeMark: '',
+                    content:                 [
+                        `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-invert">`,
+                        `<span class="${ccnControlCharTheChar}">^</span>`,
+                        '</span>',
+                    ].join(''),
+                }
+
+                const astNode2 = {
+                    isEnclosured: true,
+                    openMark: '',
+                    closeMark: '',
+                    content: parseAllRangingDashesInsideBraketsPairs(
+                        content.slice(1)
+                    ),
+                }
+
+                astNode.content = [
+                    astNode1,
+                    astNode2,
+                ]
+
+                astNodesForContents.push(astNode2)
+            } else {
+                astNodesForContents.push(astNode)
+            }
+
+            return astNodesForContents
+        }, [])
+
+
+        astNodesForContentsInsideBraketPairs.forEach(astNode => {
             let { content } = astNode
-
-            // '-' as char range control
-            content = content.replace(
-                /([a-z])-([a-z])/g,
-                [
-                    '$1',
-                    `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
-                    '-',
-                    '</span>',
-                    '$2',
-                ].join('')
-            ).replace(
-                /([A-Z])-([A-Z])/g,
-                [
-                    '$1',
-                    `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
-                    '-',
-                    '</span>',
-                    '$2',
-                ].join('')
-            ).replace(
-                /([0-9])-([0-9])/g,
-                [
-                    '$1',
-                    `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
-                    '-',
-                    '</span>',
-                    '$2',
-                ].join('')
-            )
-
+            content = parseAllEscapedControlChars(content)
+            content = parseAllSelectorChars(content)
             astNode.content = content
         })
 
         astNodesOutsideBraketPairs.forEach(astNode => {
             let { content } = astNode
+            content = parseAllEscapedControlChars(content)
+            content = parseAllSelectorChars(content)
+            astNode.content = content
         })
 
-        let content = content
 
 
 
@@ -346,21 +378,20 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
 
 
 
+        // signleMeaningControlChars.filter(ccib => !ccib.shouldSkipProcessingInsideBraketsPair)
+        //     .forEach(ccib => { // when inside [] pairs, they are literals
+        //         const {
+        //             char,
+        //             cssClassNameKeyword: ck,
+        //             cssClassNameExtra: ce,
+        //         } = ccib
 
-        signleMeaningControlChars.filter(ccib => !ccib.shouldSkipProcessingInsideBraketsPair)
-            .forEach(ccib => { // when inside [] pairs, they are literals
-                const {
-                    char,
-                    cssClassNameKeyword: ck,
-                    cssClassNameExtra: ce,
-                } = ccib
-
-                // Should be a literal char inside []
-                content = content.replace(
-                    new RegExp(`(\\[[^\\]]*(\\\\\\])?[^\\]]*)\\${char}`, 'g'),
-                    `$1<span class="${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">${char}</span>`
-                )
-            })
+        //         // Should be a literal char inside []
+        //         content = content.replace(
+        //             new RegExp(`(\\[[^\\]]*(\\\\\\])?[^\\]]*)\\${char}`, 'g'),
+        //             `$1<span class="${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">${char}</span>`
+        //         )
+        //     })
 
 
 
@@ -371,7 +402,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
                 cssClassNameExtra: ce,
             } = ccib
 
-            content = content.replace(
+            contentForRegExpBody = contentForRegExpBody.replace(
                 new RegExp(`\\${char}`, 'g'),
                 [
                     `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
@@ -382,78 +413,52 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         })
 
 
-        signleMeaningControlChars.forEach(ccib => { // escaped chars as literals
-            const {
-                char,
-                cssClassNameKeyword: ck,
-                cssClassNameExtra: ce,
-            } = ccib
 
-            // All control chars have been incorrectly treated as control chars
-            // even if they are escaped.
-            const incorrectInputRegExpBody = [
-                '\\\\',
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
-                `<span class="${ccnControlCharTheChar}">\\${char}<\\/span>`,
-                '<\\/span>',
-            ].join('')
-
-            // Now lets recover them back to escaped literals.
-            content = content.replace(
-                new RegExp(incorrectInputRegExpBody, 'g'),
-                [
-                    `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">`,
-                    `<span class="${ccnEscapeCharSlash}">\\</span>`,
-                    `<span class="${ccnEscapeCharTheEscapedChar}">${char}</span>`,
-                    '</span>',
-                ].join('')
-            )
-        })
 
 
 
         // '\$'
-        content = content.replace(
+        contentForRegExpBody = contentForRegExpBody.replace(
             new RegExp('\\\\\\$', 'g'),
             [
                 `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-dollar">`,
-                `<span class="${ccnEscapeCharSlash}">\\</span>`,
+                htmlSnippetSlashChar,
                 `<span class="${ccnEscapeCharTheEscapedChar}">$</span>`,
                 '</span>',
             ].join('')
         )
 
         // '$' as regexp end sign
-        content = content.replace(
+        contentForRegExpBody = contentForRegExpBody.replace(
             new RegExp('([^>])\\$', 'g'),
             `$1<span class="${ccnInputEndSign}">$</span>`
         )
 
 
-        // ['^'
-        content = content.replace(
-            new RegExp('\\[\\^', 'g'),
-            [
-                '[',
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-invert">`,
-                `<span class="${ccnControlCharTheChar}">^</span>`,
-                '</span>',
-            ].join('')
-        )
+        // // ['^'
+        // content = content.replace(
+        //     new RegExp('\\[\\^', 'g'),
+        //     [
+        //         '[',
+        //         `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-invert">`,
+        //         `<span class="${ccnControlCharTheChar}">^</span>`,
+        //         '</span>',
+        //     ].join('')
+        // )
 
         // '\^'
-        content = content.replace(
+        contentForRegExpBody = contentForRegExpBody.replace(
             new RegExp('\\\\\\^', 'g'),
             [
                 `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-caret">`,
-                `<span class="${ccnEscapeCharSlash}">\\</span>`,
+                htmlSnippetSlashChar,
                 `<span class="${ccnEscapeCharTheEscapedChar}">^</span>`,
                 '</span>',
             ].join('')
         )
 
         // '^' as regexp begin sign
-        content = content.replace(
+        contentForRegExpBody = contentForRegExpBody.replace(
             new RegExp('([^>])\\^', 'g'),
             [
                 '$1',
@@ -470,23 +475,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
 
 
 
-        // { char: '.',   cssClassName: 'regexp-selector-char regexp-selector-any-char' },
 
-
-        // regexpSelectorChars.forEach(rcc => {
-        //     const { char } = rcc
-        //     const isEscapeChar = char.startsWith('\\')
-        //     const coreChar = isEscapeChar ? char.slice(1) : char
-
-        //     content = content.replace(
-        //         new RegExp(`\\${char}`, 'g'),
-        //         `<span class="${ccnControlChar} ${rcc.cssClassName}${ isEscapeChar ? ` ${ccnEscapeChar}` : '' }">${
-        //             isEscapeChar ? `<span class="${ccnEscapeCharSlash}">\\</span>` : ''
-        //         }<span class="${ccnControlCharTheChar}${ isEscapeChar ? ` ${ccnEscapeCharTheEscapedChar}` : '' }">${
-        //             coreChar
-        //         }</span></span>`
-        //     )
-        // })
 
         // regexpEscapedLiteralChars.forEach(relc => {
         //     const char = relc.escapedChar
@@ -563,7 +552,7 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         //     '<span class="regexp-control-char regexp-control-invert"><span class="control-char">^</span></span>'
         // )
 
-        content = content.replace(
+        contentForRegExpBody = contentForRegExpBody.replace(
             /(<span class="regexp-control-char regexp-control-curly-brace curly-brace-open"><span class="control-char">\{<\/span><\/span>)(\d+)((,)(\d*))?(<span class="regexp-control-char regexp-control-curly-brace curly-brace-close"><span class="control-char">\}<\/span><\/span>)/g,
             [
                 '$1',
@@ -577,16 +566,102 @@ module.exports = function parseOnRegExpIntoHTML(astNode) {
         )
 
 
-        bodyContent = parseASTSubTreeIntoSingleString(regExpBodyASTNode.content),
+        contentForRegExpBody = parseASTSubTreeIntoSingleString(regExpBodyASTNode.content)
     }
 
 
-    astNode.content = [
+    astNodeForRegExpBody.content = [
         regexpOpen,
         `<span class="${ccnBody}">`,
-        bodyContent,
+        contentForRegExpBody,
         '</span>',
         regexpClose,
         regexpOptions,
     ].join('')
+
+
+
+
+    function parseAllRangingDashesInsideBraketsPairs(content) {
+        // '-' as char range control
+        return content.replace(
+            /([a-z])-([a-z])/g,
+            [
+                '$1',
+                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
+                '-',
+                '</span>',
+                '$2',
+            ].join('')
+        ).replace(
+            /([A-Z])-([A-Z])/g,
+            [
+                '$1',
+                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
+                '-',
+                '</span>',
+                '$2',
+            ].join('')
+        ).replace(
+            /([0-9])-([0-9])/g,
+            [
+                '$1',
+                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
+                '-',
+                '</span>',
+                '$2',
+            ].join('')
+        )
+    }
+
+    function parseAllEscapedControlChars(content) {
+        signleMeaningControlChars.forEach(ccib => { // escaped chars as literals
+            const {
+                char,
+                cssClassNameKeyword: ck,
+                cssClassNameExtra: ce,
+            } = ccib
+
+            content = content.replace(
+                new RegExp(`\\\\\\${char}`, 'g'),
+                [
+                    `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">`,
+                    htmlSnippetSlashChar,
+                    `<span class="${ccnEscapeCharTheEscapedChar}">${char}</span>`,
+                    '</span>',
+                ].join('')
+            )
+        })
+
+        return content
+    }
+
+    function parseAllSelectorChars(content) {
+        ccnSelectorChar,
+        ccnSelectorCharSpecificNamePrefix,
+        ccnSelectorCharTheChar,
+
+        // { char: '.',   cssClassName: 'regexp-selector-char regexp-selector-any-char' },
+
+        regexpSelectorChars.forEach(rcc => {
+            const { char } = rcc
+            const isEscapeChar = char.startsWith('\\')
+            const coreChar = isEscapeChar ? char.slice(1) : char
+
+            content = content.replace(
+                new RegExp(`\\${char}`, 'g'),
+                [
+                    '<span class="',
+                    `${ccnControlChar} ${ccnSelectorChar}`,
+                    isEscapeChar ? ` ${ccnEscapeChar}` : '',
+                    '">',
+                    isEscapeChar ? htmlSnippetSlashChar : '',
+                    `<span class="${ccnControlCharTheChar}">${coreChar}</span>`,
+                    '</span>',
+                ].join('')
+            )
+        })
+
+        return content
+    }
 }
