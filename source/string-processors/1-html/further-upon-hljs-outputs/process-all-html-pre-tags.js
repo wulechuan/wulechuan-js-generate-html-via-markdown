@@ -1,7 +1,5 @@
-const {
-    splitOneASTNodeByOpenAndCloseMarks,
-    parseASTIntoString,
-} = require('./simple-ast')
+const splitOneASTNodeByOpenAndCloseMarks = require('./ast/ast-generic-simple-splitter')
+const parseASTSubTreeIntoSingleString    = require('./ast/parse-ast-sub-tree-into-single-string')
 
 const {
     codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
@@ -392,5 +390,5 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     })
 
 
-    return parseASTIntoString(rootLevelASTNodes)
+    return parseASTSubTreeIntoSingleString(rootLevelASTNodes)
 }

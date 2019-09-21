@@ -1,38 +1,4 @@
-module.exports = {
-    splitOneASTNodeByOpenAndCloseMarks,
-    parseASTIntoString,
-}
-
-
-function parseASTIntoString(input) {
-    if (!input) {
-        return ''
-    }
-
-    if (typeof input === 'string') {
-        return input
-    }
-
-    if (typeof input === 'object') {
-
-        if (Array.isArray(input)) {
-            return input.map(parseASTIntoString).join('')
-        }
-
-        const {
-            openMark,
-            closeMark,
-            content,
-        } = input
-
-        return `${openMark}${parseASTIntoString(content)}${closeMark}`
-    }
-
-    return ''
-}
-
-
-function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, options) {
+module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, options) {
     if (!astNode || typeof astNode !== 'object') {
         throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[0] must be an object, an astNode for specific!')
     }
@@ -268,4 +234,3 @@ function printASTContentsForDebugging(arrayOfStage2, logContentSlicingWidth) {
         printLine()
     }
 }
-

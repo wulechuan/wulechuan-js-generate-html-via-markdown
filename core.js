@@ -111,7 +111,9 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         if (shouldReloadModulesForDevWatchingMode) {
             [
-                './source/string-processors/1-html/further-upon-hljs-outputs/simple-ast.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/ast/parse-ast-sub-tree-into-single-string.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/_all-punctuations.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-comment.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-regexp.js',
