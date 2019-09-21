@@ -77,11 +77,6 @@ const signleMeaningControlChars = [
         cssClassNameExtra:   '',
     },
     {
-        char: '.',
-        cssClassNameKeyword: 'period',
-        cssClassNameExtra:   '',
-    },
-    {
         char: '(',
         cssClassNameKeyword: 'parenthesis',
         cssClassNameExtra:   ' parenthesis-open',
@@ -115,6 +110,7 @@ const signleMeaningControlChars = [
 ]
 
 const regexpSelectorChars = [
+    { char: '.',   cssClassNameKeyword: 'any-char' },
     { char: '\\w', cssClassNameKeyword: 'word' },
     { char: '\\W', cssClassNameKeyword: 'non-word' },
     { char: '\\d', cssClassNameKeyword: 'digit' },
@@ -133,11 +129,11 @@ const regexpEscapedLiteralChars = [ //eslint-disable-line no-unused-vars
         cssClassName: 'regexp-literal-minus-sign',
         unwantedControlCssClassName: 'regexp-control-char regexp-control-range-sign',
     },
-    // {
-    //     escapedChar: '^',
-    //     cssClassName: 'regexp-literal-caret',
-    //     unwantedControlCssClassName: 'regexp-control-char regexp-control-invert',
-    // },
+    {
+        escapedChar: '^',
+        cssClassName: 'regexp-literal-caret',
+        unwantedControlCssClassName: 'regexp-control-char regexp-control-invert',
+    },
     {
         escapedChar: '?',
         cssClassName: 'regexp-literal-question-mark',
@@ -284,9 +280,9 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
     if (contentForRegExpBody) {
         // '\\' This is ALWAYS the first escape char to deal with.
         contentForRegExpBody = contentForRegExpBody.replace(
-            new RegExp('\\\\\\\\', 'g'),
+            new RegExp('\\\\' + '\\\\', 'g'),
             [
-                `<span class="${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-backward-slash">`,
+                `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-backward-slash">`,
                 htmlSnippetSlashChar,
                 `<span class="${ccnEscapeCharTheEscapedChar}">\\</span>`,
                 '</span>',
@@ -310,12 +306,21 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         const astNodesForContentsInsideBraketPairs = astNodesInsideBraketPairs.reduce((astNodesForContents, astNode) => {
             const { content } = astNode
 
-            astNodesInsideBraketPairs.openMark  = [
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-braket braket-open"></span>`,
+
+            astNode.openMark  = [
+                `<span class="${
+                    ccnControlChar
+                } ${
+                    ccnControlCharSpecificNamePrefix
+                }-square-bracket square-bracket-open">[</span>`,
             ]
 
-            astNodesInsideBraketPairs.closeMark = [
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-braket braket-close"></span>`,
+            astNode.closeMark = [
+                `<span class="${
+                    ccnControlChar
+                } ${
+                    ccnControlCharSpecificNamePrefix
+                }-square-bracket square-bracket-close">]</span>`,
             ]
 
 
@@ -356,15 +361,36 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
 
         astNodesForContentsInsideBraketPairs.forEach(astNode => {
             let { content } = astNode
-            content = parseAllEscapedControlChars(content)
-            content = parseAllSelectorChars(content)
+            content = markAllEscapedControlChars(content)
+            content = markAllSelectorChars(content)
             astNode.content = content
         })
 
         astNodesOutsideBraketPairs.forEach(astNode => {
             let { content } = astNode
-            content = parseAllEscapedControlChars(content)
-            content = parseAllSelectorChars(content)
+            content = markAllEscapedControlChars(content)
+            content = markAllControlChars(content)
+            content = markAllSelectorChars(content)
+            content = markAllRepeatingTimeRanges(content)
+
+
+            // '$' as regexp end sign
+            content = content.replace(
+                new RegExp('([^>])\\$', 'g'),
+                `$1<span class="${ccnInputEndSign}">$</span>`
+            )
+
+            // '^' as regexp begin sign
+            content = content.replace(
+                new RegExp('([^>])\\^', 'g'),
+                [
+                    '$1',
+                    `<span class="${ccnInputBeginSign}">^</span>`,
+                ].join('')
+            )
+
+
+
             astNode.content = content
         })
 
@@ -375,195 +401,13 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
 
 
 
-
-
-
-        // signleMeaningControlChars.filter(ccib => !ccib.shouldSkipProcessingInsideBraketsPair)
-        //     .forEach(ccib => { // when inside [] pairs, they are literals
-        //         const {
-        //             char,
-        //             cssClassNameKeyword: ck,
-        //             cssClassNameExtra: ce,
-        //         } = ccib
-
-        //         // Should be a literal char inside []
-        //         content = content.replace(
-        //             new RegExp(`(\\[[^\\]]*(\\\\\\])?[^\\]]*)\\${char}`, 'g'),
-        //             `$1<span class="${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">${char}</span>`
-        //         )
-        //     })
-
-
-
-        signleMeaningControlChars.forEach(ccib => { // outside [] pairs, they are control chars
-            const {
-                char,
-                cssClassNameKeyword: ck,
-                cssClassNameExtra: ce,
-            } = ccib
-
-            contentForRegExpBody = contentForRegExpBody.replace(
-                new RegExp(`\\${char}`, 'g'),
-                [
-                    `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
-                    `<span class="${ccnControlCharTheChar}">${char}</span>`,
-                    '</span>',
-                ].join('')
-            )
-        })
-
-
-
-
-
-
-        // '\$'
-        contentForRegExpBody = contentForRegExpBody.replace(
-            new RegExp('\\\\\\$', 'g'),
-            [
-                `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-dollar">`,
-                htmlSnippetSlashChar,
-                `<span class="${ccnEscapeCharTheEscapedChar}">$</span>`,
-                '</span>',
-            ].join('')
-        )
-
-        // '$' as regexp end sign
-        contentForRegExpBody = contentForRegExpBody.replace(
-            new RegExp('([^>])\\$', 'g'),
-            `$1<span class="${ccnInputEndSign}">$</span>`
-        )
-
-
-        // // ['^'
-        // content = content.replace(
-        //     new RegExp('\\[\\^', 'g'),
-        //     [
-        //         '[',
-        //         `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-invert">`,
-        //         `<span class="${ccnControlCharTheChar}">^</span>`,
-        //         '</span>',
-        //     ].join('')
-        // )
-
-        // '\^'
-        contentForRegExpBody = contentForRegExpBody.replace(
-            new RegExp('\\\\\\^', 'g'),
-            [
-                `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-caret">`,
-                htmlSnippetSlashChar,
-                `<span class="${ccnEscapeCharTheEscapedChar}">^</span>`,
-                '</span>',
-            ].join('')
-        )
-
-        // '^' as regexp begin sign
-        contentForRegExpBody = contentForRegExpBody.replace(
-            new RegExp('([^>])\\^', 'g'),
-            [
-                '$1',
-                `<span class="${ccnInputBeginSign}">^</span>`,
-            ].join('')
-        )
-
-
-
-
-
-
-
-
-
-
-
-
-        // regexpEscapedLiteralChars.forEach(relc => {
-        //     const char = relc.escapedChar
-
-        //     content = content.replace(
-        //         new RegExp(`\\\\<span class="${relc.unwantedControlCssClassName}"><span class="control-char">\\${char}</span></span>`, 'g'),
-        //         `<span class="wlc-escape-char ${relc.cssClassName}"><span class="slash">\\</span><span class="escaped-char">${
-        //             char
-        //         }</span></span>`
-        //     )
-        // })
 
         // content = content.replace(
         //     new RegExp('\\\\&lt;', 'g'),
         //     '<span class="wlc-escape-char regexp-literal-less-than-mark">\\<span class="escaped-char"><</span></span>'
         // )
 
-        // content = content.replace(
-        //     /(^|[^\\])\^/g,
-        //     '$1<span class="regexp-selector-input-begin">^</span>'
-        // )
 
-        // content = content.replace(
-        //     /([^\\])\$/g,
-        //     '$1<span class="regexp-selector-input-end">$</span>'
-        // )
-
-
-        // // recover standalone literal +
-        // content = content.replace(
-        //     /<span class="regexp-literal-plus-sign"><span class="regexp-control-char regexp-control-plus-sign">\+<\/span><\/span>/g,
-        //     '<span class="regexp-literal-plus-sign">+</span>'
-        // )
-
-        // // recover standalone literal *
-        // content = content.replace(
-        //     /<span class="regexp-literal-asterisk"><span class="regexp-control-char regexp-control-asterisk">\*<\/span><\/span>/g,
-        //     '<span class="regexp-literal-asterisk">*</span>'
-        // )
-
-        // // recover '\+'
-        // content = content.replace(
-        //     /\\<span class="regexp-control-char regexp-control-asterisk"><span class="regexp-control-char regexp-control-asterisk">\*<\/span><\/span>/g,
-        //     '<span class="wlc-escape-char regexp-literal-asterisk"><span class="slash">\\</span><span class="escaped-char">*</span></span>'
-        // )
-
-        // // recover '\*'
-        // content = content.replace(
-        //     /\\<span class="regexp-control-char regexp-control-asterisk"><span class="regexp-control-char regexp-control-asterisk">\*<\/span><\/span>/g,
-        //     '<span class="wlc-escape-char regexp-literal-asterisk"><span class="slash">\\</span><span class="escaped-char">*</span></span>'
-        // )
-
-        // // recover '\$'
-        // content = content.replace(
-        //     /<span class="escaped-char"><span class="regexp-selector-input-end">\$<\/span><\/span>/g,
-        //     '<span class="escaped-char">$</span>'
-        // )
-
-        // // recover '\^' as exp begin sign
-        // content = content.replace(
-        //     /<span class="escaped-char"><span class="regexp-selector-input-begin">\^<\/span><\/span>/g,
-        //     '<span class="escaped-char">^</span>'
-        // )
-
-        // // recover '\^' as exp begin sign, again
-        // content = content.replace(
-        //     /<span class="escaped-char"><span class="regexp-control-char regexp-control-invert"><span class="control-char"><span class="regexp-selector-input-begin">\^<\/span><\/span><\/span><\/span>/g,
-        //     '<span class="escaped-char">^</span>'
-        // )
-
-        // // recover ['^'
-        // content = content.replace(
-        //     /<span class="regexp-control-char regexp-control-invert"><span class="control-char"><span class="regexp-selector-input-begin">\^<\/span><\/span><\/span>/g,
-        //     '<span class="regexp-control-char regexp-control-invert"><span class="control-char">^</span></span>'
-        // )
-
-        contentForRegExpBody = contentForRegExpBody.replace(
-            /(<span class="regexp-control-char regexp-control-curly-brace curly-brace-open"><span class="control-char">\{<\/span><\/span>)(\d+)((,)(\d*))?(<span class="regexp-control-char regexp-control-curly-brace curly-brace-close"><span class="control-char">\}<\/span><\/span>)/g,
-            [
-                '$1',
-                '<span class="wlc-digit-pair-between-curly-braces">',
-                '<span class="digit digit-1">$2</span>',
-                '<span class="comma">$4</span>',
-                '<span class="digit digit-2">$5</span>',
-                '</span>',
-                '$6',
-            ].join('')
-        )
 
 
         contentForRegExpBody = parseASTSubTreeIntoSingleString(regExpBodyASTNode.content)
@@ -614,7 +458,7 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         )
     }
 
-    function parseAllEscapedControlChars(content) {
+    function markAllEscapedControlChars(content) {
         signleMeaningControlChars.forEach(ccib => { // escaped chars as literals
             const {
                 char,
@@ -636,7 +480,28 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         return content
     }
 
-    function parseAllSelectorChars(content) {
+    function markAllControlChars(content) {
+        signleMeaningControlChars.forEach(ccib => { // outside [] pairs, they are control chars
+            const {
+                char,
+                cssClassNameKeyword: ck,
+                cssClassNameExtra: ce,
+            } = ccib
+
+            content = content.replace(
+                new RegExp(`\\${char}`, 'g'),
+                [
+                    `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
+                    `<span class="${ccnControlCharTheChar}">${char}</span>`,
+                    '</span>',
+                ].join('')
+            )
+        })
+
+        return content
+    }
+
+    function markAllSelectorChars(content) {
         ccnSelectorChar,
         ccnSelectorCharSpecificNamePrefix,
         ccnSelectorCharTheChar,
@@ -663,5 +528,20 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         })
 
         return content
+    }
+
+    function markAllRepeatingTimeRanges(content) {
+        return content.replace(
+            /(<span class="regexp-control-char regexp-control-curly-brace curly-brace-open"><span class="control-char">\{<\/span><\/span>)(\d+)((,)(\d*))?(<span class="regexp-control-char regexp-control-curly-brace curly-brace-close"><span class="control-char">\}<\/span><\/span>)/g,
+            [
+                '$1',
+                '<span class="wlc-digit-pair-between-curly-braces">',
+                '<span class="digit digit-1">$2</span>',
+                '<span class="comma">$4</span>',
+                '<span class="digit digit-2">$5</span>',
+                '</span>',
+                '$6',
+            ].join('')
+        )
     }
 }

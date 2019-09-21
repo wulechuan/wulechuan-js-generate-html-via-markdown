@@ -10,7 +10,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
     const seg1 = segs.shift()
 
-    let lastSegEndsWithBackwardsSlash = seg1.slice(-1) === '\\'
+    let lastSegEndsWithBackwardSlash = seg1.slice(-1) === '\\'
     let openMarksCountInsideOneBraketPair = 0
     let closeMarksCountInsideOneBraketPair = 0
     let currentMergedSeg = seg1
@@ -28,7 +28,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
         if (!braketsPairHasOpened) {
 
-            if (lastSegEndsWithBackwardsSlash) {
+            if (lastSegEndsWithBackwardSlash) {
 
                 // A literal '[' is meet, because it is escaped.
                 currentMergedSeg += '[' // A literal '['
@@ -69,7 +69,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
 
         const currentSeg = segs[i]
-        lastSegEndsWithBackwardsSlash = currentSeg.slice(-1) === '\\'
+        lastSegEndsWithBackwardSlash = currentSeg.slice(-1) === '\\'
 
         const segParts = currentSeg.split(']')
 
@@ -97,12 +97,12 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
         currentMergedSeg += firstSegPart
 
-        let lastSegPartEndsWithBackwardsSlash = firstSegPart.slice(-1) === '\\'
+        let lastSegPartEndsWithBackwardSlash = firstSegPart.slice(-1) === '\\'
 
         for (let j = 0; j < segParts.length; j++) {
             const segPart = segParts[j]
 
-            if (lastSegPartEndsWithBackwardsSlash) {
+            if (lastSegPartEndsWithBackwardSlash) {
                 // a literal `]`, that is a '\]'
                 currentMergedSeg += ']'
                 closeMarksCountInsideOneBraketPair++
@@ -139,7 +139,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
             currentMergedSeg += segPart
 
-            lastSegPartEndsWithBackwardsSlash = segPart.slice(-1) === '\\'
+            lastSegPartEndsWithBackwardSlash = segPart.slice(-1) === '\\'
         }
     }
 
