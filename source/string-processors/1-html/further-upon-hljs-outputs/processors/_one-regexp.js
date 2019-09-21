@@ -188,105 +188,165 @@ function regExpASTSplitter(astNode) {
 
     const seg1 = segs.shift()
 
-    if (seg1) { // Is an empty string if '[' is the first char of original content
-        subASTs.push({
-            isEnclosured: false,
-            openMark: '',
-            closeMark: '',
-            content: seg1,
-        })
-    }
+    let lastSegEndsWithBackwardsSlash = seg1.slice(-1) === '\\'
+    let openMarksCountInsideOneBraketPair = 0
+    let closeMarksCountInsideOneBraketPair = 0
+    let currentMergedSeg = seg1
 
+    let braketsPairOpened = false
+    let closeMarksCountBeforeBraketsPairStart = 0
 
-    if (segs.length > 0) {
-        let currentMergedSeg = ''
-        let currentMergedSegIsPairedCorrectly = false
-        let openMarksCountInsideOneBraketPair = 0
+    for (let i = 0; i < segs.length; i++) {
+        /*
+            A new '[' presents at begininig of each loop pass,
+            because the segs array was splitted by '[', plus
+            the first member of the array has already been `shift()`
+            before hand, outside this `for` loop block.
+        */
 
-        for (let i = 0; i < segs.length; i++) {
-            // a new '[' presents
+        if (!braketsPairOpened) {
 
-            const currentSeg = segs[i]
-            const segParts = currentSeg.split(']')
-            const closeMarksCount = segParts.length
+            if (lastSegEndsWithBackwardsSlash) {
 
-            if (closeMarksCount > 2) {
-                throw new Error('@wulechuan/regexp-to-html: [] not pairing well.')
+                // A literal '[' is meet, because it is escaped.
+                currentMergedSeg += '[' // A literal '['
+                openMarksCountInsideOneBraketPair++
+
+            } else {
+
+                braketsPairOpened = true
+                openMarksCountInsideOneBraketPair = 0
+                closeMarksCountInsideOneBraketPair = 0
+
+                if (currentMergedSeg) { // We have things outside the just opening brakets pair.
+                    subASTs.push({
+                        isEnclosured: false,
+                        openMark: '',
+                        closeMark: '',
+                        content: currentMergedSeg,
+                    })
+
+                    currentMergedSeg = ''
+                }
+
             }
 
-            const unescapedCloseMarksCount = segParts.reduce((c, s) => {
+        } else {
+
+            // braketsPair already opened in previous loop pass
+            // A literal '[' is meet, no matter it is escaped or not
+            currentMergedSeg += '[' // A literal '['
+            openMarksCountInsideOneBraketPair++
+
+        }
+
+        const currentSeg = segs[i]
+        lastSegEndsWithBackwardsSlash = currentSeg.slice(-1) === '\\'
+
+        const segParts = currentSeg.split(']')
+
+
+        if (!braketsPairOpened) {
+            const unescapedCloseMarksCount = segParts.slice(-1).reduce((c, s) => {
                 if (s.slice(-1) !== '\\') {
                     c++
                 }
                 return c
-            }, 0) - 1
+            }, 0)
 
-
-            if (unescapedCloseMarksCount > 1) {
-                throw new Error('@wulechuan/regexp-to-html: [] not pairing well.')
+            closeMarksCountBeforeBraketsPairStart += unescapedCloseMarksCount
+            if (closeMarksCountBeforeBraketsPairStart > 0) {
+                throw new Error('@wulechuan/regexp-to-html: closing braket present before opening braket.')
             }
 
-            for (let j = 0; j < segParts.length; j++) {
-                const segPart = segParts[j]
+            currentMergedSeg += currentSeg
+
+            continue
+        }
+
+
+        const firstSegPart = segParts.shift()
+
+        currentMergedSeg += firstSegPart
+
+        let lastSegPartEndsWithBackwardsSlash = firstSegPart.slice(-1) === '\\'
+
+        for (let j = 0; j < segParts.length; j++) {
+            const segPart = segParts[j]
+
+            if (lastSegPartEndsWithBackwardsSlash) {
+                // a literal `]`, that is a '\]'
+                currentMergedSeg += ']'
+                closeMarksCountInsideOneBraketPair++
+
+                if (closeMarksCountInsideOneBraketPair > 2) {
+                    console.log('too many closemarks:', closeMarksCountInsideOneBraketPair)
+                    console.log('too many closemarks:', segParts)
+                    throw new Error('@wulechuan/regexp-to-html: [] not pairing well.')
+                }
 
                 currentMergedSeg += segPart
 
-                if (segPart.slice(-1) === '\\') {
-                    // a literal `]`, that is a '\]'
-                    currentMergedSeg += ']'
-                } else {
-                    // a valid closing braket, a ]
-                    subASTs.push({
-                        isEnclosured: true,
-                        openMark:  '[',
-                        closeMark: ']',
-                        content: currentMergedSeg,
-                    })
-
-                    currentMergedSegIsPairedCorrectly = true
-                    openMarksCountInsideOneBraketPair = 0
-
-                    currentMergedSeg = ''
-                }
+                continue
             }
 
-            if (!currentMergedSegIsPairedCorrectly) {
-                // Seg parts all processed, but the open '[' still not paired yet.
-                // We are still inside a [] pair.
 
-                currentMergedSeg += '[' // The splitter behide this seg was a literal `[`, although not escaped.
-                openMarksCountInsideOneBraketPair++
+            // A valid closing braket, aka a ']', presents
 
+            if (braketsPairOpened) {
+                subASTs.push({
+                    isEnclosured: true,
+                    openMark:  '[',
+                    closeMark: ']',
+                    content: currentMergedSeg,
+                })
+
+                currentMergedSeg = ''
+                braketsPairOpened = false
             } else {
-                if (currentMergedSeg) { // paired correctly, and have tail string outside the [] pair.
-                    if (currentMergedSeg.slice(-1) === '\\') {
-                        // The tail ends will a '\\'.
-                        // So The splitter behide this seg was a literal `[`, and was escaped.
-
-                        currentMergedSeg += '['
-                        openMarksCountInsideOneBraketPair++
-
-                    } else {
-                        // The tail does NOT end will a '\\'.
-                        // So the next(in the next loop) '[' will be a begining of a new [] pair.
-                        subASTs.push({
-                            isEnclosured: false,
-                            openMark: '',
-                            closeMark: '',
-                            content: currentMergedSeg,
-                        })
-                        currentMergedSegIsPairedCorrectly = false
-                    }
-                } else {
-                    // Paired and no tail. Clean.
-
-                }
+                // Brackets pare already closed,
+                // but another non escaped `]` presents
+                closeMarksCountBeforeBraketsPairStart++
             }
 
-            if (openMarksCountInsideOneBraketPair > 1) {
-                throw new Error('@wulechuan/regexp-to-html: Too many "[" within on pair of "[]".')
-            }
+            currentMergedSeg += segPart
 
+            lastSegPartEndsWithBackwardsSlash = segPart.slice(-1) === '\\'
+        }
+
+        // if (currentMergedSegIsPairedCorrectly) {
+
+        //     console.log(i, 'paired!')
+
+        //     if (currentMergedSeg) { // paired correctly, and have tail string outside the [] pair.
+        //         console.log('    has tail:"' + currentMergedSeg + '"')
+
+        //         if (currentMergedSeg.slice(-1) === '\\') {
+        //             // The tail ends will a '\\'.
+        //             // So The splitter behide this seg was a literal `[`, and was escaped.
+
+        //             currentMergedSeg += '['
+        //             openMarksCountInsideOneBraketPair++
+
+        //         } else {
+        //             // The tail does NOT end will a '\\'.
+        //             // So the next(in the next loop) '[' will be a begining of a new [] pair.
+        //             subASTs.push({
+        //                 isEnclosured: false,
+        //                 openMark: '',
+        //                 closeMark: '',
+        //                 content: currentMergedSeg,
+        //             })
+        //             currentMergedSegIsPairedCorrectly = false
+        //         }
+        //     } else {
+        //         // Paired and no tail. Clean.
+        //         console.log('    no tail content')
+        //     }
+        // }
+
+        if (openMarksCountInsideOneBraketPair > 1) {
+            throw new Error('@wulechuan/regexp-to-html: Too many "[" within on pair of "[]".')
         }
 
         // console.log('RegExp AST:')
@@ -294,6 +354,17 @@ function regExpASTSplitter(astNode) {
         // console.log('-'.repeat(59))
 
         astNode.content = subASTs
+    }
+
+    if (currentMergedSeg) {
+        subASTs.push({
+            isEnclosured: false,
+            openMark: '',
+            closeMark: '',
+            content: currentMergedSeg,
+        })
+
+        currentMergedSeg = ''
     }
 }
 
