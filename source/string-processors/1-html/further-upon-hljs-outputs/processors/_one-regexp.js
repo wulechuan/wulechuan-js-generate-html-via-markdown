@@ -2,40 +2,39 @@ const {
     splitRegExpASTByBraketPairs,
     splitRegExpASTForEscapeChars,
 } = require('../ast/ast-splitters-for-regexp')
-const parseASTSubTreeIntoSingleString = require('../ast/parse-ast-sub-tree-into-single-string')
 
 
 const defaultCSSClassNamesRegExp = {
     // `ccn` means (C)SS (C)lass (N)ame
 
-    ccnIllegal:                         'wlc-regexp-illegal',
+    ccnIllegal:                              'regexp-illegal',
 
-    ccnQuote:                           'regexp-quote',
-    ccnQuoteOpen:                       'regexp-open-quote',
-    ccnQuoteClose:                      'regexp-close-quote',
+    ccnQuote:                                'regexp-quote',
+    ccnQuoteOpen:                            'regexp-open-quote',
+    ccnQuoteClose:                           'regexp-close-quote',
 
-    ccnBody:                            'regexp-body',
-    ccnOptions:                         'regexp-options', // g, i
+    ccnBody:                                 'regexp-body',
+    ccnOptions:                              'regexp-options', // g, i
 
-    ccnInputBeginSign:                  'regexp-selector-input-begin',
-    ccnInputEndSign:                    'regexp-selector-input-end',
+    ccnInputBeginSign:                       'regexp-selector-input-begin',
+    ccnInputEndSign:                         'regexp-selector-input-end',
 
-    ccnEscapeChar:                      'wlc-escape-char',
-    ccnEscapeCharSlash:                 'slash',
-    ccnEscapeCharTheEscapedChar:        'escaped-char',
+    ccnEscapeChar:                           'escape-char',
+    ccnEscapeCharSlash:                      'slash',
+    ccnEscapeCharTheEscapedChar:             'escaped-char',
 
-    ccnControlChar:                     'regexp-control-char',
-    ccnControlCharSpecificNamePrefix:   'regexp-control',
-    ccnControlCharTheChar:              'control-char',
+    ccnControlChar:                          'regexp-control-char',
+    ccnControlCharSpecificNamePrefix:        'regexp-control',
+    ccnControlCharTheChar:                   'control-char',
 
-    ccnSelectorChar:                    'regexp-selector-char',
-    ccnSelectorCharSpecificNamePrefix:  'regexp-selector',
-    ccnSelectorCharTheChar:             'selector-char',
+    ccnSelectorChar:                         'regexp-selector-char',
+    ccnSelectorCharSpecificNamePrefix:       'regexp-selector',
+    ccnSelectorCharTheChar:                  'selector-char',
 
-    ccnLiteral:                         'regexp-literal-char',
-    ccnLiteralSpecificNamePrefix:       'regexp-literal',
+    ccnLiteral:                              'regexp-literal-char',
+    ccnLiteralSpecificNamePrefix:            'regexp-literal',
 
-    ccnCountingRangeBetweenCurlyBraces: 'wlc-digit-pair-between-curly-braces',
+    ccnCountingRangeBetweenCurlyBraces:      'digit-pair-between-curly-braces',
     ccnCountingRangeBetweenCurlyBracesDigit: 'digit',
 }
 
@@ -268,16 +267,36 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
     }
 
 
+    const regExpBodyASTNode = {
+        isEnclosured: true,
+        openMark: `<span class="${ccnBody}">`,
+        closeMark: '</span>',
+        content: contentForRegExpBody,
+    }
+
+    const regExpFullContentASTNode = {
+        isEnclosured: true,
+        openMark:  regexpOpen,  // the '/' at beginning
+        closeMark: regexpClose, // the '/' at end
+        content: [
+            regExpBodyASTNode,
+        ],
+    }
+
+    const regExpOptionsASTNode = {
+        isEnclosured: true,
+        openMark: '',
+        closeMark: '',
+        content: regexpOptions, // 'g', 'i' or 'gi'
+    }
+
+    astNodeForRegExp.content = [
+        regExpFullContentASTNode,
+        regExpOptionsASTNode,
+    ]
 
 
     if (contentForRegExpBody) {
-        const regExpBodyASTNode = {
-            isEnclosured: true,
-            openMark: '/',
-            closeMark: '/',
-            content: contentForRegExpBody,
-        }
-
         const {
             nodesEnclosured:    astNodesInsideBraketPairs,
             nodesNotEnclosured: astNodesOutsideBraketPairs,
@@ -395,22 +414,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
         })
-
-
-
-
-        contentForRegExpBody = parseASTSubTreeIntoSingleString(regExpBodyASTNode.content)
     }
-
-
-    astNodeForRegExp.content = [
-        regexpOpen,
-        `<span class="${ccnBody}">`,
-        contentForRegExpBody,
-        '</span>',
-        regexpClose,
-        regexpOptions,
-    ].join('')
 
 
 
@@ -458,7 +462,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
         const escapedChar = astNode.content
         if (escapedChar !== '.') { return }
-        console.log('escapedchar:', '"' + escapedChar + '"')
+        // console.log('escapedchar:', '"' + escapedChar + '"')
 
         const cssClassNames = [
             ccnEscapeChar,
@@ -484,7 +488,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         }
 
         const escapedChar = astNode.content
-        console.log('escapedchar:', '"' + escapedChar + '"')
 
         const matchedConfigs = regexpRegularCharsButMustMatchViaItsHTMLEntity.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
@@ -497,6 +500,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         // Since "matchedConfigs" might be zero lengthed array,
         // the astNode might NOT be modified at all.
         matchedConfigs.forEach(rccConfig => {
+            // console.log('escapedchar:', '"' + escapedChar + '"')
+
             const {
                 char,
                 cssClassNames: {
@@ -528,7 +533,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         }
 
         const escapedChar = astNode.content
-        console.log('escapedchar:', '"' + escapedChar + '"')
 
         const matchedConfigs = regexpControlCharsThatMustNotEscape.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
@@ -562,6 +566,10 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 '</span>',
             ].join('')
 
+            console.log('escapedchar:', '"' + escapedChar + '"')
+            console.log(astNode.content)
+            console.log('^'.repeat(79))
+
             astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
     }
@@ -572,7 +580,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         }
 
         const escapedChar = astNode.content
-        console.log('escapedchar:', '"' + escapedChar + '"')
+        // console.log('escapedchar:', '"' + escapedChar + '"')
 
         const matchedConfigs = regexpControlCharsThatMustEscape.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
@@ -589,7 +597,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 char,
                 thisControlIsASelector,
                 cssClassNames: {
-                    // asALiteral: cl,
                     asAControl: cc,
                     asASelector: cs,
                     extra: ce,
@@ -638,7 +645,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 char,
                 thisControlIsASelector,
                 cssClassNames: {
-                    // asALiteral: cl,
                     asAControl: cc,
                     asASelector: cs,
                     extra: ce,
