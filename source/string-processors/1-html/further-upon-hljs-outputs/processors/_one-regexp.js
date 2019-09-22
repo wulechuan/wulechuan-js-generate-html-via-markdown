@@ -2,8 +2,9 @@ const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messa
 
 const {
     splitRegExpASTByBraketPairs,
-    splitRegExpASTForEscapeChars,
 } = require('../ast/ast-splitters-for-regexp')
+
+const splitASTForEscapeChars = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
 
 
 const DEFAULT_CSS_CLASS_NAMES_FOR_REGEXPS = {
@@ -435,7 +436,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             const {
                 nodesEnclosured:    astNodesForEscapedChars,
                 nodesNotEnclosured: astNodesForNonEscapedSegments,
-            } = splitRegExpASTForEscapeChars(astNode)
+            } = splitASTForEscapeChars(astNode)
 
             astNodesForEscapedChars.forEach(astNodeForAnEscapedChar => {
                 markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNodeForAnEscapedChar)
@@ -458,7 +459,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             const {
                 nodesEnclosured:    astNodesForEscapedChars,
                 nodesNotEnclosured: astNodesForNonEscapedSegments,
-            } = splitRegExpASTForEscapeChars(astNode)
+            } = splitASTForEscapeChars(astNode)
 
             astNodesForEscapedChars.forEach(astNodeForAnEscapedChar => {
                 markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNodeForAnEscapedChar)
