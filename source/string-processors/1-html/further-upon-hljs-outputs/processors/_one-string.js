@@ -74,7 +74,10 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
     let stringIsIllegal = false
 
     const {
-        decidedQuoteSign,
+        decidedOpenQuoteSign,
+        decidedCloseQuoteSign,
+        decidedContent,
+        restPartCarriedByOriginalIllegalString,
         isEmptyString,
         isTemplatedString,
     } = preprocessStringRootASTNode(rootASTNodeForOneString)
@@ -83,7 +86,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
         isEnclosured: true,
         openMark: `<span class="${ccnBody}">`,
         closeMark: '</span>',
-        content: rootASTNodeForOneString.content,
+        content: decidedContent,
     }
 
 
@@ -112,7 +115,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
             isEnclosured: true,
             openMark: `<span class="${ccnQuote} ${ccnQuoteOpen}">`,
             closeMark: '</span>',
-            content: decidedQuoteSign,
+            content: decidedOpenQuoteSign,
         },
 
         astNodeForStringBody,
@@ -121,9 +124,34 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
             isEnclosured: true,
             openMark: `<span class="${ccnQuote} ${ccnQuoteClose}">`,
             closeMark: '</span>',
-            content: decidedQuoteSign,
+            content: decidedCloseQuoteSign,
         },
     ]
+
+
+    if (restPartCarriedByOriginalIllegalString) {
+        const astNotForLegalString = {
+            ...rootASTNodeForOneString,
+        }
+
+        const astNodeForCarriedExtraContent = {
+            isEnclosured: false,
+            openMark: '',
+            closeMark: '',
+            content: restPartCarriedByOriginalIllegalString,
+        }
+
+        rootASTNodeForOneString.openMark = ''
+        rootASTNodeForOneString.closeMark = ''
+        rootASTNodeForOneString.content = [
+            astNotForLegalString,
+            astNodeForCarriedExtraContent,
+        ]
+
+        return astNodeForCarriedExtraContent
+    }
+
+    return
 
 
 
@@ -131,24 +159,66 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
 
     function preprocessStringRootASTNode(astNode) {
         const { content, openMark, closeMark } = astNode
-        const quoteSign = openMark.slice(-1)
+        const decidedOpenQuoteSign = openMark.slice(-1)
 
-        const isTemplatedString = quoteSign === '`'
-        const isEmptyString = !content
+        let decidedCloseMark = closeMark
+        let restPartCarriedByOriginalIllegalString = ''
 
-        if (quoteSign !== closeMark.slice(0, 1)) {
+        const isTemplatedString = decidedOpenQuoteSign === '`'
+
+        let decidedCloseQuoteSign
+        let decidedContent = content
+
+        if (isTemplatedString) {
+            decidedCloseQuoteSign = closeMark.slice(0, 1)
+            if (decidedCloseQuoteSign === '`') {
+                decidedCloseMark = decidedCloseMark.slice(1)
+            }
+        } else {
+            decidedCloseQuoteSign = content.slice(-1)
+            if (decidedCloseQuoteSign === '\'' || decidedCloseQuoteSign === '"') {
+                decidedContent = decidedContent.slice(0, -1)
+            } else {
+                decidedCloseQuoteSign = ''
+            }
+        }
+
+        if (decidedOpenQuoteSign !== decidedCloseQuoteSign) {
             stringIsIllegal = true
-            throw new Error(buildErrorMessage([
+            console.log(new Error(buildErrorMessage([
                 'Different opening/closing quote marks of a single string.',
-            ]))
+                '    opening: ' + decidedOpenQuoteSign,
+                '    closing: ' + decidedCloseQuoteSign,
+            ])))
         }
 
         astNode.openMark  = openMark
-        astNode.closeMark = closeMark.slice(1)
-        astNode.isEmptyString = isEmptyString
+        astNode.closeMark = decidedCloseMark
+
+        if (!isTemplatedString && content.match('\n')) {
+            console.log(new Error (buildErrorMessage([
+                'String literal can not be multi-lined!',
+            ])))
+
+            const lines = content.split('\n')
+            const firstLine = lines.shift()
+
+            restPartCarriedByOriginalIllegalString = lines.join('\n')
+
+            // console.log(restPartCarriedByOriginalIllegalString)
+            // console.log('-'.repeat(79))
+
+            decidedContent = firstLine
+            decidedCloseQuoteSign = '\n'
+        }
+
+        const isEmptyString = !decidedContent
 
         return {
-            decidedQuoteSign: quoteSign,
+            decidedOpenQuoteSign,
+            decidedCloseQuoteSign,
+            decidedContent,
+            restPartCarriedByOriginalIllegalString,
             isEmptyString,
             isTemplatedString,
         }

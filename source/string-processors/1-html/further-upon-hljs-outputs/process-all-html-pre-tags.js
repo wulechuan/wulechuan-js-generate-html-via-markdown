@@ -58,7 +58,16 @@ function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark,
         } = splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, optionsForSplitting)
 
         if (typeof enclosuredContentsProcessor === 'function') {
-            nodesEnclosured.forEach(enclosuredContentsProcessor)
+            nodesEnclosured.forEach(astNode => {
+                const returnedUnprocessedASTNode = enclosuredContentsProcessor(astNode)
+
+                if (returnedUnprocessedASTNode) {
+                    restNodes = [
+                        ...restNodes,
+                        returnedUnprocessedASTNode,
+                    ]
+                }
+            })
         }
 
         restNodes = [
@@ -322,14 +331,14 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">\'',
-            '\'</span>',
+            '</span>',
             parseOneStringASTNodeIntoHTML
         )
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">"',
-            '"</span>',
+            '</span>',
             parseOneStringASTNodeIntoHTML
         )
 
