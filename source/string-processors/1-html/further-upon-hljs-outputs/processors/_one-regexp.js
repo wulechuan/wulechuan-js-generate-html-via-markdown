@@ -362,7 +362,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
             astNodesForNonEscapedSegments.forEach((astNodeForNonEscapedSegment) => {
                 markAllUnescapedPeriodSigns(astNodeForNonEscapedSegment)
-                markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
         })
 
@@ -695,35 +694,47 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 },
             } = rccConfig
 
-            console.log(`working on char non-escaped control char "${char}"`)
+
 
             if (cc === undefined && cs === undefined) {
                 throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a control.')
             }
 
-            const cssClassNames = [
-                thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
-                thisControlIsASelector
-                    ? `${ccnSelectorCharSpecificNamePrefix}-${cs}`
-                    : `${ccnControlCharSpecificNamePrefix}-${cc}`,
-                ce || '',
-            ].join(' ')
+            if (content.indexOf(char) > -1) {
+                const oldContent = content
 
-            content = content.replace(
-                new RegExp(`\\${char}`, 'g'),
-                [
-                    `<span class="${cssClassNames}">`,
+                const cssClassNames = [
+                    thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
+                    thisControlIsASelector
+                        ? `${ccnSelectorCharSpecificNamePrefix}-${cs}`
+                        : `${ccnControlCharSpecificNamePrefix}-${cc}`,
+                    ce || '',
+                ].join(' ')
 
-                    `<span class="${
-                        thisControlIsASelector ? ccnSelectorCharTheChar : ccnControlCharTheChar
-                    }">${char}</span>`,
+                content = content.replace(
+                    new RegExp(`\\${char}`, 'g'),
+                    [
+                        `<span class="${cssClassNames}">`,
 
-                    '</span>',
-                ].join('')
-            )
+                        `<span class="${
+                            thisControlIsASelector ? ccnSelectorCharTheChar : ccnControlCharTheChar
+                        }">${char}</span>`,
+
+                        '</span>',
+                    ].join('')
+                )
+
+                console.log(`non-escaped control char "${char}"`)
+                console.log(`"${oldContent}"`)
+                console.log('-'.repeat(15))
+                console.log(`"${content}"`)
+                console.log('^'.repeat(79))
+                console.log()
+            }
+
+            astNode.content = content
         })
 
-        return content
     }
 
     function markAllUnescapedPeriodSigns(astNode) {
