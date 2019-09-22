@@ -33,7 +33,25 @@ function parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, code
                 ].join('')
             )
             .replace(
+                /([+-]?)(\d*\.\d+|\d+)(cap|ch|em|ex|ic|lh|rem|rlh|vh|vw|vi|vb|vmin|vmax)/g,
+                [
+                    '<span class="css-length">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit length-unit relative-length-unit $3">$3</span>',
+                    '</span>',
+                ].join('')
+            )
+            .replace(
                 /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)(px|mm|cm|Q|in|pt|pc)<\/span>/g,
+                [
+                    '<span class="css-length">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit length-unit absolute-length-unit $3">$3</span>',
+                    '</span>',
+                ].join('')
+            )
+            .replace(
+                /([+-]?)(\d*\.\d+|\d+)(px|mm|cm|Q|in|pt|pc)/g,
                 [
                     '<span class="css-length">',
                     '<span class="hljs-number">$1$2</span>',
