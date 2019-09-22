@@ -644,10 +644,13 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
             const cssClassNames = [
                 ccnEscapeChar,
+
                 thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
+
                 thisControlIsASelector
                     ? `${ccnSelectorCharSpecificNamePrefix}-${cs}`
                     : `${ccnControlCharSpecificNamePrefix}-${cc}`,
+
                 ce || '',
             ].join(' ')
 
@@ -679,7 +682,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
     function markAllNonEscapedControlCharsThatMustNotEscape(astNode) {
         let { content } = astNode
-        regexpControlCharsThatMustNotEscape.forEach(ccib => {
+        if (!content) { return }
+
+        regexpControlCharsThatMustNotEscape.forEach(rccConfig => {
             const {
                 char,
                 thisControlIsASelector,
@@ -688,7 +693,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                     asASelector: cs,
                     extra: ce,
                 },
-            } = ccib
+            } = rccConfig
+
+            console.log(`working on char non-escaped control char "${char}"`)
 
             if (cc === undefined && cs === undefined) {
                 throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a control.')
@@ -723,22 +730,24 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         // '.'
 
         const { content } = astNode
+        if (!content) { return }
 
-        if (content) {
-            const cssClassNames = [
-                ccnSelectorChar,
-                `${ccnSelectorCharSpecificNamePrefix}-${cssClassNameOfPeriodSignAsASelector}`,
-            ].join(' ')
+        const cssClassNames = [
+            ccnSelectorChar,
+            `${ccnSelectorCharSpecificNamePrefix}-${cssClassNameOfPeriodSignAsASelector}`,
+        ].join(' ')
 
-            astNode.content = content.replace(
-                /\\./g,
-                `<span class="${cssClassNames}">.</span>`
-            )
-        }
+        astNode.content = content.replace(
+            /\\./g,
+            `<span class="${cssClassNames}">.</span>`
+        )
     }
 
     function markAllRepeatingTimeRanges(astNode) {
-        astNode.content = astNode.content.replace(
+        const { content } = astNode
+        if (!content) { return }
+
+        astNode.content = content.replace(
             /(<span class="regexp-control-char regexp-control-curly-brace curly-brace-open"><span class="control-char">\{<\/span><\/span>)(\d+)((,)(\d*))?(<span class="regexp-control-char regexp-control-curly-brace curly-brace-close"><span class="control-char">\}<\/span><\/span>)/g,
             [
                 '$1',
