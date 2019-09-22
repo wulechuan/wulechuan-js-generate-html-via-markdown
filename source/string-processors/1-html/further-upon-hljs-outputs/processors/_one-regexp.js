@@ -534,8 +534,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         // Since "matchedConfigs" might be zero lengthed array,
         // the astNode might NOT be modified at all.
         matchedConfigs.forEach(rccConfig => {
-            // console.log('escapedchar:', '"' + escapedChar + '"')
-
             const {
                 char,
                 cssClassNames: {
@@ -556,6 +554,10 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 `<span class="${ccnEscapeCharTheEscapedChar}">${char}</span>`,
                 '</span>',
             ].join('')
+
+            // console.log('escapedchar:', '"' + escapedChar + '"')
+            // console.log(astNode.content)
+            // console.log('^'.repeat(79))
 
             astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
@@ -600,9 +602,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 '</span>',
             ].join('')
 
-            console.log('escapedchar:', '"' + escapedChar + '"')
-            console.log(astNode.content)
-            console.log('^'.repeat(79))
+            // console.log('escapedchar:', '"' + escapedChar + '"')
+            // console.log(astNode.content)
+            // console.log('^'.repeat(79))
 
             astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
@@ -614,7 +616,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         }
 
         const escapedChar = astNode.content
-        // console.log('escapedchar:', '"' + escapedChar + '"')
 
         const matchedConfigs = regexpControlCharsThatMustEscape.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
@@ -667,6 +668,10 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
                 '</span>',
             ].join('')
+
+            // console.log('escapedchar:', '"' + escapedChar + '"')
+            // console.log(astNode.content)
+            // console.log('^'.repeat(79))
 
             astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
