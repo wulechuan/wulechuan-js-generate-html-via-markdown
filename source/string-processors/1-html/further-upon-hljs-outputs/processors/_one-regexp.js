@@ -4,7 +4,7 @@ const {
 } = require('../ast/ast-splitters-for-regexp')
 
 
-const defaultCSSClassNamesRegExp = {
+const DEFAULT_CSS_CLASS_NAMES_FOR_REGEXPS = {
     // `ccn` means (C)SS (C)lass (N)ame
 
     ccnIllegal:                              'regexp-illegal',
@@ -42,20 +42,20 @@ const defaultCSSClassNamesRegExp = {
     ccnCountingRangeBetweenCurlyBracesDigit: 'digit',
 }
 
-// const cssClassNameOfLiteralForwardSlash  = 'forward-slash'
-// const cssClassNameOfLiteralBackwardSlash = 'backward-slash'
+// const CSS_CLASS_NAME_OF_LITERAL_FORWARD_SLASH  = 'forward-slash'
+// const CSS_CLASS_NAME_OF_LITERAL_BACKWARD_SLASH = 'backward-slash'
 
-const cssClassNameOfBraketAsAControl    = 'candidate-chars'
-const cssClassNameOfBraketAsALiteral    = 'braket'
-const cssClassNameOfOpenBraketSpecific  = 'open-braket'
-const cssClassNameOfCloseBraketSpecific = 'close-braket'
+const CSS_CLASS_NAME_OF_BRAKET_AS_A_CONTROL   = 'candidate-chars'
+const CSS_CLASS_NAME_OF_BRAKET_AS_A_LITERAL   = 'braket'
+const CSS_CLASS_NAME_OF_OPEN_BRAKET_SPECIFIC  = 'open-braket'
+const CSS_CLASS_NAME_OF_CLOSE_BRAKET_SPECIFIC = 'close-braket'
 
-const cssClassNameOfPeriodSignAsALiteral  = 'period'
-const cssClassNameOfPeriodSignAsASelector = 'any-char'
-const cssClassNameOfMinusSignAsARangeControl = 'range-sign'
-const cssClassNameOfCaretSignAsAnInvertControl = 'invert'
+const CSS_CLASS_NAME_OF_PERIOD_SIGN_AS_A_LITERAL        = 'period'
+const CSS_CLASS_NAME_OF_PERIOD_SIGN_AS_A_SELECTOR       = 'any-char'
+const CSS_CLASS_NAME_OF_MINUS_SIGN_AS_A_RANGE_CONTROL   = 'range-sign'
+const CSS_CLASS_NAME_OF_CARET_SIGN_AS_AN_INVERT_CONTROL = 'invert'
 
-const regexpRegularCharsButMustMatchViaItsHTMLEntity = [
+const REGEXP_REGULAR_CHARS_BUT_MUST_MATCH_VIA_ITS_HTML_ENTITY = [
     {
         char: '<',
         htmlEntity: '&lts;',
@@ -74,7 +74,7 @@ const regexpRegularCharsButMustMatchViaItsHTMLEntity = [
     },
 ]
 
-const regexpControlCharsThatMustNotEscape = [
+const REGEXP_CONTROL_CHARS_THAT_MUST_NOT_ESCAPE = [
     /*
         If `thisControlIsASelector` is true,
         we use 'regexp-selector-' as CSS class name prefix, instead of `regexp-control-`
@@ -138,18 +138,18 @@ const regexpControlCharsThatMustNotEscape = [
         char: '[',
         // htmlEntity: '',
         cssClassNames: {
-            asALiteral: cssClassNameOfBraketAsALiteral,
-            asAControl: cssClassNameOfBraketAsAControl,
-            extra:      cssClassNameOfOpenBraketSpecific,
+            asALiteral: CSS_CLASS_NAME_OF_BRAKET_AS_A_LITERAL,
+            asAControl: CSS_CLASS_NAME_OF_BRAKET_AS_A_CONTROL,
+            extra:      CSS_CLASS_NAME_OF_OPEN_BRAKET_SPECIFIC,
         },
     },
     {
         char: ']',
         // htmlEntity: '',
         cssClassNames: {
-            asALiteral: cssClassNameOfBraketAsALiteral,
-            asAControl: cssClassNameOfBraketAsAControl,
-            extra:      cssClassNameOfCloseBraketSpecific,
+            asALiteral: CSS_CLASS_NAME_OF_BRAKET_AS_A_LITERAL,
+            asAControl: CSS_CLASS_NAME_OF_BRAKET_AS_A_CONTROL,
+            extra:      CSS_CLASS_NAME_OF_CLOSE_BRAKET_SPECIFIC,
         },
     },
     {
@@ -172,7 +172,7 @@ const regexpControlCharsThatMustNotEscape = [
     },
 ]
 
-const regexpControlCharsThatMustEscape = [
+const REGEXP_CONTROL_CHARS_THAT_MUST_ESCAPE = [
     /*
         If `thisControlIsASelector` is true,
         we use 'regexp-selector-' as CSS class name prefix, instead of `regexp-control-`
@@ -190,9 +190,14 @@ const regexpControlCharsThatMustEscape = [
 
 
 
-module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
+module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, options = {}) {
+    const {
+        cssClassNames: customizedCSSClassNames = {},
+    } = options
+
     const cssClassNames = {
-        ...defaultCSSClassNamesRegExp,
+        ...DEFAULT_CSS_CLASS_NAMES_FOR_REGEXPS,
+        ...customizedCSSClassNames,
     }
 
     const {
@@ -360,9 +365,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 `<span class="${
                     ccnControlChar
                 } ${
-                    ccnControlCharSpecificNamePrefix}-${cssClassNameOfBraketAsAControl
+                    ccnControlCharSpecificNamePrefix}-${CSS_CLASS_NAME_OF_BRAKET_AS_A_CONTROL
                 } ${
-                    cssClassNameOfOpenBraketSpecific
+                    CSS_CLASS_NAME_OF_OPEN_BRAKET_SPECIFIC
                 }">[</span>`,
             ]
 
@@ -371,9 +376,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 `<span class="${
                     ccnControlChar
                 } ${
-                    ccnControlCharSpecificNamePrefix}-${cssClassNameOfOpenBraketSpecific
+                    ccnControlCharSpecificNamePrefix}-${CSS_CLASS_NAME_OF_OPEN_BRAKET_SPECIFIC
                 } ${
-                    cssClassNameOfCloseBraketSpecific
+                    CSS_CLASS_NAME_OF_CLOSE_BRAKET_SPECIFIC
                 }">]</span>`,
             ]
 
@@ -391,7 +396,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                         `<span class="${
                             ccnControlChar
                         } ${
-                            ccnControlCharSpecificNamePrefix}-${cssClassNameOfCaretSignAsAnInvertControl
+                            ccnControlCharSpecificNamePrefix}-${CSS_CLASS_NAME_OF_CARET_SIGN_AS_AN_INVERT_CONTROL
                         }">`,
                         `<span class="${ccnControlCharTheChar}">^</span>`,
                         '</span>',
@@ -475,7 +480,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
         const cssClassNames = [
             ccnControlChar,
-            `${ccnControlCharSpecificNamePrefix}-${cssClassNameOfMinusSignAsARangeControl}`,
+            `${ccnControlCharSpecificNamePrefix}-${CSS_CLASS_NAME_OF_MINUS_SIGN_AS_A_RANGE_CONTROL}`,
         ].join(' ')
 
         const replacement = [
@@ -524,7 +529,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         const cssClassNames = [
             ccnEscapeChar,
             ccnLiteral,
-            `${ccnLiteralSpecificNamePrefix}-${cssClassNameOfPeriodSignAsALiteral}`,
+            `${ccnLiteralSpecificNamePrefix}-${CSS_CLASS_NAME_OF_PERIOD_SIGN_AS_A_LITERAL}`,
         ].join(' ')
 
         astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
@@ -546,7 +551,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
         const escapedChar = astNode.content
 
-        const matchedConfigs = regexpRegularCharsButMustMatchViaItsHTMLEntity.filter(rccConfig => {
+        const matchedConfigs = REGEXP_REGULAR_CHARS_BUT_MUST_MATCH_VIA_ITS_HTML_ENTITY.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
         })
 
@@ -604,7 +609,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
         const escapedChar = astNode.content
 
-        const matchedConfigs = regexpControlCharsThatMustNotEscape.filter(rccConfig => {
+        const matchedConfigs = REGEXP_CONTROL_CHARS_THAT_MUST_NOT_ESCAPE.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
         })
 
@@ -651,7 +656,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
         const escapedChar = astNode.content
 
-        const matchedConfigs = regexpControlCharsThatMustEscape.filter(rccConfig => {
+        const matchedConfigs = REGEXP_CONTROL_CHARS_THAT_MUST_ESCAPE.filter(rccConfig => {
             return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
         })
 
@@ -718,7 +723,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         let { content } = astNode
         if (!content) { return }
 
-        regexpControlCharsThatMustNotEscape.forEach(rccConfig => {
+        REGEXP_CONTROL_CHARS_THAT_MUST_NOT_ESCAPE.forEach(rccConfig => {
             const {
                 char,
                 thisControlIsASelector,
@@ -771,7 +776,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
         const cssClassNames = [
             ccnSelectorChar,
-            `${ccnSelectorCharSpecificNamePrefix}-${cssClassNameOfPeriodSignAsASelector}`,
+            `${ccnSelectorCharSpecificNamePrefix}-${CSS_CLASS_NAME_OF_PERIOD_SIGN_AS_A_SELECTOR}`,
         ].join(' ')
 
         astNode.content = content.replace(
