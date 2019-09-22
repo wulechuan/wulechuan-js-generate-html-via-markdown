@@ -1,4 +1,7 @@
 const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
+const splitASTForEscapeChars = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
+
+
 
 const DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS = {
     // `ccn` means (C)SS (C)lass (N)ame
@@ -16,21 +19,26 @@ const DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS = {
     ccnEscapeCharSlash:                      'slash',
     ccnEscapeCharTheEscapedChar:             'escaped-char',
 
-    ccnLiteral:                              'regexp-literal-char',
-    ccnLiteralSpecificNamePrefix:            'regexp-literal',
+    ccnLiteral:                              'string-literal-char',
+    ccnLiteralSpecificNamePrefix:            'string-literal',
 }
 
 
-const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
-    { escapedChar: '\\\\', cssClassName: 'backward-slash' },
-    { escapedChar: 'n',    cssClassName: 'new-line' },
-    { escapedChar: 'r',    cssClassName: 'carriage-return' },
-    { escapedChar: 't',    cssClassName: 'tab' },
-    { escapedChar: '\'',   cssClassName: 'single-quote' },
-    { escapedChar: '"',    cssClassName: 'double-quote' },
-    { escapedChar: '/',    cssClassName: 'forward-mark' },
+const SPECIAL_ESPACED_CHARS_IN_STRINGS = [
+    { escapedChar: '\\', /* htmlEntity: '', */ cssClassNames: 'backward-slash' },
+    { escapedChar: 'n',  /* htmlEntity: '', */ cssClassNames: 'new-line' },
+    { escapedChar: 'r',  /* htmlEntity: '', */ cssClassNames: 'carriage-return' },
+    { escapedChar: 't',  /* htmlEntity: '', */ cssClassNames: 'tab' },
+    { escapedChar: '\'', /* htmlEntity: '', */ cssClassNames: 'single-quote' },
+    { escapedChar: '"',  /* htmlEntity: '', */ cssClassNames: 'double-quote' },
+    { escapedChar: '/',  /* htmlEntity: '', */ cssClassNames: 'forward-mark' },
 ]
 
+
+const REGULAR_CHARS_BUT_MUST_MATCH_VIA_ITS_HTML_ENTITY = [
+    { char: '<', htmlEntity: '&lts;', cssClassNames: 'less-than-sign' },
+    { char: '>', htmlEntity: '&gts;', cssClassNames: 'greater-than-sign' },
+]
 
 
 const {
@@ -39,7 +47,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
 
 
-module.exports = function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae */) {
+module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/* , codeLanguae */) {
     const {
         ccnIllegal,
         ccnEmpty,
@@ -54,71 +62,114 @@ module.exports = function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae 
         ccnEscapeCharSlash,
         ccnEscapeCharTheEscapedChar,
 
-        // ccnLiteral,
-        // ccnLiteralSpecificNamePrefix,
+        ccnLiteral,
+        ccnLiteralSpecificNamePrefix,
     } = DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS
+
+
+    // Prepare some constantly used HTML snippets here.
+    const htmlSnippetSlashChar = `<span class="${ccnEscapeCharSlash}">\\</span>`
 
 
     let stringIsIllegal = false
 
-    let { content, openMark, closeMark } = astNode
-    const quoteSign = openMark.slice(-1)
+    const {
+        decidedQuoteSign,
+        decidedCloseQuoteSign,
+        isEmptyString,
+        isTemplatedString,
+    } = preprocessStringRootASTNode(rootASTNodeForOneString)
 
-    const isTemplatedString = quoteSign === '`'
-    const stringIsEmpty = !content
-
-    if (quoteSign !== closeMark.slice(0, 1)) {
-        stringIsIllegal = true
-        throw new Error(buildErrorMessage([
-            'Different opening/closing quote marks of a single string.',
-        ]))
+    const astNodeForStringBody = {
+        isEnclosured: true,
+        openMark: `<span class="${ccnBody}">`,
+        closeMark: '</span>',
+        content: rootASTNodeForOneString.content,
     }
 
-    openMark = `<span class="hljs-string${
-        stringIsEmpty ? ` ${ccnEmpty}` : ''
-    }${
-        stringIsIllegal ? ` ${ccnIllegal}` : ''
-    }"><span class="${ccnQuote} ${ccnQuoteOpen}">${quoteSign}</span>`
 
-    closeMark = `<span class="${ccnQuote} ${ccnQuoteClose}">${quoteSign}</span>${closeMark.slice(1)}`
-
-    astNode.openMark  = openMark
-    astNode.closeMark = closeMark
-
-    content = parseOneStringOfEitherType(content) // templated or not templated
 
     if (isTemplatedString) {
-        content = parseOneTemplatedString(content)
+        parseOneTemplatedString(astNodeForStringBody)
+    } else {
+        parseOneStringLiteralOrOnePureSegmentOfOneTemplatedString(astNodeForStringBody)
     }
 
-    astNode.content = `<span class="${ccnBody}">${content}</span>`
+
+
+    const cssClassNamesForRootOpenMark = `${
+        'hljs-string'
+    }${
+        isEmptyString   ? ` ${ccnEmpty}`   : ''
+    }${
+        stringIsIllegal ? ` ${ccnIllegal}` : ''
+    }`
+
+    rootASTNodeForOneString.openMark = `<span class="${cssClassNamesForRootOpenMark}">`
+    // rootASTNodeForOneString.closeMark = '</span>'
+
+    rootASTNodeForOneString.content = [
+        {
+            isEnclosured: true,
+            openMark: `<span class="${ccnQuote} ${ccnQuoteOpen}">`,
+            closeMark: '</span>',
+            content: decidedQuoteSign,
+        },
+
+        astNodeForStringBody,
+
+        {
+            isEnclosured: true,
+            openMark: `<span class="${ccnQuote} ${ccnQuoteClose}">`,
+            closeMark: '</span>',
+            content: decidedCloseQuoteSign,
+        },
+    ]
 
 
 
 
 
+    function preprocessStringRootASTNode(astNode) {
+        const { content, openMark, closeMark } = astNode
+        const quoteSign = openMark.slice(-1)
 
-    function parseOneStringOfEitherType(content) {
-        STANDARD_ESPACED_CHARS_IN_STRING_LITERALS.forEach(sec => {
-            const char = sec.escapedChar
-            const coreChar = char.startsWith('\\') ? char.slice(1) : char
-            content = content.replace(
-                new RegExp(`(\\\\${char})`, 'g'),
-                [
-                    `<span class="${ccnEscapeChar} ${sec.cssClassName}">`,
-                    `<span class="${ccnEscapeCharSlash}">\\</span>`,
-                    `<span class="${ccnEscapeCharTheEscapedChar}">${coreChar}</span>`,
-                    '</span>',
-                ]
-            )
+        const isTemplatedString = quoteSign === '`'
+        const isEmptyString = !content
+
+        if (quoteSign !== closeMark.slice(0, 1)) {
+            stringIsIllegal = true
+            throw new Error(buildErrorMessage([
+                'Different opening/closing quote marks of a single string.',
+            ]))
+        }
+
+        astNode.openMark  = openMark
+        astNode.closeMark = closeMark
+        astNode.isEmptyString = isEmptyString
+
+        return {
+            decidedQuoteSign: quoteSign,
+            isEmptyString,
+            isTemplatedString,
+        }
+    }
+
+    function parseOneStringLiteralOrOnePureSegmentOfOneTemplatedString(astNode) {
+        const {
+            nodesEnclosured:    astNodesForEscapedChars,
+            // nodesNotEnclosured: astNodesForNonEscapedSegments,
+        } = splitASTForEscapeChars(astNode)
+
+        astNodesForEscapedChars.forEach(astNodeForAnEscapedChar => {
+            markAllSpecialEscapeChars(astNodeForAnEscapedChar) // They have extra CSS specifical class names.
+            markAllRegularEscapeChars(astNodeForAnEscapedChar) // They have less CSS class names.
         })
-
-        return content
     }
 
-
-    function parseOneTemplatedString(content) {
-        // content = content.replace(
+    function parseOneTemplatedString(/* astNode */) {
+        // const { content } = astNode
+        // astNode.content = content.replace(
         //     /\${/g,
         //     [
         //         '<span class="string-template-interpolation-begin">',
@@ -127,6 +178,98 @@ module.exports = function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae 
         //         '</span>',
         //     ].join('')
         // )
-        return content
+    }
+
+    function markAllSpecialEscapeChars(astNode) {
+        if (astNode.asAnEscapedCharThisHasBeenProcessed) {
+            return
+        }
+
+        const escapedChar = astNode.content
+
+        const matchedConfigs = SPECIAL_ESPACED_CHARS_IN_STRINGS.filter(secConfig => {
+            return secConfig.char === escapedChar || secConfig.htmlEntity === escapedChar
+        })
+
+        if (matchedConfigs.length > 1) {
+            throw new Error(buildErrorMessage([
+                'For content "' + escapedChar + '" more than one parsing configs matched!',
+            ]))
+        }
+
+
+        // Since "matchedConfigs" might be zero lengthed array,
+        // the astNode might NOT be modified at all.
+        matchedConfigs.forEach(secConfig => {
+            const {
+                char,
+                cssClassNames,
+            } = secConfig
+
+            const cssClassNamesToUse = `${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${cssClassNames}`
+
+            astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
+            astNode.openMark = '' // clear the '\\'
+
+            astNode.content = [
+                `<span class="${cssClassNamesToUse}">`,
+                htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
+                `<span class="${ccnEscapeCharTheEscapedChar}">${char}</span>`,
+                '</span>',
+            ].join('')
+
+            astNode.asAnEscapedCharThisHasBeenProcessed = true
+        })
+    }
+
+    function markAllRegularEscapeChars(astNode) {
+        if (astNode.asAnEscapedCharThisHasBeenProcessed) {
+            return
+        }
+
+        const escapedChar = astNode.content
+
+        const matchedConfigs = REGULAR_CHARS_BUT_MUST_MATCH_VIA_ITS_HTML_ENTITY.filter(secConfig => {
+            return secConfig.char === escapedChar || secConfig.htmlEntity === escapedChar
+        })
+
+        if (matchedConfigs.length > 1) {
+            throw new Error(buildErrorMessage([
+                'For content "' + escapedChar + '" more than one parsing configs matched!',
+            ]))
+        }
+
+
+
+        let printingChar
+        let cssClassNamesToUse
+
+        if (matchedConfigs.length === 1) {
+            const [ secConfig ] = matchedConfigs
+
+            const {
+                char,
+                cssClassNames,
+            } = secConfig
+
+            printingChar       = char
+            cssClassNamesToUse = `${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${cssClassNames}`
+        } else {
+            printingChar       = escapedChar
+            cssClassNamesToUse = ccnEscapeChar
+        }
+
+
+        astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
+        astNode.openMark = '' // clear the '\\'
+
+        astNode.content = [
+            `<span class="${cssClassNamesToUse}">`,
+            htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
+            `<span class="${ccnEscapeCharTheEscapedChar}">${printingChar}</span>`,
+            '</span>',
+        ].join('')
+
+        astNode.asAnEscapedCharThisHasBeenProcessed = true
     }
 }
