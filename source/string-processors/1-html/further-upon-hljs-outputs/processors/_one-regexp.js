@@ -458,7 +458,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 markAllRepeatingTimeRanges(astNodeForNonEscapedSegment)
                 markAllControlCharsOfInputBeginOrEnd(astNodeForNonEscapedSegment)
                 markAllUnescapedPeriodSigns(astNodeForNonEscapedSegment)
-                markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
+                markAllUnescapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
         })
     }
@@ -703,7 +703,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         })
     }
 
-    function markAllNonEscapedControlCharsThatMustNotEscape(astNode) {
+    function markAllUnescapedControlCharsThatMustNotEscape(astNode) {
         let { content } = astNode
         if (!content) { return }
 
@@ -725,8 +725,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
             }
 
             if (content.indexOf(char) > -1) {
-                // const oldContent = content
-
                 const cssClassNames = [
                     thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
                     thisControlIsASelector
@@ -747,13 +745,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                         '</span>',
                     ].join('')
                 )
-
-                // console.log(`non-escaped control char "${char}"`)
-                // console.log(`"${oldContent}"`)
-                // console.log('-'.repeat(15))
-                // console.log(`"${content}"`)
-                // console.log('^'.repeat(79))
-                // console.log()
             }
 
             astNode.content = content
@@ -773,7 +764,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         ].join(' ')
 
         astNode.content = content.replace(
-            /\\./g,
+            /\./g,
             `<span class="${cssClassNames}">.</span>`
         )
     }
