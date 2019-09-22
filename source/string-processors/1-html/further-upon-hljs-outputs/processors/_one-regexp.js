@@ -269,10 +269,73 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
 
 
+    parseMainContentOfOneRegExp(regExpBodyASTNode)
 
 
 
-    if (contentForRegExpBody) {
+    if (regexpIsIllegal) {
+        astNodeForRegExp.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
+    }
+
+
+
+    function extractTopLevelPartsOfARegExp(regexpFullContentWithOptions) {
+        let regexpOpen = ''
+        let regexpClose = ''
+        let regexpOptions = ''
+        let regexpBothQuotesPresent = true
+
+        let contentForRegExpBody = regexpFullContentWithOptions
+
+        const matchingResultOfRegExpOpenMark = contentForRegExpBody.match(/^(\/)/)
+        if (matchingResultOfRegExpOpenMark) {
+            const [
+                ,
+                regexpOpenMark, // in case an illegal regexp provided, without open mark
+            ] = matchingResultOfRegExpOpenMark
+
+            contentForRegExpBody = contentForRegExpBody.slice(regexpOpenMark.length)
+
+            if (regexpOpenMark === '/') {
+                regexpOpen = regexpOpenMark
+            } else {
+                regexpBothQuotesPresent = false
+            }
+        }
+
+
+        const matchingResultOfRegExpCloseMark = contentForRegExpBody.match(/(\/)([a-z]*)$/)
+        if (matchingResultOfRegExpCloseMark) {
+            const [
+                tailIncludingRegexpCloseMark, // in case an illegal regexp provided, without close mark
+                regexpCloseMark,              // in case an illegal regexp provided, without close mark
+                regexpOptionsRaw,
+            ] = matchingResultOfRegExpCloseMark
+
+            contentForRegExpBody = contentForRegExpBody.slice(0, -tailIncludingRegexpCloseMark.length)
+
+            if (regexpCloseMark === '/') {
+                regexpClose = regexpCloseMark
+            } else {
+                regexpBothQuotesPresent = false
+            }
+
+            regexpOptions = regexpOptionsRaw
+        }
+
+        return {
+            regexpOpen,
+            regexpClose,
+            regexpOptions,
+            regexpBothQuotesPresent,
+            contentForRegExpBody,
+        }
+    }
+
+    function parseMainContentOfOneRegExp(regExpBodyASTNode) {
+        if (!regExpBodyASTNode.content) { return }
+
+
         const {
             nodesEnclosured:    astNodesInsideBraketPairs,
             nodesNotEnclosured: astNodesOutsideBraketPairs,
@@ -283,9 +346,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
 
         const astNodesForContentsInsideBraketPairs = astNodesInsideBraketPairs.reduce((astNodesForContents, astNode) => {
-            const { content } = astNode
-
-
             astNode.openMark  = [
                 `<span class="${
                     ccnControlChar
@@ -295,6 +355,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                     cssClassNameOfOpenBraketSpecific
                 }">[</span>`,
             ]
+
 
             astNode.closeMark = [
                 `<span class="${
@@ -306,6 +367,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 }">]</span>`,
             ]
 
+
+            const { content } = astNode
 
             // If there is a '^' at the very begining of the content inside a braket pair,
             // we treat it as a control, and split the AST node further into 2 sub AST nodes.
@@ -389,67 +452,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
         })
-    }
-
-
-
-    if (regexpIsIllegal) {
-        astNodeForRegExp.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
-    }
-
-
-
-    function extractTopLevelPartsOfARegExp(regexpFullContentWithOptions) {
-        let regexpOpen = ''
-        let regexpClose = ''
-        let regexpOptions = ''
-        let regexpBothQuotesPresent = true
-
-        let contentForRegExpBody = regexpFullContentWithOptions
-
-        const matchingResultOfRegExpOpenMark = contentForRegExpBody.match(/^(\/)/)
-        if (matchingResultOfRegExpOpenMark) {
-            const [
-                ,
-                regexpOpenMark, // in case an illegal regexp provided, without open mark
-            ] = matchingResultOfRegExpOpenMark
-
-            contentForRegExpBody = contentForRegExpBody.slice(regexpOpenMark.length)
-
-            if (regexpOpenMark === '/') {
-                regexpOpen = regexpOpenMark
-            } else {
-                regexpBothQuotesPresent = false
-            }
-        }
-
-
-        const matchingResultOfRegExpCloseMark = contentForRegExpBody.match(/(\/)([a-z]*)$/)
-        if (matchingResultOfRegExpCloseMark) {
-            const [
-                tailIncludingRegexpCloseMark, // in case an illegal regexp provided, without close mark
-                regexpCloseMark,              // in case an illegal regexp provided, without close mark
-                regexpOptionsRaw,
-            ] = matchingResultOfRegExpCloseMark
-
-            contentForRegExpBody = contentForRegExpBody.slice(0, -tailIncludingRegexpCloseMark.length)
-
-            if (regexpCloseMark === '/') {
-                regexpClose = regexpCloseMark
-            } else {
-                regexpBothQuotesPresent = false
-            }
-
-            regexpOptions = regexpOptionsRaw
-        }
-
-        return {
-            regexpOpen,
-            regexpClose,
-            regexpOptions,
-            regexpBothQuotesPresent,
-            contentForRegExpBody,
-        }
     }
 
     function markAllRangingDashesInsideBraketsPairs(content) {
