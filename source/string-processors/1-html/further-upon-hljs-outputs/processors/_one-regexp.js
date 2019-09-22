@@ -229,7 +229,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         regexpOptions,
         regexpBothQuotesPresent,
         contentForRegExpBody,
-    } = extractTopLevelPartsOfARegExp(astNodeForRegExp.content)
+    } = extractTopLevelPartsOfOneRegExp(astNodeForRegExp.content)
 
     regexpIsIllegal = !regexpBothQuotesPresent // eslint-disable-line prefer-const
 
@@ -279,7 +279,10 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
 
 
-    function extractTopLevelPartsOfARegExp(regexpFullContentWithOptions) {
+
+
+
+    function extractTopLevelPartsOfOneRegExp(regexpFullContentWithOptions) {
         let regexpOpen = ''
         let regexpClose = ''
         let regexpOptions = ''
