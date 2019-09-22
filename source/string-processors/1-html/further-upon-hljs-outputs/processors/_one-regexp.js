@@ -31,6 +31,10 @@ const defaultCSSClassNamesRegExp = {
     ccnSelectorCharSpecificNamePrefix:       'regexp-selector',
     ccnSelectorCharTheChar:                  'selector-char',
 
+    ccnCharRange:                            'regexp-char-range',
+    ccnCharRangeStartChar:                   'regexp-char-range-start-char',
+    ccnCharRangeEndChar:                     'regexp-char-range-end-char',
+
     ccnLiteral:                              'regexp-literal-char',
     ccnLiteralSpecificNamePrefix:            'regexp-literal',
 
@@ -209,6 +213,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         ccnSelectorChar,
         ccnSelectorCharSpecificNamePrefix,
         ccnSelectorCharTheChar,
+        ccnCharRange,
+        ccnCharRangeStartChar,
+        ccnCharRangeEndChar,
         ccnLiteral,
         ccnLiteralSpecificNamePrefix,
         ccnCountingRangeBetweenCurlyBraces,
@@ -395,9 +402,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                     isEnclosured: true,
                     openMark: '',
                     closeMark: '',
-                    content: markAllRangingDashesInsideBraketsPairs(
-                        content.slice(1)
-                    ),
+                    content: content.slice(1),
                 }
 
                 astNode.content = [
@@ -427,6 +432,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
             })
 
             astNodesForNonEscapedSegments.forEach((astNodeForNonEscapedSegment) => {
+                markAllRangingDashesInsideBraketsPairs(astNodeForNonEscapedSegment)
                 markAllUnescapedPeriodSigns(astNodeForNonEscapedSegment)
             })
         })
@@ -457,17 +463,30 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         })
     }
 
-    function markAllRangingDashesInsideBraketsPairs(content) {
+    function markAllRangingDashesInsideBraketsPairs(astNodeInsideBraketPair) {
         // '-' as char range control
+
+        const { content } = astNodeInsideBraketPair
+        if (!content) { return }
+
+        if (typeof content !== 'string') {
+            console.log(content)
+        }
 
         const cssClassNames = [
             ccnControlChar,
             `${ccnControlCharSpecificNamePrefix}-${cssClassNameOfMinusSignAsARangeControl}`,
         ].join(' ')
 
-        const replacement = `$1<span class="${cssClassNames}">-</span>$2`
+        const replacement = [
+            `<span class="${ccnCharRange}">`,
+            `<span class="${ccnCharRangeStartChar}">$1</span>`,
+            `<span class="${cssClassNames}">-</span>`,
+            `<span class="${ccnCharRangeEndChar}">$2</span>`,
+            '</span>',
+        ].join('')
 
-        return content
+        astNodeInsideBraketPair.content = content
             .replace(/([a-z])-([a-z])/g, replacement)
             .replace(/([A-Z])-([A-Z])/g, replacement)
             .replace(/([0-9])-([0-9])/g, replacement)
@@ -706,7 +725,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
             }
 
             if (content.indexOf(char) > -1) {
-                const oldContent = content
+                // const oldContent = content
 
                 const cssClassNames = [
                     thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
