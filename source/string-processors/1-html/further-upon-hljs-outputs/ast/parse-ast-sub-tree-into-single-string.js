@@ -1,4 +1,13 @@
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
+
+const {
+    // buildErrorMessage,
+    buildErrorMessageSaysThatSomethingMustBe,
+} = createErrorMessageBuildersFor('@wulechuan/very-simple-ast-stringifier')
+
 module.exports = function parseASTSubTreeIntoSingleString(input) {
+    const errorContext = 'parseASTSubTreeIntoSingleString'
+
     if (!input) {
         return ''
     }
@@ -22,7 +31,12 @@ module.exports = function parseASTSubTreeIntoSingleString(input) {
         return `${openMark}${parseASTSubTreeIntoSingleString(content)}${closeMark}`
     }
 
-    console.log('@wulechuan/very-simple-ast-stringifier: WARNING: invalid type "' + (typeof input) + '" for an AST node.')
+    console.log(buildErrorMessageSaysThatSomethingMustBe(
+        'an object(an AST Node for specific), a string, or an array of either',
+        input,
+        'arguments.input',
+        errorContext
+    ))
 
     return ''
 }

@@ -1,18 +1,39 @@
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
+
+const {
+    // buildErrorMessage,
+    buildErrorMessageSaysThatSomethingMustBe,
+} = createErrorMessageBuildersFor('@wulechuan/html-simple-ast-node-splitter')
+
+
 module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, options) {
+    const errorContext = 'splitOneASTNodeByOpenAndCloseMarks'
+
     if (!astNode || typeof astNode !== 'object') {
-        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[0] must be an object, an astNode for specific!')
+        throw new TypeError(buildErrorMessageSaysThatSomethingMustBe(
+            'an object(an AST Node for specific)',
+            astNode,
+            'arguments.astNode',
+            errorContext
+        ))
     }
 
-    if (typeof openMark !== 'string') {
-        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[1] must be an string!')
+    if (!openMark || typeof openMark !== 'string') {
+        throw new TypeError(buildErrorMessageSaysThatSomethingMustBe(
+            'a non-empty string',
+            openMark,
+            'arguments.openMark',
+            errorContext
+        ))
     }
 
-    if (typeof closeMark !== 'string') {
-        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[2] must be an string!')
-    }
-
-    if (!closeMark) {
-        throw new TypeError('@wulechuan/generate-html-via-markdown: arguments[3] must be a non empty string!')
+    if (!closeMark || typeof closeMark !== 'string') {
+        throw new TypeError(buildErrorMessageSaysThatSomethingMustBe(
+            'a non-empty string',
+            closeMark,
+            'arguments.closeMark',
+            errorContext
+        ))
     }
 
 

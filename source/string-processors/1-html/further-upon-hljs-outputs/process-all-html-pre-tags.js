@@ -1,3 +1,4 @@
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
 const splitOneASTNodeByOpenAndCloseMarks = require('./ast/ast-generic-simple-splitter')
 const parseASTSubTreeIntoSingleString    = require('./ast/parse-ast-sub-tree-into-single-string')
 
@@ -44,6 +45,11 @@ const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
 
 
 
+const {
+    buildErrorMessage,
+    // buildErrorMessageSaysThatSomethingMustBe,
+} = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
+
 function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
     return astNodes.reduce((restNodes, astNode) => {
         const {
@@ -66,6 +72,8 @@ function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark,
 
 
 module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
+    const errorContext = 'processAllContentsOfAllHTMLPreTagsOfHTMLString' // eslint-disable-line no-unused-vars
+
     const rootLevelASTNodes = {
         isRoot: true, // Not used. Maybe use in the future.
         openMark: '',
@@ -86,7 +94,11 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     const astNodesForHTMLCodeTagsWithinAPreTag = astNodesHTMLPreTag.reduce((astNodesForCodeTags, astNodeHTMLPreTag) => {
         const segments = astNodeHTMLPreTag.content.split(/<code class="hljs(\s*)(language-)?([\w_\d-]+)?">/)
         if (segments.length !== 5) {
-            throw new Error('Unhandled situation that a <pre> tag contains more than one <code> tags, or zero <code> tags.')
+            throw new Error(buildErrorMessage([
+                'Unhandled situation that a <pre> tag contains:',
+                '    more than one <code> tags,',
+                '    or zero <code> tags.',
+            ]))
         }
 
         // console.log(`0:"${segments[0]}"`)

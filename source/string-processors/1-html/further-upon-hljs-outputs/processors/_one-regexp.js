@@ -1,3 +1,5 @@
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
+
 const {
     splitRegExpASTByBraketPairs,
     splitRegExpASTForEscapeChars,
@@ -189,6 +191,12 @@ const REGEXP_CONTROL_CHARS_THAT_MUST_ESCAPE = [
 ]
 
 
+
+
+const {
+    buildErrorMessage,
+    // buildErrorMessageSaysThatSomethingMustBe,
+} = createErrorMessageBuildersFor('@wulechuan/regexp-to-html')
 
 module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, options = {}) {
     const {
@@ -556,7 +564,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         })
 
         if (matchedConfigs.length > 1) {
-            throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
+            throw new Error(buildErrorMessage([
+                'For content "' + escapedChar + '" more than one parsing configs matched!',
+            ]))
         }
 
         astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
@@ -574,7 +584,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             } = rccConfig
 
             if (cl === undefined) {
-                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a literal.')
+                throw new Error(buildErrorMessage([
+                    `Char "${char}" expects a CSS class name when acts as a literal.`,
+                ]))
             }
 
             astNode.content = [
@@ -614,7 +626,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         })
 
         if (matchedConfigs.length > 1) {
-            throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
+            throw new Error(buildErrorMessage([
+                'For content "' + escapedChar + '" more than one parsing configs matched!',
+            ]))
         }
 
         // Since "matchedConfigs" might be zero lengthed array,
@@ -629,7 +643,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             } = rccConfig
 
             if (cl === undefined) {
-                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a literal.')
+                throw new Error(buildErrorMessage([
+                    `Char "${char}" expects a CSS class name when acts as a literal.`,
+                ]))
             }
 
             astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
@@ -661,7 +677,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         })
 
         if (matchedConfigs.length > 1) {
-            throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
+            throw new Error(buildErrorMessage([
+                'For content "' + escapedChar + '" more than one parsing configs matched!',
+            ]))
         }
 
         // Since "matchedConfigs" might be zero lengthed array,
@@ -678,7 +696,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             } = rccConfig
 
             if (cc === undefined && cs === undefined) {
-                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a control.')
+                throw new Error(buildErrorMessage([
+                    `Char "${char}" expects a CSS class name when acts as a control char.`,
+                ]))
             }
 
             const cssClassNames = [
@@ -737,7 +757,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
 
             if (cc === undefined && cs === undefined) {
-                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a control.')
+                throw new Error(buildErrorMessage([
+                    `Char "${char}" expects a CSS class name when acts as a control char.`,
+                ]))
             }
 
             if (content.indexOf(char) > -1) {

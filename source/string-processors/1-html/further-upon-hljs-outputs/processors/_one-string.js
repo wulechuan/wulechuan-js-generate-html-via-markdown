@@ -1,3 +1,5 @@
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
+
 const DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS = {
     // `ccn` means (C)SS (C)lass (N)ame
 
@@ -30,6 +32,13 @@ const STANDARD_ESPACED_CHARS_IN_STRING_LITERALS = [
 ]
 
 
+
+const {
+    buildErrorMessage,
+    // buildErrorMessageSaysThatSomethingMustBe,
+} = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
+
+
 module.exports = function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae */) {
     const {
         ccnIllegal,
@@ -60,7 +69,9 @@ module.exports = function parseOneStringASTNodeIntoHTML(astNode/* , codeLanguae 
 
     if (quoteSign !== closeMark.slice(0, 1)) {
         stringIsIllegal = true
-        throw new Error('@wulechuan/hljs-plus: Different opening/closing marks of a single string.')
+        throw new Error(buildErrorMessage([
+            'Different opening/closing quote marks of a single string.',
+        ]))
     }
 
     openMark = `<span class="hljs-string${

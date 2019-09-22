@@ -1,3 +1,11 @@
+const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
+
+const {
+    buildErrorMessage,
+    // buildErrorMessageSaysThatSomethingMustBe,
+} = createErrorMessageBuildersFor('@wulechuan/regexp-to-html')
+
+
 module.exports = {
     splitRegExpASTByBraketPairs,
     splitRegExpASTForEscapeChars,
@@ -65,7 +73,11 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
 
         if (openMarksCountInsideOneBraketPair > 1) {
-            throw new Error('@wulechuan/regexp-to-html: Too many "[" within on pair of "[]".')
+            throw new Error(buildErrorMessage([
+                '"[" and "]" not pairing well.',
+                'Too many literal "[" chars within one pair of "[]".',
+                'Found: ' + openMarksCountInsideOneBraketPair,
+            ]))
         }
 
 
@@ -85,7 +97,10 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
             closeMarksCountBeforeBraketsPairStart += unescapedCloseMarksCount
             if (closeMarksCountBeforeBraketsPairStart > 0) {
-                throw new Error('@wulechuan/regexp-to-html: closing braket presents before opening braket.')
+                throw new Error(buildErrorMessage([
+                    '"[" and "]" not pairing well.',
+                    'Closing braket presents before opening braket.',
+                ]))
             }
 
             currentMergedSeg += currentSeg
@@ -109,9 +124,11 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
                 closeMarksCountInsideOneBraketPair++
 
                 if (closeMarksCountInsideOneBraketPair > 2) {
-                    console.log('too many closemarks:', closeMarksCountInsideOneBraketPair)
-                    console.log('too many closemarks:', segParts)
-                    throw new Error('@wulechuan/regexp-to-html: [] not pairing well.')
+                    throw new Error(buildErrorMessage([
+                        '"[" and "]" not pairing well.',
+                        'Too many literal "]" chars within one pair of "[]".',
+                        'Found: ' + closeMarksCountInsideOneBraketPair,
+                    ]))
                 }
 
                 currentMergedSeg += segPart
@@ -191,7 +208,9 @@ function splitRegExpASTForEscapeChars(astNode) {
             continuousEmptySegmentsCount++
 
             if (continuousEmptySegmentsCount > 2) {
-                console.log('@wulechuan/regexp-to-html: WARNING: more than 3 continouse backward slash signs("\\").')
+                console.log(buildErrorMessage([
+                    ' WARNING: more than 3 continouse backward slash signs("\\").',
+                ]))
             }
 
             if (lastSegWasEmpty) {
@@ -247,8 +266,6 @@ function splitRegExpASTForEscapeChars(astNode) {
 
     astNode.content = subASTs
 
-    // console.log('subASTs:', subASTs)
-    // console.log('^'.repeat(60))
 
     return {
         nodesEnclosured:    subASTs.filter(n =>  n.isEnclosured),
