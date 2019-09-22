@@ -75,7 +75,6 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
 
     const {
         decidedQuoteSign,
-        decidedCloseQuoteSign,
         isEmptyString,
         isTemplatedString,
     } = preprocessStringRootASTNode(rootASTNodeForOneString)
@@ -122,7 +121,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
             isEnclosured: true,
             openMark: `<span class="${ccnQuote} ${ccnQuoteClose}">`,
             closeMark: '</span>',
-            content: decidedCloseQuoteSign,
+            content: decidedQuoteSign,
         },
     ]
 
@@ -145,7 +144,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
         }
 
         astNode.openMark  = openMark
-        astNode.closeMark = closeMark
+        astNode.closeMark = closeMark.slice(1)
         astNode.isEmptyString = isEmptyString
 
         return {
@@ -174,7 +173,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
         //     [
         //         '<span class="string-template-interpolation-begin">',
         //         '<span class="dollar-sign">$</span>',
-        //         '<span class="wlc-punctuation wlc-curly-brace wlc-curly-brace-open">{</span>',
+        //         '<span class="punctuation curly-brace open-curly-brace">{</span>',
         //         '</span>',
         //     ].join('')
         // )

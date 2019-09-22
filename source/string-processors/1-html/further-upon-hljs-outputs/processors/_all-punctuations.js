@@ -8,57 +8,62 @@ const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
     // {
     //     sign: '&semi;',
     //     signRegExp: '',
-    //     cssClassNames: 'wlc-punctuation wlc-semi-colon',
+    //     cssClassNames: 'punctuation semi-colon',
     // },
+    {
+        sign: '#',
+        signRegExp: '',
+        cssClassNames: 'punctuation sharp-sign',
+    },
     {
         sign: ',',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-comma',
+        cssClassNames: 'punctuation comma',
     },
     {
         sign: '.',
         signRegExp: '\\.',
-        cssClassNames: 'wlc-punctuation wlc-period',
+        cssClassNames: 'punctuation period',
     },
     {
         sign: ':',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-colon',
+        cssClassNames: 'punctuation colon',
     },
     {
         sign: '%',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-percentage-sign',
+        cssClassNames: 'punctuation percentage-sign',
     },
     {
         sign: '(',
         signRegExp: '\\(',
-        cssClassNames: 'wlc-punctuation wlc-parenthesis wlc-parenthesis-open',
+        cssClassNames: 'punctuation parenthesis open-parenthesis',
     },
     {
         sign: ')',
         signRegExp: '\\)',
-        cssClassNames: 'wlc-punctuation wlc-parenthesis wlc-parenthesis-close',
+        cssClassNames: 'punctuation parenthesis close-parenthesis',
     },
     {
         sign: '[',
         signRegExp: '\\[',
-        cssClassNames: 'wlc-punctuation wlc-square-bracket wlc-square-bracket-open',
+        cssClassNames: 'punctuation bracket open-bracket',
     },
     {
         sign: ']',
         signRegExp: '\\]',
-        cssClassNames: 'wlc-punctuation wlc-square-bracket wlc-square-bracket-close',
+        cssClassNames: 'punctuation bracket close-bracket',
     },
     {
         sign: '{',
         signRegExp: '\\{',
-        cssClassNames: 'wlc-punctuation wlc-curly-brace wlc-curly-brace-open',
+        cssClassNames: 'punctuation curly-brace open-curly-brace',
     },
     {
         sign: '}',
         signRegExp: '\\}',
-        cssClassNames: 'wlc-punctuation wlc-curly-brace wlc-curly-brace-close',
+        cssClassNames: 'punctuation curly-brace close-curly-brace',
     },
 ]
 
@@ -66,47 +71,47 @@ const SPECIAL_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
     {
         sign: '===',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-tripple-equal-signs',
+        cssClassNames: 'punctuation tripple-equal-signs',
     },
     {
         sign: '!==',
         signRegExp: '\\!===',
-        cssClassNames: 'wlc-punctuation wlc-exclamation-mark-and-double-equal-signs',
+        cssClassNames: 'punctuation exclamation-mark-and-double-equal-signs',
     },
     {
         sign: '=&gt;',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-arrow-function-sign',
+        cssClassNames: 'punctuation arrow-function-sign',
     },
     {
         sign: '&gt;=',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-greater-than-or-equal-to-sign',
+        cssClassNames: 'punctuation greater-than-or-equal-to-sign',
     },
     {
         sign: '&lt;=',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-less-than-or-equal-to-sign',
+        cssClassNames: 'punctuation less-than-or-equal-to-sign',
     },
     {
         sign: '&amp;&amp;',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-double-ampersands',
+        cssClassNames: 'punctuation double-ampersands',
     },
     {
         sign: '?',
         signRegExp: '\\?',
-        cssClassNames: 'wlc-punctuation wlc-question-mark',
+        cssClassNames: 'punctuation question-mark',
     },
     {
         sign: '++',
         signRegExp: '\\+\\+',
-        cssClassNames: 'wlc-punctuation wlc-plus-plus-sign',
+        cssClassNames: 'punctuation plus-plus-sign',
     },
     {
         sign: '--',
         signRegExp: '',
-        cssClassNames: 'wlc-punctuation wlc-minus-minus-sign',
+        cssClassNames: 'punctuation minus-minus-sign',
     },
 ]
 
@@ -129,12 +134,12 @@ function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode/*, codeLanguage*
 
     content = content.replace(
         /\|\|/g,
-        '<span class="wlc-punctuation wlc-double-pipes">||</span>'
+        '<span class="punctuation double-pipes">||</span>'
     )
 
     content = content.replace(
         /([^|])\|([^|])/g,
-        '$1<span class="wlc-punctuation wlc-pipe">|</span>$2'
+        '$1<span class="punctuation pipe">|</span>$2'
     )
 
     astNode.content = content
@@ -158,7 +163,7 @@ function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage) {
     */
     // html = html.replace(
     //     /(>[^<-]*)-/g,
-    //     '$1<span class="wlc-punctuation wlc-minus-sign">-</span>'
+    //     '$1<span class="punctuation minus-sign">-</span>'
     // )
 
 
@@ -170,7 +175,7 @@ function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage) {
     */
     // html = html.replace(
     //     /([^<>])\//g,
-    //     '$1<span class="wlc-punctuation wlc-forward-slash">/</span>'
+    //     '$1<span class="punctuation forward-slash">/</span>'
     // )
 
     astNode.content = content
@@ -205,7 +210,7 @@ function processStandaloneEqualSigns(html, codeLanguage) {
     ) {
         html = html.replace(
             /(\s*[^"';])=([^"'&]\s*)/g,
-            '$1<span class="wlc-punctuation wlc-equal-sign">=</span>$2'
+            '$1<span class="punctuation equal-sign">=</span>$2'
         )
     } else {
         /*
@@ -215,7 +220,7 @@ function processStandaloneEqualSigns(html, codeLanguage) {
         */
         html = html.replace(
             /\s*([^"';!=])=([^"'&=>]\s*)/g,
-            '$1<span class="wlc-punctuation wlc-equal-sign">=</span>$2'
+            '$1<span class="punctuation equal-sign">=</span>$2'
         )
     }
 
@@ -231,10 +236,10 @@ function processExclamationMarks(html, codeLanguage) {
      */
     html = html.replace(
         /(^|([^!]))((!!)+)(([^!])|$)/g,
-        '$2<span class="wlc-punctuation wlc-exclamation-marks even-count">$3</span>$6'
+        '$2<span class="punctuation exclamation-marks even-count">$3</span>$6'
     ).replace(
         /(^|([^!]))!((!!)*)(([^!])|$)/g,
-        '$2<span class="wlc-punctuation wlc-exclamation-marks odd-count">!$4</span>$6'
+        '$2<span class="punctuation exclamation-marks odd-count">!$4</span>$6'
     )
 
     if (
@@ -246,7 +251,7 @@ function processExclamationMarks(html, codeLanguage) {
         ])
     ) {
         html = html.replace(
-            /<span class="hljs-meta"><span class="wlc-punctuation wlc-exclamation-marks odd-count">!<\/span>important/g,
+            /<span class="hljs-meta"><span class="punctuation exclamation-marks odd-count">!<\/span>important/g,
             '<span class="hljs-meta css-exclamation-important>!important'
         )
     }
@@ -266,7 +271,7 @@ function processSpecialPunctuationsString(html , codeLanguage) {
 
     html = html.replace(
         /([^=])==([^=])/g,
-        '$1<span class="wlc-punctuation wlc-double-equal-signs">==</span>$2'
+        '$1<span class="punctuation double-equal-signs">==</span>$2'
     )
 
     if (
@@ -277,16 +282,16 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     ) {
         html = html.replace(
             /&lt;([^=])/g,
-            '<span class="wlc-punctuation wlc-less-than-sign"><</span>$1'
+            '<span class="punctuation less-than-sign"><</span>$1'
         ).replace(
             /([^=])&gt;([^=])/g,
-            '$1<span class="wlc-punctuation wlc-greater-than-sign">></span>$2'
+            '$1<span class="punctuation greater-than-sign">></span>$2'
         )
     }
 
     html = html.replace(
         /!=([^=])/g,
-        '<span class="wlc-punctuation wlc-exclamation-mark-and-equal-sign">!=</span>$1'
+        '<span class="punctuation exclamation-mark-and-equal-sign">!=</span>$1'
     )
 
     return html

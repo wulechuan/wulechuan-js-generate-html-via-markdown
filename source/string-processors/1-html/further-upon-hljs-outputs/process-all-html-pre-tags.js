@@ -318,10 +318,10 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
                 content = content.replace(
                     /-/g,
-                    '<span class="wlc-punctuation wlc-negative-sign">-</span>'
+                    '<span class="punctuation negative-sign">-</span>'
                 ).replace(
                     /\+/g,
-                    '<span class="wlc-punctuation wlc-positive-sign">+</span>'
+                    '<span class="punctuation positive-sign">+</span>'
                 )
 
                 astNode.content = content
@@ -360,7 +360,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
-            '<span class="wlc-punctuation',
+            '<span class="punctuation',
             '</span>',
             null
         )

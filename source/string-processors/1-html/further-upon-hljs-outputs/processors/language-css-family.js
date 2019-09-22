@@ -22,15 +22,61 @@ function parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, code
             'less',
         ])
     ) {
-        content = content.replace(
-            /([+-]?)(\d*.\d+|\d+)%/g,
-            [
-                '<span class="wlc-percentage-value">',
-                '<span class="hljs-number">$1$2</span>',
-                '%',
-                '</span>',
-            ].join('')
-        )
+        content = content
+            .replace(
+                /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)(cap|ch|em|ex|ic|lh|rem|rlh|vh|vw|vi|vb|vmin|vmax)<\/span>/g,
+                [
+                    '<span class="css-length">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit length-unit relative-length-unit $3">$3</span>',
+                    '</span>',
+                ].join('')
+            )
+            .replace(
+                /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)(px|mm|cm|Q|in|pt|pc)<\/span>/g,
+                [
+                    '<span class="css-length">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit length-unit absolute-length-unit $3">$3</span>',
+                    '</span>',
+                ].join('')
+            )
+            .replace(
+                /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)(s)<\/span>/g,
+                [
+                    '<span class="css-time-duration">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit time-duration-unit">$3</span>',
+                    '</span>',
+                ].join('')
+            )
+            .replace(
+                /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)(deg|rad|turn)<\/span>/g,
+                [
+                    '<span class="css-angle">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit angle-unit">$3</span>',
+                    '</span>',
+                ].join('')
+            )
+            .replace( // Some percentage values have already treated as number by hljs
+                /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)%<\/span>/g,
+                [
+                    '<span class="percentage-value">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '%',
+                    '</span>',
+                ].join('')
+            )
+            .replace( // Some percentage values have not been identified as number, thus are plain texts.
+                /([+-]?)(\d*\.\d+|\d+)%/g,
+                [
+                    '<span class="percentage-value">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '%',
+                    '</span>',
+                ].join('')
+            )
     }
 
     if (
