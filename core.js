@@ -48,6 +48,8 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     let wrapHTMLChiefContentWithAnArticleTag
     let processAllContentsOfAllPreTagsOfHTMLString
 
+    console.log('cwd', process.cwd())
+
     if (!shouldReloadModulesForDevWatchingMode) {
         defaultOptionValues = require('./default-options')
 
@@ -55,20 +57,22 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         tab1 = tabs.tab1
 
 
+
+
         insertTOCMarkDownTagIfNecessary = require(
             './source/string-processors/0-markdown/insert-toc-placeholder'
         )
 
         buildHTMLTitleSnippetString = require(
-            './source/string-processors/1-html/build-html-title-tag'
+            './source/string-processors/1-html/direct/build-html-title-tag'
         )
 
         wrapHTMLChiefContentWithAnArticleTag = require(
-            './source/string-processors/1-html/wrap-chief-content-with-article-tag'
+            './source/string-processors/1-html/direct/wrap-chief-content-with-article-tag'
         )
 
         processAllContentsOfAllPreTagsOfHTMLString = require(
-            './source/string-processors/1-html/process-contents-of-all-pre-tags'
+            './source/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags'
         )
     }
 

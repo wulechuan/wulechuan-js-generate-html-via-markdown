@@ -6,19 +6,11 @@ const peerDependencyModuleName = '@wulechuan/css-stylus-markdown-themes'
 
 const createOneConverterOfMarkdownToHTML = require('./core')
 
-let generateFullHTMLStringViaMarkdownString
+
+let requiredPeerDepModule
 
 try {
-    const {
-        allFileEntriesKeyingByFileNames: themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-        syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-    } = require(peerDependencyModuleName)
-
-    generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHTML({
-        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-        shouldReloadModulesForDevWatchingMode: false,
-    })
+    requiredPeerDepModule = require(peerDependencyModuleName)
 } catch (err) {
     console.log('-'.repeat(79))
     console.log(chalk.yellow(`The module "${
@@ -36,7 +28,11 @@ try {
 }
 
 
-
+const generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHTML({
+    themesPeerPackageAllDistFileEntriesKeyingByFileNames: requiredPeerDepModule.allFileEntriesKeyingByFileNames,
+    syncGetContentStringOfOneFileOfThePeerModuleOfThemes: requiredPeerDepModule.syncGetContentStringOfOneFileEntry,
+    shouldReloadModulesForDevWatchingMode: false,
+})
 
 
 
