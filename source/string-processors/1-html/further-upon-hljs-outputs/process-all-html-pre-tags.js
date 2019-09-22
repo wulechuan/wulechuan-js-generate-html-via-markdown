@@ -193,11 +193,75 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
 
+        let astNodesRest = astNodesForNonComments
 
 
 
+        let astNodesForStyleTagsInsideHTMLCodes = []
+        // let astNodesForScriptTagsInsideHTMLCodes = []
 
-        let astNodesRest = astNodesForNonComments // eslint-disable-line no-unused-vars
+
+        if (
+            codeLanguageIsOneOf(codeLanguage, [
+                'xml',
+                'html',
+            ])
+        ) {
+            astNodesRest = astNodesRest.reduce((restNodes, astNode) => {
+                const {
+                    nodesEnclosured,
+                    nodesNotEnclosured,
+                } = splitOneASTNodeByOpenAndCloseMarks(
+                    astNode,
+                    '<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span>',
+                    '<span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>',
+                    null
+                )
+
+                astNodesForStyleTagsInsideHTMLCodes = [
+                    ...astNodesForStyleTagsInsideHTMLCodes,
+                    ...nodesEnclosured,
+                ]
+
+                restNodes = [
+                    ...restNodes,
+                    ...nodesEnclosured,
+                    ...nodesNotEnclosured,
+                ]
+
+                return restNodes
+            }, [])
+
+            // astNodesRest = astNodesRest.reduce((restNodes, astNode) => {
+            //     const {
+            //         nodesEnclosured,
+            //         nodesNotEnclosured,
+            //     } = splitOneASTNodeByOpenAndCloseMarks(
+            //         astNode,
+            //         '<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>',
+            //         '<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>',
+            //         null
+            //     )
+
+            //     astNodesForScriptTagsInsideHTMLCodes = [
+            //         ...astNodesForScriptTagsInsideHTMLCodes,
+            //         ...nodesEnclosured,
+            //     ]
+
+            //     restNodes = [
+            //         ...restNodes,
+            //         ...nodesEnclosured,
+            //         ...nodesNotEnclosured,
+            //     ]
+
+            //     return restNodes
+            // }, [])
+        }
+
+
+        astNodesForStyleTagsInsideHTMLCodes.forEach(astNode => {
+            parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, 'css')
+        })
 
 
         if (
@@ -229,9 +293,13 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         }
 
 
+
         astNodesRest.forEach(astNode => {
             parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, codeLanguage)
         })
+
+
+
 
 
         if (true || // eslint-disable-line no-constant-condition
@@ -386,6 +454,9 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             })
         }
 
+        // astNodesForStyleTagsInsideHTMLCodes.forEach(astNode => {
+        //     parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterPunctuations(astNode, 'css')
+        // })
 
 
         if (
@@ -393,6 +464,18 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
                 'javascript',
                 'typescript',
                 // 'coffeescript',
+            ])
+        ) {
+            astNodesRest.forEach(astNode => {
+                parseJavascriptFamilyStuffsInAnASTNodeIntoHTML(astNode, codeLanguage)
+            })
+        }
+
+
+
+        if (
+            codeLanguageIsOneOf(codeLanguage, [
+                'html',
             ])
         ) {
             astNodesRest.forEach(astNode => {
