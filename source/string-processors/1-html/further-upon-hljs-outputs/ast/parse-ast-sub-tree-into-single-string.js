@@ -22,7 +22,7 @@ module.exports = function parseASTSubTreeIntoSingleString(input) {
         return `${openMark}${parseASTSubTreeIntoSingleString(content)}${closeMark}`
     }
 
-    console.log('@wulechuan/hljs-plus: WARNING: invalid type "' + (typeof input) + '" for an AST node.')
+    console.log('@wulechuan/very-simple-ast-stringifier: WARNING: invalid type "' + (typeof input) + '" for an AST node.')
 
     return ''
 }
