@@ -6,7 +6,7 @@
   "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
   "main": "index.js",
   "scripts": {
-    "prepublishOnly": "npm test;    npm run examples",
+    "prepublishOnly": "npm test   &&   npm run examples",
     "eslint": "eslint    ./.eslintrc.js    ./tests/*.js    ./gulpfile.js/**/*.js    ./source/**/*.js    ./default-options.js    ./core.js    ./index.js",
     "test": "npm     run eslint    &&    node    ./tests/index.js",
     "start2": "npm   run eslint    &&    gulp",
