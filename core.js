@@ -48,7 +48,6 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
     let wrapHTMLChiefContentWithAnArticleTag
     let processAllContentsOfAllPreTagsOfHTMLString
 
-    console.log('cwd', process.cwd())
 
     if (!shouldReloadModulesForDevWatchingMode) {
         defaultOptionValues = require('./default-options')

@@ -59,6 +59,15 @@ function parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, code
                     '</span>',
                 ].join('')
             )
+            .replace(
+                /([+-]?)(\d*\.\d+|\d+)(deg|rad|turn)/g,
+                [
+                    '<span class="css-angle">',
+                    '<span class="hljs-number">$1$2</span>',
+                    '<span class="css-unit angle-unit">$3</span>',
+                    '</span>',
+                ].join('')
+            )
             .replace( // Some percentage values have already treated as number by hljs
                 /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)%<\/span>/g,
                 [
