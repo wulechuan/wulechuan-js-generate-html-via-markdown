@@ -118,7 +118,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: 'parenthesis',
             asAControl: 'capture',
-            extra:      ' open-parenthesis',
+            extra:      'open-parenthesis',
         },
     },
     {
@@ -127,7 +127,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: 'parenthesis',
             asAControl: 'capture',
-            extra:      ' close-parenthesis',
+            extra:      'close-parenthesis',
         },
     },
     {
@@ -136,7 +136,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: cssClassNameOfBraketAsALiteral,
             asAControl: cssClassNameOfBraketAsAControl,
-            extra:      ` ${cssClassNameOfOpenBraketSpecific}`,
+            extra:      cssClassNameOfOpenBraketSpecific,
         },
     },
     {
@@ -145,7 +145,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: cssClassNameOfBraketAsALiteral,
             asAControl: cssClassNameOfBraketAsAControl,
-            extra:      ` ${cssClassNameOfCloseBraketSpecific}`,
+            extra:      cssClassNameOfCloseBraketSpecific,
         },
     },
     {
@@ -153,8 +153,8 @@ const regexpControlCharsThatMustNotEscape = [
         // htmlEntity: '',
         cssClassNames: {
             asALiteral: 'curly-brace',
-            asAControl: '',
-            extra:      ' open-curly-brace',
+            asAControl: 'curly-brace',
+            extra:      'open-curly-brace',
         },
     },
     {
@@ -162,8 +162,8 @@ const regexpControlCharsThatMustNotEscape = [
         // htmlEntity: '',
         cssClassNames: {
             asALiteral: 'curly-brace',
-            asAControl: '',
-            extra:      ' close-curly-brace',
+            asAControl: 'curly-brace',
+            extra:      'close-curly-brace',
         },
     },
 ]
@@ -383,8 +383,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
             })
 
             astNodesForNonEscapedSegments.forEach((astNodeForNonEscapedSegment) => {
-                markAllControlCharsOfInputBeginOrEnd(astNodeForNonEscapedSegment)
                 markAllRepeatingTimeRanges(astNodeForNonEscapedSegment)
+                markAllControlCharsOfInputBeginOrEnd(astNodeForNonEscapedSegment)
                 markAllUnescapedPeriodSigns(astNodeForNonEscapedSegment)
                 markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
@@ -759,7 +759,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         if (!content) { return }
 
         astNode.content = content.replace(
-            /(<span class="regexp-control-char regexp-control-curly-brace curly-brace-open"><span class="control-char">\{<\/span><\/span>)(\d+)((,)(\d*))?(<span class="regexp-control-char regexp-control-curly-brace curly-brace-close"><span class="control-char">\}<\/span><\/span>)/g,
+            /(\{)(\d+)((,)(\d*))?(\})/g,
             [
                 '$1',
                 `<span class="${ccnCountingRangeBetweenCurlyBraces}">`,
