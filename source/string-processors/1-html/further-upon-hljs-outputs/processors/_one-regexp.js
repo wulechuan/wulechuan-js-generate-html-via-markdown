@@ -729,12 +729,12 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                     ].join('')
                 )
 
-                console.log(`non-escaped control char "${char}"`)
-                console.log(`"${oldContent}"`)
-                console.log('-'.repeat(15))
-                console.log(`"${content}"`)
-                console.log('^'.repeat(79))
-                console.log()
+                // console.log(`non-escaped control char "${char}"`)
+                // console.log(`"${oldContent}"`)
+                // console.log('-'.repeat(15))
+                // console.log(`"${content}"`)
+                // console.log('^'.repeat(79))
+                // console.log()
             }
 
             astNode.content = content
