@@ -8,194 +8,185 @@ const parseASTSubTreeIntoSingleString = require('../ast/parse-ast-sub-tree-into-
 const defaultCSSClassNamesRegExp = {
     // `ccn` means (C)SS (C)lass (N)ame
 
-    ccnIllegal:                        'wlc-regexp-illegal',
+    ccnIllegal:                         'wlc-regexp-illegal',
 
-    ccnQuote:                          'regexp-quote',
-    ccnQuoteOpen:                      'regexp-open-quote',
-    ccnQuoteClose:                     'regexp-close-quote',
+    ccnQuote:                           'regexp-quote',
+    ccnQuoteOpen:                       'regexp-open-quote',
+    ccnQuoteClose:                      'regexp-close-quote',
 
-    ccnBody:                           'regexp-body',
-    ccnOptions:                        'regexp-options', // g, i
+    ccnBody:                            'regexp-body',
+    ccnOptions:                         'regexp-options', // g, i
 
-    ccnInputBeginSign:                 'regexp-selector-input-begin',
-    ccnInputEndSign:                   'regexp-selector-input-end',
+    ccnInputBeginSign:                  'regexp-selector-input-begin',
+    ccnInputEndSign:                    'regexp-selector-input-end',
 
-    ccnEscapeChar:                     'wlc-escape-char',
-    ccnEscapeCharSlash:                'slash',
-    ccnEscapeCharTheEscapedChar:       'escaped-char',
+    ccnEscapeChar:                      'wlc-escape-char',
+    ccnEscapeCharSlash:                 'slash',
+    ccnEscapeCharTheEscapedChar:        'escaped-char',
 
-    ccnControlChar:                    'regexp-control-char',
-    ccnControlCharSpecificNamePrefix:  'regexp-control',
-    ccnControlCharTheChar:             'control-char',
+    ccnControlChar:                     'regexp-control-char',
+    ccnControlCharSpecificNamePrefix:   'regexp-control',
+    ccnControlCharTheChar:              'control-char',
 
-    ccnSelectorChar:                   'regexp-selector-char',
-    ccnSelectorCharSpecificNamePrefix: 'regexp-selector',
-    ccnSelectorCharTheChar:            'selector-char',
+    ccnSelectorChar:                    'regexp-selector-char',
+    ccnSelectorCharSpecificNamePrefix:  'regexp-selector',
+    ccnSelectorCharTheChar:             'selector-char',
 
-    ccnLiteral:                        'regexp-literal-char',
-    ccnLiteralSpecificNamePrefix:      'regexp-literal',
+    ccnLiteral:                         'regexp-literal-char',
+    ccnLiteralSpecificNamePrefix:       'regexp-literal',
+
+    ccnCountingRangeBetweenCurlyBraces: 'wlc-digit-pair-between-curly-braces',
+    ccnCountingRangeBetweenCurlyBracesDigit: 'digit',
 }
 
+// const cssClassNameOfLiteralForwardSlash  = 'forward-slash'
+// const cssClassNameOfLiteralBackwardSlash = 'backward-slash'
+const cssClassNameOfBraketAsALiteral    = 'braket'
+const cssClassNameOfBraketAsAControl    = 'candidate-chars'
+const cssClassNameOfOpenBraketSpecific  = 'open-braket'
+const cssClassNameOfCloseBraketSpecific = 'close-braket'
 
-/*
-    Single meaning control chars,
-    and don't require a '\' to act as literal inside [] pairs.
-    Note that
-        1. '\' should escape other chars.
-        2. ']' does require a '\' inside [] pairs.
-        3. '^' has two meanings.
-        4. '-' meaning depends on surroundings.
-*/
-const signleMeaningControlChars = [
+const cssClassNameOfPeriodSignAsALiteral  = 'period'
+const cssClassNameOfPeriodSignAsASelector = 'any-char'
+const cssClassNameOfMinusSignAsARangeControl = 'range-sign'
+const cssClassNameOfCaretSignAsAnInvertControl = 'invert'
+
+const regexpRegularCharsButMustMatchViaItsHTMLEntity = [
     {
-        char: '^', // with the help of AST splitter, this one also treated as "single" meaning char.
-        cssClassNameKeyword: 'caret',
-        cssClassNameExtra:   '',
+        char: '<',
+        htmlEntity: '&lts;',
+        cssClassNames: {
+            asALiteral: 'less-than-sign',
+            extra:      '',
+        },
     },
     {
-        char: '$',
-        cssClassNameKeyword: 'dollar',
-        cssClassNameExtra:   '',
+        char: '>',
+        htmlEntity: '&gts;',
+        cssClassNames: {
+            asALiteral: 'greater-than-sign',
+            extra:      '',
+        },
     },
+]
+
+const regexpControlCharsThatMustNotEscape = [
+    /*
+        If `thisControlIsASelector` is true,
+        we use 'regexp-selector-' as CSS class name prefix, instead of `regexp-control-`
+    */
+
     {
         char: '?',
-        cssClassNameKeyword: 'question-mark',
-        cssClassNameExtra:   '',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'question-mark',
+            asAControl: 'question-mark', // maybe 'present-none-or-single'? way too wordy.
+            extra:      '',
+        },
     },
     {
         char: '*',
-        cssClassNameKeyword: 'asterisk',
-        cssClassNameExtra:   '',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'asterisk',
+            asAControl: 'asterisk', // 'present-none-or-any'?
+            extra:      '',
+        },
     },
     {
         char: '+',
-        cssClassNameKeyword: 'plus-sign',
-        cssClassNameExtra:   '',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'plus-sign',
+            asAControl: 'plus-sign',
+            extra:      '',
+        },
     },
     {
         char: '|',
-        cssClassNameKeyword: 'pipe',
-        cssClassNameExtra:   '',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'pipe',
+            asAControl: 'logic-or',
+            extra:      '',
+        },
     },
     {
         char: '(',
-        cssClassNameKeyword: 'parenthesis',
-        cssClassNameExtra:   ' parenthesis-open',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'parenthesis',
+            asAControl: 'capture',
+            extra:      ' parenthesis-open',
+        },
     },
     {
         char: ')',
-        cssClassNameKeyword: 'parenthesis',
-        cssClassNameExtra:   ' parenthesis-close',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'parenthesis',
+            asAControl: 'capture',
+            extra:      ' parenthesis-close',
+        },
     },
     {
         char: '[',
-        cssClassNameKeyword: 'square-bracket',
-        cssClassNameExtra:   ' square-bracket-open',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: cssClassNameOfBraketAsALiteral,
+            asAControl: cssClassNameOfBraketAsAControl,
+            extra:      ` ${cssClassNameOfOpenBraketSpecific}`,
+        },
     },
     {
         char: ']',
-        shouldSkipProcessingInsideBraketsPair: true,
-        cssClassNameKeyword: 'square-bracket',
-        cssClassNameExtra:   ' square-bracket-close',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: cssClassNameOfBraketAsALiteral,
+            asAControl: cssClassNameOfBraketAsAControl,
+            extra:      ` ${cssClassNameOfCloseBraketSpecific}`,
+        },
     },
     {
         char: '{',
-        cssClassNameKeyword: 'curly-brace',
-        cssClassNameExtra:   ' curly-brace-open',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'curly-brace',
+            asAControl: '',
+            extra:      ' curly-brace-open',
+        },
     },
     {
         char: '}',
-        cssClassNameKeyword: 'curly-brace',
-        cssClassNameExtra:   ' curly-brace-close',
+        // htmlEntity: '',
+        cssClassNames: {
+            asALiteral: 'curly-brace',
+            asAControl: '',
+            extra:      ' curly-brace-close',
+        },
     },
 ]
 
-const regexpSelectorChars = [
-    { char: '.',   cssClassNameKeyword: 'any-char' },
-    { char: '\\w', cssClassNameKeyword: 'word' },
-    { char: '\\W', cssClassNameKeyword: 'non-word' },
-    { char: '\\d', cssClassNameKeyword: 'digit' },
-    { char: '\\D', cssClassNameKeyword: 'non-digit' },
-    { char: '\\s', cssClassNameKeyword: 'whitespace' },
-    { char: '\\S', cssClassNameKeyword: 'non-whitespace' },
-    { char: '\\b', cssClassNameKeyword: 'boundary' },
-    { char: '\\B', cssClassNameKeyword: 'non-boundary' },
-]
+const regexpControlCharsThatMustEscape = [
+    /*
+        If `thisControlIsASelector` is true,
+        we use 'regexp-selector-' as CSS class name prefix, instead of `regexp-control-`
+    */
 
-
-// TODO:
-const regexpEscapedLiteralChars = [ //eslint-disable-line no-unused-vars
-    {
-        escapedChar: '-',
-        cssClassName: 'regexp-literal-minus-sign',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-range-sign',
-    },
-    {
-        escapedChar: '^',
-        cssClassName: 'regexp-literal-caret',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-invert',
-    },
-    {
-        escapedChar: '?',
-        cssClassName: 'regexp-literal-question-mark',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-question-mark',
-    },
-    {
-        escapedChar: '*',
-        cssClassName: 'regexp-literal-asterisk',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-asterisk',
-    },
-    {
-        escapedChar: '+',
-        cssClassName: 'regexp-literal-plus-sign',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-plus-sign',
-    },
-    {
-        escapedChar: '|',
-        cssClassName: 'regexp-literal-pipe',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-logic-or',
-    },
-    {
-        escapedChar: '.',
-        cssClassName: 'regexp-literal-period',
-        unwantedControlCssClassName: 'regexp-selector-char regexp-selector-any-char',
-    },
-    {
-        escapedChar: '(',
-        cssClassName: 'regexp-literal-parenthesis parenthesis-open',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-open',
-    },
-    {
-        escapedChar: ')',
-        cssClassName: 'regexp-literal-parenthesis parenthesis-close',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-parenthesis parenthesis-close',
-    },
-    {
-        escapedChar: '[',
-        cssClassName: 'regexp-literal-square-bracket square-bracket-open',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-open',
-    },
-    {
-        escapedChar: ']',
-        cssClassName: 'regexp-literal-square-bracket square-bracket-close',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-square-bracket square-bracket-close',
-    },
-    {
-        escapedChar: '{',
-        cssClassName: 'regexp-literal-curly-brace curly-brace-open',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-open',
-    },
-    {
-        escapedChar: '}',
-        cssClassName: 'regexp-literal-curly-brace curly-brace-close',
-        unwantedControlCssClassName: 'regexp-control-char regexp-control-curly-brace curly-brace-close',
-    },
+    { char: 'w', thisControlIsASelector: true, cssClassNames: { asASelector: 'word' } },
+    { char: 'W', thisControlIsASelector: true, cssClassNames: { asASelector: 'non-word' } },
+    { char: 'd', thisControlIsASelector: true, cssClassNames: { asASelector: 'digit' } },
+    { char: 'D', thisControlIsASelector: true, cssClassNames: { asASelector: 'non-digit' } },
+    { char: 's', thisControlIsASelector: true, cssClassNames: { asASelector: 'whitespace' } },
+    { char: 'S', thisControlIsASelector: true, cssClassNames: { asASelector: 'non-whitespace' } },
+    { char: 'b', thisControlIsASelector: true, cssClassNames: { asASelector: 'boundary' } },
+    { char: 'B', thisControlIsASelector: true, cssClassNames: { asASelector: 'non-boundary' } },
 ]
 
 
 
-
-module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
+module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
     const cssClassNames = {
         ...defaultCSSClassNamesRegExp,
     }
@@ -220,19 +211,20 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         ccnSelectorCharTheChar,
         ccnLiteral,
         ccnLiteralSpecificNamePrefix,
+        ccnCountingRangeBetweenCurlyBraces,
+        ccnCountingRangeBetweenCurlyBracesDigit,
     } = cssClassNames
 
 
+    // Prepare some constantly used HTML snippets here.
     const htmlSnippetSlashChar = `<span class="${ccnEscapeCharSlash}">\\</span>`
 
-
-    let { content: contentForRegExpBody } = astNodeForRegExpBody
 
     let regexpOpen = ''
     let regexpClose = ''
     let regexpOptions = ''
     let regexpBothQuotesPresent = true
-
+    let contentForRegExpBody = astNodeForRegExp.content
 
     const matchingResult1 = contentForRegExpBody.match(/^(\/)/)
     if (matchingResult1) {
@@ -272,25 +264,13 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
 
 
     if (!regexpBothQuotesPresent) {
-        astNodeForRegExpBody.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
+        astNodeForRegExp.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
     }
 
 
 
 
     if (contentForRegExpBody) {
-        // // '\\' This is ALWAYS the first escape char to deal with.
-        // contentForRegExpBody = contentForRegExpBody.replace(
-        //     new RegExp('\\\\' + '\\\\', 'g'),
-        //     [
-        //         `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-backward-slash">`,
-        //         htmlSnippetSlashChar,
-        //         `<span class="${ccnEscapeCharTheEscapedChar}">\\</span>`,
-        //         '</span>',
-        //     ].join('')
-        // )
-
-
         const regExpBodyASTNode = {
             isEnclosured: true,
             openMark: '/',
@@ -304,6 +284,9 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         } = splitRegExpASTByBraketPairs(regExpBodyASTNode)
 
 
+
+
+
         const astNodesForContentsInsideBraketPairs = astNodesInsideBraketPairs.reduce((astNodesForContents, astNode) => {
             const { content } = astNode
 
@@ -312,26 +295,36 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
                 `<span class="${
                     ccnControlChar
                 } ${
-                    ccnControlCharSpecificNamePrefix
-                }-square-bracket square-bracket-open">[</span>`,
+                    ccnControlCharSpecificNamePrefix}-${cssClassNameOfBraketAsAControl
+                } ${
+                    cssClassNameOfOpenBraketSpecific
+                }">[</span>`,
             ]
 
             astNode.closeMark = [
                 `<span class="${
                     ccnControlChar
                 } ${
-                    ccnControlCharSpecificNamePrefix
-                }-square-bracket square-bracket-close">]</span>`,
+                    ccnControlCharSpecificNamePrefix}-${cssClassNameOfOpenBraketSpecific
+                } ${
+                    cssClassNameOfCloseBraketSpecific
+                }">]</span>`,
             ]
 
 
+            // If there is a '^' at the very begining of the content inside a braket pair,
+            // we treat it as a control, and split the AST node further into 2 sub AST nodes.
             if (content.match(/^\^/)) {
                 const astNode1 = {
                     isEnclosured: false,
                     openMark: '',
                     closeMark: '',
                     content:                 [
-                        `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-invert">`,
+                        `<span class="${
+                            ccnControlChar
+                        } ${
+                            ccnControlCharSpecificNamePrefix}-${cssClassNameOfCaretSignAsAnInvertControl
+                        }">`,
                         `<span class="${ccnControlCharTheChar}">^</span>`,
                         '</span>',
                     ].join(''),
@@ -341,7 +334,7 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
                     isEnclosured: true,
                     openMark: '',
                     closeMark: '',
-                    content: parseAllRangingDashesInsideBraketsPairs(
+                    content: markAllRangingDashesInsideBraketsPairs(
                         content.slice(1)
                     ),
                 }
@@ -359,7 +352,6 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
             return astNodesForContents
         }, [])
 
-
         astNodesForContentsInsideBraketPairs.forEach(astNode => {
             const {
                 nodesEnclosured:    astNodesForEscapedChars,
@@ -367,15 +359,21 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
             } = splitRegExpASTForEscapeChars(astNode)
 
             astNodesForEscapedChars.forEach(astNodeForAnEscapedChar => {
-                markAllEscapedControlChars(astNodeForAnEscapedChar)
-                markAllBackwardSlashLeadingSelectorChars(astNodeForAnEscapedChar)
+                markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNodeForAnEscapedChar)
+                markAllEscapedControlCharsThatMustEscapeToTakeEffect(astNodeForAnEscapedChar)
+                markAllEscapedPeriodSigns(astNodeForAnEscapedChar)
+                markAllEscapedRegularChars(astNodeForAnEscapedChar)
             })
 
             astNodesForNonEscapedSegments.forEach((astNodeForNonEscapedSegment) => {
-                markAllStandaloneControlChars(astNodeForNonEscapedSegment)
-                markAllStandaloneSelectorChars(astNodeForNonEscapedSegment)
+                markAllUnescapedPeriodSigns(astNodeForNonEscapedSegment)
+                markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
         })
+
+
+
+
 
         astNodesOutsideBraketPairs.forEach(astNode => {
             const {
@@ -384,49 +382,19 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
             } = splitRegExpASTForEscapeChars(astNode)
 
             astNodesForEscapedChars.forEach(astNodeForAnEscapedChar => {
-                markAllEscapedControlChars(astNodeForAnEscapedChar)
-                markAllBackwardSlashLeadingControlChars(astNodeForAnEscapedChar)
-                markAllBackwardSlashLeadingSelectorChars(astNodeForAnEscapedChar)
+                markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNodeForAnEscapedChar)
+                markAllEscapedControlCharsThatMustEscapeToTakeEffect(astNodeForAnEscapedChar)
+                markAllEscapedPeriodSigns(astNodeForAnEscapedChar)
+                markAllEscapedRegularChars(astNodeForAnEscapedChar)
             })
 
             astNodesForNonEscapedSegments.forEach((astNodeForNonEscapedSegment) => {
+                markAllControlCharsOfInputBeginOrEnd(astNodeForNonEscapedSegment)
                 markAllRepeatingTimeRanges(astNodeForNonEscapedSegment)
-                markAllStandaloneControlChars(astNodeForNonEscapedSegment)
-                markAllStandaloneSelectorChars(astNodeForNonEscapedSegment)
-
-                let { content } = astNodeForNonEscapedSegment
-
-                // '$' as regexp end sign
-                content = content.replace(
-                    new RegExp('([^>])\\$', 'g'),
-                    `$1<span class="${ccnInputEndSign}">$</span>`
-                )
-
-                // '^' as regexp begin sign
-                content = content.replace(
-                    new RegExp('([^>])\\^', 'g'),
-                    [
-                        '$1',
-                        `<span class="${ccnInputBeginSign}">^</span>`,
-                    ].join('')
-                )
-
-                astNodeForNonEscapedSegment.content = content
+                markAllUnescapedPeriodSigns(astNodeForNonEscapedSegment)
+                markAllNonEscapedControlCharsThatMustNotEscape(astNodeForNonEscapedSegment)
             })
         })
-
-
-
-
-
-
-
-
-
-        // content = content.replace(
-        //     new RegExp('\\\\&lt;', 'g'),
-        //     '<span class="wlc-escape-char regexp-literal-less-than-mark">\\<span class="escaped-char"><</span></span>'
-        // )
 
 
 
@@ -435,7 +403,7 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
     }
 
 
-    astNodeForRegExpBody.content = [
+    astNodeForRegExp.content = [
         regexpOpen,
         `<span class="${ccnBody}">`,
         contentForRegExpBody,
@@ -447,152 +415,257 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
 
 
 
-    function parseAllRangingDashesInsideBraketsPairs(content) {
+    function markAllRangingDashesInsideBraketsPairs(content) {
         // '-' as char range control
-        return content.replace(
-            /([a-z])-([a-z])/g,
-            [
-                '$1',
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
-                '-',
-                '</span>',
-                '$2',
-            ].join('')
-        ).replace(
-            /([A-Z])-([A-Z])/g,
-            [
-                '$1',
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
-                '-',
-                '</span>',
-                '$2',
-            ].join('')
-        ).replace(
-            /([0-9])-([0-9])/g,
-            [
-                '$1',
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-range-sign">`,
-                '-',
-                '</span>',
-                '$2',
-            ].join('')
-        )
+
+        const cssClassNames = [
+            ccnControlChar,
+            `${ccnControlCharSpecificNamePrefix}-${cssClassNameOfMinusSignAsARangeControl}`,
+        ].join(' ')
+
+        const replacement = `$1<span class="${cssClassNames}">-</span>$2`
+
+        return content
+            .replace(/([a-z])-([a-z])/g, replacement)
+            .replace(/([A-Z])-([A-Z])/g, replacement)
+            .replace(/([0-9])-([0-9])/g, replacement)
     }
 
-    function markAllEscapedControlChars(astNode) {
-        const escapedChar = astNode.content
+    function markAllControlCharsOfInputBeginOrEnd(astNodeForASegment) {
+        let { content } = astNodeForASegment
 
-        const matchedSettings = signleMeaningControlChars.filter(r => {
-            return r.char === escapedChar || r.htmlEntity === escapedChar
-        })
+        // '$' as regexp end sign
+        content = content.replace(
+            new RegExp('\\$', 'g'),
+            `<span class="${ccnInputEndSign}">$</span>`
+        )
 
-        if (matchedSettings.length > 1) {
-            throw new Error('@wulechuan/regexp-to-html: more than one escaped controlling chars matched!')
+        // '^' as regexp begin sign
+        content = content.replace(
+            new RegExp('\\^', 'g'),
+            `<span class="${ccnInputBeginSign}">^</span>`
+        )
+
+        astNodeForASegment.content = content
+    }
+
+    function markAllEscapedPeriodSigns(astNode) {
+        // '\\.'
+
+        if (astNode.asAnEscapedCharThisHasBeenProcessed) {
+            return
         }
 
-        // Since "matchedSettings" might be zero lengthed array,
+        const escapedChar = astNode.content
+        if (escapedChar !== '.') { return }
+        console.log('escapedchar:', '"' + escapedChar + '"')
+
+        const cssClassNames = [
+            ccnEscapeChar,
+            ccnLiteral,
+            `${ccnLiteralSpecificNamePrefix}-${cssClassNameOfPeriodSignAsALiteral}`,
+        ].join(' ')
+
+        astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
+        astNode.openMark = '' // clear the '\\'
+        astNode.content = [
+            `<span class="${cssClassNames}">`,
+            htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
+            `<span class="${ccnEscapeCharTheEscapedChar}">.</span>`,
+            '</span>',
+        ].join('')
+
+        astNode.asAnEscapedCharThisHasBeenProcessed = true
+    }
+
+    function markAllEscapedRegularChars(astNode) {
+        if (astNode.asAnEscapedCharThisHasBeenProcessed) {
+            return
+        }
+
+        const escapedChar = astNode.content
+        console.log('escapedchar:', '"' + escapedChar + '"')
+
+        const matchedConfigs = regexpRegularCharsButMustMatchViaItsHTMLEntity.filter(rccConfig => {
+            return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
+        })
+
+        if (matchedConfigs.length > 1) {
+            throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
+        }
+
+        // Since "matchedConfigs" might be zero lengthed array,
         // the astNode might NOT be modified at all.
-        matchedSettings.forEach(setting => {
-            console.log('>>>', escapedChar)
+        matchedConfigs.forEach(rccConfig => {
             const {
                 char,
-                cssClassNameKeyword: ck,
-                cssClassNameExtra: ce,
-            } = setting
+                cssClassNames: {
+                    asALiteral: cl,
+                    extra: ce,
+                },
+            } = rccConfig
+
+            if (cl === undefined) {
+                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a literal.')
+            }
 
             astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
-            astNode.openMark = ''
+            astNode.openMark = '' // clear the '\\'
             astNode.content = [
-                `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${ck}${ce}">`,
-                htmlSnippetSlashChar,
+                `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${cl}${ce || ''}">`,
+                htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
                 `<span class="${ccnEscapeCharTheEscapedChar}">${char}</span>`,
                 '</span>',
             ].join('')
+
+            astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
     }
 
-    function markAllBackwardSlashLeadingControlChars(astNode) {
-        const escapedChar = astNode.content
-
-        const matchedSettings = signleMeaningControlChars.filter(r => {
-            return r.char === escapedChar || r.htmlEntity === escapedChar
-        })
-
-        if (matchedSettings.length > 1) {
-            throw new Error('@wulechuan/regexp-to-html: more than one controlling chars matched!')
+    function markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNode) {
+        if (astNode.asAnEscapedCharThisHasBeenProcessed) {
+            return
         }
 
-        // Since "matchedSettings" might be zero lengthed array,
+        const escapedChar = astNode.content
+        console.log('escapedchar:', '"' + escapedChar + '"')
+
+        const matchedConfigs = regexpControlCharsThatMustNotEscape.filter(rccConfig => {
+            return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
+        })
+
+        if (matchedConfigs.length > 1) {
+            throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
+        }
+
+        // Since "matchedConfigs" might be zero lengthed array,
         // the astNode might NOT be modified at all.
-        matchedSettings.forEach(setting => {
-            console.log(escapedChar)
+        matchedConfigs.forEach(rccConfig => {
             const {
                 char,
-                cssClassNameKeyword: ck,
-                cssClassNameExtra: ce,
-            } = setting
+                cssClassNames: {
+                    asALiteral: cl,
+                    extra: ce,
+                },
+            } = rccConfig
+
+            if (cl === undefined) {
+                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a literal.')
+            }
 
             astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
-            astNode.openMark = ''
+            astNode.openMark = '' // clear the '\\'
             astNode.content = [
-                `<span class="${ccnControlChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
-                `<span class="${ccnControlCharTheChar}">${char}</span>`,
+                `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${cl}${ce || ''}">`,
+                htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
+                `<span class="${ccnEscapeCharTheEscapedChar}">${char}</span>`,
                 '</span>',
             ].join('')
+
+            astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
     }
 
-    function markAllBackwardSlashLeadingSelectorChars(astNode) {
-        // { char: '.',   cssClassName: 'regexp-selector-char regexp-selector-any-char' },
-
-        const escapedChar = astNode.content
-
-        const matchedSettings = signleMeaningControlChars.filter(r => {
-            return r.char === escapedChar || r.htmlEntity === escapedChar
-        })
-
-        if (matchedSettings.length > 1) {
-            throw new Error('@wulechuan/regexp-to-html: more than one escape selector chars matched!')
+    function markAllEscapedControlCharsThatMustEscapeToTakeEffect(astNode) {
+        if (astNode.asAnEscapedCharThisHasBeenProcessed) {
+            return
         }
 
-        // Since "matchedSettings" might be zero lengthed array,
+        const escapedChar = astNode.content
+        console.log('escapedchar:', '"' + escapedChar + '"')
+
+        const matchedConfigs = regexpControlCharsThatMustEscape.filter(rccConfig => {
+            return rccConfig.char === escapedChar || rccConfig.htmlEntity === escapedChar
+        })
+
+        if (matchedConfigs.length > 1) {
+            throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
+        }
+
+        // Since "matchedConfigs" might be zero lengthed array,
         // the astNode might NOT be modified at all.
-        matchedSettings.forEach(setting => {
-            console.log(escapedChar)
-            const { char } = setting
-            const isEscapeChar = char.startsWith('\\')
-            const coreChar = isEscapeChar ? char.slice(1) : char
+        matchedConfigs.forEach(rccConfig => {
+            const {
+                char,
+                thisControlIsASelector,
+                cssClassNames: {
+                    // asALiteral: cl,
+                    asAControl: cc,
+                    asASelector: cs,
+                    extra: ce,
+                },
+            } = rccConfig
+
+            if (cc === undefined && cs === undefined) {
+                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a control.')
+            }
+
+            const cssClassNames = [
+                ccnEscapeChar,
+                thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
+                thisControlIsASelector
+                    ? `${ccnSelectorCharSpecificNamePrefix}-${cs}`
+                    : `${ccnControlCharSpecificNamePrefix}-${cc}`,
+                ce || '',
+            ].join(' ')
 
             astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
-            astNode.openMark = ''
+            astNode.openMark = '' // clear the '\\'
             astNode.content = [
+                `<span class="${cssClassNames}">`,
+
+                htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
+
                 '<span class="',
                 [
-                    ccnSelectorChar,
-                    `${ccnSelectorCharSpecificNamePrefix}-${'aaaaa'}`,
-                    ccnEscapeChar,
+                    ccnEscapeCharTheEscapedChar,
+                    thisControlIsASelector ? ccnSelectorCharTheChar : ccnControlCharTheChar,
                 ].join(' '),
                 '">',
-                `<span class="${ccnEscapeCharTheEscapedChar}">${coreChar}</span>`,
+                `${char}</span>`,
+
                 '</span>',
             ].join('')
+
+            astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
     }
 
-    function markAllStandaloneSelectorChars(astNode) {
+    function markAllNonEscapedControlCharsThatMustNotEscape(astNode) {
         let { content } = astNode
-        signleMeaningControlChars.forEach(ccib => {
+        regexpControlCharsThatMustNotEscape.forEach(ccib => {
             const {
                 char,
-                cssClassNameKeyword: ck,
-                cssClassNameExtra: ce,
+                thisControlIsASelector,
+                cssClassNames: {
+                    // asALiteral: cl,
+                    asAControl: cc,
+                    asASelector: cs,
+                    extra: ce,
+                },
             } = ccib
+
+            if (cc === undefined && cs === undefined) {
+                throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a control.')
+            }
+
+            const cssClassNames = [
+                thisControlIsASelector ? ccnSelectorChar : ccnControlChar,
+                thisControlIsASelector
+                    ? `${ccnSelectorCharSpecificNamePrefix}-${cs}`
+                    : `${ccnControlCharSpecificNamePrefix}-${cc}`,
+                ce || '',
+            ].join(' ')
 
             content = content.replace(
                 new RegExp(`\\${char}`, 'g'),
                 [
-                    `<span class="${ccnEscapeChar} ${ccnControlCharSpecificNamePrefix}-${ck}${ce}">`,
-                    `<span class="${ccnSelectorCharTheChar}">${char}</span>`,
+                    `<span class="${cssClassNames}">`,
+
+                    `<span class="${
+                        thisControlIsASelector ? ccnSelectorCharTheChar : ccnControlCharTheChar
+                    }">${char}</span>`,
+
                     '</span>',
                 ].join('')
             )
@@ -601,30 +674,22 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
         return content
     }
 
-    function markAllStandaloneControlChars(astNode) {
-        let { content } = astNode
+    function markAllUnescapedPeriodSigns(astNode) {
+        // '.'
 
-        regexpSelectorChars.forEach(rsc => {
-            const { char } = rsc
-            const isEscapeChar = char.startsWith('\\')
-            const coreChar = isEscapeChar ? char.slice(1) : char
+        const { content } = astNode
 
-            content = content.replace(
-                new RegExp(`\\${char}`, 'g'),
-                [
-                    '<span class="',
-                    [
-                        ccnControlChar,
-                        ccnSelectorChar,
-                    ].join(' '),
-                    '">',
-                    `<span class="${ccnControlCharTheChar}">${coreChar}</span>`,
-                    '</span>',
-                ].join('')
+        if (content) {
+            const cssClassNames = [
+                ccnSelectorChar,
+                `${ccnSelectorCharSpecificNamePrefix}-${cssClassNameOfPeriodSignAsASelector}`,
+            ].join(' ')
+
+            astNode.content = content.replace(
+                /\\./g,
+                `<span class="${cssClassNames}">.</span>`
             )
-        })
-
-        astNode.content = content
+        }
     }
 
     function markAllRepeatingTimeRanges(astNode) {
@@ -632,10 +697,10 @@ module.exports = function parseOnRegExpIntoHTML(astNodeForRegExpBody) {
             /(<span class="regexp-control-char regexp-control-curly-brace curly-brace-open"><span class="control-char">\{<\/span><\/span>)(\d+)((,)(\d*))?(<span class="regexp-control-char regexp-control-curly-brace curly-brace-close"><span class="control-char">\}<\/span><\/span>)/g,
             [
                 '$1',
-                '<span class="wlc-digit-pair-between-curly-braces">',
-                '<span class="digit digit-1">$2</span>',
-                '<span class="comma">$4</span>',
-                '<span class="digit digit-2">$5</span>',
+                `<span class="${ccnCountingRangeBetweenCurlyBraces}">`,
+                `<span class="${ccnCountingRangeBetweenCurlyBracesDigit} ${ccnCountingRangeBetweenCurlyBracesDigit}-1">$2</span>`,
+                `<span class="${'comma'}">$4</span>`,
+                `<span class="${ccnCountingRangeBetweenCurlyBracesDigit} ${ccnCountingRangeBetweenCurlyBracesDigit}-2">$5</span>`,
                 '</span>',
                 '$6',
             ].join('')
