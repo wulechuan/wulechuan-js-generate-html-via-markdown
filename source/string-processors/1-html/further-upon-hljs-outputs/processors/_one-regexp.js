@@ -40,8 +40,9 @@ const defaultCSSClassNamesRegExp = {
 
 // const cssClassNameOfLiteralForwardSlash  = 'forward-slash'
 // const cssClassNameOfLiteralBackwardSlash = 'backward-slash'
-const cssClassNameOfBraketAsALiteral    = 'braket'
+
 const cssClassNameOfBraketAsAControl    = 'candidate-chars'
+const cssClassNameOfBraketAsALiteral    = 'braket'
 const cssClassNameOfOpenBraketSpecific  = 'open-braket'
 const cssClassNameOfCloseBraketSpecific = 'close-braket'
 
@@ -117,7 +118,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: 'parenthesis',
             asAControl: 'capture',
-            extra:      ' parenthesis-open',
+            extra:      ' open-parenthesis',
         },
     },
     {
@@ -126,7 +127,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: 'parenthesis',
             asAControl: 'capture',
-            extra:      ' parenthesis-close',
+            extra:      ' close-parenthesis',
         },
     },
     {
@@ -153,7 +154,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: 'curly-brace',
             asAControl: '',
-            extra:      ' curly-brace-open',
+            extra:      ' open-curly-brace',
         },
     },
     {
@@ -162,7 +163,7 @@ const regexpControlCharsThatMustNotEscape = [
         cssClassNames: {
             asALiteral: 'curly-brace',
             asAControl: '',
-            extra:      ' curly-brace-close',
+            extra:      ' close-curly-brace',
         },
     },
 ]
