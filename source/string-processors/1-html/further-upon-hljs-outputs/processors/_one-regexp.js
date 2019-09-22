@@ -219,53 +219,20 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
     // Prepare some constantly used HTML snippets here.
     const htmlSnippetSlashChar = `<span class="${ccnEscapeCharSlash}">\\</span>`
 
-
-    let regexpOpen = ''
-    let regexpClose = ''
-    let regexpOptions = ''
-    let regexpBothQuotesPresent = true
-    let contentForRegExpBody = astNodeForRegExp.content
-
-    const matchingResult1 = contentForRegExpBody.match(/^(\/)/)
-    if (matchingResult1) {
-        const [
-            ,
-            regexpOpenMark, // in case an illegal regexp provided, without open mark
-        ] = matchingResult1
-
-        contentForRegExpBody = contentForRegExpBody.slice(regexpOpenMark.length)
-
-        if (regexpOpenMark) {
-            regexpOpen = `<span class="${ccnQuote} ${ccnQuoteOpen}">${regexpOpenMark}</span>`
-        } else {
-            regexpBothQuotesPresent = false
-        }
-    }
+    let regexpIsIllegal = false
 
 
-    const matchingResult2 = contentForRegExpBody.match(/(\/)([a-z]*)$/)
-    if (matchingResult2) {
-        const [
-            tailIncludingRegexpCloseMark, // in case an illegal regexp provided, without close mark
-            regexpCloseMark,              // in case an illegal regexp provided, without close mark
-            regexpOptionsRaw,
-        ] = matchingResult2
 
-        contentForRegExpBody = contentForRegExpBody.slice(0, -tailIncludingRegexpCloseMark.length)
+    const {
+        regexpOpen,
+        regexpClose,
+        regexpOptions,
+        regexpBothQuotesPresent,
+        contentForRegExpBody,
+    } = extractTopLevelPartsOfARegExp(astNodeForRegExp.content)
 
-        if (regexpCloseMark) {
-            regexpClose = `<span class="${ccnQuote} ${ccnQuoteClose}">${regexpCloseMark}</span>`
-        } else {
-            regexpBothQuotesPresent = false
-        }
+    regexpIsIllegal = !regexpBothQuotesPresent // eslint-disable-line prefer-const
 
-        regexpOptions = `<span class="${ccnOptions}">${regexpOptionsRaw}</span>`
-    }
-
-
-    if (!regexpBothQuotesPresent) {
-        astNodeForRegExp.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
-    }
 
 
     const regExpBodyASTNode = {
@@ -275,26 +242,34 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
         content: contentForRegExpBody,
     }
 
-    const regExpFullContentASTNode = {
-        isEnclosured: true,
-        openMark:  regexpOpen,  // the '/' at beginning
-        closeMark: regexpClose, // the '/' at end
-        content: [
-            regExpBodyASTNode,
-        ],
-    }
-
-    const regExpOptionsASTNode = {
-        isEnclosured: true,
-        openMark: '',
-        closeMark: '',
-        content: regexpOptions, // 'g', 'i' or 'gi'
-    }
-
     astNodeForRegExp.content = [
-        regExpFullContentASTNode,
-        regExpOptionsASTNode,
+        { // the '/' at beginning
+            isEnclosured: true,
+            openMark:  `<span class="${ccnQuote} ${ccnQuoteOpen}">`,
+            closeMark: '</span>',
+            content: regexpOpen,
+        },
+
+        regExpBodyASTNode, // everything between the two '/' chars
+
+        { // the '/' at end
+            isEnclosured: true,
+            openMark:  `<span class="${ccnQuote} ${ccnQuoteClose}">`,
+            closeMark: '</span>',
+            content: regexpClose,
+        },
+
+        {
+            isEnclosured: true,
+            openMark:  `<span class="${ccnOptions}">`,
+            closeMark: '</span>',
+            content: regexpOptions, // 'g', 'i' or 'gi'
+        },
     ]
+
+
+
+
 
 
     if (contentForRegExpBody) {
@@ -419,6 +394,64 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
 
 
 
+    if (regexpIsIllegal) {
+        astNodeForRegExp.openMark = `<span class="hljs-regexp ${ccnIllegal}">`
+    }
+
+
+
+    function extractTopLevelPartsOfARegExp(regexpFullContentWithOptions) {
+        let regexpOpen = ''
+        let regexpClose = ''
+        let regexpOptions = ''
+        let regexpBothQuotesPresent = true
+
+        let contentForRegExpBody = regexpFullContentWithOptions
+
+        const matchingResultOfRegExpOpenMark = contentForRegExpBody.match(/^(\/)/)
+        if (matchingResultOfRegExpOpenMark) {
+            const [
+                ,
+                regexpOpenMark, // in case an illegal regexp provided, without open mark
+            ] = matchingResultOfRegExpOpenMark
+
+            contentForRegExpBody = contentForRegExpBody.slice(regexpOpenMark.length)
+
+            if (regexpOpenMark === '/') {
+                regexpOpen = regexpOpenMark
+            } else {
+                regexpBothQuotesPresent = false
+            }
+        }
+
+
+        const matchingResultOfRegExpCloseMark = contentForRegExpBody.match(/(\/)([a-z]*)$/)
+        if (matchingResultOfRegExpCloseMark) {
+            const [
+                tailIncludingRegexpCloseMark, // in case an illegal regexp provided, without close mark
+                regexpCloseMark,              // in case an illegal regexp provided, without close mark
+                regexpOptionsRaw,
+            ] = matchingResultOfRegExpCloseMark
+
+            contentForRegExpBody = contentForRegExpBody.slice(0, -tailIncludingRegexpCloseMark.length)
+
+            if (regexpCloseMark === '/') {
+                regexpClose = regexpCloseMark
+            } else {
+                regexpBothQuotesPresent = false
+            }
+
+            regexpOptions = regexpOptionsRaw
+        }
+
+        return {
+            regexpOpen,
+            regexpClose,
+            regexpOptions,
+            regexpBothQuotesPresent,
+            contentForRegExpBody,
+        }
+    }
 
     function markAllRangingDashesInsideBraketsPairs(content) {
         // '-' as char range control
