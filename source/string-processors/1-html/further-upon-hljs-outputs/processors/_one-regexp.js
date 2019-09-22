@@ -554,9 +554,12 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
             throw new Error('@wulechuan/regexp-to-html: For content "' + escapedChar + '" more than one escaped controlling chars matched!')
         }
 
-        // Since "matchedConfigs" might be zero lengthed array,
-        // the astNode might NOT be modified at all.
-        matchedConfigs.forEach(rccConfig => {
+        astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
+        astNode.openMark = '' // clear the '\\'
+
+        if (matchedConfigs.length === 1) {
+            const [ rccConfig ] = matchedConfigs
+
             const {
                 char,
                 cssClassNames: {
@@ -569,8 +572,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 throw new Error('@wulechuan/regexp-to-html: char "' + char + '" has no CSS class name as a literal.')
             }
 
-            astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'
-            astNode.openMark = '' // clear the '\\'
             astNode.content = [
                 `<span class="${ccnEscapeChar} ${ccnLiteral} ${ccnLiteralSpecificNamePrefix}-${cl}${ce || ''}">`,
                 htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
@@ -578,12 +579,22 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp) {
                 '</span>',
             ].join('')
 
-            // console.log('escapedchar:', '"' + escapedChar + '"')
-            // console.log(astNode.content)
-            // console.log('^'.repeat(79))
 
             astNode.asAnEscapedCharThisHasBeenProcessed = true
-        })
+        } else {
+            astNode.content = [
+                `<span class="${ccnEscapeChar}">`,
+                htmlSnippetSlashChar, // here is the '\\', wrapped by a <span>.
+                `<span class="${ccnEscapeCharTheEscapedChar}">${escapedChar}</span>`,
+                '</span>',
+            ].join('')
+
+            astNode.asAnEscapedCharThisHasBeenProcessed = true
+        }
+
+        // console.log('escapedchar:', '"' + escapedChar + '"')
+        // console.log(astNode.content)
+        // console.log('^'.repeat(79))
     }
 
     function markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNode) {
