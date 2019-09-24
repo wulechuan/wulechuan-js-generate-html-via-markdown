@@ -544,4 +544,11 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
     return parseASTSubTreeIntoSingleString(rootLevelASTNodes)
+        .replace(
+            /\n(\s+)/g,
+            '\n<span class="inline-pre-whitespaces indentation">$1</span>'
+        ).replace(
+            /\n/g,
+            '<br>'
+        )
 }

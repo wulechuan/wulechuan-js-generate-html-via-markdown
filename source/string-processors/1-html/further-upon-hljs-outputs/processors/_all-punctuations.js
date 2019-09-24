@@ -5,11 +5,6 @@ const {
 
 
 const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
-    // {
-    //     sign: '&semi;',
-    //     signRegExp: '',
-    //     cssClassNames: 'punctuation semi-colon',
-    // },
     {
         sign: '#',
         signRegExp: '',
@@ -295,6 +290,14 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     html = html.replace(
         /!=([^=])/g,
         '<span class="punctuation exclamation-mark-and-equal-sign">!=</span>$1'
+    )
+
+    html = html.replace(
+        /;/g,
+        '<span class="punctuation semi-colon">;</span>'
+    ).replace(
+        /(&\w{2,})<span class="punctuation semi-colon">;<\/span>/g,
+        '$1;'
     )
 
     return html
