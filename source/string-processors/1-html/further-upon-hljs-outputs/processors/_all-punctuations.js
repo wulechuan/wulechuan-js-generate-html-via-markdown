@@ -252,7 +252,10 @@ function processExclamationMarks(html, codeLanguage) {
     ) {
         html = html.replace(
             /<span class="hljs-meta"><span class="punctuation exclamation-marks odd-count">!<\/span>important/g,
-            '<span class="hljs-meta css-exclamation-important>!important'
+            '<span class="hljs-meta css-exclamation-important">!important'
+        ).replace(
+            /<span class="punctuation exclamation-marks odd-count">!<\/span>important(\s*[;<])/g,
+            '<span class="hljs-meta css-exclamation-important">!important</span>$1'
         )
     }
 

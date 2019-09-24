@@ -302,6 +302,55 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
         }
 
 
+        if (
+            codeLanguageIsOneOf(codeLanguage, [
+                'css',
+                'stylus',
+                'sass',
+                'less',
+            ])
+        ) {
+            astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+                astNodesRest,
+                '<span class="hljs-selector-attr">', // html: <!DOCTYPE html>, css: !important, etc.
+                '</span>',
+                astNode => {
+                    let { content } = astNode
+
+                    content = content.replace(
+                        /^(\[)([\w\d-]+)([\^*~$|]=)(["']?)([^"'\]])*(["']?)(\])$/g,
+                        [
+                            '<span class="punctuation braket open-braket">$1</span>',
+                            '<span class="hljs-attr">$2</span>',
+                            '<span class="punctuation assertion">$3</span>',
+                            '<span class="hljs-string">',
+                            '<span class="string-quote string-opening-quote">$4</span>',
+                            '<span class="string-body">$5</span>',
+                            '<span class="string-quote string-closing-quote">$6</span>',
+                            '</span>',
+                            '<span class="punctuation braket close-braket">$7</span>',
+                        ].join('')
+                    ).replace(
+                        /^(\[)([\w\d-]+)(=)(["']?)([^"'\]])*(["']?)(\])$/g,
+                        [
+                            '<span class="punctuation braket open-braket">$1</span>',
+                            '<span class="hljs-attr">$2</span>',
+                            '<span class="punctuation assertion">$3</span>',
+                            '<span class="hljs-string">',
+                            '<span class="string-quote string-opening-quote">$4</span>',
+                            '<span class="string-body">$5</span>',
+                            '<span class="string-quote string-closing-quote">$6</span>',
+                            '</span>',
+                            '<span class="punctuation braket close-braket">$7</span>',
+                        ].join('')
+                    )
+
+                    astNode.content = content
+                }
+            )
+        }
+
+
 
         astNodesRest.forEach(astNode => {
             parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforePunctuations(astNode, codeLanguage)

@@ -37,7 +37,7 @@
     "url": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown/issues"
   },
   "peerDependencies": {
-    "@wulechuan/css-stylus-markdown-themes": ">= 5.9.12"
+    "@wulechuan/css-stylus-markdown-themes": ">= 5.9.14"
   },
   "dependencies": {
     "@wulechuan/meaningful-error-messages": "^0.1.4",
@@ -49,7 +49,7 @@
     "markdown-it-toc-done-right": "^4.0.2"
   },
   "devDependencies": {
-    "@wulechuan/css-stylus-markdown-themes": "^5.9.12",
+    "@wulechuan/css-stylus-markdown-themes": "^5.9.14-beta1",
     "@wulechuan/gulp-classical-task-cycle": "^0.2.2",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
