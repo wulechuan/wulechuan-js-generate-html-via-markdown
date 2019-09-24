@@ -149,7 +149,13 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
             isEnclosured: true,
             openMark: `<code class="hljs${optionalSpace}${codeLanguage}">`,
             closeMark: '</code>',
-            content: contentOfHTMLCodeTag,
+            content: contentOfHTMLCodeTag.replace(
+                /(\n+)(\s+)/g,
+                '$1<span class="inline-pre-whitespaces indentation">$2</span>'
+            ).replace(
+                /\n/g,
+                '<br>'
+            ),
         }
 
         allASTNodes.push(astNodeForHTMLCodeTag)
@@ -544,11 +550,4 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
 
 
     return parseASTSubTreeIntoSingleString(rootLevelASTNodes)
-        .replace(
-            /\n(\s+)/g,
-            '\n<span class="inline-pre-whitespaces indentation">$1</span>'
-        ).replace(
-            /\n/g,
-            '<br>'
-        )
 }
