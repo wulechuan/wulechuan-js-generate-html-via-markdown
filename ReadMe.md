@@ -55,6 +55,12 @@ The CSS file for the built-in theming is from another NPM package of mine, named
 
 Alongside this npm package, I also maintain another npm package, named [@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html). Let's call it package A. The package perfectly fit the workflows provided by the [Gulpjs](https://gulpjs.com) ecosystem. The package A utilizes this npm package internally to convert Markdown files into HTML files in batch.
 
+### CLI Tool
+
+Alongside this npm package, I also maintain another npm package, named [@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli). Let's call it package B. The package is a convenient CLI tool for batch converting markdwon files into HTML ones, internally utilizing the features of this npm package you are inspecting.
+
+
+
 ## Usage
 
 ### Example 1

@@ -55,6 +55,11 @@
 本人还另行构建和维护了一个 npm 项目，名为《[@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html)》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 [Gulpjs](https://gulpjs.com) 生态中的工作流的工具软件。甲软件内部会调用本软件，实现从 Markdown 文件到 HTML 文件的批量转换。
 
 
+### 用于命令行环境的工具
+
+本人还另行构建和维护了一个 npm 项目，名为《[@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli)》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中异常方便的批量将 Markdown 文件转换成对应的 HTML 文件。一软件内部会调用本软件之功能。
+
+
 ## 用法
 
 ### 示例 1
