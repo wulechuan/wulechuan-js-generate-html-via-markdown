@@ -265,6 +265,12 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             absolutePathsOfExtraFilesToEmbedIntoHTML: [],
         },
 
+        behaviousOfBuiltInTOC: {
+            shouldShowOnlyTwoLevelsAtMost: false,
+            atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
+            atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
+        },
+
         sundries: {
             shouldConsoleLogsInChinese: false,
             shouldDisableCachingForInternalThemeFiles: false,

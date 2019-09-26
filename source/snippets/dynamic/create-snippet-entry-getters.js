@@ -56,7 +56,7 @@ const allSnippetEntries = {
  * @method syncGetSnippetEntryOfHTMLBeginning
  * @method syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin
  * @method syncGetSnippetEntryOfHTMLEnding
- * @method syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes
+ * @method syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes
  * @method syncGetSnippetEntryOfOneExternalFile
  */
 
@@ -86,7 +86,7 @@ function createSnippetEntryGetters(options) {
         syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin,
         syncGetSnippetEntryOfHTMLEnding,
 
-        syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes,
+        syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
     }
 
@@ -159,7 +159,7 @@ function createSnippetEntryGetters(options) {
     }
 
     /** The said peer module below is the "@wulechuan/css-stylus-markdown-themes" */
-    function syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(fileName, shouldIgnoreCachedContent) {
+    function syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(fileName, shouldIgnoreCachedContent) {
         const { optional: optionalEntries } = allSnippetEntries
 
         if (!optionalEntries[fileName] || shouldIgnoreCachedContent) {
@@ -182,10 +182,10 @@ function createSnippetEntryGetters(options) {
                 isStyleTag: wrappingTagName === 'style',
             }
 
-            const { pairingJavascriptFileNames } = fileEntry
+            const { associatedJavascriptFileNames } = fileEntry
 
-            if (pairingJavascriptFileNames) {
-                snippetEntry.pairingJavascriptSnippetEntryPairs = pairingJavascriptFileNames.map(jsFileName => {
+            if (associatedJavascriptFileNames) {
+                snippetEntry.associatedJavascriptSnippetEntryPairs = associatedJavascriptFileNames.map(jsFileName => {
                     const jsFileNameIsOfMinifiedVersion = !!jsFileName.match(/\.min\.js$/)
 
                     let jsFileNameOfMinifiedVersion
@@ -199,17 +199,19 @@ function createSnippetEntryGetters(options) {
                         jsFileNameOfMinifiedVersion   = jsFileName.replace(/\.js$/, '.min.js')
                     }
 
-                    return {
-                        minified:   syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+                    const jsEntryPair = {
+                        minified:   syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                             jsFileNameOfMinifiedVersion,
                             shouldIgnoreCachedContent
                         ),
 
-                        unminified: syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+                        unminified: syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                             jsFileNameOfUnminifiedVersion,
                             shouldIgnoreCachedContent
                         ),
                     }
+
+                    return jsEntryPair
                 })
             }
 

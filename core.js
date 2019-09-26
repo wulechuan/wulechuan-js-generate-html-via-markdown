@@ -84,7 +84,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin,
         syncGetSnippetEntryOfHTMLEnding,
 
-        syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes,
+        syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
     } = require('./source/snippets/dynamic/create-snippet-entry-getters')({
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
@@ -393,7 +393,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
         if (themingCSSFileEntryKey) {
-            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                 themingCSSFileEntryKey,
                 shouldDisableCachingForInternalThemeFiles
             )
@@ -403,10 +403,10 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 snippetEntryOfThemingCSS,
             ]
 
-            if (snippetEntryOfThemingCSS.pairingJavascriptSnippetEntryPairs) {
+            if (snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs) {
                 allSnippetEntriesToEmbed = [
                     ...allSnippetEntriesToEmbed,
-                    ...snippetEntryOfThemingCSS.pairingJavascriptSnippetEntryPairs.map(entryPair => {
+                    ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
                         if (shouldUseUnminifiedVersionOfInternalJavascriptIfAny) {
                             return entryPair.unminified
                         } else {
