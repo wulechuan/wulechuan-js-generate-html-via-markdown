@@ -103,6 +103,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             conversionPreparations = {},
             conversionOptions = {},
             manipulationsOverHTML = {},
+            behaviousOfBuiltInTOC = {},
             sundries = {},
         } = options
 
@@ -179,6 +180,11 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         manipulationsOverHTML = {
             ...defaultOptionValues.manipulationsOverHTML,
             ...manipulationsOverHTML,
+        }
+
+        behaviousOfBuiltInTOC = {
+            ...defaultOptionValues.behaviousOfBuiltInTOC,
+            ...behaviousOfBuiltInTOC,
         }
 
         sundries = {
@@ -395,7 +401,8 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         if (themingCSSFileEntryKey) {
             const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                 themingCSSFileEntryKey,
-                shouldDisableCachingForInternalThemeFiles
+                shouldDisableCachingForInternalThemeFiles,
+                behaviousOfBuiltInTOC
             )
 
             allSnippetEntriesToEmbed = [
