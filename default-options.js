@@ -92,7 +92,7 @@ module.exports = {
     },
 
     behaviousOfBuiltInTOC: {
-        shouldShowOnlyTwoLevelsAtMost: false,
+        shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
         atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
         atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
     },

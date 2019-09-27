@@ -159,7 +159,7 @@ function createSnippetEntryGetters(options) {
     }
 
     /** The said peer module below is the "@wulechuan/css-stylus-markdown-themes" */
-    function syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(fileName, shouldIgnoreCachedContent) {
+    function syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(fileName, shouldIgnoreCachedContent, options) {
         const { optional: optionalEntries } = allSnippetEntries
 
         if (!optionalEntries[fileName] || shouldIgnoreCachedContent) {
@@ -168,7 +168,8 @@ function createSnippetEntryGetters(options) {
             const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileName)
             const fileRawContent = syncGetContentStringOfOneFileOfThePeerModuleOfThemes(
                 fileName,
-                shouldIgnoreCachedContent
+                shouldIgnoreCachedContent,
+                options
             )
 
             const fileWrappedContent = wrapContentsWithAPairOfHTMLTags({
@@ -202,12 +203,14 @@ function createSnippetEntryGetters(options) {
                     const jsEntryPair = {
                         minified:   syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                             jsFileNameOfMinifiedVersion,
-                            shouldIgnoreCachedContent
+                            shouldIgnoreCachedContent,
+                            options
                         ),
 
                         unminified: syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                             jsFileNameOfUnminifiedVersion,
-                            shouldIgnoreCachedContent
+                            shouldIgnoreCachedContent,
+                            options
                         ),
                     }
 

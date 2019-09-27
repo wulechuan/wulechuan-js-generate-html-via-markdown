@@ -271,7 +271,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         },
 
         behaviousOfBuiltInTOC: {
-            shouldShowOnlyTwoLevelsAtMost: false,
+            shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
             atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
             atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
         },
