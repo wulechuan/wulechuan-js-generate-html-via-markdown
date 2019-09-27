@@ -1,6 +1,11 @@
 const chalk = require('chalk')
 
-function clearCacheOfRequiredFile(pathOfFileToReload, { shouldNotLog, shouldNotWarn }) {
+function clearCacheOfRequiredFile(pathOfFileToReload, options = {}) {
+    const {
+        shouldNotLog,
+        shouldNotWarn,
+    } = options
+
     !shouldNotLog && console.log(`${
         chalk.gray('Prepare for reloading file:')
     }\n    ${
