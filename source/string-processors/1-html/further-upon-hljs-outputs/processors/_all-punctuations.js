@@ -26,11 +26,6 @@ const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
         cssClassNames: 'punctuation colon',
     },
     {
-        sign: '%',
-        signRegExp: '',
-        cssClassNames: 'punctuation percentage-sign',
-    },
-    {
         sign: '(',
         signRegExp: '\\(',
         cssClassNames: 'punctuation parenthesis open-parenthesis',
@@ -107,6 +102,31 @@ const SPECIAL_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
         sign: '--',
         signRegExp: '',
         cssClassNames: 'punctuation minus-minus-sign',
+    },
+    {
+        sign: '+=',
+        signRegExp: '\\+=',
+        cssClassNames: 'punctuation plus-and-assign-to',
+    },
+    {
+        sign: '-=',
+        signRegExp: '\\-=',
+        cssClassNames: 'punctuation minus-and-assign-to',
+    },
+    {
+        sign: '*=',
+        signRegExp: '\\*=',
+        cssClassNames: 'punctuation multiply-and-assign-to',
+    },
+    {
+        sign: '/=',
+        signRegExp: '\\/=',
+        cssClassNames: 'punctuation divide-by-and-assign-to',
+    },
+    {
+        sign: '%=',
+        signRegExp: '',
+        cssClassNames: 'punctuation modulo-by-and-assign-to',
     },
 ]
 
@@ -214,7 +234,7 @@ function processStandaloneEqualSigns(html, codeLanguage) {
             But according to regexp below, these two are not processed as expected.
         */
         html = html.replace(
-            /\s*([^"';!=])=([^"'&=>]\s*)/g,
+            /\s*([^"';!=+\-*/%&|^~])=([^"'&=>]\s*)/g,
             '$1<span class="punctuation equal-sign">=</span>$2'
         )
     }
@@ -272,6 +292,8 @@ function processSpecialPunctuationsString(html , codeLanguage) {
         '$1<span class="punctuation double-equal-signs">==</span>$2'
     )
 
+
+
     if (
         codeLanguageIsNotAnyOf(codeLanguage, [
             'xml',
@@ -287,9 +309,26 @@ function processSpecialPunctuationsString(html , codeLanguage) {
         )
     }
 
+
+
     html = html.replace(
         /!=([^=])/g,
         '<span class="punctuation exclamation-mark-and-equal-sign">!=</span>$1'
+    )
+
+    html = html.replace(
+        /([^+])\+([^=+])/g,
+        '$1<span class="punctuation plus-sign">+</span>$2'
+    )
+
+    html = html.replace(
+        /([^*])\*([^=*])/g,
+        '$1<span class="punctuation asterisk">*</span>$2'
+    )
+
+    html = html.replace(
+        /%([^=])/g,
+        '<span class="punctuation percentage-sign">%</span>$1'
     )
 
     html = html.replace(
