@@ -91,6 +91,12 @@ module.exports = {
         absolutePathsOfExtraFilesToEmbedIntoHTML: [],
     },
 
+    behaviousOfBuiltInTOC: {
+        shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
+        atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
+        atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
+    },
+
     sundries: {
         shouldConsoleLogsInChinese: false,
         shouldDisableCachingForInternalThemeFiles: false,

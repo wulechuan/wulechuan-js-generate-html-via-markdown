@@ -16,7 +16,7 @@ const joinPathOSLocalStyle = path.join
 
 const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
 
-
+const rerequireLoggingOptions = { shouldNotLog: true, shouldNotWarn: false }
 
 
 
@@ -84,7 +84,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin,
         syncGetSnippetEntryOfHTMLEnding,
 
-        syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes,
+        syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
     } = require('./source/snippets/dynamic/create-snippet-entry-getters')({
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
@@ -103,6 +103,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             conversionPreparations = {},
             conversionOptions = {},
             manipulationsOverHTML = {},
+            behaviousOfBuiltInTOC = {},
             sundries = {},
         } = options
 
@@ -125,41 +126,62 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-css-family.js',
             ].forEach(subPath => {
-                clearCacheOfRequiredFile(joinPathOSLocalStyle(thisModuleRootFolderPath, subPath))
+                clearCacheOfRequiredFile(
+                    joinPathOSLocalStyle(thisModuleRootFolderPath, subPath),
+                    rerequireLoggingOptions
+                )
             })
 
             // ----------------------------------------------
 
-            defaultOptionValues = rerequire(joinPathOSLocalStyle(
-                thisModuleRootFolderPath,
-                'default-options.js'
-            ))
+            defaultOptionValues = rerequire(
+                joinPathOSLocalStyle(
+                    thisModuleRootFolderPath,
+                    'default-options.js'
+                ),
+                rerequireLoggingOptions
+            )
 
-            const tabs = rerequire(joinPathOSLocalStyle(
-                thisModuleRootFolderPath,
-                './source/snippets/static/tabs.js'
-            ))
+            const tabs = rerequire(
+                joinPathOSLocalStyle(
+                    thisModuleRootFolderPath,
+                    './source/snippets/static/tabs.js'
+                ),
+                rerequireLoggingOptions
+            )
             tab1 = tabs.tab1
 
-            insertTOCMarkDownTagIfNecessary = rerequire(joinPathOSLocalStyle(
-                thisModuleRootFolderPath,
-                './source/string-processors/0-markdown/insert-toc-placeholder.js'
-            ))
+            insertTOCMarkDownTagIfNecessary = rerequire(
+                joinPathOSLocalStyle(
+                    thisModuleRootFolderPath,
+                    './source/string-processors/0-markdown/insert-toc-placeholder.js'
+                ),
+                rerequireLoggingOptions
+            )
 
-            buildHTMLTitleSnippetString = rerequire(joinPathOSLocalStyle(
-                thisModuleRootFolderPath,
-                './source/string-processors/1-html/direct/build-html-title-tag.js'
-            ))
+            buildHTMLTitleSnippetString = rerequire(
+                joinPathOSLocalStyle(
+                    thisModuleRootFolderPath,
+                    './source/string-processors/1-html/direct/build-html-title-tag.js'
+                ),
+                rerequireLoggingOptions
+            )
 
-            wrapHTMLChiefContentWithAnArticleTag = rerequire(joinPathOSLocalStyle(
-                thisModuleRootFolderPath,
-                './source/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
-            ))
+            wrapHTMLChiefContentWithAnArticleTag = rerequire(
+                joinPathOSLocalStyle(
+                    thisModuleRootFolderPath,
+                    './source/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
+                ),
+                rerequireLoggingOptions
+            )
 
-            processAllContentsOfAllPreTagsOfHTMLString = rerequire(joinPathOSLocalStyle(
-                thisModuleRootFolderPath,
-                './source/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
-            ))
+            processAllContentsOfAllPreTagsOfHTMLString = rerequire(
+                joinPathOSLocalStyle(
+                    thisModuleRootFolderPath,
+                    './source/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
+                ),
+                rerequireLoggingOptions
+            )
         }
 
 
@@ -179,6 +201,11 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         manipulationsOverHTML = {
             ...defaultOptionValues.manipulationsOverHTML,
             ...manipulationsOverHTML,
+        }
+
+        behaviousOfBuiltInTOC = {
+            ...defaultOptionValues.behaviousOfBuiltInTOC,
+            ...behaviousOfBuiltInTOC,
         }
 
         sundries = {
@@ -237,6 +264,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             console.log('\nconversionPreparations:', conversionPreparations)
             console.log('\nconversionOptions:', conversionOptions)
             console.log('\nmanipulationsOverHTML:', manipulationsOverHTML)
+            console.log('\nbehaviousOfBuiltInTOC:', behaviousOfBuiltInTOC)
             console.log('\nsundries:', sundries)
         }
 
@@ -393,9 +421,10 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
         if (themingCSSFileEntryKey) {
-            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerModuleOfThemes(
+            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                 themingCSSFileEntryKey,
-                shouldDisableCachingForInternalThemeFiles
+                shouldDisableCachingForInternalThemeFiles,
+                behaviousOfBuiltInTOC
             )
 
             allSnippetEntriesToEmbed = [
@@ -403,10 +432,10 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 snippetEntryOfThemingCSS,
             ]
 
-            if (snippetEntryOfThemingCSS.pairingJavascriptSnippetEntryPairs) {
+            if (snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs) {
                 allSnippetEntriesToEmbed = [
                     ...allSnippetEntriesToEmbed,
-                    ...snippetEntryOfThemingCSS.pairingJavascriptSnippetEntryPairs.map(entryPair => {
+                    ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
                         if (shouldUseUnminifiedVersionOfInternalJavascriptIfAny) {
                             return entryPair.unminified
                         } else {
