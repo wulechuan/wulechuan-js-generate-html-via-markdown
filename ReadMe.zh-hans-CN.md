@@ -195,7 +195,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             */
             cssClassNameOfHeadingPermanentLinks: undefined,
 
-            cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
+            cssClassNameOfArticleTOCRootTag:     'markdown-article-toc',
             cssClassNameOfArticleTOCLists:       undefined, // 作用于 <ul> 或 <ol>。
             cssClassNameOfArticleTOCListItems:   undefined, // 作用于 <li>。
             cssClassNameOfArticleTOCItemAnchors: undefined, // 作用于 <li> 内层的 <a>。
@@ -250,7 +250,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
                 例 1：另所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
                 {
-                    from: /\s+href="([!#])/gi,
+                    from: /\s+href="([^#])/gi,
                     to: ' target="_blank" href="$1',
                 },
 

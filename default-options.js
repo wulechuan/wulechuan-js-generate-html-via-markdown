@@ -18,7 +18,7 @@ module.exports = {
         */
         cssClassNameOfHeadingPermanentLinks: undefined,
 
-        cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
+        cssClassNameOfArticleTOCRootTag:     'markdown-article-toc',
         cssClassNameOfArticleTOCLists:       undefined, // <ul>s and <ol>s
         cssClassNameOfArticleTOCListItems:   undefined, // <li>s
         cssClassNameOfArticleTOCItemAnchors: undefined, // <a>s under <li>s
@@ -75,7 +75,7 @@ module.exports = {
             For example:
             To make opening methods of all external links to be "_blank".
             {
-                from: /\s+href="([!#])/gi,
+                from: /\s+href="([^#])/gi,
                 to: ' target="_blank" href="$1',
             },
 

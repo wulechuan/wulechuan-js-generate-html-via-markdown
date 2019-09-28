@@ -197,7 +197,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             */
             cssClassNameOfHeadingPermanentLinks: undefined,
 
-            cssClassNameOfArticleTOCRootTag: 'markdown-article-toc',
+            cssClassNameOfArticleTOCRootTag:     'markdown-article-toc',
             cssClassNameOfArticleTOCLists:       undefined, // <ul>s or <ol>s
             cssClassNameOfArticleTOCListItems:   undefined, // <li>s
             cssClassNameOfArticleTOCItemAnchors: undefined, // <a>s under <li>s
@@ -254,7 +254,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                 For example:
                 To make opening methods of all external links to be "_blank".
                 {
-                    from: /\s+href="([!#])/gi,
+                    from: /\s+href="([^#])/gi,
                     to: ' target="_blank" href="$1',
                 },
 
