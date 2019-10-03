@@ -272,10 +272,20 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             absolutePathsOfExtraFilesToEmbedIntoHTML: [],
         },
 
-        behaviousOfBuiltInTOC: {
+        /* [ DEPRECATED ]
+            Deprecated because of two typos.
+            Please avoid using this object.
+        */
+        // behaviousOfBuiltInTOC: {
+        //     shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
+        //     atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
+        //     atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
+        // },
+
+        behavioursOfBuiltInTOC: {
             shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
             atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
-            atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
+            atBeginingShouldExpandTOCWhenWindowIsWideEnough: false, // "Window" instead of "Windows".
         },
 
         sundries: {

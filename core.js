@@ -99,12 +99,22 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             shouldLogVerbosely,
         } = options
 
+        const deprecatedLevel1OptionsThatShouldTakeEffect ={
+            behaviousOfBuiltInTOC: !!options.behaviousOfBuiltInTOC &&
+                typeof options.behaviousOfBuiltInTOC === 'object' &&
+                !options.behavioursOfBuiltInTOC,
+        }
+
         let {
             conversionPreparations = {},
             conversionOptions = {},
             manipulationsOverHTML = {},
-            behaviousOfBuiltInTOC = {},
+            behavioursOfBuiltInTOC = {},
             sundries = {},
+        } = options
+
+        const {
+            behaviousOfBuiltInTOC, // Deprecated because of typos.
         } = options
 
         const newVerionPropertyProvided = {
@@ -203,9 +213,21 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             ...manipulationsOverHTML,
         }
 
-        behaviousOfBuiltInTOC = {
-            ...defaultOptionValues.behaviousOfBuiltInTOC,
-            ...behaviousOfBuiltInTOC,
+        if (deprecatedLevel1OptionsThatShouldTakeEffect.behaviousOfBuiltInTOC) {
+            if ('atBeginingShouldExpandTOCWhenWindowsIsWideEnough' in behaviousOfBuiltInTOC) {
+                // "Windows" to "Window", avoding using the option with typo.
+                behaviousOfBuiltInTOC.atBeginingShouldExpandTOCWhenWindowIsWideEnough = behaviousOfBuiltInTOC.atBeginingShouldExpandTOCWhenWindowsIsWideEnough
+                delete behaviousOfBuiltInTOC.atBeginingShouldExpandTOCWhenWindowsIsWideEnough
+            }
+            behavioursOfBuiltInTOC = {
+                ...defaultOptionValues.behavioursOfBuiltInTOC,
+                ...behaviousOfBuiltInTOC,
+            }
+        } else {
+            behavioursOfBuiltInTOC = {
+                ...defaultOptionValues.behavioursOfBuiltInTOC,
+                ...behavioursOfBuiltInTOC,
+            }
         }
 
         sundries = {
@@ -264,7 +286,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             console.log('\nconversionPreparations:', conversionPreparations)
             console.log('\nconversionOptions:', conversionOptions)
             console.log('\nmanipulationsOverHTML:', manipulationsOverHTML)
-            console.log('\nbehaviousOfBuiltInTOC:', behaviousOfBuiltInTOC)
+            console.log('\nbehavioursOfBuiltInTOC:', behavioursOfBuiltInTOC)
             console.log('\nsundries:', sundries)
         }
 
@@ -424,7 +446,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                 themingCSSFileEntryKey,
                 shouldDisableCachingForInternalThemeFiles,
-                behaviousOfBuiltInTOC
+                behavioursOfBuiltInTOC
             )
 
             allSnippetEntriesToEmbed = [
