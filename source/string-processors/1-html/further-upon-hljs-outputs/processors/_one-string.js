@@ -1,5 +1,6 @@
+const chalk                         = require('chalk')
 const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
-const splitASTForEscapeChars = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
+const splitASTForEscapeChars        = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
 
 
 
@@ -189,6 +190,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
                 'Different opening/closing quote marks of a single string.',
                 '    opening: ' + decidedOpenQuoteSign,
                 '    closing: ' + decidedCloseQuoteSign,
+                '    string: "' + chalk.green(content) + '"',
             ])))
         }
 
@@ -198,6 +200,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
         if (!isTemplatedString && content.match('\n')) {
             console.log(new Error (buildErrorMessage([
                 'String literal can not be multi-lined!',
+                '    string: "' + chalk.green(content) + '"',
             ])))
 
             const lines = content.split('\n')

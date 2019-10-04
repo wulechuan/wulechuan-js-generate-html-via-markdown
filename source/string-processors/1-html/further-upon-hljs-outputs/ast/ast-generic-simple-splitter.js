@@ -6,7 +6,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/html-simple-ast-node-splitter')
 
 
-module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, options) {
+module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, codeLanguageOfEnclosuredNodes, options) {
     const errorContext = 'splitOneASTNodeByOpenAndCloseMarks'
 
     if (!astNode || typeof astNode !== 'object') {
@@ -191,10 +191,22 @@ module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, 
 
             astNode.content = allNodesInOriginalOrder
 
+            const parentSnippetCodeLanguage = astNode.codeLanguage
+
+            if (!codeLanguageOfEnclosuredNodes || typeof codeLanguageOfEnclosuredNodes !== 'string') {
+                codeLanguageOfEnclosuredNodes = parentSnippetCodeLanguage
+            }
+
+            const nodesEnclosured    = allNodesInOriginalOrder.filter(n =>  n.isEnclosured)
+            const nodesNotEnclosured = allNodesInOriginalOrder.filter(n => !n.isEnclosured)
+
+            nodesEnclosured   .forEach(n => { n.codeLanguage = codeLanguageOfEnclosuredNodes })
+            nodesNotEnclosured.forEach(n => { n.codeLanguage = parentSnippetCodeLanguage     })
+
             return {
                 allNodesInOriginalOrder,
-                nodesEnclosured:    allNodesInOriginalOrder.filter(n =>  n.isEnclosured),
-                nodesNotEnclosured: allNodesInOriginalOrder.filter(n => !n.isEnclosured),
+                nodesEnclosured,
+                nodesNotEnclosured,
             }
         }
     }
