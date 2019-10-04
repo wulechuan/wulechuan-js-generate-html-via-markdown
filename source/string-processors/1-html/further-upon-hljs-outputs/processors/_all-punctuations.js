@@ -137,7 +137,7 @@ module.exports = {
 }
 
 
-function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode/*, codeLanguage*/) {
+function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode) {
     let { content } = astNode
 
     COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY.forEach(({ sign, signRegExp, cssClassNames })=> {
@@ -160,7 +160,8 @@ function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode/*, codeLanguage*
     astNode.content = content
 }
 
-function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage) {
+function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode) {
+    const { codeLanguage } = astNode
     let { content } = astNode
 
     content = processStandaloneEqualSigns(content, codeLanguage)
