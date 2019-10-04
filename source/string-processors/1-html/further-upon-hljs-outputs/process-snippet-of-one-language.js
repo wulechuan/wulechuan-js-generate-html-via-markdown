@@ -84,6 +84,27 @@ function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark,
     }, [])
 }
 
+function processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(astNodes, hljsTokenName) {
+    return processASTNodesAndCollectUnprocessedOnes(
+        astNodes,
+        `<span class="hljs-${hljsTokenName}">`,
+        '</span>',
+        null,
+        astNode => {
+            const { content } = astNode
+            if (!content.match(/["'\s.<>[\]`~!@#$%^&*()+:;/?\\]/)) {
+                astNode.openMark = `<span class="hljs-${hljsTokenName} ${content}">`
+            } else {
+                console.log(`WARNING: content of an "${
+                    chalk.red(`.hljs-${hljsTokenName}`)
+                }" has been modified into:\n    "${
+                    chalk.yellow(content)
+                }"\n`)
+            }
+        }
+    )
+}
+
 
 module.exports = function processHTMLStringThatMightContainSubLanguages(astNode) {
     const errorContext = 'processHTMLStringThatMightContainSubLanguages' // eslint-disable-line no-unused-vars
@@ -251,6 +272,16 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         )
     }
 
+    if (codeLanguageIsOneOf(codeLanguage, [
+        'css',
+        'stylus',
+        'sass',
+        'less',
+    ])) {
+        astNodesRest.forEach(astNode => {
+            parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations(astNode)
+        })
+    }
 
     if (codeLanguageIsNotAnyOf(codeLanguage, [
         'xml',
@@ -288,6 +319,16 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         )
     }
 
+    astNodesRest = processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(
+        astNodesRest,
+        'keyword'
+    )
+
+    astNodesRest = processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(
+        astNodesRest,
+        'literal'
+    )
+
     if (codeLanguageIsNotAnyOf(codeLanguage, [
         'css',
         'stylus',
@@ -295,51 +336,12 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         'less',
     ])) {
         // Among CSS standard font families, there is one named "math".
-        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+        // Among Javascript built-in objects, there is one named "Math".
+        astNodesRest = processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(
             astNodesRest,
-            '<span class="hljs-built_in">',
-            '</span>',
-            null,
-            astNode => {
-                const { content } = astNode
-                if (!content.match(/["'\s.<>[\]`~!@#$%^&*()+:;/?\\]/)) {
-                    astNode.openMark = `<span class="hljs-built_in ${content}">`
-                } else {
-                    console.log(`WARNING: content of an "${
-                        chalk.red('.hljs-built_in')
-                    }" has been modified into:\n    "${
-                        chalk.yellow(content)
-                    }"\n`)
-                }
-            }
+            'built_in'
         )
-    } else {
-        astNodesRest.forEach(astNode => {
-            parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations(astNode)
-        })
     }
-
-    astNodesRest = processASTNodesAndCollectUnprocessedOnes(
-        astNodesRest,
-        '<span class="hljs-keyword">',
-        '</span>',
-        null,
-        astNode => {
-            const { content } = astNode
-            astNode.openMark = `<span class="hljs-keyword ${content}">`
-        }
-    )
-
-    astNodesRest = processASTNodesAndCollectUnprocessedOnes(
-        astNodesRest,
-        '<span class="hljs-literal">',
-        '</span>',
-        null,
-        astNode => {
-            const { content } = astNode
-            astNode.openMark = `<span class="hljs-literal ${content}">`
-        }
-    )
 
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
         astNodesRest,
@@ -395,7 +397,6 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         '</span>'
     )
 
-
     astNodesRest.forEach(astNode => {
         parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
     })
@@ -404,16 +405,6 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
     if (codeLanguageIsOneOf(codeLanguage, [
         'javascript',
         'typescript',
-    ])) {
-        astNodesRest.forEach(astNode => {
-            parseJavascriptFamilyStuffsInAnASTNodeIntoHTML(astNode, codeLanguage)
-        })
-    }
-
-
-    if (codeLanguageIsOneOf(codeLanguage, [
-        'html',
-        'xml',
     ])) {
         astNodesRest.forEach(astNode => {
             parseJavascriptFamilyStuffsInAnASTNodeIntoHTML(astNode, codeLanguage)

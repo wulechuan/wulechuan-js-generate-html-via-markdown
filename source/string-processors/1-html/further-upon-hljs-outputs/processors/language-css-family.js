@@ -13,6 +13,18 @@ function parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations(ast
     if (!astNode.content) { return }
     astNode.content = astNode.content
         .replace(
+            /([(,]\s*)([+-]?(\d*\.\d+|\d+)(\w{1,5})?)/g,
+            [
+                '$1<span class="hljs-number">$2</span>',
+            ].join('')
+        )
+        .replace(
+            /([^+-])([+-]?)<span class="hljs-number">/g,
+            [
+                '$1<span class="hljs-number">$2',
+            ].join('')
+        )
+        .replace(
             /<span class="hljs-number">([+-]?)(\d*\.\d+|\d+)(cap|ch|em|ex|ic|lh|rem|rlh|vh|vw|vi|vb|vmin|vmax)<\/span>/g,
             [
                 '<span class="css-length">',
