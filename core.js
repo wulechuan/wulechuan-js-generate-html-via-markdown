@@ -125,6 +125,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         if (shouldReloadModulesForDevWatchingMode) {
             [
+                './source/string-processors/1-html/further-upon-hljs-outputs/process-snippet-of-one-language.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
