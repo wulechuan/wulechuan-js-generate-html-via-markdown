@@ -1,9 +1,8 @@
-module.exports = function parseOneASTNodeOfCommentIntoHTML(astNode /* , codeLanguage */) {
-    astNode.content = astNode.content.replace(
-        /(\n+)(\s+)/g,
-        '$1<span class="inline-pre-whitespaces indentation">$2</span>'
-    ).replace(
-        /\n/g,
-        '<br>'
-    )
+const processAllLineBreaksAndLeadingWhitespaces = require(
+    '../processors/__line-breaks-and-leading-whitespaces'
+)
+
+
+module.exports = function parseOneASTNodeOfCommentIntoHTML(astNode) {
+    processAllLineBreaksAndLeadingWhitespaces(astNode)
 }

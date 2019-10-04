@@ -218,12 +218,10 @@ function processStandaloneEqualSigns(html, codeLanguage) {
             ='
      */
 
-    if (
-        codeLanguageIsOneOf(codeLanguage, [
-            'xml',
-            'html',
-        ])
-    ) {
+    if (codeLanguageIsOneOf(codeLanguage, [
+        'xml',
+        'html',
+    ])) {
         html = html.replace(
             /(\s*[^"';])=([^"'&]\s*)/g,
             '$1<span class="punctuation equal-sign">=</span>$2'
@@ -258,14 +256,12 @@ function processExclamationMarks(html, codeLanguage) {
         '$2<span class="punctuation exclamation-marks odd-count">!$4</span>$6'
     )
 
-    if (
-        codeLanguageIsOneOf(codeLanguage, [
-            'css',
-            'stylus',
-            'less',
-            'sass',
-        ])
-    ) {
+    if (codeLanguageIsOneOf(codeLanguage, [
+        'css',
+        'stylus',
+        'less',
+        'sass',
+    ])) {
         html = html.replace(
             /<span class="hljs-meta"><span class="punctuation exclamation-marks odd-count">!<\/span>important/g,
             '<span class="hljs-meta css-exclamation-important">!important'
@@ -294,13 +290,14 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     )
 
 
+    if (!codeLanguage) {
+        console.log(`codeLanguage = "${codeLanguage}"`)
+    }
 
-    if (
-        codeLanguageIsNotAnyOf(codeLanguage, [
-            'xml',
-            'html',
-        ])
-    ) {
+    if (codeLanguageIsNotAnyOf(codeLanguage, [
+        'xml',
+        'html',
+    ])) {
         html = html.replace(
             /&lt;([^=])/g,
             '<span class="punctuation less-than-sign"><</span>$1'

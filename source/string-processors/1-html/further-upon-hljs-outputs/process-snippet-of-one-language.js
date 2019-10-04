@@ -1,9 +1,23 @@
+const chalk                              = require('chalk')
 const splitOneASTNodeByOpenAndCloseMarks = require('./ast/ast-generic-simple-splitter')
 
 const {
     codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
     codeLanguageIsNotAnyOf, // eslint-disable-line no-unused-vars
 } = require('./code-language-matchers')
+
+
+const processAllLineBreaksAndLeadingWhitespaces = require(
+    './processors/__line-breaks-and-leading-whitespaces'
+)
+
+
+const {
+    parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
+    parseAllRestPunctuationsInAnASTNodeIntoHTML,
+} = require(
+    './processors/__punctuations'
+)
 
 
 const parseOneASTNodeOfCommentIntoHTML = require(
@@ -22,14 +36,6 @@ const parseOneStringASTNodeIntoHTML = require(
 
 
 const {
-    parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
-    parseAllRestPunctuationsInAnASTNodeIntoHTML,
-} = require(
-    './processors/_all-punctuations'
-)
-
-
-const {
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations,
 } = require(
     './processors/language-css-family'
@@ -43,24 +49,24 @@ const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
 
 
 
-function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark, enclosuredContentsProcessor, optionsForSplitting) {
+function processASTNodesAndCollectUnprocessedOnes(astNodes, openMark, closeMark, codeLanguageOfEnclosuredNodes, enclosuredContentsProcessor, optionsForSplitting) {
     return astNodes.reduce((restNodes, astNode) => {
         const {
             nodesEnclosured,
             nodesNotEnclosured,
-        } = splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, optionsForSplitting)
+        } = splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, codeLanguageOfEnclosuredNodes, optionsForSplitting)
 
         if (typeof enclosuredContentsProcessor === 'function') {
-            nodesEnclosured.forEach(astNode => {
-                let returnedUnprocessedASTNode
-                try {
-                    returnedUnprocessedASTNode = enclosuredContentsProcessor(astNode)
-                } catch (err) {
-                    console.log('ERROR:', astNode)
-                    console.log('RAW ERROR:', err)
-                }
+            nodesEnclosured.forEach(astNodeEnclosured => {
+                const returnedUnprocessedASTNode = enclosuredContentsProcessor(astNodeEnclosured)
 
                 if (returnedUnprocessedASTNode) {
+                    returnedUnprocessedASTNode.forEach(n => {
+                        if (!n.codeLanguage) {
+                            n.codeLanguage = astNodeEnclosured.codeLanguage
+                        }
+                    })
+
                     restNodes = [
                         ...restNodes,
                         returnedUnprocessedASTNode,
@@ -106,8 +112,8 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode)
                 [ astNode ],
                 '<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">',
                 '</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>',
+                'css',
                 astNode => {
-                    astNode.codeLanguage = 'css'
                     astNode.isOfPureCodeLanguage = true
                     allASTNodesEachOfOnePureLanguage.push(astNode)
                 },
@@ -118,8 +124,8 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode)
                 restASTNodes,
                 '<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">',
                 '</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>',
+                'javascript',
                 astNode => {
-                    astNode.codeLanguage = 'javascript'
                     astNode.isOfPureCodeLanguage = true
                     allASTNodesEachOfOnePureLanguage.push(astNode)
                 },
@@ -127,7 +133,6 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode)
             )
 
             restASTNodes.forEach(astNode => {
-                astNode.codeLanguage = codeLanguage
                 astNode.isOfPureCodeLanguage = true
                 allASTNodesEachOfOnePureLanguage.push(astNode)
             })
@@ -154,16 +159,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
     )
 
     astNodesForComments.forEach(parseOneASTNodeOfCommentIntoHTML)
-
-    astNodesForNonComments.forEach(astNode => {
-        astNode.content = astNode.content.replace(
-            /(\n+)(\s+)/g,
-            '$1<span class="inline-pre-whitespaces indentation">$2</span>'
-        ).replace(
-            /\n/g,
-            '<br>'
-        )
-    })
+    astNodesForNonComments.forEach(processAllLineBreaksAndLeadingWhitespaces)
 
 
 
@@ -177,15 +173,13 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-meta">', // html: <!DOCTYPE html>, css: !important, etc.
-            '</span>',
-            null
+            '</span>'
         )
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-tag">&lt;/<span class="hljs-name">',
-            '</span>&gt;</span>',
-            null
+            '</span>&gt;</span>'
         )
     }
 
@@ -200,6 +194,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             astNodesRest,
             '<span class="hljs-selector-attr">',
             '</span>',
+            null,
             astNode => {
                 let { content } = astNode
 
@@ -238,13 +233,6 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
 
 
 
-    astNodesRest.forEach(astNode => {
-        parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations(astNode)
-    })
-
-
-
-
 
     if (true || // eslint-disable-line no-constant-condition
         codeLanguageIsOneOf(codeLanguage, [
@@ -258,6 +246,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             astNodesRest,
             '<span class="hljs-regexp">',
             '</span>',
+            'regexp',
             parseOneRegExpASTNodeIntoHTML
         )
     }
@@ -271,6 +260,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             astNodesRest,
             '<span class="hljs-string">\'', // single quote
             '</span>',
+            null,
             parseOneStringASTNodeIntoHTML
         )
 
@@ -278,6 +268,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             astNodesRest,
             '<span class="hljs-string">"', // double quote
             '</span>',
+            null,
             parseOneStringASTNodeIntoHTML
         )
 
@@ -285,6 +276,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             astNodesRest,
             '<span class="hljs-string">`', // grave accent quote
             '`</span>',
+            null,
             parseOneStringASTNodeIntoHTML,
             {
                 splittingResultValidator: content => {
@@ -296,10 +288,42 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         )
     }
 
+    if (codeLanguageIsNotAnyOf(codeLanguage, [
+        'css',
+        'stylus',
+        'sass',
+        'less',
+    ])) {
+        // Among CSS standard font families, there is one named "math".
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+            astNodesRest,
+            '<span class="hljs-built_in">',
+            '</span>',
+            null,
+            astNode => {
+                const { content } = astNode
+                if (!content.match(/["'\s.<>[\]`~!@#$%^&*()+:;/?\\]/)) {
+                    astNode.openMark = `<span class="hljs-built_in ${content}">`
+                } else {
+                    console.log(`WARNING: content of an "${
+                        chalk.red('.hljs-built_in')
+                    }" has been modified into:\n    "${
+                        chalk.yellow(content)
+                    }"\n`)
+                }
+            }
+        )
+    } else {
+        astNodesRest.forEach(astNode => {
+            parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations(astNode)
+        })
+    }
+
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
         astNodesRest,
         '<span class="hljs-keyword">',
         '</span>',
+        null,
         astNode => {
             const { content } = astNode
             astNode.openMark = `<span class="hljs-keyword ${content}">`
@@ -308,18 +332,9 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
 
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
         astNodesRest,
-        '<span class="hljs-built_in">',
-        '</span>',
-        astNode => {
-            const { content } = astNode
-            astNode.openMark = `<span class="hljs-built_in ${content}">`
-        }
-    )
-
-    astNodesRest = processASTNodesAndCollectUnprocessedOnes(
-        astNodesRest,
         '<span class="hljs-literal">',
         '</span>',
+        null,
         astNode => {
             const { content } = astNode
             astNode.openMark = `<span class="hljs-literal ${content}">`
@@ -330,6 +345,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
         astNodesRest,
         '<span class="hljs-number">',
         '</span>',
+        null,
         astNode => {
             let { content } = astNode
 
@@ -376,8 +392,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
         astNodesRest,
         '<span class="punctuation',
-        '</span>',
-        null
+        '</span>'
     )
 
 
