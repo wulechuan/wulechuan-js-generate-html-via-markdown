@@ -135,7 +135,7 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
         ])) {
             let restASTNodes = processASTNodesAndCollectUnprocessedOnes(
                 [ astNode ],
-                '<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">',
+                '<span class="css">',
                 '</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>',
                 'css',
                 astNode => {
@@ -147,7 +147,7 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
 
             restASTNodes = processASTNodesAndCollectUnprocessedOnes(
                 restASTNodes,
-                '<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">',
+                '<span class="javascript">',
                 '</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>',
                 'javascript',
                 astNode => {
