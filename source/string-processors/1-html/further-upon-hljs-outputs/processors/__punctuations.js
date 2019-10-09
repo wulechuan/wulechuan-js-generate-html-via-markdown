@@ -300,10 +300,10 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     ])) {
         html = html.replace(
             /&lt;([^=])/g,
-            '<span class="punctuation less-than-sign"><</span>$1'
+            '<span class="punctuation less-than-sign">&lt;</span>$1'
         ).replace(
             /([^=])&gt;([^=])/g,
-            '$1<span class="punctuation greater-than-sign">></span>$2'
+            '$1<span class="punctuation greater-than-sign">&gt;</span>$2'
         )
     }
 
