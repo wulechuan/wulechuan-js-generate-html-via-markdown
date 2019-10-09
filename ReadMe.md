@@ -224,13 +224,14 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         },
 
         manipulationsOverHTML: {
+            shouldNotReplaceLineBreaksInCodeTagsWithBrTags: false,
             shouldNotInsertBackToTopAnchor: false,
             shouldNotUseInternalCSSThemingFiles: false,
             shouldUseUnminifiedVersionOfInternalCSS: false,
             shouldUseUnminifiedVersionOfInternalJavascriptIfAny: false,
 
-            htmlTagLanguage: '', // By default it's an emepty string. This means it will be `'zh-hans-CN'`, according to the `begin.html`.
-            htmlTitleString: '', // By default it's an emepty string. This means to extract content of the first met <h1/> as the content of the <title/> tag.
+            htmlTagLanguage: '', // By default it's an empty string. This means `'zh-hans-CN'` is used, according to the `begin.html`.
+            htmlTitleString: '', // By default it's an empty string. This means to extract content of the first met <h1/> as the content of the <title/> tag.
 
             internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',

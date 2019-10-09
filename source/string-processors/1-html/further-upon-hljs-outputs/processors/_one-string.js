@@ -48,7 +48,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
 
 
-module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/* , codeLanguae */) {
+module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString, options = {}) {
     const {
         ccnIllegal,
         ccnEmpty,
@@ -67,6 +67,9 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
         ccnLiteralSpecificNamePrefix,
     } = DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS
 
+    const {
+        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+    } = options
 
     // Prepare some constantly used HTML snippets here.
     const htmlSnippetSlashChar = `<span class="${ccnEscapeCharSlash}">\\</span>`
@@ -149,7 +152,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
             astNodeForCarriedExtraContent,
         ]
 
-        return astNodeForCarriedExtraContent
+        return [ astNodeForCarriedExtraContent ]
     }
 
     return
@@ -197,22 +200,26 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString/
         astNode.openMark  = openMark
         astNode.closeMark = decidedCloseMark
 
-        if (!isTemplatedString && content.match('\n')) {
-            console.log(new Error (buildErrorMessage([
-                'String literal can not be multi-lined!',
-                '    string: "' + chalk.green(content) + '"',
-            ])))
+        if (!isTemplatedString) {
+            const lineBreakMatchingString = shouldNotReplaceLineBreaksInCodeTagsWithBrTags ? '\n' : '<br\n>'
 
-            const lines = content.split('\n')
-            const firstLine = lines.shift()
+            if (content.match(lineBreakMatchingString)) {
+                console.log(new Error (buildErrorMessage([
+                    'String literal can not be multi-lined!',
+                    '    string: "' + chalk.green(content) + '"',
+                ])))
 
-            restPartCarriedByOriginalIllegalString = lines.join('\n')
+                const lines = content.split(lineBreakMatchingString)
+                const firstLine = lines.shift()
 
-            // console.log(restPartCarriedByOriginalIllegalString)
-            // console.log('-'.repeat(79))
+                restPartCarriedByOriginalIllegalString = lines.join(lineBreakMatchingString)
 
-            decidedContent = firstLine
-            decidedCloseQuoteSign = '\n'
+                // console.log(restPartCarriedByOriginalIllegalString)
+                // console.log('-'.repeat(79))
+
+                decidedContent = firstLine
+                decidedCloseQuoteSign = lineBreakMatchingString
+            }
         }
 
         const isEmptyString = !decidedContent

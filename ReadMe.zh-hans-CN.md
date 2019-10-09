@@ -221,6 +221,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         },
 
         manipulationsOverHTML: {
+            shouldNotReplaceLineBreaksInCodeTagsWithBrTags: false,
             shouldNotInsertBackToTopAnchor: false,
             shouldNotUseInternalCSSThemingFiles: false,
             shouldUseUnminifiedVersionOfInternalCSS: false,

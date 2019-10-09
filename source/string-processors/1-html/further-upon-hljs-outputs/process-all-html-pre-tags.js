@@ -9,8 +9,12 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
 
 
-module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
+module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, options = {}) {
     const errorContext = 'processAllContentsOfAllHTMLPreTagsOfHTMLString' // eslint-disable-line no-unused-vars
+
+    const {
+        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+    } = options
 
     const rootLevelASTNodes = {
         isRoot: true, // Not used. Maybe use in the future.
@@ -108,9 +112,14 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html) {
     }, [])
 
 
-    astNodesForHTMLCodeTagsWithinAPreTag.forEach(
-        processHTMLStringThatMightContainSubLanguages
-    )
+    astNodesForHTMLCodeTagsWithinAPreTag.forEach(astNodeForOneCodeTag => {
+        processHTMLStringThatMightContainSubLanguages(
+            astNodeForOneCodeTag,
+            {
+                shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+            }
+        )
+    })
 
     return parseASTSubTreeIntoSingleString(rootLevelASTNodes)
 }

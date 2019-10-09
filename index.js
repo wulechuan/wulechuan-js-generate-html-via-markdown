@@ -58,6 +58,7 @@ const generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHT
 
 /**
  * @typedef {object} converterManipulationsOverHTMLOptions
+ * @property {boolean} shouldNotReplaceLineBreaksInCodeTagsWithBrTags
  * @property {boolean} shouldNotInsertBackToTopAnchor
  * @property {boolean} shouldNotUseInternalCSSThemingFiles
  * @property {boolean} shouldUseUnminifiedVersionOfInternalCSS

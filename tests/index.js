@@ -34,6 +34,7 @@ const htmlContent3 = markdownToHTMLConverter(markdownContent, {
     },
 
     manipulationsOverHTML: {
+        shouldNotReplaceLineBreaksInCodeTagsWithBrTags: true,
         shouldNotUseInternalCSSThemingFiles: true,
         htmlTitleString: 'A really simple HTML document',
         htmlTagLanguage: 'en-US',

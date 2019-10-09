@@ -254,6 +254,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         } = conversionOptions
 
         const {
+            shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
             shouldNotInsertBackToTopAnchor,
             shouldNotUseInternalCSSThemingFiles,
             shouldUseUnminifiedVersionOfInternalCSS,
@@ -378,7 +379,10 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
         htmlContentViaMarkDownContent = processAllContentsOfAllPreTagsOfHTMLString(
-            htmlContentViaMarkDownContent
+            htmlContentViaMarkDownContent,
+            {
+                shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+            }
         )
 
         htmlContentViaMarkDownContent = wrapHTMLChiefContentWithAnArticleTag(

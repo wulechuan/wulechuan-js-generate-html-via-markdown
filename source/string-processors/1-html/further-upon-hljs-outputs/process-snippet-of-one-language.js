@@ -106,12 +106,16 @@ function processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(astNodes, hlj
 }
 
 
-module.exports = function processHTMLStringThatMightContainSubLanguages(astNode) {
+module.exports = function processHTMLStringThatMightContainSubLanguages(astNode, options = {}) {
     const errorContext = 'processHTMLStringThatMightContainSubLanguages' // eslint-disable-line no-unused-vars
 
     const {
         codeLanguage,
     } = astNode
+
+    const {
+        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+    } = options
 
     const allASTNodesEachOfOnePureLanguage = []
     const allRestASTNodesMightContainSubLanguages = []
@@ -160,15 +164,26 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode)
         }
     }
 
-    allASTNodesEachOfOnePureLanguage.forEach(processHTMLStringOfOnePureCodeLanguage)
+    allASTNodesEachOfOnePureLanguage.forEach(astNoteForOnePureLanguage => {
+        processHTMLStringOfOnePureCodeLanguage(
+            astNoteForOnePureLanguage,
+            {
+                shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+            }
+        )
+    })
     allRestASTNodesMightContainSubLanguages.forEach(processHTMLStringThatMightContainSubLanguages)
 }
 
 
-function processHTMLStringOfOnePureCodeLanguage(astNode) {
+function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     const errorContext = 'processHTMLStringOfOnePureCodeLanguage' // eslint-disable-line no-unused-vars
 
     const { codeLanguage } = astNode
+
+    const {
+        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+    } = options
 
     const {
         nodesEnclosured: astNodesForComments,
@@ -180,7 +195,10 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
     )
 
     astNodesForComments.forEach(parseOneASTNodeOfCommentIntoHTML)
-    astNodesForNonComments.forEach(processAllLineBreaksAndLeadingWhitespaces)
+
+    if (!shouldNotReplaceLineBreaksInCodeTagsWithBrTags) {
+        astNodesForNonComments.forEach(processAllLineBreaksAndLeadingWhitespaces)
+    }
 
 
 
@@ -292,15 +310,29 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             '<span class="hljs-string">\'', // single quote
             '</span>',
             null,
-            parseOneStringASTNodeIntoHTML
+            astNodeForOneString => {
+                parseOneStringASTNodeIntoHTML(
+                    astNodeForOneString,
+                    {
+                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                    }
+                )
+            }
         )
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
-            '<span class="hljs-string">"', // double quote
+            '<span class="hljs-string">"', // double quotes
             '</span>',
             null,
-            parseOneStringASTNodeIntoHTML
+            astNodeForOneString => {
+                parseOneStringASTNodeIntoHTML(
+                    astNodeForOneString,
+                    {
+                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                    }
+                )
+            }
         )
 
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
@@ -308,7 +340,14 @@ function processHTMLStringOfOnePureCodeLanguage(astNode) {
             '<span class="hljs-string">`', // grave accent quote
             '`</span>',
             null,
-            parseOneStringASTNodeIntoHTML,
+            astNodeForOneString => {
+                parseOneStringASTNodeIntoHTML(
+                    astNodeForOneString,
+                    {
+                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                    }
+                )
+            },
             {
                 splittingResultValidator: content => {
                     const countOfSpans      = (content.match(/<span(\s|$)/g)     || []).length
