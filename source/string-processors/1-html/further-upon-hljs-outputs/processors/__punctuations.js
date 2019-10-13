@@ -65,7 +65,7 @@ const SPECIAL_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
     },
     {
         sign: '!==',
-        signRegExp: '\\!===',
+        signRegExp: '',
         cssClassNames: 'punctuation exclamation-mark-and-double-equal-signs',
     },
     {
@@ -249,10 +249,10 @@ function processExclamationMarks(html, codeLanguage) {
      * The same as the "^".
      */
     html = html.replace(
-        /(^|([^!]))((!!)+)(([^!])|$)/g,
+        /(^|([^!]))((!!)+)(([^!=])|$)/g,
         '$2<span class="punctuation exclamation-marks even-count">$3</span>$6'
     ).replace(
-        /(^|([^!]))!((!!)*)(([^!])|$)/g,
+        /(^|([^!]))!((!!)*)(([^!=])|$)/g,
         '$2<span class="punctuation exclamation-marks odd-count">!$4</span>$6'
     )
 
@@ -285,7 +285,7 @@ function processSpecialPunctuationsString(html , codeLanguage) {
 
 
     html = html.replace(
-        /([^=])==([^=])/g,
+        /([^=!])==([^=])/g,
         '$1<span class="punctuation double-equal-signs">==</span>$2'
     )
 

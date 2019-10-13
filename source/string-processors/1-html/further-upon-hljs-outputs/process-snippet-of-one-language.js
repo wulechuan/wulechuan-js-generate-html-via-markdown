@@ -37,6 +37,7 @@ const parseOneStringASTNodeIntoHTML = require(
 
 const {
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations,
+    parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations,
 } = require(
     './processors/language-css-family'
 )
@@ -380,6 +381,17 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
             astNodesRest,
             'built_in'
         )
+    }
+
+    if (codeLanguageIsOneOf(codeLanguage, [
+        'css',
+        'stylus',
+        'sass',
+        'less',
+    ])) {
+        astNodesRest.forEach(astNode => {
+            parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations(astNode)
+        })
     }
 
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
