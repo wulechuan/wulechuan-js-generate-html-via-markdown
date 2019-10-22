@@ -135,8 +135,9 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-comment.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-regexp.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-string.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
                 './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-css-family.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-html.js',
+                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
             ].forEach(subPath => {
                 clearCacheOfRequiredFile(
                     joinPathOSLocalStyle(thisModuleRootFolderPath, subPath),

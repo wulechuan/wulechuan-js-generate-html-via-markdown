@@ -201,7 +201,7 @@ function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode) {
 
 
 
-function processStandaloneEqualSigns(html, codeLanguage) {
+function processStandaloneEqualSigns(html, /* codeLanguage */) {
     /*
         Find standalone equal signs.
         Should avoid:
@@ -216,27 +216,35 @@ function processStandaloneEqualSigns(html, codeLanguage) {
             ="
             '=
             ='
+            +=
+            -=
+            *=
+            /=
+            %=
      */
 
-    if (codeLanguageIsOneOf(codeLanguage, [
-        'xml',
-        'html',
-    ])) {
-        html = html.replace(
-            /(\s*[^"';])=([^"'&]\s*)/g,
-            '$1<span class="punctuation equal-sign">=</span>$2'
-        )
-    } else {
-        /*
-            TODO: Not perfect.
-            Both =' & =" are allowed inside javascript.
-            But according to regexp below, these two are not processed as expected.
-        */
-        html = html.replace(
-            /\s*([^"';!=+\-*/%&|^~])=([^"'&=>]\s*)/g,
-            '$1<span class="punctuation equal-sign">=</span>$2'
-        )
-    }
+    // if (codeLanguageIsOneOf(codeLanguage, [
+    //     'xml',
+    //     'html',
+    // ])) {
+    //     html = html.replace(
+    //         /(\s*[^"';])=([^"'&]\s*)/g,
+    //         '$1<span class="punctuation equal-sign">=</span>$2'
+    //     )
+
+    //     return html
+    // }
+
+
+    /*
+        TODO: Not perfect.
+        Both =' & =" are allowed inside javascript.
+        But according to regexp below, these two are not processed as expected.
+    */
+    html = html.replace(
+        /(\s*[^"';!=+\-*/%&|^~])=([^"'&=>]\s*)/g,
+        '$1<span class="punctuation equal-sign">=</span>$2'
+    )
 
     return html
 }

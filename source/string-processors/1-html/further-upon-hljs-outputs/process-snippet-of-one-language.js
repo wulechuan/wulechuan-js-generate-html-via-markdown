@@ -43,6 +43,13 @@ const {
 )
 
 
+const {
+    parseAnHTMLSnippetASTNode,
+} = require(
+    './processors/language-html'
+)
+
+
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
     './processors/language-javascript-family'
 )
@@ -130,39 +137,39 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
         astNode.isOfPureCodeLanguage = true
         allASTNodesEachOfOnePureLanguage.push(astNode)
     } else {
-        if (codeLanguageIsOneOf(codeLanguage, [
-            'html',
-            'xml',
-        ])) {
-            let restASTNodes = processASTNodesAndCollectUnprocessedOnes(
-                [ astNode ],
-                '<span class="css">',
-                '</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>',
-                'css',
-                astNode => {
-                    astNode.isOfPureCodeLanguage = true
-                    allASTNodesEachOfOnePureLanguage.push(astNode)
-                },
-                null
-            )
+        // HTML & XML
 
-            restASTNodes = processASTNodesAndCollectUnprocessedOnes(
-                restASTNodes,
-                '<span class="javascript">',
-                '</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>',
-                'javascript',
-                astNode => {
-                    astNode.isOfPureCodeLanguage = true
-                    allASTNodesEachOfOnePureLanguage.push(astNode)
-                },
-                null
-            )
-
-            restASTNodes.forEach(astNode => {
+        // separate css, aka <style></style>s into pure language snippets.
+        let restASTNodes = processASTNodesAndCollectUnprocessedOnes(
+            [ astNode ],
+            '<span class="css">',
+            '</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>',
+            'css',
+            astNode => {
                 astNode.isOfPureCodeLanguage = true
                 allASTNodesEachOfOnePureLanguage.push(astNode)
-            })
-        }
+            },
+            null
+        )
+
+        // separate javascript, aka <script></script>s into pure language snippets.
+        restASTNodes = processASTNodesAndCollectUnprocessedOnes(
+            restASTNodes,
+            '<span class="javascript">',
+            '</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>',
+            'javascript',
+            astNode => {
+                astNode.isOfPureCodeLanguage = true
+                allASTNodesEachOfOnePureLanguage.push(astNode)
+            },
+            null
+        )
+
+        // mark the rest parts of HTML as pure language snippets, they are html.
+        restASTNodes.forEach(astNode => {
+            astNode.isOfPureCodeLanguage = true
+            allASTNodesEachOfOnePureLanguage.push(astNode)
+        })
     }
 
     allASTNodesEachOfOnePureLanguage.forEach(astNoteForOnePureLanguage => {
@@ -297,15 +304,15 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         'sass',
         'less',
     ])) {
-        astNodesRest.forEach(astNode => {
-            parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations(astNode)
-        })
+        astNodesRest.forEach(parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations)
     }
 
-    if (codeLanguageIsNotAnyOf(codeLanguage, [
+    if (codeLanguageIsOneOf(codeLanguage, [
         'xml',
         'html',
     ])) {
+        astNodesRest.forEach(parseAnHTMLSnippetASTNode)
+    } else {
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">\'', // single quote
@@ -389,9 +396,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         'sass',
         'less',
     ])) {
-        astNodesRest.forEach(astNode => {
-            parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations(astNode)
-        })
+        astNodesRest.forEach(parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations)
     }
 
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
@@ -436,10 +441,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     }
 
 
-    astNodesRest.forEach(astNode => {
-        // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
-        parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
-    })
+    // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
+    astNodesRest.forEach(parseVeryCommonPunctuationsInAnASTNodeIntoHTML)
 
 
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
@@ -448,17 +451,13 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         '</span>'
     )
 
-    astNodesRest.forEach(astNode => {
-        parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode, codeLanguage)
-    })
+    astNodesRest.forEach(parseAllRestPunctuationsInAnASTNodeIntoHTML)
 
 
     if (codeLanguageIsOneOf(codeLanguage, [
         'javascript',
         'typescript',
     ])) {
-        astNodesRest.forEach(astNode => {
-            parseJavascriptFamilyStuffsInAnASTNodeIntoHTML(astNode, codeLanguage)
-        })
+        astNodesRest.forEach(parseJavascriptFamilyStuffsInAnASTNodeIntoHTML)
     }
 }
