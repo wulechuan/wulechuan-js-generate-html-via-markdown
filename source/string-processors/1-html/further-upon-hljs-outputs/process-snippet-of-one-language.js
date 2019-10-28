@@ -165,6 +165,20 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
             null
         )
 
+        // separate javascript, aka <script></script>s into pure language snippets.
+        // sometimes, hljs treat javascript as actionscript.
+        restASTNodes = processASTNodesAndCollectUnprocessedOnes(
+            restASTNodes,
+            '<span class="actionscript">',
+            '</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>',
+            'javascript',
+            astNode => {
+                astNode.isOfPureCodeLanguage = true
+                allASTNodesEachOfOnePureLanguage.push(astNode)
+            },
+            null
+        )
+
         // mark the rest parts of HTML as pure language snippets, they are html.
         restASTNodes.forEach(astNode => {
             astNode.isOfPureCodeLanguage = true
