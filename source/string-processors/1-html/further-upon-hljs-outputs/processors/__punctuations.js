@@ -201,7 +201,7 @@ function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode) {
 
 
 
-function processStandaloneEqualSigns(html, /* codeLanguage */) {
+function processStandaloneEqualSigns(html /* , codeLanguage */) {
     /*
         Find standalone equal signs.
         Should avoid:

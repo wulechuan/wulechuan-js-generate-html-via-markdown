@@ -58,11 +58,11 @@ module.exports = {
 
     buildExampleHTMLsOnce: series(
         prepareForBuildingPeerDependencyExamples,
-        buildExampleHTMLsOnce,
+        buildExampleHTMLsOnce
     ),
 
     buildExampleHTMLsAndStartWatching: series(
         prepareForBuildingPeerDependencyExamples,
-        buildExampleHTMLsAndStartWatching,
+        buildExampleHTMLsAndStartWatching
     ),
 }
