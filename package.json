@@ -2,20 +2,19 @@
   "name": "@wulechuan/generate-html-via-markdown",
   "author": "wulechuan <wulechuan@live.com>",
   "license": "WTFPL",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
   "main": "index.js",
   "scripts": {
     "eslint": "eslint    ./.eslintrc.js    ./tests/*.js    ./gulpfile.js/**/*.js    ./source/**/*.js    ./default-options.js    ./core.js    ./index.js",
-    "_testByBuildingPeerDepPackageExamples": "gulp    --silent   buildExamplesOnce",
     "_testWithVerySimpleMarkdowns": "node    ./tests/index.js",
-    "_testAllWithoutLintingWithoutBrowser": "npm  run  _testByBuildingPeerDepPackageExamples    &&    npm  run  _testWithVerySimpleMarkdowns",
-    "examples": "npm  run  eslint    &&    npm    run  _testByBuildingPeerDepPackageExamples",
-    "test": "npm      run  eslint    &&    npm    run  _testAllWithoutLintingWithoutBrowser",
-    "start": "npm     run  eslint    &&    gulp  --silent",
-    "start2": "npm    run  eslint    &&    gulp",
-    "beforeGitCommit": "npm    test",
-    "prepublishOnly": "npm     test"
+    "_testWithDepPackageExamples": "gulp    --silent   buildExamplesOnce",
+    "_testAllWithoutLintingWithoutBrowser": "npm  run  _testWithDepPackageExamples    &&    npm  run  _testWithVerySimpleMarkdowns",
+    "test": "npm    run  eslint    &&    npm  run  _testAllWithoutLintingWithoutBrowser",
+    "start": "npm   run  eslint    &&    gulp  --silent",
+    "start2": "npm  run  eslint    &&    gulp",
+    "beforeGitCommit": "npm  test",
+    "prepublishOnly": "npm   test"
   },
   "keywords": [
     "markdown",
@@ -30,7 +29,8 @@
   ],
   "directories": {
     "source": "source",
-    "test": "tests"
+    "test": "tests",
+    "doc": "documents"
   },
   "homepage": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown#readme",
   "repository": {
@@ -39,9 +39,6 @@
   },
   "bugs": {
     "url": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown/issues"
-  },
-  "peerDependencies": {
-    "@wulechuan/css-stylus-markdown-themes": ">= 6.4.0"
   },
   "dependencies": {
     "@wulechuan/meaningful-error-messages": "^0.1.4",

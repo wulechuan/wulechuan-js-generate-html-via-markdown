@@ -3,7 +3,7 @@ const outputRootFolderSubPath = 'tests/output/examples-from-peer-dependency'
 module.exports = {
     buildingHTMLs: {
         descriptionOfInputsOfCoreTask: 'Example HTMLs',
-        sourceFilesFolderSubPathInPeerDepPackage: 'docs/examples/source-markdown-files',
+        sourceFilesFolderSubPathInPeerDepPackage: 'documents/examples/source-markdown-files',
         sourceFilesRelativeGlobsInPeerDepPackage: [ '**/*.md' ],
         outputRootFolderSubPath,
         relativeGlobsOfAllPossibleOutputs: [ '**/*.html' ],
@@ -16,7 +16,7 @@ module.exports = {
 
     copyingMarkdownJustForReferencingOfHTMLs: {
         descriptionOfInputsOfCoreTask: 'Peer dependency example Markdowns',
-        sourceFilesFolderSubPathInPeerDepPackage: 'docs/examples/source-markdown-files',
+        sourceFilesFolderSubPathInPeerDepPackage: 'documents/examples/source-markdown-files',
         sourceFilesRelativeGlobsInPeerDepPackage: [ '**/*.md' ],
         outputRootFolderSubPath,
         relativeGlobsOfAllPossibleOutputs: [ '**/*.md' ],
