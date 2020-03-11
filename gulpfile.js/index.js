@@ -1,14 +1,14 @@
 const {
     cleanAllOldOuputs,
-    buildExampleHTMLsOnce,
-    buildExampleHTMLsAndStartWatching,
+    buildEverythingOnce,
+    watchEverything,
 } = require(
     './tasks/build-peer-dependency-examples'
 )
 
 const cleanAll          = cleanAllOldOuputs
-const buildExamplesOnce = buildExampleHTMLsOnce
-const buildAndWatch     = buildExampleHTMLsAndStartWatching
+const buildExamplesOnce = buildEverythingOnce
+const buildAndWatch     = watchEverything
 
 module.exports = {
     cleanAll,

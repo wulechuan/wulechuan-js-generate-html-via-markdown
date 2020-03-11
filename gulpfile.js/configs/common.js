@@ -8,8 +8,6 @@ const thisModuleRootFolderPath = path.dirname(
     require.resolve('../../package.json')
 )
 
-
-
 module.exports = {
     peerDepThemingNPMPackageRootPath,
     thisModuleRootFolderPath,

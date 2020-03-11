@@ -51,7 +51,16 @@ const taskCycleForMarkdownConversions = createATaskCycle({
         shouldNotOutputCompressedVersion: true,
     },
 
-    firstPipeForProcessingSources: createAPipeForConvertingMarkdownsIntoHTMLs({}),
+    firstPipeForProcessingSources: createAPipeForConvertingMarkdownsIntoHTMLs({
+        manipulationsOverHTML: {
+            desiredReplacementsInHTML: [
+                {
+                    from: /\.\/illustrates\//g,
+                    to:   '../../../node_modules/@wulechuan/css-stylus-markdown-themes/documents/examples/source-markdown-files/illustrates/',
+                },
+            ],
+        },
+    }),
 })
 
 module.exports = taskCycleForMarkdownConversions
