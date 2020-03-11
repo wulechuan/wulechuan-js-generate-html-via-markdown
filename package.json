@@ -43,7 +43,7 @@
   "dependencies": {
     "@wulechuan/meaningful-error-messages": "^0.1.4",
     "chalk": "^2.4.2",
-    "markdown-it": "^9.1.0",
+    "markdown-it": "^10.0.0",
     "markdown-it-anchor": "^5.2.5",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-highlightjs": "^3.1.0",
