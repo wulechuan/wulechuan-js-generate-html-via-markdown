@@ -100,13 +100,24 @@ function processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(astNodes, hlj
         null,
         astNode => {
             const { content } = astNode
-            if (!content.match(/["'\s.<>[\]`~!@#$%^&*()+:;/?\\]/)) {
-                astNode.openMark = `<span class="hljs-${hljsTokenName} ${content}">`
-            } else {
-                console.log(`WARNING: content of an "${
+            let additionalCSSClassName = content
+                .replace(/["'\s.<>[\]`~!#$%^&*()+:;/?\\]/g, '_')
+
+            const shouldLogTip = additionalCSSClassName !== content
+
+            additionalCSSClassName = additionalCSSClassName
+                .replace(/^@/g, 'at_')
+                .replace(/@/g, '_at_')
+
+            astNode.openMark = `<span class="hljs-${hljsTokenName} ${additionalCSSClassName}">`
+
+            if (shouldLogTip) {
+                console.log(`@wulechuan/generate-html-via-markdown:\nCSS class names of tag "${
                     chalk.red(`.hljs-${hljsTokenName}`)
-                }" has been modified into:\n    "${
-                    chalk.yellow(content)
+                }" with content\n    "${
+                    chalk.green(content)
+                }"\nhave been adjusted to:\n    "${
+                    chalk.yellow(`.hljs-${hljsTokenName}.${additionalCSSClassName}`)
                 }"\n`)
             }
         }
