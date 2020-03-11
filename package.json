@@ -2,7 +2,7 @@
   "name": "@wulechuan/generate-html-via-markdown",
   "author": "wulechuan <wulechuan@live.com>",
   "license": "WTFPL",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
   "main": "index.js",
   "scripts": {
@@ -44,14 +44,14 @@
     "@wulechuan/meaningful-error-messages": "^0.1.4",
     "chalk": "^2.4.2",
     "markdown-it": "^9.1.0",
-    "markdown-it-anchor": "^5.2.4",
+    "markdown-it-anchor": "^5.2.5",
     "markdown-it-checkbox": "^1.1.0",
-    "markdown-it-highlightjs": "^3.0.0",
-    "markdown-it-toc-done-right": "^4.0.2"
+    "markdown-it-highlightjs": "^3.1.0",
+    "markdown-it-toc-done-right": "^4.1.0"
   },
   "devDependencies": {
-    "@wulechuan/css-stylus-markdown-themes": "^6.4.0",
-    "@wulechuan/gulp-classical-task-cycle": "^0.2.2",
+    "@wulechuan/css-stylus-markdown-themes": "^6.4.5",
+    "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-pipe": "^1.0.4",

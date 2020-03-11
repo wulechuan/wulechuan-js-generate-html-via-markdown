@@ -47,7 +47,7 @@ const htmlContent3 = markdownToHTMLConverter(markdownContent, {
 })
 
 const readMeHTMLContent = markdownToHTMLConverter(
-    readFileSync('./ReadMe.zh-hans-CN.md').toString(),
+    readFileSync('./ReadMe.md').toString(),
     {
         manipulationsOverHTML: {
             shouldUseUnminifiedVersionOfInternalCSS: false,
@@ -72,4 +72,4 @@ writeFileSync(joinPathPOSIX(testsOutputPath2, 'test1.html'), htmlContent1)
 writeFileSync(joinPathPOSIX(testsOutputPath2, 'test2.html'), htmlContent2)
 writeFileSync(joinPathPOSIX(testsOutputPath2, 'test3.html'), htmlContent3)
 
-writeFileSync(joinPathPOSIX(testsOutputPath1, 'readme.zh-hans-cn.html'), readMeHTMLContent)
+writeFileSync(joinPathPOSIX(testsOutputPath1, 'readme.html'), readMeHTMLContent)
