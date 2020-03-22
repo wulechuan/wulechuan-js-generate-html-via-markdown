@@ -1,4 +1,5 @@
 .circleci
+.vs/**/*
 .vscode
 documents
 gulpfile.js
