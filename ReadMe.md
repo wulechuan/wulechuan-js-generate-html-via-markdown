@@ -32,15 +32,15 @@
 
 本工具借助 [markdownIt](https://www.npmjs.com/package/markdown-it) 生态的工具集，可将一段 MarkDown 内容转化成对应的 HTML 内容。本工具还在输出的完整 HTML 内容中，内嵌了精美的 CSS 样式集和 Javascript 代码。**故，当你借助本工具来制作你的文章的可分发版本时，单一的完整 HTML 文档即可独立运转。**
 
-> 其中的 Javascript 代码用于控制【文章纲要列表】之行为。
+> 其中的 Javascript 代码用于控制【文章目录】（亦称【文章纲要】，即所谓 TOC）之行为。
 
 > 尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。
 
 **简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。**
 
-不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题，宽窄屏全自适应排版。包含文章纲要列表，“返回顶部”按钮（实则链接）等等。
+不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题，宽窄屏全自适应排版。包含【文章纲要】、“返回顶部”按钮（实则链接）等等。
 
-你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从文章纲要列表到“返回顶部”按钮。甚至控制内嵌 CSS 和 Javascript 是否为压缩版本，亦有两个专门的选项。
+你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从【文章纲要】到“返回顶部”按钮。甚至控制内嵌 CSS 和 Javascript 是否为压缩版本，亦有两个专门的选项。
 
 
 ### 内嵌样式
@@ -138,10 +138,10 @@ const htmlContent = markdownToHTMLConverter(markdownContent, {
 
     absolutePathsOfExtraFilesToEmbedIntoHTML: [
         // 2) 引入你自己设计的 CSS 文件。
-        '/d/my/work/folder/some/theme/my-splendid-theme.css',
+        '/d/your/work/folder/some/theme/your-splendid-theme.css',
 
         // 3) 或许你也须引入你自己的 Javascript 文件。
-        '/d/my/work/folder/some/theme/my-splendid-theme.actions.js',
+        '/d/your/work/folder/some/theme/your-splendid-theme.actions.js',
     ],
 })
 
@@ -255,13 +255,21 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                     to:   <string>,
                 },
 
-                例 1：另所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
+
+
+                例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
                 {
-                    from: /\s+href="([^#])/gi,
-                    to: ' target="_blank" href="$1',
+                    from: /\s+href="([^#\./].+)/gi,
+                    to:   ' target="_blank" href="$1',
                 },
 
-                例 2：批量转换链接地址。
+                例 2：批量令原本指向另一些 Markdown 文件的链接地址就，改为指向对应的 HTML 文件。
+                {
+                    from: /\s+href="(.+)\.md(#.*)?"/gi,
+                    to:   ' href="$1.html$2"',
+                },
+
+                例 3：批量转换链接地址。
                 {
                     from: /\s+href="\.\/course-examples\//gi,
                     to: ' href="../public/assets/course-examples/',

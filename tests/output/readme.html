@@ -28,14 +28,14 @@
 <h2 id="%E7%AE%80%E4%BB%8B"><a class="header-anchor" href="#%E7%AE%80%E4%BB%8B">§</a> 简介</h2>
 <p>本工具借助 <a href="https://www.npmjs.com/package/markdown-it">markdownIt</a> 生态的工具集，可将一段 MarkDown 内容转化成对应的 HTML 内容。本工具还在输出的完整 HTML 内容中，内嵌了精美的 CSS 样式集和 Javascript 代码。<strong>故，当你借助本工具来制作你的文章的可分发版本时，单一的完整 HTML 文档即可独立运转。</strong></p>
 <blockquote>
-<p>其中的 Javascript 代码用于控制【文章纲要列表】之行为。</p>
+<p>其中的 Javascript 代码用于控制【文章目录】（亦称【文章纲要】，即所谓 TOC）之行为。</p>
 </blockquote>
 <blockquote>
 <p>尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。</p>
 </blockquote>
 <p><strong>简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。</strong></p>
-<p>不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题，宽窄屏全自适应排版。包含文章纲要列表，“返回顶部”按钮（实则链接）等等。</p>
-<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从文章纲要列表到“返回顶部”按钮。甚至控制内嵌 CSS 和 Javascript 是否为压缩版本，亦有两个专门的选项。</p>
+<p>不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题，宽窄屏全自适应排版。包含【文章纲要】、“返回顶部”按钮（实则链接）等等。</p>
+<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从【文章纲要】到“返回顶部”按钮。甚至控制内嵌 CSS 和 Javascript 是否为压缩版本，亦有两个专门的选项。</p>
 <h3 id="%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"><a class="header-anchor" href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">§</a> 内嵌样式</h3>
 <p>内嵌样式来源于本人创建和维护的另一项目，即《<a href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
 <p>其文档中亦有若干截图，直观展示一篇文档在应用两种默认主题样式（一浅色、一深色）后之样貌。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md">该文档</a>。</p>
@@ -107,10 +107,10 @@
 ><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">absolutePathsOfExtraFilesToEmbedIntoHTML</span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">// 2) 引入你自己设计的 CSS 文件。</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">/d/my/work/folder/some/theme/my-splendid-theme.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">/d/your/work/folder/some/theme/your-splendid-theme.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">// 3) 或许你也须引入你自己的 Javascript 文件。</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">/d/my/work/folder/some/theme/my-splendid-theme.actions.js</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">/d/your/work/folder/some/theme/your-splendid-theme.actions.js</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation bracket close-bracket">]</span><span class="punctuation comma">,</span><br
 ><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
@@ -208,13 +208,21 @@
 ><span class="inline-pre-whitespaces indentation">                </span>to:   &lt;string&gt;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span>例 1：另所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。<br
+><br
+><br
+><span class="inline-pre-whitespaces indentation">            </span>例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="([^#])/gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to: ' target="_blank" href="$1',<br
+><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="([^#\./].+)/gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>to:   ' target="_blank" href="$1',<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span>例 2：批量转换链接地址。<br
+><span class="inline-pre-whitespaces indentation">            </span>例 2：批量令原本指向另一些 Markdown 文件的链接地址就，改为指向对应的 HTML 文件。<br
+><span class="inline-pre-whitespaces indentation">            </span>{<br
+><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="(.+)\.md(#.*)?"/gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>to:   ' href="$1.html$2"',<br
+><span class="inline-pre-whitespaces indentation">            </span>},<br
+><br
+><span class="inline-pre-whitespaces indentation">            </span>例 3：批量转换链接地址。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
 ><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="\.\/course-examples\//gi,<br
 ><span class="inline-pre-whitespaces indentation">                </span>to: ' href="../public/assets/course-examples/',<br

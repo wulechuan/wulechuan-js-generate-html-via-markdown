@@ -139,10 +139,10 @@ const htmlContent = markdownToHTMLConverter(markdownContent, {
 
     absolutePathsOfExtraFilesToEmbedIntoHTML: [
         // 2) Use your own CSS
-        '/d/my/work/folder/some/theme/my-splendid-theme.css',
+        '/d/your/work/folder/some/theme/your-splendid-theme.css',
 
         // 3) [Optional] Maybe you also need to use your own js
-        '/d/my/work/folder/some/theme/my-splendid-theme.actions.js',
+        '/d/your/work/folder/some/theme/your-splendid-theme.actions.js',
     ],
 })
 
@@ -261,8 +261,16 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                 For example:
                 To make opening methods of all external links to be "_blank".
                 {
-                    from: /\s+href="([^#])/gi,
-                    to: ' target="_blank" href="$1',
+                    from: /\s+href="([^#\./].+)/gi,
+                    to:   ' target="_blank" href="$1',
+                },
+
+                Example 2:
+                To change some hrefs to point to html files
+                which were pointing to markdown files.
+                {
+                    from: /\s+href="(.+)\.md(#.*)?"/gi,
+                    to:   ' href="$1.html$2"',
                 },
 
                 Another example:
