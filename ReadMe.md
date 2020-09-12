@@ -6,7 +6,7 @@
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./ReadMe.en-US.md)
+- [English version of this ReadMe](./documents/ReadMes/ReadMe.en-US.md)
 
 
 
@@ -30,40 +30,46 @@
 
 ## 简介
 
-本工具借助 [markdownIt](https://www.npmjs.com/package/markdown-it) 生态的工具集，可将一段 MarkDown 内容转化成对应的 HTML 内容。本工具还在输出的完整 HTML 内容中，内嵌了精美的 CSS 样式集和 Javascript 代码。**故，当你借助本工具来制作你的文章的可分发版本时，单一的完整 HTML 文档即可独立运转。**
+本工具借助 [markdownIt](https://www.npmjs.com/package/markdown-it) 生态的工具集，可将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。
 
-> 其中的 Javascript 代码用于控制【文章目录】（亦称【文章纲要】，即所谓 TOC）之行为。
+当采用完全默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。**故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。**
 
-> 尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。
+> - HTML 中包含【文章目录】、“返回顶部”按钮（实则链接）等方便实用的功能。
+>
+>   > 【文章目录】，亦称【文章纲要】，即外国话所谓 TOC。
+>
+> - 其中的 Javascript 代码用于控制【文章目录】之行为。
+> - 其内嵌样式另文章排版完全自动适应各型宽窄屏幕尺寸。
+> - 于最终产生的单一 HTML 内容，尽管样式和脚本均已完整包含其中，但图片、视频文件仍为该 HTML 文档的外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
 
-**简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。**
+**简而言之，对本工具输入一个 MarkDown 字符串，其产生一个 HTML 字符串。**
 
-不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题，宽窄屏全自适应排版。包含【文章纲要】、“返回顶部”按钮（实则链接）等等。
+不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题。
 
-你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从【文章纲要】到“返回顶部”按钮。甚至控制内嵌 CSS 和 Javascript 是否为压缩版本，亦有两个专门的选项。
+你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、“返回顶部”按钮，到是否采用来自您自定义 CSS 文件中的 CSS 内容替换掉默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。
 
 
 ### 内嵌样式
 
-内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。
+产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。
 
-其文档中亦有若干截图，直观展示一篇文档在应用两种默认主题样式（一浅色、一深色）后之样貌。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md)。
+上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md)。
 
 <!-- 
 > 重要！
 >
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 css 样式项目（称乙程序）的。
+> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 CSS 样式项目（称乙程序）的。
 > 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！ -->
 
 
 ### 用于 Gulpjs 生态的适配版本
 
-本人还另行构建和维护了一个 npm 项目，名为《[@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html)》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 [Gulpjs](https://gulpjs.com) 生态中的工作流的工具软件。甲软件内部会调用本软件，实现从 Markdown 文件到 HTML 文件的批量转换。
+本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《[@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html)》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 [Gulpjs](https://gulpjs.com) 工作流的工具软件。甲软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。**注意，本软件旨在从字符串生成新字符串，而甲软件旨在从文件生成新文件。**
 
 
 ### 用于命令行环境的工具
 
-本人还另行构建和维护了一个 npm 项目，名为《[@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli)》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中异常方便的批量将 Markdown 文件转换成对应的 HTML 文件。一软件内部会调用本软件之功能。
+本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《[@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli)》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中批量将 Markdown 文件转换成对应的 HTML 文件。乙软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。**注意，本软件旨在从字符串生成新字符串，而乙软件旨在从文件生成新文件。** 乙软件异常方便，推荐诸君一试。
 
 
 ## 用法
@@ -85,7 +91,7 @@ const markdownContent = '# 测试文章\n\n## 此为二级标题\n\n### 此为�
 
 ### 示例 2
 
-输出一个“纯净”的 HTML 文档字符串。无 CSS、无纲要列表、无“返回顶部”按钮（实则一个链接）、无 Javascript，什么都没有。
+输出一个“纯净”的 HTML 文档字符串。无 CSS、无【文章目录】、无“返回顶部”按钮、无 Javascript。总之，什么都没有。
 
 ```js
 const {
@@ -119,7 +125,7 @@ writeFileSync('我的文章.html', htmlContent)
 
 ### 示例 3
 
-采用你自己设计的 CSS 文件，嵌入输出 HTML 内容中，控制其样式。
+采用来自你自己设计的 CSS 文件中的 CSS 代码，取代本软件默认的 CSS 代码，嵌入输出的 HTML 内容中，以控制该 HTML 之样貌。
 
 ```js
 const {
@@ -216,8 +222,8 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                     则**不会**为文章中的任何 <h1> 构建对应的纲要列表项。
                     而从第二级标题开始的所有标题，即 <h2/>、<h3/>……等，均会构建对应纲要列表项。
 
-                另，我所设计的默认 CSS，会【故意】隐藏较深层的纲要列表项。即，这些列表项的 HTML
-                标签明明存在，但被 CSS 强行隐藏不见。
+                另，我所设计的默认 CSS，在默认配置下会【故意】隐藏较深层的纲要列表项。
+                即，这些列表项的 HTML 标签明明存在，但被 CSS 强行隐藏不见。
             */
             articleTOCBuildingHeadingLevelStartsFrom: 2, // 注意：我令其默认取 2。
             articleTOCListTagNameIsUL: false,
@@ -309,9 +315,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 一个字符串，内容为一篇完整的 HTML 文档，包含 CSS 和 Javascript。不需任何外部链接的样式或脚本文件。
 
-> 尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。
+> - 于最终产生的单一 HTML 内容，尽管样式和脚本均已完整包含其中，但图片、视频文件仍为该 HTML 文档的外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
 
-> 千万注意！改返回值是一个字符串，**而不是**一个文件。欲将该字符串写入磁盘永久保存，请在你自己的脚本中另行调用诸如 `writeFile` 或 `writeFileSync` 的函数。另，文件扩展名应为 `html`。
+> 千万注意！该返回值是一个字符串，**而不是**一个文件。欲将该字符串写入磁盘永久保存，请在你自己的脚本中另行调用诸如 `writeFile` 或 `writeFileSync` 的函数。另，文件扩展名应为 `html`。
 
 
 

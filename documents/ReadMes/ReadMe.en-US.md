@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="../../node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 # Wulechuan's Tool for Generating HTMLs via Markdowns
 
 ## Multilingual Editions of this Article
 
-- [简体中文版文档](./ReadMe.md)
+- [简体中文版文档](../../ReadMe.md)
 
 
 

@@ -14,7 +14,7 @@
 <h1 id="%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7"><a class="header-anchor" href="#%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具</h1>
 <h2 id="multilingual-editions-of-this-article"><a class="header-anchor" href="#multilingual-editions-of-this-article">§</a> Multilingual Editions of this Article</h2>
 <ul>
-<li><a href="./ReadMe.en-US.md">English version of this ReadMe</a></li>
+<li><a href="./documents/ReadMes/ReadMe.en-US.md">English version of this ReadMe</a></li>
 </ul>
 <h2 id="npm-%E9%A1%B5"><a class="header-anchor" href="#npm-%E9%A1%B5">§</a> NPM 页</h2>
 <dl>
@@ -26,28 +26,42 @@
 <dd><p>南昌吴乐川</p></dd>
 </dl>
 <h2 id="%E7%AE%80%E4%BB%8B"><a class="header-anchor" href="#%E7%AE%80%E4%BB%8B">§</a> 简介</h2>
-<p>本工具借助 <a href="https://www.npmjs.com/package/markdown-it">markdownIt</a> 生态的工具集，可将一段 MarkDown 内容转化成对应的 HTML 内容。本工具还在输出的完整 HTML 内容中，内嵌了精美的 CSS 样式集和 Javascript 代码。<strong>故，当你借助本工具来制作你的文章的可分发版本时，单一的完整 HTML 文档即可独立运转。</strong></p>
+<p>本工具借助 <a href="https://www.npmjs.com/package/markdown-it">markdownIt</a> 生态的工具集，可将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。</p>
+<p>当采用完全默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。<strong>故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。</strong></p>
 <blockquote>
-<p>其中的 Javascript 代码用于控制【文章目录】（亦称【文章纲要】，即所谓 TOC）之行为。</p>
-</blockquote>
+<ul>
+<li>
+<p>HTML 中包含【文章目录】、“返回顶部”按钮（实则链接）等方便实用的功能。</p>
 <blockquote>
-<p>尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。</p>
+<p>【文章目录】，亦称【文章纲要】，即外国话所谓 TOC。</p>
 </blockquote>
-<p><strong>简而言之，输入一个 MarkDown 字符串，得到一个 HTML 字符串。</strong></p>
-<p>不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题，宽窄屏全自适应排版。包含【文章纲要】、“返回顶部”按钮（实则链接）等等。</p>
-<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从【文章纲要】到“返回顶部”按钮。甚至控制内嵌 CSS 和 Javascript 是否为压缩版本，亦有两个专门的选项。</p>
+</li>
+<li>
+<p>其中的 Javascript 代码用于控制【文章目录】之行为。</p>
+</li>
+<li>
+<p>其内嵌样式另文章排版完全自动适应各型宽窄屏幕尺寸。</p>
+</li>
+<li>
+<p>于最终产生的单一 HTML 内容，尽管样式和脚本均已完整包含其中，但图片、视频文件仍为该 HTML 文档的外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。</p>
+</li>
+</ul>
+</blockquote>
+<p><strong>简而言之，对本工具输入一个 MarkDown 字符串，其产生一个 HTML 字符串。</strong></p>
+<p>不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题。</p>
+<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、“返回顶部”按钮，到是否采用来自您自定义 CSS 文件中的 CSS 内容替换掉默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。</p>
 <h3 id="%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"><a class="header-anchor" href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">§</a> 内嵌样式</h3>
-<p>内嵌样式来源于本人创建和维护的另一项目，即《<a href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
-<p>其文档中亦有若干截图，直观展示一篇文档在应用两种默认主题样式（一浅色、一深色）后之样貌。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md">该文档</a>。</p>
+<p>产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《<a href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
+<p>上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md">该文档</a>。</p>
 <!-- 
 > 重要！
 >
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 css 样式项目（称乙程序）的。
+> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 CSS 样式项目（称乙程序）的。
 > 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！ -->
 <h3 id="%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"><a class="header-anchor" href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC">§</a> 用于 Gulpjs 生态的适配版本</h3>
-<p>本人还另行构建和维护了一个 npm 项目，名为《<a href="https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html">@wulechuan/gulp-markdown-to-html</a>》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 <a href="https://gulpjs.com">Gulpjs</a> 生态中的工作流的工具软件。甲软件内部会调用本软件，实现从 Markdown 文件到 HTML 文件的批量转换。</p>
+<p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a href="https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html">@wulechuan/gulp-markdown-to-html</a>》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 <a href="https://gulpjs.com">Gulpjs</a> 工作流的工具软件。甲软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而甲软件旨在从文件生成新文件。</strong></p>
 <h3 id="%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"><a class="header-anchor" href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 用于命令行环境的工具</h3>
-<p>本人还另行构建和维护了一个 npm 项目，名为《<a href="https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli">@wulechuan/markdown-to-html-via-cli</a>》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中异常方便的批量将 Markdown 文件转换成对应的 HTML 文件。一软件内部会调用本软件之功能。</p>
+<p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a href="https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli">@wulechuan/markdown-to-html-via-cli</a>》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中批量将 Markdown 文件转换成对应的 HTML 文件。乙软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而乙软件旨在从文件生成新文件。</strong> 乙软件异常方便，推荐诸君一试。</p>
 <h2 id="%E7%94%A8%E6%B3%95"><a class="header-anchor" href="#%E7%94%A8%E6%B3%95">§</a> 用法</h2>
 <h3 id="%E7%A4%BA%E4%BE%8B-1"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-1">§</a> 示例 1</h3>
 <p>不需要带任何参数。输出完整的 HTML 内容，一切都自动包含其中。</p>
@@ -60,7 +74,7 @@
 ><span class="hljs-comment">/********************************************************************/</span><br
 ></code></pre>
 <h3 id="%E7%A4%BA%E4%BE%8B-2"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-2">§</a> 示例 2</h3>
-<p>输出一个“纯净”的 HTML 文档字符串。无 CSS、无纲要列表、无“返回顶部”按钮（实则一个链接）、无 Javascript，什么都没有。</p>
+<p>输出一个“纯净”的 HTML 文档字符串。无 CSS、无【文章目录】、无“返回顶部”按钮、无 Javascript。总之，什么都没有。</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>readFileSync<span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>writeFileSync<span class="punctuation comma">,</span><br
@@ -90,7 +104,7 @@
 ></span>writeFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">我的文章.html</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span> htmlContent<span class="punctuation parenthesis close-parenthesis">)</span><br
 ></code></pre>
 <h3 id="%E7%A4%BA%E4%BE%8B-3"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-3">§</a> 示例 3</h3>
-<p>采用你自己设计的 CSS 文件，嵌入输出 HTML 内容中，控制其样式。</p>
+<p>采用来自你自己设计的 CSS 文件中的 CSS 代码，取代本软件默认的 CSS 代码，嵌入输出的 HTML 内容中，以控制该 HTML 之样貌。</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>readFileSync<span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>writeFileSync<span class="punctuation comma">,</span><br
@@ -169,8 +183,8 @@
 ><span class="inline-pre-whitespaces indentation">                </span>则**不会**为文章中的任何 &lt;h1&gt; 构建对应的纲要列表项。<br
 ><span class="inline-pre-whitespaces indentation">                </span>而从第二级标题开始的所有标题，即 &lt;h2/&gt;、&lt;h3/&gt;……等，均会构建对应纲要列表项。<br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span>另，我所设计的默认 CSS，会【故意】隐藏较深层的纲要列表项。即，这些列表项的 HTML<br
-><span class="inline-pre-whitespaces indentation">            </span>标签明明存在，但被 CSS 强行隐藏不见。<br
+><span class="inline-pre-whitespaces indentation">            </span>另，我所设计的默认 CSS，在默认配置下会【故意】隐藏较深层的纲要列表项。<br
+><span class="inline-pre-whitespaces indentation">            </span>即，这些列表项的 HTML 标签明明存在，但被 CSS 强行隐藏不见。<br
 ><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">articleTOCBuildingHeadingLevelStartsFrom</span><span class="punctuation colon">:</span> <span class="hljs-number">2</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 注意：我令其默认取 2。</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">articleTOCListTagNameIsUL</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
@@ -261,10 +275,12 @@
 <h4 id="%E8%BF%94%E5%9B%9E%E5%80%BC"><a class="header-anchor" href="#%E8%BF%94%E5%9B%9E%E5%80%BC">§</a> 返回值</h4>
 <p>一个字符串，内容为一篇完整的 HTML 文档，包含 CSS 和 Javascript。不需任何外部链接的样式或脚本文件。</p>
 <blockquote>
-<p>尽管样式和脚本均已完整包含其中，但图片文件仍为改 HTML 文档的外部资源，须正确对应引用路径。</p>
+<ul>
+<li>于最终产生的单一 HTML 内容，尽管样式和脚本均已完整包含其中，但图片、视频文件仍为该 HTML 文档的外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。</li>
+</ul>
 </blockquote>
 <blockquote>
-<p>千万注意！改返回值是一个字符串，<strong>而不是</strong>一个文件。欲将该字符串写入磁盘永久保存，请在你自己的脚本中另行调用诸如 <code>writeFile</code> 或 <code>writeFileSync</code> 的函数。另，文件扩展名应为 <code>html</code>。</p>
+<p>千万注意！该返回值是一个字符串，<strong>而不是</strong>一个文件。欲将该字符串写入磁盘永久保存，请在你自己的脚本中另行调用诸如 <code>writeFile</code> 或 <code>writeFileSync</code> 的函数。另，文件扩展名应为 <code>html</code>。</p>
 </blockquote>
 <h2 id="%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"><a class="header-anchor" href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92">§</a> 未来计划</h2>
 <p>暂无。</p>
