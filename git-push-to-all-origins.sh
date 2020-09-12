@@ -36,7 +36,7 @@ fi
 
 
 
-if false; then
+if true; then
     echo
     echo -e "--- \e[33mGitHub\e[0m -------------------------"
     echo
