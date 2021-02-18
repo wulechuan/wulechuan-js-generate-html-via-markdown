@@ -3,10 +3,12 @@
 
 # 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具
 
+> 中国人，特别是汉族人，理应坚持广泛、规范地使用汉语。凡非必要之情形，不说外国话，不用外国字。此乃天经地义！支持少数民族坚持采用自己民族的传统语言。然，凡中国人，皆应会用汉语、积极使用汉语，此乃中华各民族之大一统之必由。
+
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./documents/ReadMes/ReadMe.en-US.md)
+- [English version of this ReadMe](./文档/说明书/en-US/ReadMe.md)
 
 
 
@@ -53,7 +55,7 @@
 
 产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。
 
-上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md)。
+上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)。
 
 <!-- 
 > 重要！
@@ -320,7 +322,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 > 千万注意！该返回值是一个字符串，**而不是**一个文件。欲将该字符串写入磁盘永久保存，请在你自己的脚本中另行调用诸如 `writeFile` 或 `writeFileSync` 的函数。另，文件扩展名应为 `html`。
 
 
+## 本项目已知的功能缺陷
 
+见`文档/本项目已知的功能缺陷/`。
 
 
 ## 未来计划

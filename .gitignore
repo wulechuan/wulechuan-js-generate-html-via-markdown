@@ -1,5 +1,7 @@
 .vs/**/*
 node_modules
+temp
+
 tests/output/**/*.md
 tests/output/**/*.png
 tests/output/**/*.jpg

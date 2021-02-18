@@ -12,9 +12,12 @@
     <article class="markdown-article">
 <link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 <h1 id="%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7"><a class="header-anchor" href="#%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具</h1>
+<blockquote>
+<p>中国人，特别是汉族人，理应坚持广泛、规范地使用汉语。凡非必要之情形，不说外国话，不用外国字。此乃天经地义！支持少数民族坚持采用自己民族的传统语言。然，凡中国人，皆应会用汉语、积极使用汉语，此乃中华各民族之大一统之必由。</p>
+</blockquote>
 <h2 id="multilingual-editions-of-this-article"><a class="header-anchor" href="#multilingual-editions-of-this-article">§</a> Multilingual Editions of this Article</h2>
 <ul>
-<li><a href="./documents/ReadMes/ReadMe.en-US.md">English version of this ReadMe</a></li>
+<li><a href="./%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/en-US/ReadMe.md">English version of this ReadMe</a></li>
 </ul>
 <h2 id="npm-%E9%A1%B5"><a class="header-anchor" href="#npm-%E9%A1%B5">§</a> NPM 页</h2>
 <dl>
@@ -52,7 +55,7 @@
 <p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、“返回顶部”按钮，到是否采用来自您自定义 CSS 文件中的 CSS 内容替换掉默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。</p>
 <h3 id="%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"><a class="header-anchor" href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">§</a> 内嵌样式</h3>
 <p>产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《<a href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
-<p>上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/documents/refs/zh-hans-CN/application-examples.md">该文档</a>。</p>
+<p>上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md">该文档</a>。</p>
 <!-- 
 > 重要！
 >
@@ -65,12 +68,12 @@
 <h2 id="%E7%94%A8%E6%B3%95"><a class="header-anchor" href="#%E7%94%A8%E6%B3%95">§</a> 用法</h2>
 <h3 id="%E7%A4%BA%E4%BE%8B-1"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-1">§</a> 示例 1</h3>
 <p>不需要带任何参数。输出完整的 HTML 内容，一切都自动包含其中。</p>
-<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">@wulechuan/generate-html-via-markdown</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
+<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;@wulechuan/generate-html-via-markdown&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
-></span><span class="hljs-keyword const">const</span> markdownContent <span class="punctuation equal-sign">=</span> <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body"># 测试文章<span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span>## 此为二级标题<span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span>### 此为三级标题<span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span>一个句子。<span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span><span class="escape-char"><span class="slash">\</span><span class="escaped-char">n</span></span></span><span class="string-quote string-close-quote">'</span></span><br
+></span><span class="hljs-keyword const">const</span> markdownContent <span class="punctuation equal-sign">=</span> <span class="hljs-string">&#x27;<span class="punctuation sharp-sign">#</span> 测试文章\n\n<span class="punctuation sharp-sign">#</span># 此为二级标题\n\n<span class="punctuation sharp-sign">#</span>## 此为三级标题\n\n一个句子。\n\n&#x27;</span><br
 ><span class="inline-pre-whitespaces indentation"><br
 ></span><span class="hljs-comment">/********************************************************************/</span><br
-><span class="hljs-comment">/**/ const htmlContent = markdownToHTMLConverter(markdownContent) /**/</span><br
+><span class="hljs-comment">/**/</span> <span class="hljs-keyword const">const</span> htmlContent <span class="punctuation equal-sign">=</span> markdownToHTMLConverter<span class="punctuation parenthesis open-parenthesis">(</span>markdownContent<span class="punctuation parenthesis close-parenthesis">)</span> <span class="hljs-comment">/**/</span><br
 ><span class="hljs-comment">/********************************************************************/</span><br
 ></code></pre>
 <h3 id="%E7%A4%BA%E4%BE%8B-2"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-2">§</a> 示例 2</h3>
@@ -78,10 +81,10 @@
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>readFileSync<span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>writeFileSync<span class="punctuation comma">,</span><br
-><span class="punctuation curly-brace close-curly-brace">}</span> <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">fs</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
+><span class="punctuation curly-brace close-curly-brace">}</span> <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;fs&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
-></span><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">@wulechuan/generate-html-via-markdown</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
-><span class="hljs-keyword const">const</span> markdownContent <span class="punctuation equal-sign">=</span> readFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">我的文章.md</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><span class="punctuation period">.</span>toString<span class="punctuation parenthesis open-parenthesis">(</span><span class="punctuation parenthesis close-parenthesis">)</span><br
+></span><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;@wulechuan/generate-html-via-markdown&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><br
+><span class="hljs-keyword const">const</span> markdownContent <span class="punctuation equal-sign">=</span> readFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;我的文章<span class="punctuation period">.</span>md&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><span class="punctuation period">.</span>toString<span class="punctuation parenthesis open-parenthesis">(</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
 ></span><span class="hljs-keyword const">const</span> htmlContent <span class="punctuation equal-sign">=</span> markdownToHTMLConverter<span class="punctuation parenthesis open-parenthesis">(</span>markdownContent<span class="punctuation comma">,</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">shouldLogVerbosely</span><span class="punctuation colon">:</span> <span class="hljs-literal true">true</span><span class="punctuation comma">,</span><br
@@ -96,22 +99,22 @@
 ><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">manipulationsOverHTML</span><span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">shouldNotUseInternalCSSThemingFiles</span><span class="punctuation colon">:</span> <span class="hljs-literal true">true</span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">htmlTitleString</span><span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">一份极简的 HTML 文档</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">htmlTitleString</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;一份极简的 HTML 文档&#x27;</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">shouldNotInsertBackToTopAnchor</span><span class="punctuation colon">:</span> <span class="hljs-literal true">true</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
-></span>writeFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">我的文章.html</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span> htmlContent<span class="punctuation parenthesis close-parenthesis">)</span><br
+></span>writeFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;我的文章<span class="punctuation period">.</span>html&#x27;</span><span class="punctuation comma">,</span> htmlContent<span class="punctuation parenthesis close-parenthesis">)</span><br
 ></code></pre>
 <h3 id="%E7%A4%BA%E4%BE%8B-3"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-3">§</a> 示例 3</h3>
 <p>采用来自你自己设计的 CSS 文件中的 CSS 代码，取代本软件默认的 CSS 代码，嵌入输出的 HTML 内容中，以控制该 HTML 之样貌。</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>readFileSync<span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>writeFileSync<span class="punctuation comma">,</span><br
-><span class="punctuation curly-brace close-curly-brace">}</span> <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">fs</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
+><span class="punctuation curly-brace close-curly-brace">}</span> <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;fs&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
-></span><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">@wulechuan/generate-html-via-markdown</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
-><span class="hljs-keyword const">const</span> markdownContent <span class="punctuation equal-sign">=</span> readFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">一篇好文.md</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><span class="punctuation period">.</span>toString<span class="punctuation parenthesis open-parenthesis">(</span><span class="punctuation parenthesis close-parenthesis">)</span><br
+></span><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;@wulechuan/generate-html-via-markdown&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><br
+><span class="hljs-keyword const">const</span> markdownContent <span class="punctuation equal-sign">=</span> readFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;一篇好文<span class="punctuation period">.</span>md&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><span class="punctuation period">.</span>toString<span class="punctuation parenthesis open-parenthesis">(</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
 ></span><span class="hljs-keyword const">const</span> htmlContent <span class="punctuation equal-sign">=</span> markdownToHTMLConverter<span class="punctuation parenthesis open-parenthesis">(</span>markdownContent<span class="punctuation comma">,</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">manipulationsOverHTML</span><span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
@@ -121,20 +124,20 @@
 ><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">absolutePathsOfExtraFilesToEmbedIntoHTML</span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">// 2) 引入你自己设计的 CSS 文件。</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">/d/your/work/folder/some/theme/your-splendid-theme.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string">&#x27;/d/your/work/folder/some/theme/your-splendid-theme<span class="punctuation period">.</span>css&#x27;</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">// 3) 或许你也须引入你自己的 Javascript 文件。</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">/d/your/work/folder/some/theme/your-splendid-theme.actions.js</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-string">&#x27;/d/your/work/folder/some/theme/your-splendid-theme<span class="punctuation period">.</span>actions<span class="punctuation period">.</span>js&#x27;</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation bracket close-bracket">]</span><span class="punctuation comma">,</span><br
 ><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ><span class="inline-pre-whitespaces indentation"><br
-></span>writeFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">一篇好文.html</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span> htmlContent<span class="punctuation parenthesis close-parenthesis">)</span><br
+></span>writeFileSync<span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;一篇好文<span class="punctuation period">.</span>html&#x27;</span><span class="punctuation comma">,</span> htmlContent<span class="punctuation parenthesis close-parenthesis">)</span><br
 ></code></pre>
 <h2 id="api"><a class="header-anchor" href="#api">§</a> API</h2>
 <h3 id="%E4%B8%BB%E5%87%BD%E6%95%B0"><a class="header-anchor" href="#%E4%B8%BB%E5%87%BD%E6%95%B0">§</a> 主函数</h3>
 <p>主函数为一个<strong>匿名函数</strong>。因此，欲调用之，不妨先将其命名。</p>
 <p>如下例所示，我将其命名为 <code>mardownToHTMLConverter</code>。</p>
-<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">@wulechuan/generate-html-via-markdown</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
+<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string">&#x27;@wulechuan/generate-html-via-markdown&#x27;</span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ></code></pre>
 <h3 id="%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><a class="header-anchor" href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3">§</a> 主函数接口</h3>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> htmlString <span class="punctuation equal-sign">=</span> markdownToHTMLConverter<span class="punctuation parenthesis open-parenthesis">(</span>markdownString<span class="punctuation comma">,</span> options<span class="punctuation parenthesis close-parenthesis">)</span><br
@@ -158,17 +161,17 @@
 ><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">conversionOptions</span><span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">shouldNotBuildHeadingPermanentLinks</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">headingPermanentLinkSymbolChar</span><span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">§</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">headingPermanentLinkSymbolChar</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;§&#x27;</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">/*<br
 ><span class="inline-pre-whitespaces indentation">            </span>该参数对应 “markdown-it-anchor” 插件的 “permalinkClass” 参数。<br
-><span class="inline-pre-whitespaces indentation">            </span>其默认值为 “'header-anchor'”。<br
+><span class="inline-pre-whitespaces indentation">            </span>其默认值为 “&#x27;header-anchor&#x27;”。<br
 ><br
 ><span class="inline-pre-whitespaces indentation">            </span>我的所谓内部 CSS 采用其默认值。<br
 ><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfHeadingPermanentLinks</span><span class="punctuation colon">:</span> <span class="hljs-literal undefined">undefined</span><span class="punctuation comma">,</span><br
 ><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfArticleTOCRootTag</span><span class="punctuation colon">:</span>     <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">markdown-article-toc</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfArticleTOCRootTag</span><span class="punctuation colon">:</span>     <span class="hljs-string">&#x27;markdown-article-toc&#x27;</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfArticleTOCLists</span><span class="punctuation colon">:</span>       <span class="hljs-literal undefined">undefined</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 作用于 &lt;ul&gt; 或 &lt;ol&gt;。</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfArticleTOCListItems</span><span class="punctuation colon">:</span>   <span class="hljs-literal undefined">undefined</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 作用于 &lt;li&gt;。</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfArticleTOCItemAnchors</span><span class="punctuation colon">:</span> <span class="hljs-literal undefined">undefined</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 作用于 &lt;li&gt; 内层的 &lt;a&gt;。</span><br
@@ -197,23 +200,23 @@
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">shouldUseUnminifiedVersionOfInternalCSS</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">shouldUseUnminifiedVersionOfInternalJavascriptIfAny</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">htmlTagLanguage</span><span class="punctuation colon">:</span> <span class="hljs-string empty-string"><span class="string-quote string-open-quote">'</span><span class="string-body"></span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">htmlTitleString</span><span class="punctuation colon">:</span> <span class="hljs-string empty-string"><span class="string-quote string-open-quote">'</span><span class="string-body"></span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着自动从文字中第一个 &lt;h1&gt; 标签中提前内容文字，作为 HTML 文档的标题（&lt;title&gt;）。</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">htmlTagLanguage</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;&#x27;</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着实际取值为 “&#x27;zh-hans-CN&#x27;”。该默认取值源自 “begin.html”。</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">htmlTitleString</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;&#x27;</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着自动从文字中第一个 &lt;h1&gt; 标签中提前内容文字，作为 HTML 文档的标题（&lt;title&gt;）。</span><br
 ><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">internalCSSFileNameOfTheme</span><span class="punctuation colon">:</span>        <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">wulechuan-styles-for-html-via-markdown.default--no-toc.min.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">internalCSSFileNameOfThemeWithTOC</span><span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">wulechuan-styles-for-html-via-markdown.default--with-toc.min.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">internalCSSFileNameOfTheme</span><span class="punctuation colon">:</span>        <span class="hljs-string">&#x27;wulechuan-styles-for-html-via-markdown<span class="punctuation period">.</span>default<span class="punctuation minus-minus-sign">--</span>no-toc<span class="punctuation period">.</span>min<span class="punctuation period">.</span>css&#x27;</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">internalCSSFileNameOfThemeWithTOC</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;wulechuan-styles-for-html-via-markdown<span class="punctuation period">.</span>default<span class="punctuation minus-minus-sign">--</span>with-toc<span class="punctuation period">.</span>min<span class="punctuation period">.</span>css&#x27;</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">/*<br
 ><span class="inline-pre-whitespaces indentation">            </span>下列两项参数已被弃用。实则更名为上方两个参数。请尽量采用上方使用新名称的两个参数。<br
 ><span class="inline-pre-whitespaces indentation">            </span>一旦上方某参数配置了值，则下方对应参数的值会被忽略。<br
 ><span class="inline-pre-whitespaces indentation">            </span>未来，或许我干脆不再支持使用下方两个参数名。<br
 ><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">moduleCSSFileNameOfDefaultTheme</span><span class="punctuation colon">:</span>        <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">wulechuan-styles-for-html-via-markdown.default--no-toc.min.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">moduleCSSFileNameOfDefaultThemeWithTOC</span><span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">wulechuan-styles-for-html-via-markdown.default--with-toc.min.css</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">moduleCSSFileNameOfDefaultTheme</span><span class="punctuation colon">:</span>        <span class="hljs-string">&#x27;wulechuan-styles-for-html-via-markdown<span class="punctuation period">.</span>default<span class="punctuation minus-minus-sign">--</span>no-toc<span class="punctuation period">.</span>min<span class="punctuation period">.</span>css&#x27;</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">moduleCSSFileNameOfDefaultThemeWithTOC</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;wulechuan-styles-for-html-via-markdown<span class="punctuation period">.</span>default<span class="punctuation minus-minus-sign">--</span>with-toc<span class="punctuation period">.</span>min<span class="punctuation period">.</span>css&#x27;</span><span class="punctuation comma">,</span><br
 ><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfMarkdownChiefContentWrappingArticleTag</span><span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">markdown-article</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfBodyTagWhenMarkdownArticleHasTOC</span><span class="punctuation colon">:</span>       <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">markdown-article-toc-exists</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfBackToTopAnchor</span><span class="punctuation colon">:</span>                        <span class="hljs-string"><span class="string-quote string-open-quote">'</span><span class="string-body">markdown-article-back-to-top</span><span class="string-quote string-close-quote">'</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfMarkdownChiefContentWrappingArticleTag</span><span class="punctuation colon">:</span> <span class="hljs-string">&#x27;markdown-article&#x27;</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfBodyTagWhenMarkdownArticleHasTOC</span><span class="punctuation colon">:</span>       <span class="hljs-string">&#x27;markdown-article-toc-exists&#x27;</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">cssClassNameOfBackToTopAnchor</span><span class="punctuation colon">:</span>                        <span class="hljs-string">&#x27;markdown-article-back-to-top&#x27;</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">desiredReplacementsInHTML</span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">/*<br
@@ -226,20 +229,20 @@
 ><br
 ><span class="inline-pre-whitespaces indentation">            </span>例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="([^#\./].+)/gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to:   ' target="_blank" href="$1',<br
+><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href=&quot;([^#\./].+)/gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>to:   &#x27; target=&quot;_blank&quot; href=&quot;$1&#x27;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
 ><span class="inline-pre-whitespaces indentation">            </span>例 2：批量令原本指向另一些 Markdown 文件的链接地址就，改为指向对应的 HTML 文件。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="(.+)\.md(#.*)?"/gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to:   ' href="$1.html$2"',<br
+><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href=&quot;(.+)\.md(#.*)?&quot;/gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>to:   &#x27; href=&quot;$1.html$2&quot;&#x27;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
 ><span class="inline-pre-whitespaces indentation">            </span>例 3：批量转换链接地址。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href="\.\/course-examples\//gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to: ' href="../public/assets/course-examples/',<br
+><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href=&quot;\.\/course-examples\//gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>to: &#x27; href=&quot;../public/assets/course-examples/&#x27;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="punctuation bracket close-bracket">]</span><span class="punctuation comma">,</span><br
@@ -260,7 +263,7 @@
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">behavioursOfBuiltInTOC</span><span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">shouldShowOnlyTwoLevelsOfTOCItemsAtMost</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan</span><span class="punctuation colon">:</span> <span class="hljs-number">1</span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">atBeginingShouldExpandTOCWhenWindowIsWideEnough</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span> <span class="hljs-comment">// "Window" instead of "Windows".</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-attr">atBeginingShouldExpandTOCWhenWindowIsWideEnough</span><span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span> <span class="hljs-comment">// &quot;Window&quot; instead of &quot;Windows&quot;.</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-attr">sundries</span><span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
@@ -282,6 +285,8 @@
 <blockquote>
 <p>千万注意！该返回值是一个字符串，<strong>而不是</strong>一个文件。欲将该字符串写入磁盘永久保存，请在你自己的脚本中另行调用诸如 <code>writeFile</code> 或 <code>writeFileSync</code> 的函数。另，文件扩展名应为 <code>html</code>。</p>
 </blockquote>
+<h2 id="%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7"><a class="header-anchor" href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7">§</a> 本项目已知的功能缺陷</h2>
+<p>见<code>文档/本项目已知的功能缺陷/</code>。</p>
 <h2 id="%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"><a class="header-anchor" href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92">§</a> 未来计划</h2>
 <p>暂无。</p>
 <h2 id="%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"><a class="header-anchor" href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B">§</a> 许可证类型</h2>
@@ -292,7 +297,7 @@
 </blockquote>
 
     </article>
-    <nav class="markdown-article-toc"><ol><li><a href="#multilingual-editions-of-this-article"> Multilingual Editions of this Article</a></li><li><a href="#npm-%E9%A1%B5"> NPM 页</a></li><li><a href="#%E7%AE%80%E4%BB%8B"> 简介</a><ol><li><a href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"> 内嵌样式</a></li><li><a href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"> 用于 Gulpjs 生态的适配版本</a></li><li><a href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"> 用于命令行环境的工具</a></li></ol></li><li><a href="#%E7%94%A8%E6%B3%95"> 用法</a><ol><li><a href="#%E7%A4%BA%E4%BE%8B-1"> 示例 1</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-2"> 示例 2</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-3"> 示例 3</a></li></ol></li><li><a href="#api"> API</a><ol><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0"> 主函数</a></li><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"> 主函数接口</a><ol><li><a href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0"> 入口参数</a></li><li><a href="#%E8%BF%94%E5%9B%9E%E5%80%BC"> 返回值</a></li></ol></li></ol></li><li><a href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"> 未来计划</a></li><li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"> 许可证类型</a></li></ol></nav>
+    <nav class="markdown-article-toc"><ol><li><a href="#multilingual-editions-of-this-article"> Multilingual Editions of this Article</a></li><li><a href="#npm-%E9%A1%B5"> NPM 页</a></li><li><a href="#%E7%AE%80%E4%BB%8B"> 简介</a><ol><li><a href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"> 内嵌样式</a></li><li><a href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"> 用于 Gulpjs 生态的适配版本</a></li><li><a href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"> 用于命令行环境的工具</a></li></ol></li><li><a href="#%E7%94%A8%E6%B3%95"> 用法</a><ol><li><a href="#%E7%A4%BA%E4%BE%8B-1"> 示例 1</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-2"> 示例 2</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-3"> 示例 3</a></li></ol></li><li><a href="#api"> API</a><ol><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0"> 主函数</a></li><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"> 主函数接口</a><ol><li><a href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0"> 入口参数</a></li><li><a href="#%E8%BF%94%E5%9B%9E%E5%80%BC"> 返回值</a></li></ol></li></ol></li><li><a href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7"> 本项目已知的功能缺陷</a></li><li><a href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"> 未来计划</a></li><li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"> 许可证类型</a></li></ol></nav>
     <a href="#" class="markdown-article-back-to-top"></a>
 
     <script>

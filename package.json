@@ -2,7 +2,7 @@
     "name": "@wulechuan/generate-html-via-markdown",
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
-    "version": "2.9.7",
+    "version": "2.9.8",
     "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
     "main": "index.js",
     "scripts": {
@@ -47,7 +47,7 @@
     "directories": {
         "source": "source",
         "test": "tests",
-        "doc": "documents"
+        "doc": "文档"
     },
     "homepage": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown#readme",
     "repository": {
@@ -59,22 +59,23 @@
     },
     "dependencies": {
         "@wulechuan/meaningful-error-messages": "^0.1.4",
-        "chalk": "^3.0.0",
-        "markdown-it": "^10.0.0",
-        "markdown-it-anchor": "^5.2.5",
+        "chalk": "^4.1.0",
+        "markdown-it": "^12.0.4",
+        "markdown-it-anchor": "^7.0.2",
         "markdown-it-checkbox": "^1.1.0",
-        "markdown-it-highlightjs": "^3.1.0",
-        "markdown-it-toc-done-right": "^4.1.0"
+        "markdown-it-highlightjs": "^3.4.0",
+        "markdown-it-toc-done-right": "^4.2.0"
     },
     "devDependencies": {
         "@wulechuan/css-stylus-markdown-themes": "^6.4.12",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
-        "del": "^5.1.0",
+        "del": "^6.0.0",
+        "eslint": "^7.20.0",
         "gulp": "^4.0.2",
         "gulp-pipe": "^1.0.4",
         "gulp-rename": "^2.0.0",
         "plugin-error": "^1.0.1",
-        "replace-ext": "^1.0.0",
-        "through2": "^3.0.1"
+        "replace-ext": "^2.0.0",
+        "through2": "^4.0.2"
     }
 }

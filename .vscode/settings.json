@@ -7,6 +7,6 @@
     "search.exclude": {
         "**/node_modules": true,
         "**/bower_components": true,
-        "documents": true
+        "文档": true
     }
 }

@@ -5,11 +5,11 @@ const {
 
 
 const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
-    {
-        sign: '#',
-        signRegExp: '',
-        cssClassNames: 'punctuation sharp-sign',
-    },
+    // {
+    //     sign: '#',
+    //     signRegExp: '',
+    //     cssClassNames: 'punctuation sharp-sign',
+    // },
     {
         sign: ',',
         signRegExp: '',
@@ -146,6 +146,16 @@ function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode) {
             `<span class="${cssClassNames}">${sign}</span>`
         )
     })
+
+    content = content.replace(
+        /&([^#a-zA-Z])/g,
+        '<span class="punctuation ampersand11">&</span>$1'
+    )
+
+    content = content.replace(
+        /([^&])#([^xX])/g,
+        '$1<span class="punctuation sharp-sign">#</span>$2'
+    )
 
     content = content.replace(
         /\|\|/g,
@@ -341,9 +351,21 @@ function processSpecialPunctuationsString(html , codeLanguage) {
         /;/g,
         '<span class="punctuation semi-colon">;</span>'
     ).replace(
-        /(&\w{2,})<span class="punctuation semi-colon">;<\/span>/g,
+        /(&\w{2,}|&#x\d+)<span class="punctuation semi-colon">;<\/span>/g,
         '$1;'
     )
+
+    // const r = html.match(/(&\w{2,});/g)
+    // if (codeLanguageIsOneOf(codeLanguage, [
+    //     'javascript',
+    // ]) && r) {
+    //     r.push(html)
+    //     console.log(
+    //         codeLanguage,
+    //         r,
+    //         '\n\n\n'
+    //     )
+    // }
 
     return html
 }
