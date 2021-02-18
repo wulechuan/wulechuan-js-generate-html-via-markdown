@@ -12,6 +12,7 @@ temp
 *.ps1
 
 用于研发阶段的命令行工具
+gulpfile.js
 gulpfile.esm.js
 
 文档
