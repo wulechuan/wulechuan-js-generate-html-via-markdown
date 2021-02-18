@@ -26,13 +26,14 @@ const DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS = {
 
 
 const SPECIAL_ESPACED_CHARS_IN_STRINGS = [
-    { escapedChar: '\\', /* htmlEntity: '', */ cssClassNames: 'backward-slash' },
-    { escapedChar: 'n',  /* htmlEntity: '', */ cssClassNames: 'new-line' },
-    { escapedChar: 'r',  /* htmlEntity: '', */ cssClassNames: 'carriage-return' },
-    { escapedChar: 't',  /* htmlEntity: '', */ cssClassNames: 'tab' },
-    { escapedChar: '\'', /* htmlEntity: '', */ cssClassNames: 'single-quote' },
-    { escapedChar: '"',  /* htmlEntity: '', */ cssClassNames: 'double-quote' },
-    { escapedChar: '/',  /* htmlEntity: '', */ cssClassNames: 'forward-mark' },
+    { escapedChar: '\\',      /* htmlEntity: '', */ cssClassNames: 'backward-slash' },
+    { escapedChar: 'n',       /* htmlEntity: '', */ cssClassNames: 'new-line' },
+    { escapedChar: 'r',       /* htmlEntity: '', */ cssClassNames: 'carriage-return' },
+    { escapedChar: 't',       /* htmlEntity: '', */ cssClassNames: 'tab' },
+    { escapedChar: '\'',      /* htmlEntity: '', */ cssClassNames: 'single-quote' },
+    { escapedChar: '&#x27;', /* htmlEntity: '', */ cssClassNames: 'single-quote' },
+    { escapedChar: '"',       /* htmlEntity: '', */ cssClassNames: 'double-quote' },
+    { escapedChar: '/',       /* htmlEntity: '', */ cssClassNames: 'forward-mark' },
 ]
 
 
@@ -163,7 +164,8 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
 
     function preprocessStringRootASTNode(astNode) {
         const { content, openMark, closeMark } = astNode
-        const decidedOpenQuoteSign = openMark.slice(-1)
+        // const decidedOpenQuoteSign = openMark.slice(-1)
+        const decidedOpenQuoteSign = openMark.replace(/.*>([^>]+)$/, '$1')
 
         let decidedCloseMark = closeMark
         let restPartCarriedByOriginalIllegalString = ''
@@ -179,13 +181,22 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
                 decidedCloseMark = decidedCloseMark.slice(1)
             }
         } else {
-            decidedCloseQuoteSign = content.slice(-1)
-            if (decidedCloseQuoteSign === '\'' || decidedCloseQuoteSign === '"') {
-                decidedContent = decidedContent.slice(0, -1)
+            // decidedCloseQuoteSign = content.slice(-1)
+            decidedCloseQuoteSign = closeMark.replace(/^([^<]+)<.+/, '$1')
+            decidedCloseMark = closeMark.slice(decidedCloseQuoteSign.length)
+            if (
+                decidedCloseQuoteSign === '\'' ||
+                decidedCloseQuoteSign === '&#x27;' ||
+                decidedCloseQuoteSign === '"' ||
+                decidedCloseQuoteSign === '&quot;'
+            ) {
+                // decidedContent = decidedContent.slice(0, -1)
             } else {
                 decidedCloseQuoteSign = ''
             }
         }
+
+        // console.log('decideQuoteSignPair', [ decidedOpenQuoteSign, decidedCloseQuoteSign ])
 
         if (decidedOpenQuoteSign !== decidedCloseQuoteSign) {
             stringIsIllegal = true
@@ -239,6 +250,10 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
             nodesEnclosured:    astNodesForEscapedChars,
             // nodesNotEnclosured: astNodesForNonEscapedSegments,
         } = splitASTForEscapeChars(astNode)
+
+        // if (astNodesForEscapedChars && astNodesForEscapedChars.length > 0) {
+        //     console.log('astNodesForEscapedChars', astNodesForEscapedChars)
+        // }
 
         astNodesForEscapedChars.forEach(astNodeForAnEscapedChar => {
             markAllSpecialEscapeChars(astNodeForAnEscapedChar) // They have extra CSS specifical class names.

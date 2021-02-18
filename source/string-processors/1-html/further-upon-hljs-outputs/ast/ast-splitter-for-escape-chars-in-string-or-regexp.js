@@ -59,7 +59,7 @@ module.exports = function splitASTForEscapeChars(astNode) {
             escapedChar = '\\'
             restContent = seg
         } else {
-            const matchingHTMLEntityChars = seg.match(/^(&[a-z]{2,};)/)
+            const matchingHTMLEntityChars = seg.match(/^(&[a-z]{2,};|&#x\d{1,};)/)
             if (matchingHTMLEntityChars) {
                 const [ , escapedHTMLEntityChar ] = matchingHTMLEntityChars
                 escapedChar = seg.slice(0, escapedHTMLEntityChar.length)

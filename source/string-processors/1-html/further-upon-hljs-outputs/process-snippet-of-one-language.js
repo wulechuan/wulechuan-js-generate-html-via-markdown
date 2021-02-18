@@ -341,7 +341,22 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-string">\'', // single quote
-            '</span>',
+            '\'</span>',
+            null,
+            astNodeForOneString => {
+                parseOneStringASTNodeIntoHTML(
+                    astNodeForOneString,
+                    {
+                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                    }
+                )
+            }
+        )
+
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+            astNodesRest,
+            '<span class="hljs-string">&#x27;', // single quote
+            '&#x27;</span>',
             null,
             astNodeForOneString => {
                 parseOneStringASTNodeIntoHTML(
@@ -357,6 +372,21 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
             astNodesRest,
             '<span class="hljs-string">"', // double quotes
             '</span>',
+            null,
+            astNodeForOneString => {
+                parseOneStringASTNodeIntoHTML(
+                    astNodeForOneString,
+                    {
+                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                    }
+                )
+            }
+        )
+
+        astNodesRest = processASTNodesAndCollectUnprocessedOnes(
+            astNodesRest,
+            '<span class="hljs-string">&quot;', // double quotes
+            '&quot;</span>',
             null,
             astNodeForOneString => {
                 parseOneStringASTNodeIntoHTML(
