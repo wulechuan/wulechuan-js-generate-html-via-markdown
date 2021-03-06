@@ -1,4 +1,5 @@
 #!/bin/sh
+
 npm i \
     '@wulechuan/meaningful-error-messages@latest' \
     'chalk@latest' \
