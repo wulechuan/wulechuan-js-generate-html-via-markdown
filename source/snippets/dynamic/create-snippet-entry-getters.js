@@ -98,7 +98,7 @@ function createSnippetEntryGetters(options) {
     function syncGetSnippetEntryOfHTMLBeginning(options) {
         const {
             thisModuleRootFolderPath = '',
-            htmlTagLanguage,
+            产出之HTML文件之HTML标签之语言属性之取值,
         } = options
 
         if (!rawHTMLBeginning) {
@@ -107,25 +107,25 @@ function createSnippetEntryGetters(options) {
             )
         }
 
-        const entryKey = `HTML beginning snippet of language ${htmlTagLanguage}`
+        const entryKey = `HTML beginning snippet of language ${产出之HTML文件之HTML标签之语言属性之取值}`
 
         const snippetsDict = allSnippetEntries.standard
 
         if (!snippetsDict[entryKey]) {
             const {
-                htmlTagLanguage,
+                产出之HTML文件之HTML标签之语言属性之取值,
             } = options
 
             let htmlBeginning = rawHTMLBeginning
 
             if (
-                typeof htmlTagLanguage === 'string' &&
-                htmlTagLanguage.length > 1 &&
-                htmlTagLanguage !== 'zh-hans-CN'
+                typeof 产出之HTML文件之HTML标签之语言属性之取值 === 'string' &&
+                产出之HTML文件之HTML标签之语言属性之取值.length > 1 &&
+                产出之HTML文件之HTML标签之语言属性之取值 !== 'zh-hans-CN'
             ) {
                 htmlBeginning = htmlBeginning.replace(
                     '<html lang="zh-hans-CN">',
-                    `<html lang="${htmlTagLanguage}">`
+                    `<html lang="${产出之HTML文件之HTML标签之语言属性之取值}">`
                 )
             }
 

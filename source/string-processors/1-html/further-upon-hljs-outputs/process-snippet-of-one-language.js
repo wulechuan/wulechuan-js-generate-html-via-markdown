@@ -133,7 +133,7 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
     } = astNode
 
     const {
-        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+        不应将代码块中的换行符替换成BR标签,
     } = options
 
     const allASTNodesEachOfOnePureLanguage = []
@@ -201,7 +201,7 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
         processHTMLStringOfOnePureCodeLanguage(
             astNoteForOnePureLanguage,
             {
-                shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                不应将代码块中的换行符替换成BR标签,
             }
         )
     })
@@ -215,7 +215,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     const { codeLanguage } = astNode
 
     const {
-        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+        不应将代码块中的换行符替换成BR标签,
     } = options
 
     const {
@@ -229,7 +229,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
 
     astNodesForComments.forEach(parseOneASTNodeOfCommentIntoHTML)
 
-    if (!shouldNotReplaceLineBreaksInCodeTagsWithBrTags) {
+    if (!不应将代码块中的换行符替换成BR标签) {
         astNodesForNonComments.forEach(processAllLineBreaksAndLeadingWhitespaces)
     }
 
@@ -347,7 +347,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
                 parseOneStringASTNodeIntoHTML(
                     astNodeForOneString,
                     {
-                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                        不应将代码块中的换行符替换成BR标签,
                     }
                 )
             }
@@ -362,7 +362,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
                 parseOneStringASTNodeIntoHTML(
                     astNodeForOneString,
                     {
-                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                        不应将代码块中的换行符替换成BR标签,
                     }
                 )
             }
@@ -377,7 +377,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
                 parseOneStringASTNodeIntoHTML(
                     astNodeForOneString,
                     {
-                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                        不应将代码块中的换行符替换成BR标签,
                     }
                 )
             }
@@ -392,7 +392,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
                 parseOneStringASTNodeIntoHTML(
                     astNodeForOneString,
                     {
-                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                        不应将代码块中的换行符替换成BR标签,
                     }
                 )
             }
@@ -407,7 +407,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
                 parseOneStringASTNodeIntoHTML(
                     astNodeForOneString,
                     {
-                        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                        不应将代码块中的换行符替换成BR标签,
                     }
                 )
             },

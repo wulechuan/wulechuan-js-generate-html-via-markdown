@@ -52,8 +52,8 @@ const taskCycleForMarkdownConversions = createATaskCycle({
     },
 
     firstPipeForProcessingSources: createAPipeForConvertingMarkdownsIntoHTMLs({
-        manipulationsOverHTML: {
-            desiredReplacementsInHTML: [
+        对HTML做额外处理之阶段: {
+            须对产出之HTML内容字符串依次按下诸内容替换规则做修订: [
                 {
                     from: /\.\/illustrates\//g,
                     to:   '../../../node_modules/@wulechuan/css-stylus-markdown-themes/documents/examples/source-markdown-files/illustrates/',

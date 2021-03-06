@@ -1,4 +1,4 @@
-const outputRootFolderSubPath = 'tests/output/examples-from-peer-dependency'
+const outputRootFolderSubPath = '测试集/输出之内容/取自-peer-依赖包之范文'
 
 module.exports = {
     buildingHTMLs: {

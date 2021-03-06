@@ -13,7 +13,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
     const errorContext = 'processAllContentsOfAllHTMLPreTagsOfHTMLString' // eslint-disable-line no-unused-vars
 
     const {
-        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+        不应将代码块中的换行符替换成BR标签,
     } = options
 
     const rootLevelASTNodes = {
@@ -116,7 +116,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
         processHTMLStringThatMightContainSubLanguages(
             astNodeForOneCodeTag,
             {
-                shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                不应将代码块中的换行符替换成BR标签,
             }
         )
     })

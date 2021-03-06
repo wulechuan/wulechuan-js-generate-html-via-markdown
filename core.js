@@ -96,31 +96,19 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
     return function generateFullHTMLStringViaMarkdownString(markdownContent, options = {}) {
         const {
-            shouldLogVerbosely,
+            须在控制台打印详尽细节,
         } = options
-
-        const deprecatedLevel1OptionsThatShouldTakeEffect ={
-            behaviousOfBuiltInTOC: !!options.behaviousOfBuiltInTOC &&
-                typeof options.behaviousOfBuiltInTOC === 'object' &&
-                !options.behavioursOfBuiltInTOC,
-        }
 
         let {
-            conversionPreparations = {},
-            conversionOptions = {},
-            manipulationsOverHTML = {},
-            behavioursOfBuiltInTOC = {},
-            sundries = {},
+            将Markdown转换为HTML之前之预备阶段 = {},
+            将Markdown转换为HTML之阶段 = {},
+            对HTML做额外处理之阶段 = {},
+            对本工具现成提供的文章纲要做以下配置 = {},
+            杂项 = {},
         } = options
 
-        const {
-            behaviousOfBuiltInTOC, // Deprecated because of typos.
-        } = options
 
-        const newVerionPropertyProvided = {
-            internalCSSFileNameOfThemeWithTOC: manipulationsOverHTML.internalCSSFileNameOfThemeWithTOC !== undefined,
-            internalCSSFileNameOfTheme:        manipulationsOverHTML.internalCSSFileNameOfTheme        !== undefined,
-        }
+
 
 
         if (shouldReloadModulesForDevWatchingMode) {
@@ -201,71 +189,59 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         /* ************* Merge options with their default values ************** */
 
-        conversionPreparations = {
-            ...defaultOptionValues.conversionPreparations,
-            ...conversionPreparations,
+        将Markdown转换为HTML之前之预备阶段 = {
+            ...defaultOptionValues.将Markdown转换为HTML之前之预备阶段,
+            ...将Markdown转换为HTML之前之预备阶段,
         }
 
-        conversionOptions = {
-            ...defaultOptionValues.conversionOptions,
-            ...conversionOptions,
+        将Markdown转换为HTML之阶段 = {
+            ...defaultOptionValues.将Markdown转换为HTML之阶段,
+            ...将Markdown转换为HTML之阶段,
         }
 
-        manipulationsOverHTML = {
-            ...defaultOptionValues.manipulationsOverHTML,
-            ...manipulationsOverHTML,
+        对HTML做额外处理之阶段 = {
+            ...defaultOptionValues.对HTML做额外处理之阶段,
+            ...对HTML做额外处理之阶段,
         }
 
-        if (deprecatedLevel1OptionsThatShouldTakeEffect.behaviousOfBuiltInTOC) {
-            if ('atBeginingShouldExpandTOCWhenWindowsIsWideEnough' in behaviousOfBuiltInTOC) {
-                // "Windows" to "Window", avoding using the option with typo.
-                behaviousOfBuiltInTOC.atBeginingShouldExpandTOCWhenWindowIsWideEnough = behaviousOfBuiltInTOC.atBeginingShouldExpandTOCWhenWindowsIsWideEnough
-                delete behaviousOfBuiltInTOC.atBeginingShouldExpandTOCWhenWindowsIsWideEnough
-            }
-            behavioursOfBuiltInTOC = {
-                ...defaultOptionValues.behavioursOfBuiltInTOC,
-                ...behaviousOfBuiltInTOC,
-            }
-        } else {
-            behavioursOfBuiltInTOC = {
-                ...defaultOptionValues.behavioursOfBuiltInTOC,
-                ...behavioursOfBuiltInTOC,
-            }
+        对本工具现成提供的文章纲要做以下配置 = {
+            ...defaultOptionValues.对本工具现成提供的文章纲要做以下配置,
+            ...对本工具现成提供的文章纲要做以下配置,
         }
 
-        sundries = {
-            ...defaultOptionValues.sundries,
-            ...sundries,
+        杂项 = {
+            ...defaultOptionValues.杂项,
+            ...杂项,
         }
 
         const {
-            shouldNotAutoInsertTOCPlaceholderIntoMarkdown,
-        } = conversionPreparations
+            不应主动插入TOC之占位标记,
+        } = 将Markdown转换为HTML之前之预备阶段
 
         const {
-            shouldNotBuildHeadingPermanentLinks,
-            headingPermanentLinkSymbolChar,
+            不应为各章节标题构建超链接,
+            各章节标题超链接之符号字符串,
             cssClassNameOfHeadingPermanentLinks,
             cssClassNameOfArticleTOCRootTag,
             cssClassNameOfArticleTOCLists,
             cssClassNameOfArticleTOCListItems,
             cssClassNameOfArticleTOCItemAnchors,
-            articleTOCListTagNameIsUL,
-            articleTOCBuildingHeadingLevelStartsFrom,
-        } = conversionOptions
+            文章纲要列表应采用UL标签而非OL标签,
+            构建文章纲要列表时自该级别之标题始,
+        } = 将Markdown转换为HTML之阶段
 
         const {
-            shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
-            shouldNotInsertBackToTopAnchor,
-            shouldNotUseInternalCSSThemingFiles,
-            shouldUseUnminifiedVersionOfInternalCSS,
-            shouldUseUnminifiedVersionOfInternalJavascriptIfAny,
+            不应将代码块中的换行符替换成BR标签,
+            不应注入用于返回文章起始之按钮,
+            不应采用任何由本工具内建之层叠样式表,
+            采用由本工具内建之层叠样式表时应采用未经压缩之版本,
+            采用由本工具内建之Javascript时应采用未经压缩之版本,
 
-            htmlTagLanguage,
-            htmlTitleString,
+            产出之HTML文件之HTML标签之语言属性之取值,
+            产出之HTML文件之Title标签之内容字符串,
 
-            internalCSSFileNameOfThemeWithTOC,
-            internalCSSFileNameOfTheme,
+            所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称,
+            所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称,
 
             moduleCSSFileNameOfDefaultThemeWithTOC,
             moduleCSSFileNameOfDefaultTheme,
@@ -274,24 +250,23 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
             cssClassNameOfMarkdownChiefContentWrappingArticleTag,
 
-            desiredReplacementsInHTML,
+            须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
 
-            absolutePathsOfExtraFilesToEmbedIntoHTML,
-        } = manipulationsOverHTML
+            须读取以下诸文件之内容并全部注入产出之HTML内容中,
+        } = 对HTML做额外处理之阶段
 
         const {
-            shouldConsoleLogsInChinese,
-            shouldDisableCachingForInternalThemeFiles,
-            shouldDisableCachingForExternalFiles,
-        } = sundries
+            控制台打印信息改用英国话,
+            读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
+            读取外来文件时禁止Require语句缓存其内容,
+        } = 杂项
 
-
-        if (shouldLogVerbosely) {
-            console.log('\nconversionPreparations:', conversionPreparations)
-            console.log('\nconversionOptions:', conversionOptions)
-            console.log('\nmanipulationsOverHTML:', manipulationsOverHTML)
-            console.log('\nbehavioursOfBuiltInTOC:', behavioursOfBuiltInTOC)
-            console.log('\nsundries:', sundries)
+        if (须在控制台打印详尽细节) {
+            console.log('\n 将Markdown转换为HTML之前之预备阶段：', 将Markdown转换为HTML之前之预备阶段)
+            console.log('\n 将Markdown转换为HTML之阶段：', 将Markdown转换为HTML之阶段)
+            console.log('\n 对HTML做额外处理之阶段：', 对HTML做额外处理之阶段)
+            console.log('\n 对本工具现成提供的文章纲要做以下配置：', 对本工具现成提供的文章纲要做以下配置)
+            console.log('\n 杂项：', 杂项)
         }
 
 
@@ -306,7 +281,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         const {
             markdownContentHasTOCPlaceholder,
             processedMarkdownContent: _tempMarkdownContent1,
-        } = insertTOCMarkDownTagIfNecessary(markdownContent, shouldNotAutoInsertTOCPlaceholderIntoMarkdown)
+        } = insertTOCMarkDownTagIfNecessary(markdownContent, 不应主动插入TOC之占位标记)
 
         const finalMarkdownContent = _tempMarkdownContent1
 
@@ -327,12 +302,12 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         markdownItParser.use(markdownItPluginCheckbox)
 
         const markdownItPluginAnchorOptions = {
-            permalink: !shouldNotBuildHeadingPermanentLinks,
+            permalink: !不应为各章节标题构建超链接,
             permalinkBefore: true,
         }
 
-        if (headingPermanentLinkSymbolChar) {
-            markdownItPluginAnchorOptions.permalinkSymbol = headingPermanentLinkSymbolChar
+        if (各章节标题超链接之符号字符串) {
+            markdownItPluginAnchorOptions.permalinkSymbol = 各章节标题超链接之符号字符串
         }
 
         if (cssClassNameOfHeadingPermanentLinks) {
@@ -343,9 +318,9 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         if (markdownContentHasTOCPlaceholder) {
             markdownItParser.use(markdownItPluginTOCDoneRight, {
-                level: articleTOCBuildingHeadingLevelStartsFrom,
+                level: 构建文章纲要列表时自该级别之标题始,
                 containerClass: cssClassNameOfArticleTOCRootTag,
-                listType: articleTOCListTagNameIsUL ? 'ul' : 'ol',
+                listType: 文章纲要列表应采用UL标签而非OL标签 ? 'ul' : 'ol',
                 listClass: cssClassNameOfArticleTOCLists,
                 itemClass: cssClassNameOfArticleTOCListItems,
                 linkClass: cssClassNameOfArticleTOCItemAnchors,
@@ -364,8 +339,8 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         /* ****** Extract HTML title out of generated HTML raw contents ******* */
 
         const snippetStringOfHTMLTitle = buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, {
-            specifiedArticleTitle: htmlTitleString,
-            shouldConsoleLogsInChinese,
+            specifiedArticleTitle: 产出之HTML文件之Title标签之内容字符串,
+            控制台打印信息改用英国话,
         })
 
 
@@ -374,7 +349,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         /* **************** Modify generated HTML raw contents **************** */
 
-        desiredReplacementsInHTML.forEach(pair => {
+        须对产出之HTML内容字符串依次按下诸内容替换规则做修订.forEach(pair => {
             htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(pair.from, pair.to)
         })
 
@@ -382,7 +357,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         htmlContentViaMarkDownContent = processAllContentsOfAllPreTagsOfHTMLString(
             htmlContentViaMarkDownContent,
             {
-                shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+                不应将代码块中的换行符替换成BR标签,
             }
         )
 
@@ -396,7 +371,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             }
         )
 
-        if (!shouldNotInsertBackToTopAnchor) {
+        if (!不应注入用于返回文章起始之按钮) {
             htmlContentViaMarkDownContent += `\n${tab1}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
         }
 
@@ -409,7 +384,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         const snippetEntryOfHTMLBeginning = syncGetSnippetEntryOfHTMLBeginning({
             thisModuleRootFolderPath,
-            htmlTagLanguage,
+            产出之HTML文件之HTML标签之语言属性之取值,
         })
 
         const snippetEntryOfHTMLEnding = syncGetSnippetEntryOfHTMLEnding()
@@ -428,22 +403,14 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         let themingCSSFileEntryKey
 
-        if (!shouldNotUseInternalCSSThemingFiles) {
+        if (!不应采用任何由本工具内建之层叠样式表) {
             if (markdownArticleHasTOC) {
-                if (newVerionPropertyProvided.internalCSSFileNameOfThemeWithTOC) {
-                    themingCSSFileEntryKey = internalCSSFileNameOfThemeWithTOC
-                } else {
-                    themingCSSFileEntryKey = moduleCSSFileNameOfDefaultThemeWithTOC
-                }
+                themingCSSFileEntryKey = 所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称
             } else {
-                if (newVerionPropertyProvided.internalCSSFileNameOfTheme) {
-                    themingCSSFileEntryKey = internalCSSFileNameOfTheme
-                } else {
-                    themingCSSFileEntryKey = moduleCSSFileNameOfDefaultTheme
-                }
+                themingCSSFileEntryKey = 所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称
             }
 
-            if (shouldUseUnminifiedVersionOfInternalCSS) {
+            if (采用由本工具内建之层叠样式表时应采用未经压缩之版本) {
                 themingCSSFileEntryKey = themingCSSFileEntryKey.replace(/\.min\.css$/, '.css')
             }
         }
@@ -452,8 +419,8 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
         if (themingCSSFileEntryKey) {
             const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                 themingCSSFileEntryKey,
-                shouldDisableCachingForInternalThemeFiles,
-                behavioursOfBuiltInTOC
+                读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
+                对本工具现成提供的文章纲要做以下配置
             )
 
             allSnippetEntriesToEmbed = [
@@ -465,7 +432,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
                 allSnippetEntriesToEmbed = [
                     ...allSnippetEntriesToEmbed,
                     ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
-                        if (shouldUseUnminifiedVersionOfInternalJavascriptIfAny) {
+                        if (采用由本工具内建之Javascript时应采用未经压缩之版本) {
                             return entryPair.unminified
                         } else {
                             return entryPair.minified
@@ -478,11 +445,11 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         allSnippetEntriesToEmbed = [
             ...allSnippetEntriesToEmbed,
-            ...absolutePathsOfExtraFilesToEmbedIntoHTML
+            ...须读取以下诸文件之内容并全部注入产出之HTML内容中
                 .map(filePath => {
                     return syncGetSnippetEntryOfOneExternalFile(
                         filePath,
-                        shouldDisableCachingForExternalFiles
+                        读取外来文件时禁止Require语句缓存其内容
                     )
                 })
                 .filter(entry => !!entry),

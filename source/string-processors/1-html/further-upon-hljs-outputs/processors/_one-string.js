@@ -69,7 +69,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
     } = DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS
 
     const {
-        shouldNotReplaceLineBreaksInCodeTagsWithBrTags,
+        不应将代码块中的换行符替换成BR标签,
     } = options
 
     // Prepare some constantly used HTML snippets here.
@@ -212,7 +212,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
         astNode.closeMark = decidedCloseMark
 
         if (!isTemplatedString) {
-            const lineBreakMatchingString = shouldNotReplaceLineBreaksInCodeTagsWithBrTags ? '\n' : '<br\n>'
+            const lineBreakMatchingString = 不应将代码块中的换行符替换成BR标签 ? '\n' : '<br\n>'
 
             if (content.match(lineBreakMatchingString)) {
                 console.log(new Error (buildErrorMessage([

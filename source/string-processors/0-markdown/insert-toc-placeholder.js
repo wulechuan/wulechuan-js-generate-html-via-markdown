@@ -1,6 +1,6 @@
 const chalk = require('chalk')
 
-module.exports = function insertTOCMarkDownTagIfNecessary(markdownContent, shouldNotAutoInsertTOCPlaceholderIntoMarkdown) {
+module.exports = function insertTOCMarkDownTagIfNecessary(markdownContent, 不应主动插入TOC之占位标记) {
     if (typeof markdownContent !== 'string') {
         throw new TypeError(`@wulechuan/generate-html-via-markdown:\n    ${
             chalk.red('Invalid markdownContent. It must be a string')
@@ -16,7 +16,7 @@ module.exports = function insertTOCMarkDownTagIfNecessary(markdownContent, shoul
     let markdownContentHasTOCPlaceholder = processedMarkdownContent
         .match(/\$\{toc\}|\[\[toc\]\]|\[toc\]|\[\[_toc_\]\]/i)
 
-    if (!markdownContentHasTOCPlaceholder && !shouldNotAutoInsertTOCPlaceholderIntoMarkdown) {
+    if (!markdownContentHasTOCPlaceholder && !不应主动插入TOC之占位标记) {
         processedMarkdownContent += [
             '\n',
             '[[toc]]',

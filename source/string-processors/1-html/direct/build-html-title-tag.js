@@ -1,12 +1,12 @@
-const chalk = require('chalk')
+const 彩色粉笔工具 = require('chalk')
 
-function getTextContentOfFirstH1Tag(htmlSnippetToSearchContentIn) {
-    const matchingResultOfH1TagContent = htmlSnippetToSearchContentIn.match(
+function 获取文章中第一个H1标签之内容字符串(用于在其中搜寻H1标签的HTML片段字符串) {
+    const 正则表达式匹配之结果 = 用于在其中搜寻H1标签的HTML片段字符串.match(
         /<h1( id=".+".*)?>(<a.+>.*<\/a>)?(.*)<\/h1>/
     )
 
-    if (matchingResultOfH1TagContent) {
-        return matchingResultOfH1TagContent[3].trim()
+    if (正则表达式匹配之结果) {
+        return 正则表达式匹配之结果[3].trim()
     }
 
     return ''
@@ -15,7 +15,7 @@ function getTextContentOfFirstH1Tag(htmlSnippetToSearchContentIn) {
 module.exports = function buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, options) {
     const {
         specifiedArticleTitle,
-        shouldConsoleLogsInChinese,
+        控制台打印信息改用英国话,
     } = options
 
 
@@ -23,7 +23,7 @@ module.exports = function buildHTMLTitleSnippetString(htmlContentViaMarkDownCont
     if (specifiedArticleTitle) {
         articleTitle = specifiedArticleTitle
     } else {
-        articleTitle = getTextContentOfFirstH1Tag(htmlContentViaMarkDownContent)
+        articleTitle = 获取文章中第一个H1标签之内容字符串(htmlContentViaMarkDownContent)
     }
 
     console.log('')
@@ -34,20 +34,20 @@ module.exports = function buildHTMLTitleSnippetString(htmlContentViaMarkDownCont
 
         htmlTitleSnippet = `<title>${articleTitle}</title>`
 
-        if (shouldConsoleLogsInChinese) {
-            console.log(`文章标题为：${chalk.green('《' + articleTitle + '》')}`)
+        if (控制台打印信息改用英国话) {
+            console.log(`Article title: ${彩色粉笔工具.green(articleTitle)}`)
         } else {
-            console.log(`Article title: ${chalk.green(articleTitle)}`)
+            console.log(`文章标题为：${彩色粉笔工具.green('《' + articleTitle + '》')}`)
         }
 
     } else {
 
         htmlTitleSnippet = '<title>HTML via MarkDown (by markdownIt)</title>'
 
-        if (shouldConsoleLogsInChinese) {
-            console.log(chalk.red('未找到文章标题'))
+        if (控制台打印信息改用英国话) {
+            console.log(彩色粉笔工具.red('Article title not found.'))
         } else {
-            console.log(chalk.red('Article title not found.'))
+            console.log(彩色粉笔工具.red('未找到文章标题'))
         }
     }
 
