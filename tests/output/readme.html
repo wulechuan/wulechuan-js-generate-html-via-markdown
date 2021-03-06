@@ -28,6 +28,33 @@
 <dt>作者</dt>
 <dd><p>南昌吴乐川</p></dd>
 </dl>
+<h2 id="%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"><a class="header-anchor" href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93">§</a> 源代码仓库</h2>
+<table>
+<thead>
+<tr>
+<th><span style="display:inline-block;width:180px;">提供仓库服务之组织</span></th>
+<th style="text-align:center"><span style="display:inline-block;width:150px;">仓库组织之国别</span></th>
+<th>仓库地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>码云</td>
+<td style="text-align:center">中华人民共和国</td>
+<td><a href="https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown">https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown</a></td>
+</tr>
+<tr>
+<td>阿里云之代码仓库</td>
+<td style="text-align:center">中华人民共和国</td>
+<td><a href="https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown">https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown</a></td>
+</tr>
+<tr>
+<td>GitHub</td>
+<td style="text-align:center">美</td>
+<td><a href="https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown">https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown</a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="%E7%AE%80%E4%BB%8B"><a class="header-anchor" href="#%E7%AE%80%E4%BB%8B">§</a> 简介</h2>
 <p>本工具借助 <a href="https://www.npmjs.com/package/markdown-it">markdownIt</a> 生态的工具集，可将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。</p>
 <p>当采用完全默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。<strong>故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。</strong></p>
@@ -51,8 +78,8 @@
 </ul>
 </blockquote>
 <p><strong>简而言之，对本工具输入一个 MarkDown 字符串，其产生一个 HTML 字符串。</strong></p>
-<p>不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题。</p>
-<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、“返回顶部”按钮，到是否采用来自您自定义 CSS 文件中的 CSS 内容替换掉默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。</p>
+<p>不须带任何参数，调用本工具之接口函数，即可轻松获得一份华丽的 HTML 文档（之内容）。即，该 HTML 文件自带精美主题即交互之功能。</p>
+<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用来自您自定义 CSS 文件中之 CSS 内容以增补或替换默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。</p>
 <h3 id="%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"><a class="header-anchor" href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">§</a> 内嵌样式</h3>
 <p>产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《<a href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
 <p>上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md">该文档</a>。</p>
@@ -297,7 +324,7 @@
 </blockquote>
 
     </article>
-    <nav class="markdown-article-toc"><ol><li><a href="#multilingual-editions-of-this-article"> Multilingual Editions of this Article</a></li><li><a href="#npm-%E9%A1%B5"> NPM 页</a></li><li><a href="#%E7%AE%80%E4%BB%8B"> 简介</a><ol><li><a href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"> 内嵌样式</a></li><li><a href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"> 用于 Gulpjs 生态的适配版本</a></li><li><a href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"> 用于命令行环境的工具</a></li></ol></li><li><a href="#%E7%94%A8%E6%B3%95"> 用法</a><ol><li><a href="#%E7%A4%BA%E4%BE%8B-1"> 示例 1</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-2"> 示例 2</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-3"> 示例 3</a></li></ol></li><li><a href="#api"> API</a><ol><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0"> 主函数</a></li><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"> 主函数接口</a><ol><li><a href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0"> 入口参数</a></li><li><a href="#%E8%BF%94%E5%9B%9E%E5%80%BC"> 返回值</a></li></ol></li></ol></li><li><a href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7"> 本项目已知的功能缺陷</a></li><li><a href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"> 未来计划</a></li><li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"> 许可证类型</a></li></ol></nav>
+    <nav class="markdown-article-toc"><ol><li><a href="#multilingual-editions-of-this-article"> Multilingual Editions of this Article</a></li><li><a href="#npm-%E9%A1%B5"> NPM 页</a></li><li><a href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"> 源代码仓库</a></li><li><a href="#%E7%AE%80%E4%BB%8B"> 简介</a><ol><li><a href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"> 内嵌样式</a></li><li><a href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"> 用于 Gulpjs 生态的适配版本</a></li><li><a href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"> 用于命令行环境的工具</a></li></ol></li><li><a href="#%E7%94%A8%E6%B3%95"> 用法</a><ol><li><a href="#%E7%A4%BA%E4%BE%8B-1"> 示例 1</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-2"> 示例 2</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-3"> 示例 3</a></li></ol></li><li><a href="#api"> API</a><ol><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0"> 主函数</a></li><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"> 主函数接口</a><ol><li><a href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0"> 入口参数</a></li><li><a href="#%E8%BF%94%E5%9B%9E%E5%80%BC"> 返回值</a></li></ol></li></ol></li><li><a href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7"> 本项目已知的功能缺陷</a></li><li><a href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"> 未来计划</a></li><li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"> 许可证类型</a></li></ol></nav>
     <a href="#" class="markdown-article-back-to-top"></a>
 
     <script>

@@ -27,7 +27,13 @@
 </dl>
 
 
+## 源代码仓库
 
+| <span style="display:inline-block;width:180px;">提供仓库服务之组织</span> | <span style="display:inline-block;width:150px;">仓库组织之国别</span> | 仓库地址 |
+| ---------- | :----------: | ------- |
+| 码云       | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
+| 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |
+| GitHub | 美 | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
 
 
 ## 简介
@@ -46,9 +52,9 @@
 
 **简而言之，对本工具输入一个 MarkDown 字符串，其产生一个 HTML 字符串。**
 
-不须带任何参数，即可轻松获得一份华丽的 HTML 文档。其自带精美主题。
+不须带任何参数，调用本工具之接口函数，即可轻松获得一份华丽的 HTML 文档（之内容）。即，该 HTML 文件自带精美主题即交互之功能。
 
-你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、“返回顶部”按钮，到是否采用来自您自定义 CSS 文件中的 CSS 内容替换掉默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。
+你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用来自您自定义 CSS 文件中之 CSS 内容以增补或替换默认的 CSS。您甚至可以控制内嵌 CSS 和 Javascript 是否为压缩过的版本。
 
 
 ### 内嵌样式
