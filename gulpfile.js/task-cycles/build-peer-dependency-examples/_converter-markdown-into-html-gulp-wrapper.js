@@ -43,18 +43,15 @@ module.exports = function createAPipeForConvertingMarkdownsIntoHTMLs(converterOp
                 return callback(null, file)
             }
 
-            // console.log('>>==> index.js', joinPathPOSIX(thisModuleRootFolderPath, '源代码', 'index.js'))
             const { 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器 } = rerequire(
                 joinPath(thisModuleRootFolderPath, '源代码', 'index.js')
             )
-            // console.log('构建一个用于将Markdown内容字符串转换为HTML字符串的转换器', 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器)
 
             const 将Markdown内容字符串转换为HTML内容的转换器 = 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器({
                 themesPeerPackageAllDistFileEntriesKeyingByFileNames,
                 syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
                 shouldReloadModulesForDevWatchingMode: true,
             })
-            console.log('将Markdown内容字符串转换为HTML内容的转换器', 将Markdown内容字符串转换为HTML内容的转换器)
 
 
 
