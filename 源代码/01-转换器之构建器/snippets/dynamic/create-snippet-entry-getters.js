@@ -1,17 +1,20 @@
-const path = require('path')
-const syncReadOneTextFile = require('../../utils/sync-read-one-text-file')
+const 路径工具 = require('path')
+
+const syncReadOneTextFile = require('../../../utils/sync-read-one-text-file')
 
 const chooseWrappingHTMLTagNameViaFileExt = require(
-    '../../utils/choose-wrapping-html-tag-name-via-file-ext'
+    '../../../utils/choose-wrapping-html-tag-name-via-file-ext'
 )
 
 const wrapContentsWithAPairOfHTMLTags = require(
     '../../string-processors/1-html/direct/wrap-file-content-with-an-pair-of-html-tags'
 )
 
+const { join: 遵循POSIX标准拼接路径 } = 路径工具.posix
 
 
-const joinPathPOSIX = path.posix.join
+
+
 
 let rawHTMLBeginning = ''
 
@@ -94,7 +97,6 @@ function createSnippetEntryGetters(options) {
 
 
 
-
     function syncGetSnippetEntryOfHTMLBeginning(options) {
         const {
             thisModuleRootFolderPath = '',
@@ -103,7 +105,7 @@ function createSnippetEntryGetters(options) {
 
         if (!rawHTMLBeginning) {
             rawHTMLBeginning = syncReadOneTextFile(
-                joinPathPOSIX(thisModuleRootFolderPath, './source/snippets/raw-sources/begin.html')
+                遵循POSIX标准拼接路径(thisModuleRootFolderPath, './源代码/01-转换器之构建器/snippets/raw-sources/begin.html')
             )
         }
 

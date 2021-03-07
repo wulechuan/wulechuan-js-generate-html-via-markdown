@@ -178,9 +178,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    All in the `./default-options.js` file.
+    All in the `./完备的默认配置.js` file.
 
-    I've copy & paste the full(almost) content of the `./default-options.js` below.
+    I've copy & paste the full(almost) content of the `./完备的默认配置.js` below.
 
     ```js
     {

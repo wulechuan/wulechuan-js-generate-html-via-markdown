@@ -1,8 +1,8 @@
-const path = require('path')
+const 路径工具 = require('path')
 const {
     clearCacheOfRequiredFile,
     rerequire,
-} = require('./source/utils/rerequired-file')
+} = require('../utils/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
 
@@ -12,9 +12,9 @@ const markdownItPluginAnchor       = require('markdown-it-anchor')
 const markdownItPluginTOCDoneRight = require('markdown-it-toc-done-right')
 
 
-const joinPathOSLocalStyle = path.join
+const joinPathOSLocalStyle = 路径工具.join
 
-const thisModuleRootFolderPath = path.dirname(require.resolve('./package.json'))
+const thisModuleRootFolderPath = 路径工具.dirname(require.resolve('../../package.json'))
 
 const rerequireLoggingOptions = { shouldNotLog: true, shouldNotWarn: false }
 
@@ -50,28 +50,28 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
 
     if (!shouldReloadModulesForDevWatchingMode) {
-        defaultOptionValues = require('./default-options')
+        defaultOptionValues = require('../完备的默认配置')
 
-        const tabs = require('./source/snippets/static/tabs')
+        const tabs = require('./snippets/static/tabs')
         tab1 = tabs.tab1
 
 
 
 
         insertTOCMarkDownTagIfNecessary = require(
-            './source/string-processors/0-markdown/insert-toc-placeholder'
+            './string-processors/0-markdown/insert-toc-placeholder'
         )
 
         buildHTMLTitleSnippetString = require(
-            './source/string-processors/1-html/direct/build-html-title-tag'
+            './string-processors/1-html/direct/build-html-title-tag'
         )
 
         wrapHTMLChiefContentWithAnArticleTag = require(
-            './source/string-processors/1-html/direct/wrap-chief-content-with-article-tag'
+            './string-processors/1-html/direct/wrap-chief-content-with-article-tag'
         )
 
         processAllContentsOfAllPreTagsOfHTMLString = require(
-            './source/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags'
+            './string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags'
         )
     }
 
@@ -86,7 +86,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
-    } = require('./source/snippets/dynamic/create-snippet-entry-getters')({
+    } = require('./snippets/dynamic/create-snippet-entry-getters')({
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })
@@ -113,19 +113,19 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         if (shouldReloadModulesForDevWatchingMode) {
             [
-                './source/string-processors/1-html/further-upon-hljs-outputs/process-snippet-of-one-language.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/ast/parse-ast-sub-tree-into-single-string.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/__line-breaks-and-leading-whitespaces.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/__punctuations.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-comment.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-regexp.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/_one-string.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-css-family.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-html.js',
-                './source/string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
+                './string-processors/1-html/further-upon-hljs-outputs/process-snippet-of-one-language.js',
+                './string-processors/1-html/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
+                './string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
+                './string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
+                './string-processors/1-html/further-upon-hljs-outputs/ast/parse-ast-sub-tree-into-single-string.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/__line-breaks-and-leading-whitespaces.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/__punctuations.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/_one-comment.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/_one-regexp.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/_one-string.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/language-css-family.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/language-html.js',
+                './string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
             ].forEach(subPath => {
                 clearCacheOfRequiredFile(
                     joinPathOSLocalStyle(thisModuleRootFolderPath, subPath),
@@ -138,7 +138,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             defaultOptionValues = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    'default-options.js'
+                    '../完备的默认配置.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -146,7 +146,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             const tabs = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './source/snippets/static/tabs.js'
+                    './snippets/static/tabs.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -155,7 +155,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             insertTOCMarkDownTagIfNecessary = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './source/string-processors/0-markdown/insert-toc-placeholder.js'
+                    './string-processors/0-markdown/insert-toc-placeholder.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -163,7 +163,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             buildHTMLTitleSnippetString = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './source/string-processors/1-html/direct/build-html-title-tag.js'
+                    './string-processors/1-html/direct/build-html-title-tag.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -171,7 +171,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             wrapHTMLChiefContentWithAnArticleTag = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './source/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
+                    './string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -179,7 +179,7 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
             processAllContentsOfAllPreTagsOfHTMLString = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './source/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
+                    './string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -349,8 +349,8 @@ module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
 
         /* **************** Modify generated HTML raw contents **************** */
 
-        须对产出之HTML内容字符串依次按下诸内容替换规则做修订.forEach(pair => {
-            htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(pair.from, pair.to)
+        须对产出之HTML内容字符串依次按下诸内容替换规则做修订.forEach(某替换规则 => {
+            htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(某替换规则.凡, 某替换规则.替换为)
         })
 
 

@@ -4,9 +4,14 @@
     "license": "WTFPL",
     "version": "3.0.0",
     "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
-    "main": "index.js",
+    "main": "源代码/index.js",
+    "directories": {
+        "source": "源代码",
+        "test": "测试集",
+        "doc": "文档"
+    },
     "scripts": {
-        "eslint": "eslint    ./.eslintrc.js    ./测试集/*.js    ./gulpfile.js/**/*.js    ./source/**/*.js    ./default-options.js    ./core.js    ./index.js",
+        "eslint": "eslint    ./.eslintrc.js    ./源代码/**/*.js    ./gulpfile.js/**/*.js    ./测试集/*.js",
         "_test-with-very-simple-markdowns": "node    ./测试集/index.js",
         "_test-with-dep-package-examples": "gulp    --silent   buildExamplesOnce",
         "_test-all-without-linting-without-browser": "npm  run  _test-with-dep-package-examples    &&    npm  run  _test-with-very-simple-markdowns",
@@ -17,16 +22,6 @@
         "prepublishOnly": "npm   test"
     },
     "keywords": [
-        "markdown",
-        "convert",
-        "conversion",
-        "html",
-        "article",
-        "pretty",
-        "beautify",
-        "gorgeous",
-        "responsive",
-        "responsive-layout",
         "可读性改善",
         "文章样式",
         "文章外观",
@@ -42,13 +37,18 @@
         "小尺寸屏幕上的文字排版",
         "文档格式转换",
         "文章格式转换",
-        "自带用于美化文章的样式"
+        "自带用于美化文章的样式",
+        "markdown",
+        "convert",
+        "conversion",
+        "html",
+        "article",
+        "pretty",
+        "beautify",
+        "gorgeous",
+        "responsive",
+        "responsive-layout"
     ],
-    "directories": {
-        "source": "source",
-        "test": "测试集",
-        "doc": "文档"
-    },
     "homepage": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown#readme",
     "repository": {
         "type": "git",
@@ -60,6 +60,7 @@
     "dependencies": {
         "@wulechuan/meaningful-error-messages": "^0.1.4",
         "chalk": "^4.1.0",
+        "fs": "^0.0.1-security",
         "markdown-it": "^12.0.4",
         "markdown-it-anchor": "^7.1.0",
         "markdown-it-checkbox": "^1.1.0",

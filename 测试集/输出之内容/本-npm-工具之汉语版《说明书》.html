@@ -177,8 +177,8 @@
 </li>
 <li>
 <p>options</p>
-<p><code>./default-options.js</code> 文件已尽述之。请参阅。</p>
-<p>我已将 <code>./default-options.js</code> 文件的（几乎）完整内容复制如下：</p>
+<p><code>./完备的默认配置.js</code> 文件已尽述之。请参阅。</p>
+<p>我已将 <code>./完备的默认配置.js</code> 文件的（几乎）完整内容复制如下：</p>
 <pre><code class="hljs language-js"><span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>须在控制台打印详尽细节<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><br
@@ -240,28 +240,28 @@
 ><span class="inline-pre-whitespaces indentation">        </span>须对产出之HTML内容字符串依次按下诸内容替换规则做修订<span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">/*<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: &lt;string or RegExp&gt;,<br
-><span class="inline-pre-whitespaces indentation">                </span>to:   &lt;string&gt;,<br
+><span class="inline-pre-whitespaces indentation">                </span>凡: &lt;字符串或正则表达式&gt;,<br
+><span class="inline-pre-whitespaces indentation">                </span>替换为: &lt;字符串&gt;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
 ><br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span>例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。<br
+><span class="inline-pre-whitespaces indentation">            </span>// 例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href=&quot;([^#\./].+)/gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to:   &#x27; target=&quot;_blank&quot; href=&quot;$1&#x27;,<br
+><span class="inline-pre-whitespaces indentation">                </span>凡: /\s+href=&quot;([^#\./].+)/gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>替换为: &#x27; target=&quot;_blank&quot; href=&quot;$1&#x27;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span>例 2：批量令原本指向另一些 Markdown 文件的链接地址，改为指向对应的 HTML 文件。<br
+><span class="inline-pre-whitespaces indentation">            </span>// 例 2：批量令原本指向另一些 Markdown 文件的链接地址，改为指向对应的 HTML 文件。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href=&quot;(.+)\.md(#.*)?&quot;/gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to:   &#x27; href=&quot;$1.html$2&quot;&#x27;,<br
+><span class="inline-pre-whitespaces indentation">                </span>凡: /\s+href=&quot;(.+)\.md(#.*)?&quot;/gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>替换为: &#x27; href=&quot;$1.html$2&quot;&#x27;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span>例 3：依照假想的特定要求批量转换链接地址。<br
+><span class="inline-pre-whitespaces indentation">            </span>// 例 3：依照假想的特定要求批量转换链接地址。<br
 ><span class="inline-pre-whitespaces indentation">            </span>{<br
-><span class="inline-pre-whitespaces indentation">                </span>from: /\s+href=&quot;\.\/course-examples\//gi,<br
-><span class="inline-pre-whitespaces indentation">                </span>to: &#x27; href=&quot;../public/assets/course-examples/&#x27;,<br
+><span class="inline-pre-whitespaces indentation">                </span>凡: /\s+href=&quot;\.\/课件之示例集\//gi,<br
+><span class="inline-pre-whitespaces indentation">                </span>替换为: &#x27; href=&quot;../公开发表/课件之示例集/&#x27;,<br
 ><span class="inline-pre-whitespaces indentation">            </span>},<br
 ><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="punctuation bracket close-bracket">]</span><span class="punctuation comma">,</span><br

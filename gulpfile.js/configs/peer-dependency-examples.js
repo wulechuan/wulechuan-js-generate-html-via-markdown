@@ -9,8 +9,8 @@ module.exports = {
         relativeGlobsOfAllPossibleOutputs: [ '**/*.html' ],
         extraSourceGlobsToWatch: [
             'core.js',
-            'default-options.js',
-            'source/string-processors/1-html/further-upon-hljs-outputs/**/*',
+            '完备的默认配置.js',
+            '源代码/string-processors/1-html/further-upon-hljs-outputs/**/*',
         ],
     },
 }

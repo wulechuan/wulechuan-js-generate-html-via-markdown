@@ -191,9 +191,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    `./default-options.js` 文件已尽述之。请参阅。
+    `./完备的默认配置.js` 文件已尽述之。请参阅。
 
-    我已将 `./default-options.js` 文件的（几乎）完整内容复制如下：
+    我已将 `./完备的默认配置.js` 文件的（几乎）完整内容复制如下：
 
     ```js
     {
@@ -257,28 +257,28 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订: [
             /*
                 {
-                    from: <string or RegExp>,
-                    to:   <string>,
+                    凡: <字符串或正则表达式>,
+                    替换为: <字符串>,
                 },
 
 
 
-                例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
+                // 例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
                 {
-                    from: /\s+href="([^#\./].+)/gi,
-                    to:   ' target="_blank" href="$1',
+                    凡: /\s+href="([^#\./].+)/gi,
+                    替换为: ' target="_blank" href="$1',
                 },
 
-                例 2：批量令原本指向另一些 Markdown 文件的链接地址，改为指向对应的 HTML 文件。
+                // 例 2：批量令原本指向另一些 Markdown 文件的链接地址，改为指向对应的 HTML 文件。
                 {
-                    from: /\s+href="(.+)\.md(#.*)?"/gi,
-                    to:   ' href="$1.html$2"',
+                    凡: /\s+href="(.+)\.md(#.*)?"/gi,
+                    替换为: ' href="$1.html$2"',
                 },
 
-                例 3：依照假想的特定要求批量转换链接地址。
+                // 例 3：依照假想的特定要求批量转换链接地址。
                 {
-                    from: /\s+href="\.\/course-examples\//gi,
-                    to: ' href="../public/assets/course-examples/',
+                    凡: /\s+href="\.\/课件之示例集\//gi,
+                    替换为: ' href="../公开发表/课件之示例集/',
                 },
             */
             ],

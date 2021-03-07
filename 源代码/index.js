@@ -1,38 +1,12 @@
-const chalk = require('chalk')
+require(
+    './02-构造对外之默认接口/01-确保-peer-依赖包存在'
+)
 
-const packageJSONOfThisModule = require('./package.json')
+const 本工具现成提供的一枚转换器 = require(
+    './02-构造对外之默认接口/02-构造一个现成的转换器作为本工具之对外默认接口'
+)
 
-const peerDependencyModuleName = '@wulechuan/css-stylus-markdown-themes'
-
-const createOneConverterOfMarkdownToHTML = require('./core')
-
-
-let requiredPeerDepModule
-
-try {
-    requiredPeerDepModule = require(peerDependencyModuleName)
-} catch (err) {
-    console.log('-'.repeat(79))
-    console.log(chalk.yellow(`The module "${
-        chalk.green(packageJSONOfThisModule.name)
-    }" requires a peer dependency \nnamed "${
-        chalk.white.bgRed(peerDependencyModuleName)
-    }" to install! So please try either \nof the lines below in your CLI:`))
-    console.log('')
-    console.log(chalk.green(`    npm  i      ${peerDependencyModuleName}`))
-    console.log(chalk.green(`    npm  i  -D  ${peerDependencyModuleName}`))
-    console.log('')
-    console.log('-'.repeat(79))
-
-    throw(err)
-}
-
-
-const generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHTML({
-    themesPeerPackageAllDistFileEntriesKeyingByFileNames: requiredPeerDepModule.allFileEntriesKeyingByFileNames,
-    syncGetContentStringOfOneFileOfThePeerModuleOfThemes: requiredPeerDepModule.syncGetContentStringOfOneFileEntry,
-    shouldReloadModulesForDevWatchingMode: false,
-})
+module.exports = 本工具现成提供的一枚转换器
 
 
 
@@ -94,5 +68,3 @@ const generateFullHTMLStringViaMarkdownString = createOneConverterOfMarkdownToHT
  * @arg {converterSundryOptions} options.杂项
  * @returns {string} - Full HTML contents
  */
-module.exports = generateFullHTMLStringViaMarkdownString
-
