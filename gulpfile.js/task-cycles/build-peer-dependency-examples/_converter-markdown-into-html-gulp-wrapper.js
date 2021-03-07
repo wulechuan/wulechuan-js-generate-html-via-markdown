@@ -14,7 +14,7 @@ const path = require('path')
 const through = require('through2')
 const GulpPluginError = require('plugin-error')
 const replaceFileExt  = require('replace-ext')
-const { rerequire } = require('../../../源代码/utils/rerequired-file')
+const { rerequire } = require('../../../源代码/99-辅助工具集/rerequired-file')
 
 const {
     thisModuleRootFolderPath,

@@ -2,7 +2,7 @@ const 路径工具 = require('path')
 const {
     clearCacheOfRequiredFile,
     rerequire,
-} = require('../utils/rerequired-file')
+} = require('../99-辅助工具集/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
 
@@ -138,7 +138,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             defaultOptionValues = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    '../完备的默认配置.js'
+                    '源代码/完备的默认配置.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -146,7 +146,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             const tabs = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './snippets/static/tabs.js'
+                    './源代码/01-转换器之构建器/snippets/static/tabs.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -155,7 +155,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             insertTOCMarkDownTagIfNecessary = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './string-processors/0-markdown/insert-toc-placeholder.js'
+                    './源代码/01-转换器之构建器/string-processors/0-markdown/insert-toc-placeholder.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -163,7 +163,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             buildHTMLTitleSnippetString = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './string-processors/1-html/direct/build-html-title-tag.js'
+                    './源代码/01-转换器之构建器/string-processors/1-html/direct/build-html-title-tag.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -171,7 +171,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             wrapHTMLChiefContentWithAnArticleTag = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
+                    './源代码/01-转换器之构建器/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -179,7 +179,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             processAllContentsOfAllPreTagsOfHTMLString = rerequire(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
-                    './string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
+                    './源代码/01-转换器之构建器/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
                 ),
                 rerequireLoggingOptions
             )

@@ -1,9 +1,9 @@
 const 路径工具 = require('path')
 
-const syncReadOneTextFile = require('../../../utils/sync-read-one-text-file')
+const syncReadOneTextFile = require('../../../99-辅助工具集/sync-read-one-text-file')
 
 const chooseWrappingHTMLTagNameViaFileExt = require(
-    '../../../utils/choose-wrapping-html-tag-name-via-file-ext'
+    '../../../99-辅助工具集/choose-wrapping-html-tag-name-via-file-ext'
 )
 
 const wrapContentsWithAPairOfHTMLTags = require(
