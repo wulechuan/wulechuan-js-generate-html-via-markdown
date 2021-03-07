@@ -33,7 +33,7 @@ const rerequireLoggingOptions = { shouldNotLog: true, shouldNotWarn: false }
  * @param {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
  * @returns {function} - The core converter function
  */
-module.exports = function createOneConverterOfMarkdownToHTML(options = {}) {
+module.exports = function 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器(options = {}) {
     const {
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,

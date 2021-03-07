@@ -1,14 +1,20 @@
-const path = require('path')
+const 路径工具 = require('path')
+
+
+
 const {
     createATaskCycle,
 } = require('@wulechuan/gulp-classical-task-cycle')
+
 const createAPipeForConvertingMarkdownsIntoHTMLs = require('./_converter-markdown-into-html-gulp-wrapper')
+
 
 
 const {
     peerDepThemingNPMPackageRootPath,
     thisModuleRootFolderPath,
 } = require('../../configs/common')
+
 
 
 const {
@@ -23,14 +29,16 @@ const {
 } = require('../../configs/peer-dependency-examples')
 
 
-const joinPathPOSIX = path.posix.join
+
+const { join: 遵循POSIX标准拼接路径 } = 路径工具.posix
+
 
 
 const taskCycleForMarkdownConversions = createATaskCycle({
     descriptionOfInputsOfCoreTask,
 
     sourceGlobs: {
-        rootFolderPath: joinPathPOSIX(
+        rootFolderPath: 遵循POSIX标准拼接路径(
             peerDepThemingNPMPackageRootPath,
             sourceFilesFolderSubPathInPeerDepPackage
         ),
@@ -41,7 +49,7 @@ const taskCycleForMarkdownConversions = createATaskCycle({
     },
 
     outputFiles: {
-        rootFolderPath: joinPathPOSIX(thisModuleRootFolderPath, outputRootFolderSubPath),
+        rootFolderPath: 遵循POSIX标准拼接路径(thisModuleRootFolderPath, outputRootFolderSubPath),
         forBatchOutputFiles: {
             relativeGlobsOfAllPossibleOutputs,
         },
@@ -56,7 +64,7 @@ const taskCycleForMarkdownConversions = createATaskCycle({
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订: [
                 {
                     凡: /\.\/illustrates\//g,
-                    替换为: '../../../node_modules/@wulechuan/css-stylus-markdown-themes/documents/examples/source-markdown-files/illustrates/',
+                    替换为: '../../../node_modules/@wulechuan/css-stylus-markdown-themes/文档/文章排版与配色效果示例集/原始的-markdown-格式的文章/illustrates/',
                 },
             ],
         },

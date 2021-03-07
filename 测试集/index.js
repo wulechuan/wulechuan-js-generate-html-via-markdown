@@ -21,7 +21,7 @@ const 简短之文章之Markdown内容字符串 = [
     '',
 ].join('\n\n')
 
-
+console.log('构建器', require('..').构建一个用于将Markdown内容字符串转换为HTML字符串的转换器)
 
 const 由简短文章产出之甲型风貌之变种其一之HTML内容字符串 = 本工具现成提供的一枚转换器(简短之文章之Markdown内容字符串)
 

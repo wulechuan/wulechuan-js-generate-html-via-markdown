@@ -8,6 +8,14 @@ const 本工具现成提供的一枚转换器 = require(
 
 module.exports = 本工具现成提供的一枚转换器
 
+module.exports.构建一个用于将Markdown内容字符串转换为HTML字符串的转换器 = require(
+    './01-转换器之构建器'
+)
+
+module.exports.完备的默认配置 = require(
+    './完备的默认配置'
+)
+
 
 
 /**

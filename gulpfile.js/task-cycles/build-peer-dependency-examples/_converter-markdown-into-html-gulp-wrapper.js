@@ -26,7 +26,7 @@ const {
 } = require('@wulechuan/css-stylus-markdown-themes')
 
 const joinPath = path.join
-// const joinPathPOSIX = path.posix.join
+const joinPathPOSIX = path.posix.join
 
 function createNewGulpError(rawError) {
     return new GulpPluginError('@wulechuan/generate-html-via-markdown', rawError)
@@ -43,20 +43,24 @@ module.exports = function createAPipeForConvertingMarkdownsIntoHTMLs(converterOp
                 return callback(null, file)
             }
 
-            const createOneConverterOfMarkdownToHTML = rerequire(
-                joinPath(thisModuleRootFolderPath, 'core.js')
+            // console.log('>>==> index.js', joinPathPOSIX(thisModuleRootFolderPath, '源代码', 'index.js'))
+            const { 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器 } = rerequire(
+                joinPath(thisModuleRootFolderPath, '源代码', 'index.js')
             )
+            // console.log('构建一个用于将Markdown内容字符串转换为HTML字符串的转换器', 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器)
 
-            const markdownToHTMLConverter = createOneConverterOfMarkdownToHTML({
+            const 将Markdown内容字符串转换为HTML内容的转换器 = 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器({
                 themesPeerPackageAllDistFileEntriesKeyingByFileNames,
                 syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
                 shouldReloadModulesForDevWatchingMode: true,
             })
+            console.log('将Markdown内容字符串转换为HTML内容的转换器', 将Markdown内容字符串转换为HTML内容的转换器)
+
 
 
             let htmlContent
             try {
-                htmlContent = markdownToHTMLConverter(file.contents.toString(fileEncoding || 'utf-8'), converterOptions)
+                htmlContent = 将Markdown内容字符串转换为HTML内容的转换器(file.contents.toString(fileEncoding || 'utf-8'), converterOptions)
             } catch(error) {
                 return callback(createNewGulpError(error))
             }
