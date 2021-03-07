@@ -3,7 +3,7 @@
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
     "version": "3.0.0",
-    "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
+    "description": "本工具借助 markdownIt 生态的工具集，可将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。当采用默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。",
     "main": "源代码/index.js",
     "directories": {
         "source": "源代码",
