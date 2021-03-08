@@ -18,7 +18,7 @@ const {
 // 用于 require 语句之路径，总是从该 require 语句所在之 JavaScript 文件之路径出发。
 module.exports = function 根据项目根文件夹相对于当前文件之路径求出几种关键路径({
     自本文件出发至本NPM包之根文件夹之相对路径,
-    应读取本NPM包之Package点JOSN之内容,
+    应顺便读取本NPM包之Package点JOSN之内容,
 } = {}) {
     if (!自本文件出发至本NPM包之根文件夹之相对路径) {
         自本文件出发至本NPM包之根文件夹之相对路径 = ''
@@ -35,7 +35,7 @@ module.exports = function 根据项目根文件夹相对于当前文件之路径
 
     let 本NPM包之Package点JSON文件 = null
 
-    if (应读取本NPM包之Package点JOSN之内容) {
+    if (应顺便读取本NPM包之Package点JOSN之内容) {
         本NPM包之Package点JSON文件 = require(自本文件出发至本NPM包之Package点JSON文件之相对路径)
     }
 
@@ -89,7 +89,7 @@ module.exports = function 根据项目根文件夹相对于当前文件之路径
         本NPM包之Package点JSON文件,
     }
 
-    console.log(求解结果汇总摘要)
+    // console.log(求解结果汇总摘要)
 
     return 求解结果汇总
 }

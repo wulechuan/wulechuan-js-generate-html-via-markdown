@@ -2,7 +2,7 @@ const 路径工具 = require('path')
 const {
     清除Require机制对该文件之缓存,
     先清除Require机制对该文件之缓存而后重新Require该文件,
-} = require('../99-辅助工具集/rerequired-file')
+} = require('../99-辅助工具集/先清除-require-机制对某文件之缓存而后重新-require-该文件')
 
 const MarkDownIt = require('markdown-it')
 
@@ -14,7 +14,9 @@ const markdownItPluginTOCDoneRight = require('markdown-it-toc-done-right')
 
 const joinPathOSLocalStyle = 路径工具.join
 
-const thisModuleRootFolderPath = 路径工具.dirname(require.resolve('../../package.json'))
+const {
+    本NPM包之根文件夹之绝对路径,
+} = require('../面向研发阶段之配置')
 
 const rerequireLoggingOptions = { shouldNotLog: true, shouldNotWarn: false }
 
@@ -40,38 +42,38 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求,
     } = options
 
-    let defaultOptionValues
+    let 完备的默认配置
     let tab1
 
-    let insertTOCMarkDownTagIfNecessary
-    let buildHTMLTitleSnippetString
+    let 按需向Markdown内容字符串中注入TOC标记
+    let 构建HTML之完整Title标签之字符串
     let wrapHTMLChiefContentWithAnArticleTag
     let processAllContentsOfAllPreTagsOfHTMLString
 
 
     if (!不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
-        defaultOptionValues = require('../完备的默认配置')
+        完备的默认配置 = require('../完备的默认配置')
 
-        const tabs = require('./snippets/static/tabs')
+        const tabs = require('./静态-html-片段以及动态构建的-html-片段/static/tabs')
         tab1 = tabs.tab1
 
 
 
 
-        insertTOCMarkDownTagIfNecessary = require(
-            './string-processors/0-markdown/insert-toc-placeholder'
+        按需向Markdown内容字符串中注入TOC标记 = require(
+            './文件内容字符串之处理工具集/1-针对-markdown-内容的字符串/insert-toc-placeholder'
         )
 
-        buildHTMLTitleSnippetString = require(
-            './string-processors/1-html/direct/build-html-title-tag'
+        构建HTML之完整Title标签之字符串 = require(
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/build-html-title-tag'
         )
 
         wrapHTMLChiefContentWithAnArticleTag = require(
-            './string-processors/1-html/direct/wrap-chief-content-with-article-tag'
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/wrap-chief-content-with-article-tag'
         )
 
         processAllContentsOfAllPreTagsOfHTMLString = require(
-            './string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags'
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/process-all-html-pre-tags'
         )
     }
 
@@ -86,7 +88,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
-    } = require('./snippets/dynamic/create-snippet-entry-getters')({
+    } = require('./静态-html-片段以及动态构建的-html-片段/dynamic/create-snippet-entry-getters')({
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
     })
@@ -113,31 +115,31 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         if (不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
             [
-                './string-processors/1-html/further-upon-hljs-outputs/process-snippet-of-one-language.js',
-                './string-processors/1-html/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
-                './string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
-                './string-processors/1-html/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
-                './string-processors/1-html/further-upon-hljs-outputs/ast/parse-ast-sub-tree-into-single-string.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/__line-breaks-and-leading-whitespaces.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/__punctuations.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/_one-comment.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/_one-regexp.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/_one-string.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/language-css-family.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/language-html.js',
-                './string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/process-snippet-of-one-language.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/parse-ast-sub-tree-into-single-string.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/__line-breaks-and-leading-whitespaces.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/__punctuations.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/_one-comment.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/_one-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/_one-string.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/language-css-family.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/language-html.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/language-javascript-family.js',
             ].forEach(subPath => {
                 清除Require机制对该文件之缓存(
-                    joinPathOSLocalStyle(thisModuleRootFolderPath, subPath),
+                    joinPathOSLocalStyle(本NPM包之根文件夹之绝对路径, subPath),
                     rerequireLoggingOptions
                 )
             })
 
             // ----------------------------------------------
 
-            defaultOptionValues = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            完备的默认配置 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
-                    thisModuleRootFolderPath,
+                    本NPM包之根文件夹之绝对路径,
                     '源代码/完备的默认配置.js'
                 ),
                 rerequireLoggingOptions
@@ -145,41 +147,41 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
             const tabs = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
-                    thisModuleRootFolderPath,
-                    './源代码/01-转换器之构建器/snippets/static/tabs.js'
+                    本NPM包之根文件夹之绝对路径,
+                    './源代码/01-转换器之构建器/静态-html-片段以及动态构建的-html-片段/static/tabs.js'
                 ),
                 rerequireLoggingOptions
             )
             tab1 = tabs.tab1
 
-            insertTOCMarkDownTagIfNecessary = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            按需向Markdown内容字符串中注入TOC标记 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
-                    thisModuleRootFolderPath,
-                    './源代码/01-转换器之构建器/string-processors/0-markdown/insert-toc-placeholder.js'
+                    本NPM包之根文件夹之绝对路径,
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/1-针对-markdown-内容的字符串/insert-toc-placeholder.js'
                 ),
                 rerequireLoggingOptions
             )
 
-            buildHTMLTitleSnippetString = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            构建HTML之完整Title标签之字符串 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
-                    thisModuleRootFolderPath,
-                    './源代码/01-转换器之构建器/string-processors/1-html/direct/build-html-title-tag.js'
+                    本NPM包之根文件夹之绝对路径,
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/build-html-title-tag.js'
                 ),
                 rerequireLoggingOptions
             )
 
             wrapHTMLChiefContentWithAnArticleTag = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
-                    thisModuleRootFolderPath,
-                    './源代码/01-转换器之构建器/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
+                    本NPM包之根文件夹之绝对路径,
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/wrap-chief-content-with-article-tag.js'
                 ),
                 rerequireLoggingOptions
             )
 
             processAllContentsOfAllPreTagsOfHTMLString = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
-                    thisModuleRootFolderPath,
-                    './源代码/01-转换器之构建器/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
+                    本NPM包之根文件夹之绝对路径,
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/process-all-html-pre-tags.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -190,27 +192,27 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         /* ************* Merge options with their default values ************** */
 
         将Markdown转换为HTML之前之预备阶段 = {
-            ...defaultOptionValues.将Markdown转换为HTML之前之预备阶段,
+            ...完备的默认配置.将Markdown转换为HTML之前之预备阶段,
             ...将Markdown转换为HTML之前之预备阶段,
         }
 
         将Markdown转换为HTML之阶段 = {
-            ...defaultOptionValues.将Markdown转换为HTML之阶段,
+            ...完备的默认配置.将Markdown转换为HTML之阶段,
             ...将Markdown转换为HTML之阶段,
         }
 
         对HTML做额外处理之阶段 = {
-            ...defaultOptionValues.对HTML做额外处理之阶段,
+            ...完备的默认配置.对HTML做额外处理之阶段,
             ...对HTML做额外处理之阶段,
         }
 
         对本工具现成提供的文章纲要做以下配置 = {
-            ...defaultOptionValues.对本工具现成提供的文章纲要做以下配置,
+            ...完备的默认配置.对本工具现成提供的文章纲要做以下配置,
             ...对本工具现成提供的文章纲要做以下配置,
         }
 
         杂项 = {
-            ...defaultOptionValues.杂项,
+            ...完备的默认配置.杂项,
             ...杂项,
         }
 
@@ -243,9 +245,6 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称,
             所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称,
 
-            moduleCSSFileNameOfDefaultThemeWithTOC,
-            moduleCSSFileNameOfDefaultTheme,
-
             cssClassNameOfBackToTopAnchor,
             cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
             cssClassNameOfMarkdownChiefContentWrappingArticleTag,
@@ -256,7 +255,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         } = 对HTML做额外处理之阶段
 
         const {
-            控制台打印信息改用英国话,
+            控制台打印信息须改用英国话,
             读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
             读取外来文件时禁止Require语句缓存其内容,
         } = 杂项
@@ -273,17 +272,14 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-
-
-
         /* *************** Modify markdown content if necessary *************** */
 
         const {
-            markdownContentHasTOCPlaceholder,
-            processedMarkdownContent: _tempMarkdownContent1,
-        } = insertTOCMarkDownTagIfNecessary(markdownContent, 不应主动插入TOC之占位标记)
+            markdown内容现已包含TOC标记,
+            处理过的Markdown内容之字符串: _markdown内容之半成品1,
+        } = 按需向Markdown内容字符串中注入TOC标记(markdownContent, 不应主动插入TOC之占位标记)
 
-        const finalMarkdownContent = _tempMarkdownContent1
+        const markdown内容之最终成品之字符串 = _markdown内容之半成品1
 
 
 
@@ -316,7 +312,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         markdownItParser.use(markdownItPluginAnchor, markdownItPluginAnchorOptions)
 
-        if (markdownContentHasTOCPlaceholder) {
+        if (markdown内容现已包含TOC标记) {
             markdownItParser.use(markdownItPluginTOCDoneRight, {
                 level: 构建文章纲要列表时自该级别之标题始,
                 containerClass: cssClassNameOfArticleTOCRootTag,
@@ -326,9 +322,11 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 linkClass: cssClassNameOfArticleTOCItemAnchors,
             })
         }
-        const markdownArticleHasTOC = markdownContentHasTOCPlaceholder
+        const markdown文章中包含了TOC标记 = markdown内容现已包含TOC标记
 
-        let htmlContentViaMarkDownContent = markdownItParser.render(finalMarkdownContent)
+        let 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = markdownItParser.render(
+            markdown内容之最终成品之字符串
+        )
         /*                                                                      */
         /*                                                                      */
         /* ******************************************************************** */
@@ -336,11 +334,16 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
+
+
+
+
+
         /* ****** Extract HTML title out of generated HTML raw contents ******* */
 
-        const snippetStringOfHTMLTitle = buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, {
+        const html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串, {
             specifiedArticleTitle: 产出之HTML文件之Title标签之内容字符串,
-            控制台打印信息改用英国话,
+            控制台打印信息须改用英国话,
         })
 
 
@@ -350,31 +353,30 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         /* **************** Modify generated HTML raw contents **************** */
 
         须对产出之HTML内容字符串依次按下诸内容替换规则做修订.forEach(某替换规则 => {
-            htmlContentViaMarkDownContent = htmlContentViaMarkDownContent.replace(某替换规则.凡, 某替换规则.替换为)
+            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串.replace(某替换规则.凡, 某替换规则.替换为)
         })
 
 
-        htmlContentViaMarkDownContent = processAllContentsOfAllPreTagsOfHTMLString(
-            htmlContentViaMarkDownContent,
+        借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = processAllContentsOfAllPreTagsOfHTMLString(
+            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
             {
                 不应将代码块中的换行符替换成BR标签,
             }
         )
 
-        htmlContentViaMarkDownContent = wrapHTMLChiefContentWithAnArticleTag(
-            htmlContentViaMarkDownContent,
+        借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = wrapHTMLChiefContentWithAnArticleTag(
+            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
 
             {
                 cssClassNameOfMarkdownChiefContentWrappingArticleTag,
                 cssClassNameOfArticleTOCRootTag,
-                markdownArticleHasTOC,
+                markdown文章中包含了TOC标记,
             }
         )
 
         if (!不应注入用于返回文章起始之按钮) {
-            htmlContentViaMarkDownContent += `\n${tab1}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
+            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 += `\n${tab1}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
         }
-
 
 
 
@@ -383,54 +385,56 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         /* ***************** Prepare all extra HTML snippets ****************** */
 
         const snippetEntryOfHTMLBeginning = syncGetSnippetEntryOfHTMLBeginning({
-            thisModuleRootFolderPath,
+            本NPM包之根文件夹之绝对路径,
             产出之HTML文件之HTML标签之语言属性之取值,
         })
 
         const snippetEntryOfHTMLEnding = syncGetSnippetEntryOfHTMLEnding()
 
         const snippetEntryOfHTMLFromHeadEndToBodyBegin = syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin({
-            markdownArticleHasTOC,
+            markdown文章中包含了TOC标记,
             cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
         })
 
 
-        let allSnippetEntriesToEmbed = []
+        let 一切须注入HTML之标签之列表 = []
 
 
 
 
 
-        let themingCSSFileEntryKey
+        let 所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称
 
         if (!不应采用任何由本工具内建之层叠样式表) {
-            if (markdownArticleHasTOC) {
-                themingCSSFileEntryKey = 所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称
+            if (markdown文章中包含了TOC标记) {
+                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称
             } else {
-                themingCSSFileEntryKey = 所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称
+                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称
             }
 
             if (采用由本工具内建之层叠样式表时应采用未经压缩之版本) {
-                themingCSSFileEntryKey = themingCSSFileEntryKey.replace(/\.min\.css$/, '.css')
+                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称.replace(
+                    /\.min\.css$/,
+                    '.css'
+                )
             }
         }
 
-
-        if (themingCSSFileEntryKey) {
+        if (所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称) {
             const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
-                themingCSSFileEntryKey,
+                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称,
                 读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
                 对本工具现成提供的文章纲要做以下配置
             )
 
-            allSnippetEntriesToEmbed = [
-                ...allSnippetEntriesToEmbed,
+            一切须注入HTML之标签之列表 = [
+                ...一切须注入HTML之标签之列表,
                 snippetEntryOfThemingCSS,
             ]
 
             if (snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs) {
-                allSnippetEntriesToEmbed = [
-                    ...allSnippetEntriesToEmbed,
+                一切须注入HTML之标签之列表 = [
+                    ...一切须注入HTML之标签之列表,
                     ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
                         if (采用由本工具内建之Javascript时应采用未经压缩之版本) {
                             return entryPair.unminified
@@ -442,9 +446,8 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             }
         }
 
-
-        allSnippetEntriesToEmbed = [
-            ...allSnippetEntriesToEmbed,
+        一切须注入HTML之标签之列表 = [
+            ...一切须注入HTML之标签之列表,
             ...须读取以下诸文件之内容并全部注入产出之HTML内容中
                 .map(filePath => {
                     return syncGetSnippetEntryOfOneExternalFile(
@@ -455,11 +458,8 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 .filter(entry => !!entry),
         ]
 
-        const allSnippetEntriesOfAllCSS         = allSnippetEntriesToEmbed.filter(entry =>  entry.isStyleTag)
-        const allSnippetEntriesOfAllJavascripts = allSnippetEntriesToEmbed.filter(entry => !entry.isStyleTag)
-
-
-
+        const 所有层叠样式表片段之列表  = 一切须注入HTML之标签之列表.filter(entry =>  entry.内容由style标签而非script标签包裹着)
+        const 所有Javascript片段之列表 = 一切须注入HTML之标签之列表.filter(entry => !entry.内容由style标签而非script标签包裹着)
 
 
 
@@ -467,15 +467,15 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         /* ***************** Join all HTML snippets together ****************** */
 
-        const htmlFullContent = [
-            // <!DOCTYPE html>... etc.
+        const 最终HTML之完整内容字符串 = [
+            // <!DOCTYPE html> 之类的内容。
             snippetEntryOfHTMLBeginning.content,
 
-            // <title />
-            snippetStringOfHTMLTitle,
+            // 完整的 <title /> 标签。
+            html之完整Title标签之字符串,
 
             // <style /> tags
-            ...allSnippetEntriesOfAllCSS.map(entry => entry.content),
+            ...所有层叠样式表片段之列表.map(片段 => 片段.content),
 
             // </head><body ...>
             snippetEntryOfHTMLFromHeadEndToBodyBegin.content,
@@ -485,14 +485,15 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             /* ***** chief content ***** */
             /*                           */
             /*                           */
-            htmlContentViaMarkDownContent,
+            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
             /*                           */
             /*                           */
             /* ************************* */
 
 
+
             // <script /> tags
-            ...allSnippetEntriesOfAllJavascripts.map(entry => entry.content),
+            ...所有Javascript片段之列表.map(片段 => 片段.content),
 
             // </body></html>
             snippetEntryOfHTMLEnding.content,
@@ -501,6 +502,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-        return htmlFullContent
+
+        return 最终HTML之完整内容字符串
     }
 }

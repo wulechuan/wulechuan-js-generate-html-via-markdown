@@ -1,7 +1,7 @@
 const {
     tab1,
     tab2,
-} = require('../../../snippets/static/tabs')
+} = require('../../../静态-html-片段以及动态构建的-html-片段/static/tabs')
 
 module.exports = function wrapContentsWithAPairOfHTMLTags({ fileRawContent, wrappingTagName, shouldIndentContentsBy2Levels }) {
     if (!fileRawContent.trim()) {

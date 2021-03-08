@@ -240,13 +240,6 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
 
-            /*
-                These two properties are deprecated. Take the two above instead.
-                Once the corresnponding property shown above is set, the one shown below is ignored.
-            */
-            moduleCSSFileNameOfDefaultTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
-            moduleCSSFileNameOfDefaultThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
-
             cssClassNameOfMarkdownChiefContentWrappingArticleTag: 'markdown-article',
             cssClassNameOfBodyTagWhenMarkdownArticleHasTOC:       'markdown-article-toc-exists',
             cssClassNameOfBackToTopAnchor:                        'markdown-article-back-to-top',

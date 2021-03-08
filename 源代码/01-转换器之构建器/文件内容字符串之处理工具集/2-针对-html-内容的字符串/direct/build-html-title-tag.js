@@ -12,10 +12,10 @@ function 获取文章中第一个H1标签之内容字符串(用于在其中搜�
     return ''
 }
 
-module.exports = function buildHTMLTitleSnippetString(htmlContentViaMarkDownContent, options) {
+module.exports = function 构建HTML之完整Title标签之字符串(htmlContentViaMarkDownContent, options) {
     const {
         specifiedArticleTitle,
-        控制台打印信息改用英国话,
+        控制台打印信息须改用英国话,
     } = options
 
 
@@ -34,7 +34,7 @@ module.exports = function buildHTMLTitleSnippetString(htmlContentViaMarkDownCont
 
         htmlTitleSnippet = `<title>${articleTitle}</title>`
 
-        if (控制台打印信息改用英国话) {
+        if (控制台打印信息须改用英国话) {
             console.log(`Article title: ${彩色粉笔工具.green(articleTitle)}`)
         } else {
             console.log(`文章标题为：${彩色粉笔工具.green('《' + articleTitle + '》')}`)
@@ -42,9 +42,9 @@ module.exports = function buildHTMLTitleSnippetString(htmlContentViaMarkDownCont
 
     } else {
 
-        htmlTitleSnippet = '<title>HTML via MarkDown (by markdownIt)</title>'
+        htmlTitleSnippet = '<title>一篇由 Markdown 源文编译而得的网页（核心技术由 markdownIt 提供）</title>'
 
-        if (控制台打印信息改用英国话) {
+        if (控制台打印信息须改用英国话) {
             console.log(彩色粉笔工具.red('Article title not found.'))
         } else {
             console.log(彩色粉笔工具.red('未找到文章标题'))

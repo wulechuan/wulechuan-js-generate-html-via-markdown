@@ -15,7 +15,7 @@
         "_test-with-very-simple-markdowns": "node    ./测试集/index.js",
         "_test-with-dep-package-examples": "gulp    --silent   buildExamplesOnce",
         "_test-with-dep-package-examples2": "gulp              buildExamplesOnce",
-        "_test-all-without-linting-without-browser": "npm  run  _test-with-dep-package-examples    &&    npm  run  _test-with-very-simple-markdowns",
+        "_test-all-without-linting-without-browser": "npm  run  _test-with-dep-package-examples2    &&    npm  run  _test-with-very-simple-markdowns",
         "test": "npm    run  eslint    &&             npm  run  _test-all-without-linting-without-browser",
         "start": "npm   run  eslint    &&    gulp  --silent",
         "start2": "npm  run  eslint    &&    gulp",

@@ -10,7 +10,7 @@ module.exports = {
         extraSourceGlobsToWatch: [
             '源代码/完备的默认配置.js',
             '源代码/01-转换器之构建器/index.js',
-            '源代码/01-转换器之构建器/string-processors/1-html/further-upon-hljs-outputs/**/*',
+            '源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/**/*',
         ],
     },
 }

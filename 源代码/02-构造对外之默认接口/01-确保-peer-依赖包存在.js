@@ -33,7 +33,7 @@ const {
     本NPM包之Package点JSON文件,
 } = 根据项目根文件夹相对于当前文件之路径求出几种关键路径({
     自本文件出发至本NPM包之根文件夹之相对路径: '../../',
-    应读取本NPM包之Package点JOSN之内容: true,
+    应顺便读取本NPM包之Package点JOSN之内容: true,
 })
 
 

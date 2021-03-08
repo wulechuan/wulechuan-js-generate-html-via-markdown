@@ -102,7 +102,7 @@ module.exports = {
     },
 
     杂项: {
-        控制台打印信息改用英国话: false,
+        控制台打印信息须改用英国话: false,
         读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容: false,
         读取外来文件时禁止Require语句缓存其内容: false,
     },

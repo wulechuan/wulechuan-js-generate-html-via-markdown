@@ -11,9 +11,9 @@ const 将由本工具构建之内容转换器包裹成Gulp任务管道之环节 
 
 
 const {
-    peerDepThemingNPMPackageRootPath,
-    thisModuleRootFolderPath,
-} = require('../../00-任务之配置项集/common')
+    本NPM包之Peer依赖包之根文件夹之绝对路径,
+    本NPM包之根文件夹之绝对路径,
+} = require('../../../源代码/面向研发阶段之配置')
 
 
 
@@ -34,12 +34,12 @@ const { join: 遵循POSIX标准拼接路径 } = 路径工具.posix
 
 
 
-const taskCycleForMarkdownConversions = createATaskCycle({
+const 专门用于将本NPM包之Peer依赖包中之Markdown范文逐一转换为HTML文件的任务闭环 = createATaskCycle({
     descriptionOfInputsOfCoreTask,
 
     sourceGlobs: {
         rootFolderPath: 遵循POSIX标准拼接路径(
-            peerDepThemingNPMPackageRootPath,
+            本NPM包之Peer依赖包之根文件夹之绝对路径,
             sourceFilesFolderSubPathInPeerDepPackage
         ),
 
@@ -49,7 +49,7 @@ const taskCycleForMarkdownConversions = createATaskCycle({
     },
 
     outputFiles: {
-        rootFolderPath: 遵循POSIX标准拼接路径(thisModuleRootFolderPath, outputRootFolderSubPath),
+        rootFolderPath: 遵循POSIX标准拼接路径(本NPM包之根文件夹之绝对路径, outputRootFolderSubPath),
         forBatchOutputFiles: {
             relativeGlobsOfAllPossibleOutputs,
         },
@@ -71,4 +71,4 @@ const taskCycleForMarkdownConversions = createATaskCycle({
     }),
 })
 
-module.exports = taskCycleForMarkdownConversions
+module.exports = 专门用于将本NPM包之Peer依赖包中之Markdown范文逐一转换为HTML文件的任务闭环
