@@ -51,8 +51,17 @@ module.exports = {
         采用由本工具内建之层叠样式表时应采用未经压缩之版本: false,
         采用由本工具内建之Javascript时应采用未经压缩之版本: false,
 
-        产出之HTML文件之HTML标签之语言属性之取值: '', // By default it's an empty string. This means `'zh-hans-CN'` is used, according to the `begin.html`.
-        产出之HTML文件之Title标签之内容字符串: '', // By default it's an empty string. This means to extract content of the first met <h1/> as the content of the <title/> tag.
+        /*
+            默认取空字符串。
+            此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。
+        */
+        产出之HTML文件之HTML标签之语言属性之取值: '',
+        
+        /*
+            默认取空字符串。
+            此即意味着自动从文字中第一个 <h1> 标签中提前内容文字，作为 HTML 文档的标题（<title>）。
+        */
+        产出之HTML文件之Title标签之内容字符串: '',
 
         所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
         所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',

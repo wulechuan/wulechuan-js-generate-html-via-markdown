@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 # 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具
@@ -30,10 +30,10 @@
 ## 源代码仓库
 
 | <span style="display:inline-block;width:180px;">提供仓库服务之组织</span> | <span style="display:inline-block;width:150px;">仓库组织之国别</span> | 仓库地址 |
-| ---------- | :----------: | ------- |
-| 码云       | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
+| ------------- | :----------: | ------- |
+| 码云           | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
 | 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |
-| GitHub | 美 | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
+| GitHub         | 美           | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
 
 
 ## 简介
@@ -63,11 +63,15 @@
 
 上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)。
 
-<!-- 
+
 > 重要！
 >
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 CSS 样式项目（称乙程序）的。
-> 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！ -->
+> 本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述 CSS 样式项目（暂称“乙程序”）之 Javascript 接口。
+> 换言之，本程序 **依赖** 乙程序。然而，为确保本程序体积尽可能小，又为不至锁死对乙程序依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
+> 本程序并不在 `package.json` 中声明对乙程序之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖乙程序。
+> 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！
+>
+> 顺便指出，本程序之源代码、文档集均多出提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。
 
 
 ### 用于 Gulpjs 生态的适配版本
@@ -191,9 +195,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    `./完备的默认配置.js` 文件已尽述之。请参阅。
+    `./源代码/完备的默认配置集.js` 文件已尽述之。请参阅。
 
-    我已将 `./完备的默认配置.js` 文件的（几乎）完整内容复制如下：
+    我已将 `./源代码/完备的默认配置集.js` 文件的（几乎）完整内容复制如下：
 
     ```js
     {
@@ -244,8 +248,17 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             采用由本工具内建之层叠样式表时应采用未经压缩之版本: false,
             采用由本工具内建之Javascript时应采用未经压缩之版本: false,
 
-            产出之HTML文件之HTML标签之语言属性之取值: '', // 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。
-            产出之HTML文件之Title标签之内容字符串: '', // 默认取空字符串。此即意味着自动从文字中第一个 <h1> 标签中提前内容文字，作为 HTML 文档的标题（<title>）。
+            /*
+                默认取空字符串。
+                此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。
+            */
+            产出之HTML文件之HTML标签之语言属性之取值: '',
+            
+            /*
+                默认取空字符串。
+                此即意味着自动从文字中第一个 <h1> 标签中提前内容文字，作为 HTML 文档的标题（<title>）。
+            */
+            产出之HTML文件之Title标签之内容字符串: '',
 
             所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',

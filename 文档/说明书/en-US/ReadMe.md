@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="../../../node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 # Wulechuan's Tool for Generating HTMLs via Markdowns
@@ -64,6 +64,15 @@ Alongside this npm package, I also maintain another npm package, named [@wulechu
 ### CLI Tool
 
 Alongside this npm package, I also maintain another npm package, named [@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli). Let's call it package B. The package is a convenient CLI tool for batch converting markdwon files into HTML ones, internally utilizing the features of this npm package you are inspecting.
+
+
+## Git Repositories
+
+| <span style="display:inline-block;width:180px;">Supplier</span> | <span style="display:inline-block;width:150px;">Nation</span> | URI |
+| ----------- | :-----: | ------- |
+| Gitee       |  China  | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
+| Aliyun:code |  China  | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |
+| GitHub      |   USA   | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
 
 
 
@@ -178,9 +187,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    All in the `./完备的默认配置.js` file.
+    All in the `./源代码/完备的默认配置集.js` file.
 
-    I've copy & paste the full(almost) content of the `./完备的默认配置.js` below.
+    I've copy & paste the full(almost) content of the `./源代码/完备的默认配置集.js` below.
 
     ```js
     {
@@ -234,8 +243,18 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             shouldUseUnminifiedVersionOfInternalCSS: false,
             shouldUseUnminifiedVersionOfInternalJavascriptIfAny: false,
 
-            htmlTagLanguage: '', // By default it's an empty string. This means `'zh-hans-CN'` is used, according to the `begin.html`.
-            htmlTitleString: '', // By default it's an empty string. This means to extract content of the first met <h1/> as the content of the <title/> tag.
+            /*
+                By default it's an empty string.
+                This means `'zh-hans-CN'` is used, according to the `begin.html`.
+            */
+            产出之HTML文件之HTML标签之语言属性之取值: '',
+            
+            /*
+                By default it's an empty string.
+                This means to extract content of the first
+                met <h1/> as the content of the <title/> tag.
+            */
+            htmlTitleString: '',
 
             internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
@@ -251,23 +270,23 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                     to:   <string>,
                 },
 
-                For example:
-                To make opening methods of all external links to be "_blank".
+                // Example 1:
+                //     To make opening methods of all external links to be "_blank".
                 {
                     from: /\s+href="([^#\./].+)/gi,
                     to:   ' target="_blank" href="$1',
                 },
 
-                Example 2:
-                To change some hrefs to point to html files
-                which were pointing to markdown files.
+                // Example 2:
+                //     To change some hrefs to point to HTML files
+                //     which were pointing to markdown files.
                 {
                     from: /\s+href="(.+)\.md(#.*)?"/gi,
                     to:   ' href="$1.html$2"',
                 },
 
-                Another example:
-                To batch replace some href values.
+                // Example 3:
+                //     To batch replace some href values according to some imagined rule.
                 {
                     from: /\s+href="\.\/course-examples\//gi,
                     to: ' href="../public/assets/course-examples/',
@@ -277,16 +296,6 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
             absolutePathsOfExtraFilesToEmbedIntoHTML: [],
         },
-
-        /* [ DEPRECATED ]
-            Deprecated because of two typos.
-            Please avoid using this object.
-        */
-        // behaviousOfBuiltInTOC: {
-        //     shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
-        //     atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
-        //     atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
-        // },
 
         behavioursOfBuiltInTOC: {
             shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,

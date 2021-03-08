@@ -42,7 +42,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求,
     } = options
 
-    let 完备的默认配置
+    let 完备的默认配置集
     let tab1
 
     let 按需向Markdown内容字符串中注入TOC标记
@@ -52,7 +52,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
     if (!不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
-        完备的默认配置 = require('../完备的默认配置')
+        完备的默认配置集 = require('../完备的默认配置集')
 
         const tabs = require('./静态-html-片段以及动态构建的-html-片段/static/tabs')
         tab1 = tabs.tab1
@@ -137,10 +137,10 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
             // ----------------------------------------------
 
-            完备的默认配置 = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            完备的默认配置集 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    '源代码/完备的默认配置.js'
+                    '源代码/完备的默认配置集.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -192,27 +192,27 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         /* ************* Merge options with their default values ************** */
 
         将Markdown转换为HTML之前之预备阶段 = {
-            ...完备的默认配置.将Markdown转换为HTML之前之预备阶段,
+            ...完备的默认配置集.将Markdown转换为HTML之前之预备阶段,
             ...将Markdown转换为HTML之前之预备阶段,
         }
 
         将Markdown转换为HTML之阶段 = {
-            ...完备的默认配置.将Markdown转换为HTML之阶段,
+            ...完备的默认配置集.将Markdown转换为HTML之阶段,
             ...将Markdown转换为HTML之阶段,
         }
 
         对HTML做额外处理之阶段 = {
-            ...完备的默认配置.对HTML做额外处理之阶段,
+            ...完备的默认配置集.对HTML做额外处理之阶段,
             ...对HTML做额外处理之阶段,
         }
 
         对本工具现成提供的文章纲要做以下配置 = {
-            ...完备的默认配置.对本工具现成提供的文章纲要做以下配置,
+            ...完备的默认配置集.对本工具现成提供的文章纲要做以下配置,
             ...对本工具现成提供的文章纲要做以下配置,
         }
 
         杂项 = {
-            ...完备的默认配置.杂项,
+            ...完备的默认配置集.杂项,
             ...杂项,
         }
 
