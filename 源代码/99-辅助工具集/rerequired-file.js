@@ -1,30 +1,34 @@
-const chalk = require('chalk')
+const 彩色粉笔工具 = require('chalk')
 
-function clearCacheOfRequiredFile(pathOfFileToReload, options = {}) {
+function 清除Require机制对该文件之缓存(须重清除其缓存之文件之绝对路径, 选项集 = {}) {
     const {
         shouldNotLog,
         shouldNotWarn,
-    } = options
+    } = 选项集
 
-    !shouldNotLog && console.log(`${
-        chalk.gray('Prepare for reloading file:')
-    }\n    ${
-        chalk.rgb(51, 102, 45)(pathOfFileToReload)
-    }`)
+    if (!shouldNotLog) {
+        console.log(`${
+            彩色粉笔工具.gray('准备重新读取（require）以下文件：')
+        }\n    ${
+            彩色粉笔工具.rgb(51, 102, 45)(须重清除其缓存之文件之绝对路径)
+        }`)
+    }
 
-    if (pathOfFileToReload in require.cache) {
-        delete require.cache[pathOfFileToReload]
+    if (须重清除其缓存之文件之绝对路径 in require.cache) {
+        delete require.cache[须重清除其缓存之文件之绝对路径]
     } else {
-        !shouldNotWarn && console.log(chalk.rgb(128, 96, 23)('    FILE CACHE MISSED!'))
+        if (!shouldNotWarn) {
+            console.log(彩色粉笔工具.rgb(128, 96, 23)('    上述文件之缓存并不存在。无须清除。'))
+        }
     }
 }
 
-function rerequire(pathOfFileToReload, options) {
-    clearCacheOfRequiredFile(pathOfFileToReload, options)
-    return require(pathOfFileToReload)
+function 先清除Require机制对该文件之缓存而后重新Require该文件(须重新读取之文件之绝对路径, 选项集) {
+    清除Require机制对该文件之缓存(须重新读取之文件之绝对路径, 选项集)
+    return require(须重新读取之文件之绝对路径)
 }
 
 module.exports = {
-    clearCacheOfRequiredFile,
-    rerequire,
+    清除Require机制对该文件之缓存,
+    先清除Require机制对该文件之缓存而后重新Require该文件,
 }

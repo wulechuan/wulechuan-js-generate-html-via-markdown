@@ -1,6 +1,6 @@
 const 路径工具 = require('path')
 
-const syncReadOneTextFile = require('../../../99-辅助工具集/sync-read-one-text-file')
+const 阻塞式读取一文本文件之完整内容字符串 = require('../../../99-辅助工具集/阻塞式读取一文本文件之完整内容字符串')
 
 const chooseWrappingHTMLTagNameViaFileExt = require(
     '../../../99-辅助工具集/choose-wrapping-html-tag-name-via-file-ext'
@@ -104,7 +104,7 @@ function createSnippetEntryGetters(options) {
         } = options
 
         if (!rawHTMLBeginning) {
-            rawHTMLBeginning = syncReadOneTextFile(
+            rawHTMLBeginning = 阻塞式读取一文本文件之完整内容字符串(
                 遵循POSIX标准拼接路径(thisModuleRootFolderPath, './源代码/01-转换器之构建器/snippets/raw-sources/begin.html')
             )
         }
@@ -231,7 +231,7 @@ function createSnippetEntryGetters(options) {
 
         if (!optionalEntries[fileAbsolutePath] || shouldIgnoreCachedContent) {
             const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileAbsolutePath)
-            const fileRawContent = syncReadOneTextFile(fileAbsolutePath)
+            const fileRawContent = 阻塞式读取一文本文件之完整内容字符串(fileAbsolutePath)
             const fileWrappedContent = wrapContentsWithAPairOfHTMLTags({
                 fileRawContent,
                 wrappingTagName,

@@ -5,7 +5,7 @@ const {
 } = require('@wulechuan/gulp-classical-task-cycle')
 
 const taskCycleForMarkdownConversions = require(
-    '../task-cycles/build-peer-dependency-examples/building-htmls'
+    '../02-用于构建任务闭环的工具集/build-peer-dependency-examples/building-htmls'
 )
 
 module.exports = create3HighOrderTasksUponMultipleTaskCycles({

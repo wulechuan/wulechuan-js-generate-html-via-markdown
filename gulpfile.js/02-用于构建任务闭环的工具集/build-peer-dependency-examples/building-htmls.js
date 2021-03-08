@@ -6,14 +6,14 @@ const {
     createATaskCycle,
 } = require('@wulechuan/gulp-classical-task-cycle')
 
-const createAPipeForConvertingMarkdownsIntoHTMLs = require('./_converter-markdown-into-html-gulp-wrapper')
+const 将由本工具构建之内容转换器包裹成Gulp任务管道之环节 = require('./将由本工具构建之内容转换器包裹成-gulp-任务管道之环节')
 
 
 
 const {
     peerDepThemingNPMPackageRootPath,
     thisModuleRootFolderPath,
-} = require('../../configs/common')
+} = require('../../00-任务之配置项集/common')
 
 
 
@@ -26,7 +26,7 @@ const {
         relativeGlobsOfAllPossibleOutputs,
         extraSourceGlobsToWatch,
     },
-} = require('../../configs/peer-dependency-examples')
+} = require('../../00-任务之配置项集/peer-dependency-examples')
 
 
 
@@ -59,7 +59,7 @@ const taskCycleForMarkdownConversions = createATaskCycle({
         shouldNotOutputCompressedVersion: true,
     },
 
-    firstPipeForProcessingSources: createAPipeForConvertingMarkdownsIntoHTMLs({
+    firstPipeForProcessingSources: 将由本工具构建之内容转换器包裹成Gulp任务管道之环节({
         对HTML做额外处理之阶段: {
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订: [
                 {

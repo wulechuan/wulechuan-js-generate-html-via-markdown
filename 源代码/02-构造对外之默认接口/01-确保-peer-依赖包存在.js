@@ -1,41 +1,40 @@
 const 彩色粉笔工具 = require('chalk')
-const 路径工具 = require('path').posix
-const 文件系统工具 = require('fs')
 
+
+
+const 路径工具 = require('path').posix
 const { join: 遵循POSIX标准拼接路径 } = 路径工具
+
+
+
+const 文件系统工具 = require('fs')
 const { existsSync: 阻塞式探明文件已存在 } = 文件系统工具
 
 
 
-const 本NPM包之根文件夹之相对路径  = '../../'
-
-
-
-
-
-const 本NPM包之Package点JSON文件之相对路径 = 遵循POSIX标准拼接路径(
-    本NPM包之根文件夹之相对路径,
-    'package.json'
-)
-const 本NPM包之Package点JSON文件 = require(本NPM包之Package点JSON文件之相对路径)
-
-
-
-
-
-const 本NPM包之Peer依赖包之名称 = '@wulechuan/css-stylus-markdown-themes'
-
-// 用于文件、文件夹存在性检测之路径，总是要求从本项目之根目录出发，而不是从本 JavaScript 文件之路径出发。
-const 本NPM包之Peer依赖包任何文件之存在性检测路径之公共起始部分 = 遵循POSIX标准拼接路径(
-    'node_modules',
-    本NPM包之Peer依赖包之名称
+const 根据项目根文件夹相对于当前文件之路径求出几种关键路径 = require(
+    '../99-辅助工具集/根据某文件之位置求出几种关键路径'
 )
 
-// 用于 require 语句之路径，总是从本 JavaScript 文件之路径出发。
-const 本NPM包之Peer依赖包之根文件夹之相对路径 = 遵循POSIX标准拼接路径(
-    本NPM包之根文件夹之相对路径,
-    本NPM包之Peer依赖包任何文件之存在性检测路径之公共起始部分
-)
+
+
+
+
+const {
+    本NPM包之Peer依赖包之名称,
+
+    // 自本文件出发至本NPM包之Package点JSON文件之相对路径,
+    // 自本文件出发至本NPM包之Peer依赖包之根文件夹之相对路径,
+    自本文件出发至本NPM包之Peer依赖包之Package点JSON文件之相对路径,
+
+    自本NPM包之根文件夹出发至本NPM包之Peer依赖包之根文件夹之相对路径,
+    自本NPM包之根文件夹出发至本NPM包之Peer依赖包之Package点JSON文件之相对路径,
+
+    本NPM包之Package点JSON文件,
+} = 根据项目根文件夹相对于当前文件之路径求出几种关键路径({
+    自本文件出发至本NPM包之根文件夹之相对路径: '../../',
+    应读取本NPM包之Package点JOSN之内容: true,
+})
 
 
 
@@ -43,30 +42,21 @@ const 本NPM包之Peer依赖包之根文件夹之相对路径 = 遵循POSIX标�
 
 let 本NPM包之Peer依赖包已经存在 = false
 
-const 本NPM包之Peer依赖包之Package点JSON文件之相对路径 = 遵循POSIX标准拼接路径(
-    本NPM包之Peer依赖包任何文件之存在性检测路径之公共起始部分,
-    'package.json'
-)
-
-if (!阻塞式探明文件已存在(本NPM包之Peer依赖包之Package点JSON文件之相对路径)) {
-    // console.log('无效路径：', 本NPM包之Peer依赖包之Package点JSON文件之相对路径)
+if (!阻塞式探明文件已存在(自本NPM包之根文件夹出发至本NPM包之Peer依赖包之Package点JSON文件之相对路径)) {
+    console.log('Peer依赖包之 package.json 文件之路径无效：\n   ', 自本NPM包之根文件夹出发至本NPM包之Peer依赖包之Package点JSON文件之相对路径)
 } else {
-    const 本NPM包之Peer依赖包之Package点JSON文件 = require(遵循POSIX标准拼接路径(
-        本NPM包之Peer依赖包之根文件夹之相对路径,
-        'package.json'
-    ))
-    // console.log('本NPM包之Peer依赖包之Package点JSON文件\n   ', 本NPM包之Peer依赖包之Package点JSON文件)
+    const 本NPM包之Peer依赖包之Package点JSON文件 = require(自本文件出发至本NPM包之Peer依赖包之Package点JSON文件之相对路径)
 
     if (本NPM包之Peer依赖包之Package点JSON文件) {
         const 本NPM包之Peer依赖包之主入口文件之内层相对路径 = 本NPM包之Peer依赖包之Package点JSON文件['main']
         if (typeof 本NPM包之Peer依赖包之主入口文件之内层相对路径 === 'string' && !!本NPM包之Peer依赖包之主入口文件之内层相对路径) {
-            const 本NPM包之Peer依赖包之主入口文件之相对路径 = 遵循POSIX标准拼接路径(
-                本NPM包之Peer依赖包任何文件之存在性检测路径之公共起始部分,
+            const 自本NPM之根文件夹出发至本NPM包之Peer依赖包之主入口文件之相对路径 = 遵循POSIX标准拼接路径(
+                自本NPM包之根文件夹出发至本NPM包之Peer依赖包之根文件夹之相对路径,
                 本NPM包之Peer依赖包之主入口文件之内层相对路径
             )
 
-            // console.log('本NPM包之Peer依赖包之主入口文件之相对路径\n   ', 本NPM包之Peer依赖包之主入口文件之相对路径)
-            本NPM包之Peer依赖包已经存在 = 阻塞式探明文件已存在(本NPM包之Peer依赖包之主入口文件之相对路径)
+            // console.log('本NPM包之Peer依赖包之主入口文件之相对路径\n   ', 自本NPM之根文件夹出发至本NPM包之Peer依赖包之主入口文件之相对路径)
+            本NPM包之Peer依赖包已经存在 = 阻塞式探明文件已存在(自本NPM之根文件夹出发至本NPM包之Peer依赖包之主入口文件之相对路径)
         }
     }
 }
@@ -92,6 +82,8 @@ if (!本NPM包之Peer依赖包已经存在) {
     console.log('')
     console.log('-'.repeat(79))
 
-    const 依赖包缺失之错误 = new ReferenceError(`Peer依赖包“${本NPM包之Peer依赖包之名称}”不存在。`)
-    throw(依赖包缺失之错误)
+    const 期望提供层叠样式表之peer依赖包缺失之错误 = new ReferenceError(`Peer依赖包“${本NPM包之Peer依赖包之名称}”不存在。`)
+    throw(期望提供层叠样式表之peer依赖包缺失之错误)
+} else {
+    console.log(彩色粉笔工具.green(`兹探明该 peer 依赖包确已存在：${彩色粉笔工具.bgGreen.black(本NPM包之Peer依赖包之名称)}`))
 }

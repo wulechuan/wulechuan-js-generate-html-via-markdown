@@ -1,7 +1,7 @@
 const 路径工具 = require('path')
 const {
-    clearCacheOfRequiredFile,
-    rerequire,
+    清除Require机制对该文件之缓存,
+    先清除Require机制对该文件之缓存而后重新Require该文件,
 } = require('../99-辅助工具集/rerequired-file')
 
 const MarkDownIt = require('markdown-it')
@@ -37,7 +37,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
     const {
         themesPeerPackageAllDistFileEntriesKeyingByFileNames,
         syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
-        shouldReloadModulesForDevWatchingMode,
+        不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求,
     } = options
 
     let defaultOptionValues
@@ -49,7 +49,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
     let processAllContentsOfAllPreTagsOfHTMLString
 
 
-    if (!shouldReloadModulesForDevWatchingMode) {
+    if (!不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
         defaultOptionValues = require('../完备的默认配置')
 
         const tabs = require('./snippets/static/tabs')
@@ -111,7 +111,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-        if (shouldReloadModulesForDevWatchingMode) {
+        if (不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
             [
                 './string-processors/1-html/further-upon-hljs-outputs/process-snippet-of-one-language.js',
                 './string-processors/1-html/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
@@ -127,7 +127,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 './string-processors/1-html/further-upon-hljs-outputs/processors/language-html.js',
                 './string-processors/1-html/further-upon-hljs-outputs/processors/language-javascript-family.js',
             ].forEach(subPath => {
-                clearCacheOfRequiredFile(
+                清除Require机制对该文件之缓存(
                     joinPathOSLocalStyle(thisModuleRootFolderPath, subPath),
                     rerequireLoggingOptions
                 )
@@ -135,7 +135,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
             // ----------------------------------------------
 
-            defaultOptionValues = rerequire(
+            defaultOptionValues = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
                     '源代码/完备的默认配置.js'
@@ -143,7 +143,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 rerequireLoggingOptions
             )
 
-            const tabs = rerequire(
+            const tabs = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
                     './源代码/01-转换器之构建器/snippets/static/tabs.js'
@@ -152,7 +152,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             )
             tab1 = tabs.tab1
 
-            insertTOCMarkDownTagIfNecessary = rerequire(
+            insertTOCMarkDownTagIfNecessary = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
                     './源代码/01-转换器之构建器/string-processors/0-markdown/insert-toc-placeholder.js'
@@ -160,7 +160,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 rerequireLoggingOptions
             )
 
-            buildHTMLTitleSnippetString = rerequire(
+            buildHTMLTitleSnippetString = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
                     './源代码/01-转换器之构建器/string-processors/1-html/direct/build-html-title-tag.js'
@@ -168,7 +168,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 rerequireLoggingOptions
             )
 
-            wrapHTMLChiefContentWithAnArticleTag = rerequire(
+            wrapHTMLChiefContentWithAnArticleTag = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
                     './源代码/01-转换器之构建器/string-processors/1-html/direct/wrap-chief-content-with-article-tag.js'
@@ -176,7 +176,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 rerequireLoggingOptions
             )
 
-            processAllContentsOfAllPreTagsOfHTMLString = rerequire(
+            processAllContentsOfAllPreTagsOfHTMLString = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     thisModuleRootFolderPath,
                     './源代码/01-转换器之构建器/string-processors/1-html/further-upon-hljs-outputs/process-all-html-pre-tags.js'
