@@ -2,12 +2,12 @@ const 路径工具 = require('path')
 
 const 阻塞式读取一文本文件之完整内容字符串 = require('../../../99-辅助工具集/阻塞式读取一文本文件之完整内容字符串')
 
-const chooseWrappingHTMLTagNameViaFileExt = require(
+const 根据文件之扩展名选用包裹该文件之内容之HTML标签名 = require(
     '../../../99-辅助工具集/根据文件之扩展名选用包裹该文件之内容之-html-标签名'
 )
 
-const wrapContentsWithAPairOfHTMLTags = require(
-    '../../文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/wrap-file-content-with-an-pair-of-html-tags'
+const 将字符串用HTML标签包裹起来得出另一字符串 = require(
+    '../../文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/将字符串用-html-标签包裹起来得出另一字符串'
 )
 
 const { join: 遵循POSIX标准拼接路径 } = 路径工具.posix
@@ -161,31 +161,31 @@ function createSnippetEntryGetters(options) {
     }
 
     /** The said peer module below is the "@wulechuan/css-stylus-markdown-themes" */
-    function syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(fileName, shouldIgnoreCachedContent, options) {
+    function syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(文件名, 不应采纳Require机制缓存之文件旧内容, 其他选项集) {
         const { optional: optionalEntries } = allSnippetEntries
 
-        if (!optionalEntries[fileName] || shouldIgnoreCachedContent) {
-            const fileEntry = themesPeerPackageAllDistFileEntriesKeyingByFileNames[fileName]
+        if (!optionalEntries[文件名] || 不应采纳Require机制缓存之文件旧内容) {
+            const 文件之简易描述项 = themesPeerPackageAllDistFileEntriesKeyingByFileNames[文件名]
 
-            const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileName)
-            const fileRawContent = syncGetContentStringOfOneFileOfThePeerModuleOfThemes(
-                fileName,
-                shouldIgnoreCachedContent,
-                options
+            const 选用的HTML标签名 = 根据文件之扩展名选用包裹该文件之内容之HTML标签名(文件名)
+            const 文件之原始内容字符串 = syncGetContentStringOfOneFileOfThePeerModuleOfThemes(
+                文件名,
+                不应采纳Require机制缓存之文件旧内容,
+                其他选项集
             )
 
-            const fileWrappedContent = wrapContentsWithAPairOfHTMLTags({
-                fileRawContent,
-                wrappingTagName,
-                shouldIndentContentsBy2Levels: true,
+            const fileWrappedContent = 将字符串用HTML标签包裹起来得出另一字符串({
+                原始字符串: 文件之原始内容字符串,
+                用于包裹原始字符串之HTML标签名: 选用的HTML标签名,
+                包裹原始内容后原始应逐行额外缩进两层: true,
             })
 
             const snippetEntry = {
                 content: fileWrappedContent,
-                内容由style标签而非script标签包裹着: wrappingTagName === 'style',
+                内容由style标签而非script标签包裹着: 选用的HTML标签名 === 'style',
             }
 
-            const { associatedJavascriptFileNames } = fileEntry
+            const { associatedJavascriptFileNames } = 文件之简易描述项
 
             if (associatedJavascriptFileNames) {
                 snippetEntry.associatedJavascriptSnippetEntryPairs = associatedJavascriptFileNames.map(jsFileName => {
@@ -205,14 +205,14 @@ function createSnippetEntryGetters(options) {
                     const jsEntryPair = {
                         minified:   syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                             jsFileNameOfMinifiedVersion,
-                            shouldIgnoreCachedContent,
-                            options
+                            不应采纳Require机制缓存之文件旧内容,
+                            其他选项集
                         ),
 
                         unminified: syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                             jsFileNameOfUnminifiedVersion,
-                            shouldIgnoreCachedContent,
-                            options
+                            不应采纳Require机制缓存之文件旧内容,
+                            其他选项集
                         ),
                     }
 
@@ -220,27 +220,27 @@ function createSnippetEntryGetters(options) {
                 })
             }
 
-            optionalEntries[fileName] = snippetEntry
+            optionalEntries[文件名] = snippetEntry
         }
 
-        return optionalEntries[fileName]
+        return optionalEntries[文件名]
     }
 
     function syncGetSnippetEntryOfOneExternalFile(fileAbsolutePath, shouldIgnoreCachedContent) {
         const { optional: optionalEntries } = allSnippetEntries
 
         if (!optionalEntries[fileAbsolutePath] || shouldIgnoreCachedContent) {
-            const wrappingTagName = chooseWrappingHTMLTagNameViaFileExt(fileAbsolutePath)
-            const fileRawContent = 阻塞式读取一文本文件之完整内容字符串(fileAbsolutePath)
-            const fileWrappedContent = wrapContentsWithAPairOfHTMLTags({
-                fileRawContent,
-                wrappingTagName,
-                shouldIndentContentsBy2Levels: true,
+            const 选用的HTML标签名 = 根据文件之扩展名选用包裹该文件之内容之HTML标签名(fileAbsolutePath)
+            const 文件之原始内容字符串 = 阻塞式读取一文本文件之完整内容字符串(fileAbsolutePath)
+            const fileWrappedContent = 将字符串用HTML标签包裹起来得出另一字符串({
+                原始字符串: 文件之原始内容字符串,
+                用于包裹原始字符串之HTML标签名: 选用的HTML标签名,
+                包裹原始内容后原始应逐行额外缩进两层: true,
             })
 
             const snippetEntry = {
                 content: fileWrappedContent,
-                内容由style标签而非script标签包裹着: wrappingTagName === 'style',
+                内容由style标签而非script标签包裹着: 选用的HTML标签名 === 'style',
             }
 
             optionalEntries[fileAbsolutePath] = snippetEntry

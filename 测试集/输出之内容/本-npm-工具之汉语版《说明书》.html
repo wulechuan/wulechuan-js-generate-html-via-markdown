@@ -10,7 +10,7 @@
 </head>
 <body class="markdown-article-toc-exists">
     <article class="markdown-article">
-<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 <h1 id="%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7"><a class="header-anchor" href="#%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具</h1>
 <blockquote>
 <p>中国人，特别是汉族人，理应坚持广泛、规范地使用汉语。凡非必要之情形，不说外国话，不用外国字。此乃天经地义！支持少数民族坚持采用自己民族的传统语言。然，凡中国人，皆应会用汉语、积极使用汉语，此乃中华各民族之大一统之必由。</p>
@@ -83,11 +83,14 @@
 <h3 id="%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"><a class="header-anchor" href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">§</a> 内嵌样式</h3>
 <p>产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《<a href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
 <p>上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 <a href="https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md">该文档</a>。</p>
-<!-- 
-> 重要！
->
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 CSS 样式项目（称乙程序）的。
-> 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！ -->
+<blockquote>
+<p>重要！</p>
+<p>本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述 CSS 样式项目（暂称“乙程序”）之 Javascript 接口。
+换言之，本程序 <strong>依赖</strong> 乙程序。然而，为确保本程序体积尽可能小，又为不至锁死对乙程序依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
+本程序并不在 <code>package.json</code> 中声明对乙程序之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖乙程序。
+这意味着，在安装甲程序时，npm <strong>不会</strong> 自动为你一并安装上乙程序。<strong>你必须亲自手工安装乙程序</strong>！</p>
+<p>顺便指出，本程序之源代码、文档集均多出提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。</p>
+</blockquote>
 <h3 id="%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"><a class="header-anchor" href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC">§</a> 用于 Gulpjs 生态的适配版本</h3>
 <p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a href="https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html">@wulechuan/gulp-markdown-to-html</a>》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 <a href="https://gulpjs.com">Gulpjs</a> 工作流的工具软件。甲软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而甲软件旨在从文件生成新文件。</strong></p>
 <h3 id="%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"><a class="header-anchor" href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 用于命令行环境的工具</h3>
@@ -177,8 +180,8 @@
 </li>
 <li>
 <p>options</p>
-<p><code>./完备的默认配置集.js</code> 文件已尽述之。请参阅。</p>
-<p>我已将 <code>./完备的默认配置集.js</code> 文件的（几乎）完整内容复制如下：</p>
+<p><code>./源代码/完备的默认配置集.js</code> 文件已尽述之。请参阅。</p>
+<p>我已将 <code>./源代码/完备的默认配置集.js</code> 文件的（几乎）完整内容复制如下：</p>
 <pre><code class="hljs language-js"><span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>须在控制台打印详尽细节<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><br
@@ -227,8 +230,17 @@
 ><span class="inline-pre-whitespaces indentation">        </span>采用由本工具内建之层叠样式表时应采用未经压缩之版本<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span>采用由本工具内建之Javascript时应采用未经压缩之版本<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><br
-><span class="inline-pre-whitespaces indentation">        </span>产出之HTML文件之HTML标签之语言属性之取值<span class="punctuation colon">:</span> <span class="hljs-string empty-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body"></span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着实际取值为 “&#x27;zh-hans-CN&#x27;”。该默认取值源自 “begin.html”。</span><br
-><span class="inline-pre-whitespaces indentation">        </span>产出之HTML文件之Title标签之内容字符串<span class="punctuation colon">:</span> <span class="hljs-string empty-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body"></span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span> <span class="hljs-comment">// 默认取空字符串。此即意味着自动从文字中第一个 &lt;h1&gt; 标签中提前内容文字，作为 HTML 文档的标题（&lt;title&gt;）。</span><br
+><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">/*<br
+><span class="inline-pre-whitespaces indentation">            </span>默认取空字符串。<br
+><span class="inline-pre-whitespaces indentation">            </span>此即意味着实际取值为 “&#x27;zh-hans-CN&#x27;”。该默认取值源自 “begin.html”。<br
+><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
+><span class="inline-pre-whitespaces indentation">        </span>产出之HTML文件之HTML标签之语言属性之取值<span class="punctuation colon">:</span> <span class="hljs-string empty-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body"></span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        <br
+>        </span><span class="hljs-comment">/*<br
+><span class="inline-pre-whitespaces indentation">            </span>默认取空字符串。<br
+><span class="inline-pre-whitespaces indentation">            </span>此即意味着自动从文字中第一个 &lt;h1&gt; 标签中提前内容文字，作为 HTML 文档的标题（&lt;title&gt;）。<br
+><span class="inline-pre-whitespaces indentation">        </span>*/</span><br
+><span class="inline-pre-whitespaces indentation">        </span>产出之HTML文件之Title标签之内容字符串<span class="punctuation colon">:</span> <span class="hljs-string empty-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body"></span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span>所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称<span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">wulechuan-styles-for-html-via-markdown.default--no-toc.min.css</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span>所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称<span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">wulechuan-styles-for-html-via-markdown.default--with-toc.min.css</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br

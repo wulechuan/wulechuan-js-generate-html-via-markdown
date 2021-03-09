@@ -18,7 +18,7 @@ const {
     本NPM包之根文件夹之绝对路径,
 } = require('../面向研发阶段之配置')
 
-const rerequireLoggingOptions = { shouldNotLog: true, shouldNotWarn: false }
+const rerequireLoggingOptions = { 不应打印普通的日志内容: true, 不应打印警告性的日志内容: false }
 
 
 
@@ -43,19 +43,19 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
     } = options
 
     let 完备的默认配置集
-    let tab1
+    let 表达单层缩进之字符串
 
     let 按需向Markdown内容字符串中注入TOC标记
     let 构建HTML之完整Title标签之字符串
-    let wrapHTMLChiefContentWithAnArticleTag
+    let 将原始的HTML主体内容用Article标签包裹起来
     let processAllContentsOfAllPreTagsOfHTMLString
 
 
     if (!不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
         完备的默认配置集 = require('../完备的默认配置集')
 
-        const tabs = require('./静态-html-片段以及动态构建的-html-片段/static/tabs')
-        tab1 = tabs.tab1
+        const tabs = require('./静态-html-片段以及动态构建的-html-片段/static/表达源代码缩进之字符串')
+        表达单层缩进之字符串 = tabs.表达单层缩进之字符串
 
 
 
@@ -65,15 +65,15 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         )
 
         构建HTML之完整Title标签之字符串 = require(
-            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/build-html-title-tag'
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/构建完整的-html-title-标签'
         )
 
-        wrapHTMLChiefContentWithAnArticleTag = require(
-            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/wrap-chief-content-with-article-tag'
+        将原始的HTML主体内容用Article标签包裹起来 = require(
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/wrap-chief-content-with-article-tag'
         )
 
         processAllContentsOfAllPreTagsOfHTMLString = require(
-            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/process-all-html-pre-tags'
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/process-all-html-pre-tags'
         )
     }
 
@@ -115,19 +115,19 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         if (不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
             [
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/process-snippet-of-one-language.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/ast-generic-simple-splitter.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/ast-splitters-for-regexp.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/ast/parse-ast-sub-tree-into-single-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/__line-breaks-and-leading-whitespaces.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/__punctuations.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/_one-comment.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/_one-regexp.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/_one-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/language-css-family.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/language-html.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/processors/language-javascript-family.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/process-snippet-of-one-language.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-generic-simple-splitter.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitters-for-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/parse-ast-sub-tree-into-single-string.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/__line-breaks-and-leading-whitespaces.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/__punctuations.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/_one-comment.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/_one-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/_one-string.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/language-css-family.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/language-html.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/language-javascript-family.js',
             ].forEach(subPath => {
                 清除Require机制对该文件之缓存(
                     joinPathOSLocalStyle(本NPM包之根文件夹之绝对路径, subPath),
@@ -148,11 +148,11 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             const tabs = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/静态-html-片段以及动态构建的-html-片段/static/tabs.js'
+                    './源代码/01-转换器之构建器/静态-html-片段以及动态构建的-html-片段/static/表达源代码缩进之字符串.js'
                 ),
                 rerequireLoggingOptions
             )
-            tab1 = tabs.tab1
+            表达单层缩进之字符串 = tabs.表达单层缩进之字符串
 
             按需向Markdown内容字符串中注入TOC标记 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
@@ -165,15 +165,15 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             构建HTML之完整Title标签之字符串 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/build-html-title-tag.js'
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/构建完整的-html-title-标签.js'
                 ),
                 rerequireLoggingOptions
             )
 
-            wrapHTMLChiefContentWithAnArticleTag = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            将原始的HTML主体内容用Article标签包裹起来 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/direct/wrap-chief-content-with-article-tag.js'
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/wrap-chief-content-with-article-tag.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -181,7 +181,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             processAllContentsOfAllPreTagsOfHTMLString = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/further-upon-hljs-outputs/process-all-html-pre-tags.js'
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/process-all-html-pre-tags.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -324,7 +324,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         }
         const markdown文章中包含了TOC标记 = markdown内容现已包含TOC标记
 
-        let 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = markdownItParser.render(
+        const 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = markdownItParser.render(
             markdown内容之最终成品之字符串
         )
         /*                                                                      */
@@ -339,10 +339,16 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
+        let html半成品之内容字符串 = 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串
+
+
+
+
+
         /* ****** Extract HTML title out of generated HTML raw contents ******* */
 
-        const html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串, {
-            specifiedArticleTitle: 产出之HTML文件之Title标签之内容字符串,
+        const html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(html半成品之内容字符串, {
+            客体程序指明采用的作为HTMLTitle标签内容之字符串: 产出之HTML文件之Title标签之内容字符串,
             控制台打印信息须改用英国话,
         })
 
@@ -353,19 +359,19 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         /* **************** Modify generated HTML raw contents **************** */
 
         须对产出之HTML内容字符串依次按下诸内容替换规则做修订.forEach(某替换规则 => {
-            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串.replace(某替换规则.凡, 某替换规则.替换为)
+            html半成品之内容字符串 = html半成品之内容字符串.replace(某替换规则.凡, 某替换规则.替换为)
         })
 
 
-        借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = processAllContentsOfAllPreTagsOfHTMLString(
-            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
+        html半成品之内容字符串 = processAllContentsOfAllPreTagsOfHTMLString(
+            html半成品之内容字符串,
             {
                 不应将代码块中的换行符替换成BR标签,
             }
         )
 
-        借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 = wrapHTMLChiefContentWithAnArticleTag(
-            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
+        html半成品之内容字符串 = 将原始的HTML主体内容用Article标签包裹起来(
+            html半成品之内容字符串,
 
             {
                 cssClassNameOfMarkdownChiefContentWrappingArticleTag,
@@ -375,7 +381,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         )
 
         if (!不应注入用于返回文章起始之按钮) {
-            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串 += `\n${tab1}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
+            html半成品之内容字符串 += `\n${表达单层缩进之字符串}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
         }
 
 
@@ -485,7 +491,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             /* ***** chief content ***** */
             /*                           */
             /*                           */
-            借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
+            html半成品之内容字符串,
             /*                           */
             /*                           */
             /* ************************* */

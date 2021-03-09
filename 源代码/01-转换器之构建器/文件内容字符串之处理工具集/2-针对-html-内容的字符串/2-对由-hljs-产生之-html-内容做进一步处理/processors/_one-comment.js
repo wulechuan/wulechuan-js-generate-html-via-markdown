@@ -1,5 +1,5 @@
 const processAllLineBreaksAndLeadingWhitespaces = require(
-    '../processors/__line-breaks-and-leading-whitespaces'
+    './__line-breaks-and-leading-whitespaces'
 )
 
 
