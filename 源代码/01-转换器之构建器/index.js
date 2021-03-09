@@ -4,7 +4,7 @@ const {
     先清除Require机制对该文件之缓存而后重新Require该文件,
 } = require('../99-辅助工具集/先清除-require-机制对某文件之缓存而后重新-require-该文件')
 
-const MarkDownIt = require('markdown-it')
+const MarkdownIt = require('markdown-it')
 
 const markdownItPluginHighlightJs  = require('markdown-it-highlightjs')
 const markdownItPluginCheckbox     = require('markdown-it-checkbox')
@@ -288,7 +288,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         /* ************************* MarkDown to HTML ************************* */
         /*                                                                      */
         /*                                                                      */
-        const markdownItParser = new MarkDownIt({
+        const markdownItParser = new MarkdownIt({
             html: true,
             linkify: true,
             typographer: true,
