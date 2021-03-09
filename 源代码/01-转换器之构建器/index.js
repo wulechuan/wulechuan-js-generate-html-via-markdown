@@ -48,7 +48,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
     let 按需向Markdown内容字符串中注入TOC标记
     let 构建HTML之完整Title标签之字符串
     let 将HTML之主体内容用Article标签包裹起来
-    let processAllContentsOfAllPreTagsOfHTMLString
+    let 处理HTML内容中之一切Pre标签
 
 
     if (!不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
@@ -72,7 +72,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             './文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/将-html-主体内容用-article-标签包裹起来'
         )
 
-        processAllContentsOfAllPreTagsOfHTMLString = require(
+        处理HTML内容中之一切Pre标签 = require(
             './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/处理-html-内容中之一切-pre-标签之工具'
         )
     }
@@ -125,9 +125,9 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-comment.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/特定语族之层叠样式表语族.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/特定语种之超文本标记语言.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/特定语族之-javascript-语族.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语族之层叠样式表语族者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语种之超文本标记语言者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语族之-javascript-语族者.js',
             ].forEach(subPath => {
                 清除Require机制对该文件之缓存(
                     joinPathOSLocalStyle(本NPM包之根文件夹之绝对路径, subPath),
@@ -178,7 +178,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 rerequireLoggingOptions
             )
 
-            processAllContentsOfAllPreTagsOfHTMLString = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            处理HTML内容中之一切Pre标签 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
                     './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/处理-html-内容中之一切-pre-标签之工具.js'
@@ -363,7 +363,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         })
 
 
-        html半成品之内容字符串 = processAllContentsOfAllPreTagsOfHTMLString(
+        html半成品之内容字符串 = 处理HTML内容中之一切Pre标签(
             html半成品之内容字符串,
             {
                 不应将代码块中的换行符替换成BR标签,

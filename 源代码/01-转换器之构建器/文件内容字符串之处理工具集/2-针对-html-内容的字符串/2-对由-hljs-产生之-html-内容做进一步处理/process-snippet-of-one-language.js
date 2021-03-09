@@ -45,7 +45,7 @@ const {
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations,
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations,
 } = require(
-    './各色内容片段之专门处理器之总集/特定语族之层叠样式表语族'
+    './各色内容片段之专门处理器之总集/针对特定语族之层叠样式表语族者'
 )
 
 
@@ -53,13 +53,13 @@ const {
 const {
     parseAnHTMLSnippetASTNode,
 } = require(
-    './各色内容片段之专门处理器之总集/特定语种之超文本标记语言'
+    './各色内容片段之专门处理器之总集/针对特定语种之超文本标记语言者'
 )
 
 
 
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
-    './各色内容片段之专门处理器之总集/特定语族之-javascript-语族'
+    './各色内容片段之专门处理器之总集/针对特定语族之-javascript-语族者'
 )
 
 
