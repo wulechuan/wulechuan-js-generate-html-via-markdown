@@ -2,57 +2,66 @@ const chalk                              = require('chalk')
 const splitOneASTNodeByOpenAndCloseMarks = require('./ast/ast-generic-simple-splitter')
 
 const {
-    codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
-    codeLanguageIsNotAnyOf, // eslint-disable-line no-unused-vars
-} = require('./code-language-matchers')
+    代码语种系以下之任一,    // eslint-disable-line no-unused-vars
+    代码语种非以下之任一, // eslint-disable-line no-unused-vars
+} = require('./代码语种称谓比对之工具集')
+
 
 
 const processAllLineBreaksAndLeadingWhitespaces = require(
-    './processors/__line-breaks-and-leading-whitespaces'
+    './各色内容片段之专门处理器之总集/__line-breaks-and-leading-whitespaces'
 )
+
 
 
 const {
     parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
     parseAllRestPunctuationsInAnASTNodeIntoHTML,
 } = require(
-    './processors/__punctuations'
+    './各色内容片段之专门处理器之总集/__punctuations'
 )
+
 
 
 const parseOneASTNodeOfCommentIntoHTML = require(
-    './processors/_one-comment'
+    './各色内容片段之专门处理器之总集/_one-comment'
 )
+
 
 
 const parseOneRegExpASTNodeIntoHTML = require(
-    './processors/_one-regexp'
+    './各色内容片段之专门处理器之总集/_one-regexp'
 )
+
 
 
 const parseOneStringASTNodeIntoHTML = require(
-    './processors/_one-string'
+    './各色内容片段之专门处理器之总集/_one-string'
 )
+
 
 
 const {
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations,
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations,
 } = require(
-    './processors/language-css-family'
+    './各色内容片段之专门处理器之总集/特定语族之层叠样式表语族'
 )
+
 
 
 const {
     parseAnHTMLSnippetASTNode,
 } = require(
-    './processors/language-html'
+    './各色内容片段之专门处理器之总集/特定语种之超文本标记语言'
 )
+
 
 
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
-    './processors/language-javascript-family'
+    './各色内容片段之专门处理器之总集/特定语族之-javascript-语族'
 )
+
 
 
 
@@ -141,7 +150,7 @@ module.exports = function processHTMLStringThatMightContainSubLanguages(astNode,
 
     if (astNode.isOfPureCodeLanguage) {
         allASTNodesEachOfOnePureLanguage.push(astNode)
-    } else if (codeLanguageIsNotAnyOf(codeLanguage, [
+    } else if (代码语种非以下之任一(codeLanguage, [
         'html',
         'xml',
     ])) {
@@ -238,7 +247,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     let astNodesRest = astNodesForNonComments
 
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+
+    if (代码语种系以下之任一(codeLanguage, [
         'xml',
         'html',
     ])) {
@@ -256,7 +266,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     }
 
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+
+    if (代码语种系以下之任一(codeLanguage, [
         'css',
         'stylus',
         'sass',
@@ -306,8 +317,9 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
 
 
 
+
     if (true || // eslint-disable-line no-constant-condition
-        codeLanguageIsOneOf(codeLanguage, [
+        代码语种系以下之任一(codeLanguage, [
             'javascript',
             'typescript',
             'python',
@@ -323,7 +335,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         )
     }
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+    if (代码语种系以下之任一(codeLanguage, [
         'css',
         'stylus',
         'sass',
@@ -332,7 +344,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         astNodesRest.forEach(parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations)
     }
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+    if (代码语种系以下之任一(codeLanguage, [
         'xml',
         'html',
     ])) {
@@ -431,7 +443,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         'literal'
     )
 
-    if (codeLanguageIsNotAnyOf(codeLanguage, [
+    if (代码语种非以下之任一(codeLanguage, [
         'css',
         'stylus',
         'sass',
@@ -445,7 +457,7 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         )
     }
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+    if (代码语种系以下之任一(codeLanguage, [
         'css',
         'stylus',
         'sass',
@@ -475,7 +487,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     )
 
 
-    if (codeLanguageIsNotAnyOf(codeLanguage, [
+
+    if (代码语种非以下之任一(codeLanguage, [
         'css',
         'stylus',
         'sass',
@@ -496,8 +509,10 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     }
 
 
+
     // '{', '}', '[', ']', '(', ')', ',', ';', '.', etc.
     astNodesRest.forEach(parseVeryCommonPunctuationsInAnASTNodeIntoHTML)
+
 
 
     astNodesRest = processASTNodesAndCollectUnprocessedOnes(
@@ -509,7 +524,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     astNodesRest.forEach(parseAllRestPunctuationsInAnASTNodeIntoHTML)
 
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+
+    if (代码语种系以下之任一(codeLanguage, [
         'javascript',
         'typescript',
     ])) {

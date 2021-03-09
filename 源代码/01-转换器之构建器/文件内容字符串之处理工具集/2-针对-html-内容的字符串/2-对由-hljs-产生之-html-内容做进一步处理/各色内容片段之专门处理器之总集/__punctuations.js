@@ -1,7 +1,7 @@
 const {
-    codeLanguageIsOneOf,    // eslint-disable-line no-unused-vars
-    codeLanguageIsNotAnyOf, // eslint-disable-line no-unused-vars
-} = require('../code-language-matchers')
+    代码语种系以下之任一,    // eslint-disable-line no-unused-vars
+    代码语种非以下之任一, // eslint-disable-line no-unused-vars
+} = require('../代码语种称谓比对之工具集')
 
 
 const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
@@ -233,7 +233,7 @@ function processStandaloneEqualSigns(html /* , codeLanguage */) {
             %=
      */
 
-    // if (codeLanguageIsOneOf(codeLanguage, [
+    // if (代码语种系以下之任一(codeLanguage, [
     //     'xml',
     //     'html',
     // ])) {
@@ -244,6 +244,7 @@ function processStandaloneEqualSigns(html /* , codeLanguage */) {
 
     //     return html
     // }
+
 
 
     /*
@@ -258,6 +259,8 @@ function processStandaloneEqualSigns(html /* , codeLanguage */) {
 
     return html
 }
+
+
 
 function processExclamationMarks(html, codeLanguage) {
     /**
@@ -274,7 +277,7 @@ function processExclamationMarks(html, codeLanguage) {
         '$2<span class="punctuation exclamation-marks odd-count">!$4</span>$6'
     )
 
-    if (codeLanguageIsOneOf(codeLanguage, [
+    if (代码语种系以下之任一(codeLanguage, [
         'css',
         'stylus',
         'less',
@@ -293,6 +296,7 @@ function processExclamationMarks(html, codeLanguage) {
 }
 
 
+
 function processSpecialPunctuationsString(html , codeLanguage) {
     SPECIAL_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY.forEach(({ sign, signRegExp, cssClassNames })=> {
         html = html.replace(
@@ -302,17 +306,19 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     })
 
 
+
     html = html.replace(
         /([^=!])==([^=])/g,
         '$1<span class="punctuation double-equal-signs">==</span>$2'
     )
 
 
+
     if (!codeLanguage) {
         console.log(`codeLanguage = "${codeLanguage}"`)
     }
 
-    if (codeLanguageIsNotAnyOf(codeLanguage, [
+    if (代码语种非以下之任一(codeLanguage, [
         'xml',
         'html',
     ])) {
@@ -356,7 +362,7 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     )
 
     // const r = html.match(/(&\w{2,});/g)
-    // if (codeLanguageIsOneOf(codeLanguage, [
+    // if (代码语种系以下之任一(codeLanguage, [
     //     'javascript',
     // ]) && r) {
     //     r.push(html)
@@ -366,6 +372,8 @@ function processSpecialPunctuationsString(html , codeLanguage) {
     //         '\n\n\n'
     //     )
     // }
+
+
 
     return html
 }

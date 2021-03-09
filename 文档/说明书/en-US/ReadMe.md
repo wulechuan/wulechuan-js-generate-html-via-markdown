@@ -68,7 +68,7 @@ Alongside this npm package, I also maintain another npm package, named [@wulechu
 
 ## Git Repositories
 
-| <span style="display:inline-block;width:180px;">Supplier</span> | <span style="display:inline-block;width:150px;">Nation</span> | URI |
+| <span style="display:inline-block;width:10em;">Supplier</span> | <span style="display:inline-block;width:8em;">Nation</span> | URI |
 | ----------- | :-----: | ------- |
 | Gitee       |  China  | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
 | Aliyun:code |  China  | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |

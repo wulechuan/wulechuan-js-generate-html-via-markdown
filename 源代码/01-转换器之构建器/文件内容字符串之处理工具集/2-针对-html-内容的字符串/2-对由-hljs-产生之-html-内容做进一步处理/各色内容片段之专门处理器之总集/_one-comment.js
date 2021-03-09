@@ -3,6 +3,7 @@ const processAllLineBreaksAndLeadingWhitespaces = require(
 )
 
 
+
 module.exports = function parseOneASTNodeOfCommentIntoHTML(astNode) {
     processAllLineBreaksAndLeadingWhitespaces(astNode)
 }

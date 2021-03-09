@@ -25,6 +25,7 @@ const DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS = {
 }
 
 
+
 const SPECIAL_ESPACED_CHARS_IN_STRINGS = [
     { escapedChar: '\\',      /* htmlEntity: '', */ cssClassNames: 'backward-slash' },
     { escapedChar: 'n',       /* htmlEntity: '', */ cssClassNames: 'new-line' },
@@ -37,16 +38,19 @@ const SPECIAL_ESPACED_CHARS_IN_STRINGS = [
 ]
 
 
+
 const REGULAR_CHARS_BUT_MUST_MATCH_VIA_ITS_HTML_ENTITY = [
     { char: '<', htmlEntity: '&lts;', cssClassNames: 'less-than-sign' },
     { char: '>', htmlEntity: '&gts;', cssClassNames: 'greater-than-sign' },
 ]
 
 
+
 const {
     buildErrorMessage,
     // buildErrorMessageSaysThatSomethingMustBe,
 } = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
+
 
 
 module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString, options = {}) {
@@ -74,6 +78,9 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
 
     // Prepare some constantly used HTML snippets here.
     const htmlSnippetSlashChar = `<span class="${ccnEscapeCharSlash}">\\</span>`
+
+
+
 
 
     let stringIsIllegal = false
@@ -132,6 +139,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
             content: decidedCloseQuoteSign,
         },
     ]
+
 
 
     if (restPartCarriedByOriginalIllegalString) {
@@ -292,6 +300,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
         }
 
 
+
         // Since "matchedConfigs" might be zero lengthed array,
         // the astNode might NOT be modified at all.
         matchedConfigs.forEach(secConfig => {
@@ -352,6 +361,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
             printingChar       = escapedChar
             cssClassNamesToUse = ccnEscapeChar
         }
+
 
 
         astNode.openMarkBackup = astNode.openMark // which should ALWASY be '\\'

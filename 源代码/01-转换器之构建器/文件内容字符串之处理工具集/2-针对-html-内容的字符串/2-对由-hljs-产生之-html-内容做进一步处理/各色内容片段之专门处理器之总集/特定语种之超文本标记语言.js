@@ -2,6 +2,8 @@ module.exports = {
     parseAnHTMLSnippetASTNode,
 }
 
+
+
 function parseAnHTMLSnippetASTNode(astNode) {
     if (!astNode.content) { return }
     astNode.content = astNode.content

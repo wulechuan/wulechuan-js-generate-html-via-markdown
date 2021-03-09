@@ -6,6 +6,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
 
 
+
 module.exports = function splitASTForEscapeChars(astNode) {
     const { content } = astNode
 
@@ -91,6 +92,7 @@ module.exports = function splitASTForEscapeChars(astNode) {
     }
 
     astNode.content = subASTs
+
 
 
     return {

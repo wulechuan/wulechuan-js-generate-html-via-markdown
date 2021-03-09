@@ -9,6 +9,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/hljs-plus')
 
 
+
 module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, options = {}) {
     const errorContext = 'processAllContentsOfAllHTMLPreTagsOfHTMLString' // eslint-disable-line no-unused-vars
 
@@ -30,6 +31,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
         '<pre>',
         '</pre>'
     )
+
 
 
     const astNodesForHTMLCodeTagsWithinAPreTag = astNodesHTMLPreTag.reduce((astNodesForCodeTags, astNodeHTMLPreTag) => {
@@ -87,6 +89,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
         allASTNodes.push(astNodeForHTMLCodeTag)
 
 
+
         if (contentAfterHTMLCodeTag) {
             allASTNodes.push({
                 isEnclosured: false,
@@ -97,11 +100,13 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
         }
 
 
+
         // allASTNodes.forEach(ast => {
         //     console.log(ast.codeLanguage)
         //     console.log(ast.content.slice(0, 256))
         // })
         // console.log('-'.repeat(79))
+
 
 
         astNodeHTMLPreTag.content = allASTNodes
@@ -112,6 +117,7 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
     }, [])
 
 
+
     astNodesForHTMLCodeTagsWithinAPreTag.forEach(astNodeForOneCodeTag => {
         processHTMLStringThatMightContainSubLanguages(
             astNodeForOneCodeTag,
@@ -120,6 +126,8 @@ module.exports = function processAllContentsOfAllHTMLPreTagsOfHTMLString(html, o
             }
         )
     })
+
+
 
     return parseASTSubTreeIntoSingleString(rootLevelASTNodes)
 }

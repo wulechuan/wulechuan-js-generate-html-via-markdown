@@ -6,6 +6,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/regexp-to-html')
 
 
+
 module.exports = {
     splitRegExpASTByBraketPairs,
 }
@@ -71,6 +72,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
         }
 
 
+
         if (openMarksCountInsideOneBraketPair > 1) {
             throw new Error(buildErrorMessage([
                 '"[" and "]" not pairing well.',
@@ -80,10 +82,12 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
         }
 
 
+
         const currentSeg = segs[i]
         lastSegEndsWithBackwardSlash = currentSeg.slice(-1) === '\\'
 
         const segParts = currentSeg.split(']')
+
 
 
         if (!braketsPairHasOpened) {
@@ -106,6 +110,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
             continue
         }
+
 
 
         const firstSegPart = segParts.shift()
@@ -134,6 +139,7 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
 
                 continue
             }
+
 
 
             // A valid closing braket, aka a ']', presents
@@ -171,7 +177,11 @@ function splitRegExpASTByBraketPairs(astNodeForRegExpBody) {
         currentMergedSeg = ''
     }
 
+
+
     astNodeForRegExpBody.content = subASTs
+
+
 
     return {
         nodesEnclosured:    subASTs.filter(n =>  n.isEnclosured),

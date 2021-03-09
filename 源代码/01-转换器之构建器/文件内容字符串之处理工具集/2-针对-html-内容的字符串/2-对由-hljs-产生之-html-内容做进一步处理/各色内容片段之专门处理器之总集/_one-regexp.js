@@ -7,6 +7,7 @@ const {
 const splitASTForEscapeChars = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
 
 
+
 const DEFAULT_CSS_CLASS_NAMES_FOR_REGEXPS = {
     // `ccn` means (C)SS (C)lass (N)ame
 
@@ -194,6 +195,7 @@ const REGEXP_CONTROL_CHARS_THAT_MUST_ESCAPE = [
 
 
 
+
 const {
     buildErrorMessage,
     // buildErrorMessageSaysThatSomethingMustBe,
@@ -235,6 +237,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         ccnCountingRangeBetweenCurlyBraces,
         ccnCountingRangeBetweenCurlyBracesDigit,
     } = cssClassNames
+
 
 
     // Prepare some constantly used HTML snippets here.
@@ -302,7 +305,6 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
 
 
-
     function extractTopLevelPartsOfOneRegExp(regexpFullContentWithOptions) {
         let regexpOpen = ''
         let regexpClose = ''
@@ -326,6 +328,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
                 regexpBothQuotesPresent = false
             }
         }
+
 
 
         const matchingResultOfRegExpCloseMark = contentForRegExpBody.match(/(\/)([a-z]*)$/)
@@ -355,6 +358,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             contentForRegExpBody,
         }
     }
+
+
 
     function parseMainContentOfOneRegExp(regExpBodyASTNode) {
         if (!regExpBodyASTNode.content) { return }
@@ -477,6 +482,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         })
     }
 
+
+
     function markAllRangingDashesInsideBraketsPairs(astNodeInsideBraketPair) {
         // '-' as char range control
 
@@ -506,6 +513,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             .replace(/([0-9])-([0-9])/g, replacement)
     }
 
+
+
     function markAllControlCharsOfInputBeginOrEnd(astNodeForASegment) {
         let { content } = astNodeForASegment
 
@@ -523,6 +532,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
         astNodeForASegment.content = content
     }
+
+
 
     function markAllEscapedPeriodSigns(astNode) {
         // '\\.'
@@ -552,6 +563,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
         astNode.asAnEscapedCharThisHasBeenProcessed = true
     }
+
+
 
     function markAllEscapedRegularChars(astNode) {
         if (astNode.asAnEscapedCharThisHasBeenProcessed) {
@@ -615,6 +628,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         // console.log('^'.repeat(79))
     }
 
+
+
     function markAllEscapedControlCharsThatMustNotEscapeToTakeEffect(astNode) {
         if (astNode.asAnEscapedCharThisHasBeenProcessed) {
             return
@@ -665,6 +680,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             astNode.asAnEscapedCharThisHasBeenProcessed = true
         })
     }
+
+
 
     function markAllEscapedControlCharsThatMustEscapeToTakeEffect(astNode) {
         if (astNode.asAnEscapedCharThisHasBeenProcessed) {
@@ -740,6 +757,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
         })
     }
 
+
+
     function markAllUnescapedControlCharsThatMustNotEscape(astNode) {
         let { content } = astNode
         if (!content) { return }
@@ -788,8 +807,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
             astNode.content = content
         })
-
     }
+
+
 
     function markAllUnescapedPeriodSigns(astNode) {
         // '.'
@@ -807,6 +827,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
             `<span class="${cssClassNames}">.</span>`
         )
     }
+
+
 
     function markAllRepeatingTimeRanges(astNode) {
         const { content } = astNode

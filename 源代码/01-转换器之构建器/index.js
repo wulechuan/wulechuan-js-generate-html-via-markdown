@@ -47,7 +47,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
     let 按需向Markdown内容字符串中注入TOC标记
     let 构建HTML之完整Title标签之字符串
-    let 将原始的HTML主体内容用Article标签包裹起来
+    let 将HTML之主体内容用Article标签包裹起来
     let processAllContentsOfAllPreTagsOfHTMLString
 
 
@@ -61,19 +61,19 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
         按需向Markdown内容字符串中注入TOC标记 = require(
-            './文件内容字符串之处理工具集/1-针对-markdown-内容的字符串/insert-toc-placeholder'
+            './文件内容字符串之处理工具集/1-针对-markdown-内容的字符串/按需向-markdown-内容字符串中注入-toc-标记'
         )
 
         构建HTML之完整Title标签之字符串 = require(
             './文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/构建完整的-html-title-标签'
         )
 
-        将原始的HTML主体内容用Article标签包裹起来 = require(
-            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/wrap-chief-content-with-article-tag'
+        将HTML之主体内容用Article标签包裹起来 = require(
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/将-html-主体内容用-article-标签包裹起来'
         )
 
         processAllContentsOfAllPreTagsOfHTMLString = require(
-            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/process-all-html-pre-tags'
+            './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/处理-html-内容中之一切-pre-标签之工具'
         )
     }
 
@@ -120,14 +120,14 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitters-for-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/parse-ast-sub-tree-into-single-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/__line-breaks-and-leading-whitespaces.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/__punctuations.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/_one-comment.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/_one-regexp.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/_one-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/language-css-family.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/language-html.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/processors/language-javascript-family.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/__line-breaks-and-leading-whitespaces.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/__punctuations.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-comment.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-regexp.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-string.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/特定语族之层叠样式表语族.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/特定语种之超文本标记语言.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/特定语族之-javascript-语族.js',
             ].forEach(subPath => {
                 清除Require机制对该文件之缓存(
                     joinPathOSLocalStyle(本NPM包之根文件夹之绝对路径, subPath),
@@ -157,7 +157,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             按需向Markdown内容字符串中注入TOC标记 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/1-针对-markdown-内容的字符串/insert-toc-placeholder.js'
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/1-针对-markdown-内容的字符串/按需向-markdown-内容字符串中注入-toc-标记.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -170,10 +170,10 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 rerequireLoggingOptions
             )
 
-            将原始的HTML主体内容用Article标签包裹起来 = 先清除Require机制对该文件之缓存而后重新Require该文件(
+            将HTML之主体内容用Article标签包裹起来 = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/wrap-chief-content-with-article-tag.js'
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/1-对最初产生的-html-内容字符做的修订/将-html-主体内容用-article-标签包裹起来.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -181,7 +181,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             processAllContentsOfAllPreTagsOfHTMLString = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 joinPathOSLocalStyle(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/process-all-html-pre-tags.js'
+                    './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/处理-html-内容中之一切-pre-标签之工具.js'
                 ),
                 rerequireLoggingOptions
             )
@@ -370,7 +370,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             }
         )
 
-        html半成品之内容字符串 = 将原始的HTML主体内容用Article标签包裹起来(
+        html半成品之内容字符串 = 将HTML之主体内容用Article标签包裹起来(
             html半成品之内容字符串,
 
             {

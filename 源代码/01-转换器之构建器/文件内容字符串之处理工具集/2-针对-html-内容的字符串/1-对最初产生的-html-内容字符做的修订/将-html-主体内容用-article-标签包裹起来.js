@@ -3,7 +3,7 @@ const {
     // 表达双层缩进之字符串,
 } = require('../../../静态-html-片段以及动态构建的-html-片段/static/表达源代码缩进之字符串')
 
-module.exports = function 将原始的HTML主体内容用Article标签包裹起来(htmlOldChiefContent, options) {
+module.exports = function 将HTML之主体内容用Article标签包裹起来(htmlOldChiefContent, options) {
     const {
         cssClassNameOfMarkdownChiefContentWrappingArticleTag,
         cssClassNameOfArticleTOCRootTag,

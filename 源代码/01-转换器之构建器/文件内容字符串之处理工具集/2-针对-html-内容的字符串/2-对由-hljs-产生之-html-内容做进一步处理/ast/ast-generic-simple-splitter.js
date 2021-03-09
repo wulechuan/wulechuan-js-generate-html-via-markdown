@@ -6,6 +6,7 @@ const {
 } = createErrorMessageBuildersFor('@wulechuan/html-simple-ast-node-splitter')
 
 
+
 module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, closeMark, codeLanguageOfEnclosuredNodes, options) {
     const errorContext = 'splitOneASTNodeByOpenAndCloseMarks'
 
@@ -73,6 +74,8 @@ module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, 
             ...options,
         }
     }
+
+
 
     const {
         shouldNotForcePairing,
@@ -175,8 +178,10 @@ module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, 
             }
 
 
+
             return a2
         }, initArrayOfStage2)
+
 
 
         let shouldSplit = true
@@ -211,6 +216,8 @@ module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, 
         }
     }
 
+
+
     return {
         allNodesInOriginalOrder: [ astNode ],
         nodesEnclosured:         [         ],
@@ -223,13 +230,19 @@ module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, 
 
 function printLine() { console.log('='.repeat(79)) }
 
+
+
+
+
 function printASTContentsForDebugging(arrayOfStage2, logContentSlicingWidth) {
     if (!logContentSlicingWidth > 0) {
         logContentSlicingWidth = 319
     }
 
 
+
     let printedNodesCount = 0
+
 
 
     arrayOfStage2.forEach(astNode => {
@@ -246,8 +259,10 @@ function printASTContentsForDebugging(arrayOfStage2, logContentSlicingWidth) {
         } = astNode
 
 
+
         const slicingWidth1 = Math.min(logContentSlicingWidth, Math.ceil(content.length / 2))
         const slicingWidth2 = Math.min(logContentSlicingWidth, content.length - slicingWidth1)
+
 
 
         console.log(`${
