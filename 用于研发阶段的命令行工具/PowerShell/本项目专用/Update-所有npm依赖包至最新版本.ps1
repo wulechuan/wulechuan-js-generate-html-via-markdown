@@ -1,13 +1,14 @@
 npm i `
     '@wulechuan/meaningful-error-messages@latest' `
     'chalk@latest' `
+    'fs@latest' `
     'markdown-it@latest' `
     'markdown-it-anchor@latest' `
     'markdown-it-checkbox@latest' `
     'markdown-it-highlightjs@latest' `
     'markdown-it-toc-done-right@latest'
 
-npm i -D '@wulechuan/css-stylus-markdown-themes@^6'
+npm i -D '@wulechuan/css-stylus-markdown-themes@^7'
 
 npm i -D `
     '@wulechuan/gulp-classical-task-cycle@latest' `
