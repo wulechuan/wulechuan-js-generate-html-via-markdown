@@ -4,18 +4,13 @@ const 彩色粉笔工具 = require('chalk')
 
 
 
-const 根据项目根文件夹相对于当前文件之路径求出几种关键路径 = require(
-    '../99-辅助工具集/根据某文件之位置求出几种关键路径'
-)
-
 const {
+    本NPM包之NPM名称,
+    // 本NPM包之Package点JSON文件,
     本NPM包之Peer依赖包之名称,
-    // 自本文件出发至本NPM包之Package点JSON文件之相对路径,
-    本NPM包之Package点JSON文件,
-} = 根据项目根文件夹相对于当前文件之路径求出几种关键路径({
-    自本文件出发至本NPM包之根文件夹之相对路径: '../../',
-    应顺便读取本NPM包之Package点JOSN之内容: true,
-})
+    // 本NPM包之Peer依赖包之根文件夹之绝对路径,
+    // 本NPM包之根文件夹之绝对路径,
+} = require('../面向研发阶段之配置')
 
 
 
@@ -27,7 +22,7 @@ try {
     console.log('-'.repeat(79))
     console.log('')
     console.log(彩色粉笔工具.yellow(`本工具（“${
-        彩色粉笔工具.green(本NPM包之Package点JSON文件.name)
+        彩色粉笔工具.green(本NPM包之NPM名称)
     }”，暂称“甲”）依赖另一\n名为“${
         彩色粉笔工具.white.bgRed(本NPM包之Peer依赖包之名称)
     }”（暂称“乙”）之工具。而此依赖包并不存在。`))

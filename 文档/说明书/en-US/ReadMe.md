@@ -273,7 +273,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                 // Example 1:
                 //     To make opening methods of all external links to be "_blank".
                 {
-                    from: /\s+href="([^#\./].+)/gi,
+                    from: /\s+href="([^#./].+)/gi,
                     to:   ' target="_blank" href="$1',
                 },
 

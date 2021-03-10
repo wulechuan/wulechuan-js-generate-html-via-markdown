@@ -24,6 +24,7 @@ const {
 } = require('../static/html')
 
 
+
 const standardSnippetEntryOfHTMLFromHeadEndToBodyBegin = {
     content: htmlFromHeadEndToBodyBegin,
 }
