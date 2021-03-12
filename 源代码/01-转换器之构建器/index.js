@@ -245,14 +245,26 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         const {
             不应为各章节标题构建超链接,
             各章节标题超链接之符号字符串,
-            cssClassNameOfHeadingPermanentLinks,
-            cssClassNameOfArticleTOCRootTag,
-            cssClassNameOfArticleTOCLists,
-            cssClassNameOfArticleTOCListItems,
-            cssClassNameOfArticleTOCItemAnchors,
             文章纲要列表应采用UL标签而非OL标签,
             构建文章纲要列表时自该级别之标题始,
         } = 将Markdown转换为HTML之阶段
+
+        let {
+            针对MarkdownIt生态之诸工具的层叠样式表类名集 = {},
+        } = 将Markdown转换为HTML之阶段
+
+        针对MarkdownIt生态之诸工具的层叠样式表类名集 = {
+            ...完备的默认配置集.将Markdown转换为HTML之阶段.针对MarkdownIt生态之诸工具的层叠样式表类名集,
+            ...针对MarkdownIt生态之诸工具的层叠样式表类名集,
+        }
+
+        const {
+            用于各级标题之超链接A标签的: cssClassNameOfHeadingPermanentLinks,
+            用于文章纲要列表之容器的: cssClassNameOfArticleTOCRootTag,
+            用于文章纲要列表各级UL或OL标签的: cssClassNameOfArticleTOCLists,
+            用于文章纲要列表各级LI标签的: cssClassNameOfArticleTOCListItems,
+            用于文章纲要列表各级LI标签内嵌之A标签的: cssClassNameOfArticleTOCItemAnchors,
+        } = 针对MarkdownIt生态之诸工具的层叠样式表类名集
 
         const {
             不应将代码块中的换行符替换成BR标签,
@@ -267,25 +279,17 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
             所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称,
             所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称,
-
-            cssClassNameOfBackToTopAnchor,
-            cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
-            cssClassNameOfMarkdownChiefContentWrappingArticleTag,
         } = 对HTML做进一步处理之阶段
 
         let {
             凡内容须注入产出之HTML中之所有外来文件 = {},
+            本工具专门可配置的层叠样式表类名集 = {},
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订 = {},
         } = 对HTML做进一步处理之阶段
 
         凡内容须注入产出之HTML中之所有外来文件 = {
             ...完备的默认配置集.对HTML做进一步处理之阶段.凡内容须注入产出之HTML中之所有外来文件,
             ...凡内容须注入产出之HTML中之所有外来文件,
-        }
-
-        须对产出之HTML内容字符串依次按下诸内容替换规则做修订 = {
-            ...完备的默认配置集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
-            ...须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
         }
 
         const {
@@ -296,14 +300,34 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             依次给出之外来文件之绝对路径序列,
         } = 凡内容须注入产出之HTML中之所有外来文件
 
+        if (!Array.isArray(依次给出之外来文件之绝对路径序列)) {
+            依次给出之外来文件之绝对路径序列 = []
+        }
+
+
+
+        本工具专门可配置的层叠样式表类名集 = {
+            ...完备的默认配置集.对HTML做进一步处理之阶段.本工具专门可配置的层叠样式表类名集,
+            ...本工具专门可配置的层叠样式表类名集,
+        }
+
+        const {
+            __cssClassNameToRename__BackToTopAnchor: cssClassNameOfBackToTopAnchor,
+            __cssClassNameToRename__BodyTagWhenMarkdownArticleHasTOC: cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
+            __cssClassNameToRename__MarkdownChiefContentWrappingArticleTag: cssClassNameOfMarkdownChiefContentWrappingArticleTag,
+        } = 本工具专门可配置的层叠样式表类名集
+
+
+
+        须对产出之HTML内容字符串依次按下诸内容替换规则做修订 = {
+            ...完备的默认配置集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
+            ...须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
+        }
+
         let {
             '1 内建现成的替换规则序列': 内建现成的替换规则序列,
             '2 额外的替换规则序列': 额外的替换规则序列,
         } = 须对产出之HTML内容字符串依次按下诸内容替换规则做修订
-
-        if (!Array.isArray(依次给出之外来文件之绝对路径序列)) {
-            依次给出之外来文件之绝对路径序列 = []
-        }
 
         if (!Array.isArray(内建现成的替换规则序列)) {
             内建现成的替换规则序列 = 完备的默认配置集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订.内建现成的替换规则序列
@@ -319,33 +343,30 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         } = 杂项
 
         if (须在控制台打印详尽细节) {
-            // console.log('\n 将Markdown转换为HTML之前之预备阶段：', 将Markdown转换为HTML之前之预备阶段)
-            // console.log('\n 将Markdown转换为HTML之阶段：', 将Markdown转换为HTML之阶段)
-            // console.log('\n 对HTML做进一步处理之阶段：', 对HTML做进一步处理之阶段)
-            // console.log('\n \'1 内建现成的替换规则序列\'：', 内建现成的替换规则序列)
-            // console.log('\n \'2 额外的替换规则序列\'：', 额外的替换规则序列)
-            // console.log('\n 对本工具现成提供的文章纲要做以下配置：', 对本工具现成提供的文章纲要做以下配置)
-            // console.log('\n 杂项：', 杂项)
             const 最终采纳之配置之打印项 = {
                 将Markdown转换为HTML之前之预备阶段,
 
                 将Markdown转换为HTML之阶段: {
                     ...将Markdown转换为HTML之阶段,
+
+                    针对MarkdownIt生态之诸工具的层叠样式表类名集,
                 },
 
                 对HTML做进一步处理之阶段: {
                     ...对HTML做进一步处理之阶段,
 
-                    须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
-                        ...须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
-                        '1 内建现成的替换规则序列': 内建现成的替换规则序列,
-                        '2 额外的替换规则序列': 额外的替换规则序列,
-                    },
-
                     凡内容须注入产出之HTML中之所有外来文件: {
                         ...凡内容须注入产出之HTML中之所有外来文件,
 
                         依次给出之外来文件之绝对路径序列,
+                    },
+
+                    本工具专门可配置的层叠样式表类名集,
+
+                    须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
+                        ...须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
+                        '1 内建现成的替换规则序列': 内建现成的替换规则序列,
+                        '2 额外的替换规则序列': 额外的替换规则序列,
                     },
                 },
             }

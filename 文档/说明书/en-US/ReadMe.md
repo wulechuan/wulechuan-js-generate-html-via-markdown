@@ -49,7 +49,7 @@ The CSS file for the built-in theming is from another NPM package of mine, named
 
 See some pictures of an example article with 2 default themes (a light-colored one and a dark-colred one) applied [there](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/en-US/application-examples.md).
 
-<!-- 
+<!--
 > IMPORTANT:
 >
 > This package "@wulechuan/generate-html-via-markdown"(package A) peer-depends upon the css theming pacakge(package B) said above.
@@ -196,44 +196,84 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         shouldLogVerbosely: false,
 
         conversionPreparations: {
+            /**
+             * Note that even if this value is true,
+             * while if there already exists a TOC mark (or placeholder, whatever)
+             * in the original string of the Markdown article,
+             * then this npm package will NOT remove the TOC mark.
+             * Thus, the output HTML file still HAS a TOC component.
+             */
             shouldNotAutoInsertTOCPlaceholderIntoMarkdown: false,
         },
 
         conversionOptions: {
             shouldNotBuildHeadingPermanentLinks: false,
+
+            /** Note that this property allows to take multiple characters as its value. */
             headingPermanentLinkSymbolChar: '§',
 
-            /*
-                This property is mapped on the "permalinkClass" property
-                of the "markdown-it-anchor" plugin.
-                The default value is "header-anchor".
-
-                My internal CSS uses the default value.
-            */
-            cssClassNameOfHeadingPermanentLinks: undefined,
-
-            cssClassNameOfArticleTOCRootTag:     'markdown-article-toc',
-            cssClassNameOfArticleTOCLists:       undefined, // <ul>s or <ol>s
-            cssClassNameOfArticleTOCListItems:   undefined, // <li>s
-            cssClassNameOfArticleTOCItemAnchors: undefined, // <a>s under <li>s
-
-            /*
-                "articleTOCBuildingHeadingLevelStartsFrom" is mapped
-                upon the "level" property of the "markdown-it-toc-done-right" plugin.
-                It basically means to build TOC items from the headings of this
-                level downwards.
-
-                For example:
-                    Say this value is 2.
-                    Then NONE of the <h1/>s will have its corresponding item in the TOC.
-                    While all <h2/>s, <h3/>s, ... etc, will have theirs in the TOC.
-
-                What's more, I perposely hide level 4 or deeper items in the TOC, via CSS rules.
-                This means although the HTML tags of ALL LEVELS DO EXIST, but from level 4 onwards,
-                their are not visible.
-            */
-            articleTOCBuildingHeadingLevelStartsFrom: 2, // Pay attention that I take 2 as a default value.
             articleTOCListTagNameIsUL: false,
+
+            针对MarkdownIt生态之诸工具的层叠样式表类名集: {
+                /**
+                 * This property is mapped onto the "permalinkClass" property of
+                * the "markdown-it-anchor" plugin.
+                *
+                * The default value is "header-anchor".
+                *
+                * The so-called internal CSS of this npm package uses the default value mentioned above.
+                */
+                用于各级标题之超链接A标签的: undefined,
+
+                /**
+                 * The 4 properties below are each mapped onto 4 properties
+                 * of the "markdown-it-toc-done-right" plugin, as the list shows below:
+                 * -   用于文章纲要列表之容器的               =>  containerClass
+                 * -   用于文章纲要列表各级UL或OL标签的        =>  listClass
+                 * -   用于文章纲要列表各级LI标签的            =>  itemClass
+                 * -   用于文章纲要列表各级LI标签内嵌之A标签的   =>  linkClass
+                 *
+                 * Anmong the 4, the "用于文章纲要列表之容器的" has
+                 * a default value designed by this npm package,
+                 * which is different from the default value of the "markdown-it-toc-done-right" plugin.
+                 * For the other 3, they have no default value designed by this npm package,
+                 * thus they each takes the default value from the "markdown-it-toc-done-right" plugin,
+                 * in which case all 3 default values happen to be the same, the `undefined`.
+                 *
+                 * See: https://www.npmjs.com/package/markdown-it-toc-done-right#options
+                 */
+                // This one is mapped onto the "containerClass" property of
+                用于文章纲要列表之容器的:     'markdown-article-toc',
+
+                // Applies to all levels of <ul>s or <ol>s.
+                用于文章纲要列表各级UL或OL标签的:       undefined,
+
+                // Applies to all levels of all <li>s.
+                用于文章纲要列表各级LI标签的:   undefined,
+
+                // Applies to all <a>s under all <li>s.
+                用于文章纲要列表各级LI标签内嵌之A标签的: undefined,
+            },
+
+            /**
+             * The "articleTOCBuildingHeadingLevelStartsFrom" is mapped
+             * onto the "level" property of the "markdown-it-toc-done-right" plugin.
+             *
+             * It basically means to build TOC items from the headings of this
+             * level downwards.
+             *
+             * For example:
+             *     Say this value is 2.
+             *     Then NONE of the <h1/>s will have its corresponding item in the TOC.
+             *     While all <h2/>s, <h3/>s, ... etc, will have theirs in the TOC.
+             *
+             * What's more, some other option of this npm package might perposely hide
+             * level 4 or deeper items in the TOC, via CSS rules, just to simplify the TOC list,
+             * thus it has better readablity.
+             * This means although the HTML tags of ALL LEVELS DO EXIST,
+             * but from level 4 onwards, their are not visible.
+             */
+            articleTOCBuildingHeadingLevelStartsFrom: 2, // Pay attention that I take 2 as a default value.
         },
 
         manipulationsOverHTML: {
@@ -243,17 +283,17 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             shouldUseUnminifiedVersionOfInternalCSS: false,
             shouldUseUnminifiedVersionOfInternalJavascriptIfAny: false,
 
-            /*
-                By default it's an empty string.
-                This means `'zh-hans-CN'` is used, according to the `begin.html`.
-            */
+            /**
+             * By default it's an empty string.
+             * This means `'zh-hans-CN'` is used, according to the `begin.html`.
+             */
             产出之HTML文件之HTML标签之语言属性之取值: '',
-            
-            /*
-                By default it's an empty string.
-                This means to extract content of the first
-                met <h1/> as the content of the <title/> tag.
-            */
+
+            /**
+             * By default it's an empty string.
+             * This means to extract content of the first
+             * met <h1/> as the content of the <title/> tag.
+             */
             htmlTitleString: '',
 
             internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
@@ -263,36 +303,50 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             cssClassNameOfBodyTagWhenMarkdownArticleHasTOC:       'markdown-article-toc-exists',
             cssClassNameOfBackToTopAnchor:                        'markdown-article-back-to-top',
 
-            desiredReplacementsInHTML: [
-            /*
-                {
-                    from: <string or RegExp>,
-                    to:   <string>,
-                },
+            desiredReplacementsInHTML: {
+                '1 内建现成的替换规则序列': [
+                    '令所有外部链接之打开方式为 _blank',
+                    '令所有原本指向 Markdown 文件之链接改为指向同名 HTML 文件',
+                ],
 
-                // Example 1:
-                //     To make opening methods of all external links to be "_blank".
-                {
-                    from: /\s+href="([^#./].+)/gi,
-                    to:   ' target="_blank" href="$1',
-                },
-
-                // Example 2:
-                //     To change some hrefs to point to HTML files
-                //     which were pointing to markdown files.
-                {
-                    from: /\s+href="(.+)\.md(#.*)?"/gi,
-                    to:   ' href="$1.html$2"',
-                },
-
-                // Example 3:
-                //     To batch replace some href values according to some imagined rule.
-                {
-                    from: /\s+href="\.\/course-examples\//gi,
-                    to: ' href="../public/assets/course-examples/',
-                },
-            */
-            ],
+                '2 额外的替换规则序列': [
+                    /**
+                     * // Data structure:
+                     * {
+                     *     from: <string or RegExp>,
+                     *     to:   <string>,
+                     * },
+                     *
+                     *
+                     *
+                     * // Example 1:
+                     * //     To make opening methods of all external links to be "_blank".
+                     * {
+                     *     from: /\s+href="([^#./].+)/gi,
+                     *     to:   ' target="_blank" href="$1',
+                     * },
+                     *
+                     *
+                     *
+                     * // Example 2:
+                     * //     To change some hrefs to point to HTML files
+                     * //     which were pointing to markdown files.
+                     * {
+                     *     from: /\s+href="(.+)\.md(#.*)?"/gi,
+                     *     to:   ' href="$1.html$2"',
+                     * },
+                     *
+                     *
+                     *
+                     * // Example 3:
+                     * //     To batch replace some href values according to some imagined rule.
+                     * {
+                     *     from: /\s+href="\.\/course-examples\//gi,
+                     *     to: ' href="../public/assets/course-examples/',
+                     * },
+                     */
+                ],
+            },
 
             absolutePathsOfExtraFilesToEmbedIntoHTML: [],
         },
