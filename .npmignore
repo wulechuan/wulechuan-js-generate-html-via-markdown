@@ -3,6 +3,7 @@
 .vscode
 
 temp
+临时文件
 
 .eslintignore
 .eslintrc.js
