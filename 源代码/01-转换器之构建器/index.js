@@ -1,3 +1,5 @@
+/// <reference path="../types/index.d.ts" />
+
 const 彩色粉笔工具 = require('chalk')
 
 
@@ -118,10 +120,13 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-    return function generateFullHTMLStringViaMarkdownString(markdownContent, options = {}) {
+    return function 吴乐川的将以Markdown为内容之字符串转换为HTML内容之字符串的转换器(
+        markdown原始文章全文之字符串,
+        转换器之配置项集 = {}
+    ) {
         const {
             须在控制台打印详尽细节,
-        } = options
+        } = 转换器之配置项集
 
         let {
             将Markdown转换为HTML之前之预备阶段 = {},
@@ -129,7 +134,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             对HTML做进一步处理之阶段 = {},
             对本工具现成提供的文章纲要做以下配置 = {},
             杂项 = {},
-        } = options
+        } = 转换器之配置项集
 
 
 
@@ -383,7 +388,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         const {
             markdown内容现已包含TOC标记,
             处理过的Markdown内容之字符串: _markdown内容之半成品1,
-        } = 按需向Markdown内容字符串中注入TOC标记(markdownContent, 不应主动插入TOC之占位标记)
+        } = 按需向Markdown内容字符串中注入TOC标记(markdown原始文章全文之字符串, 不应主动插入TOC之占位标记)
 
         const markdown内容之最终成品之字符串 = _markdown内容之半成品1
 

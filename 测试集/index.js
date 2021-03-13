@@ -1,3 +1,5 @@
+/// <reference path="../源代码/types/index.d.ts" />
+
 const {
     readFileSync: 阻塞式读取文件之内容,
     writeFileSync: 阻塞式将内容写入文件,
@@ -11,6 +13,10 @@ const { join: 遵循POSIX标准拼接路径 } = 路径工具.posix
 // 为简化本 npm 包之用法，本 npm 包预先构建了一枚转换器。
 const 本NPM包现成提供的一枚转换器 = require('..')
 const 本NPM包之Package点JSON文件 = require('../package.json')
+
+const {
+    本NPM包之Peer依赖包之名称,
+} = require('../源代码/面向研发阶段之配置')
 
 
 
@@ -112,6 +118,15 @@ const 由本工具之汉语版说明书产出之HTML内容字符串 = 本NPM包�
         对HTML做进一步处理之阶段: {
             采用由本工具内建之层叠样式表时应采用未经压缩之版本: false,
             采用由本工具内建之Javascript时应采用未经压缩之版本: true,
+
+            须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
+                '2 额外的替换规则序列': [
+                    {
+                        凡: '<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">',
+                        替换为: '',
+                    },
+                ],
+            },
         },
     }
 )
