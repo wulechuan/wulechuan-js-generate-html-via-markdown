@@ -394,7 +394,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 ## 本项目已知的功能缺陷
 
-见`文档/本项目已知的功能缺陷/`。
+见 《[本项目已知的功能缺陷](./文档/本项目已知的功能缺陷/索引.md)》。
 
 
 ## 未来计划
