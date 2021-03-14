@@ -105,9 +105,9 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
             所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称?: peer依赖包之类型定义之内建之层叠样式表文件之名称之凡含有文章目录者;
 
             本工具专门可配置的层叠样式表类名集?: {
-                __cssClassNameToRename__MarkdownChiefContentWrappingArticleTag?: string;
-                __cssClassNameToRename__BodyTagWhenMarkdownArticleHasTOC?: string;
-                __cssClassNameToRename__BackToTopAnchor?: string;
+                用于Body标签以表明文章配备了纲要列表的?: string;
+                用于文章正文之根Article标签的?: string;
+                用于具有按钮样貌的返回文章首部之链接的?: string;
             };
 
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订?: {

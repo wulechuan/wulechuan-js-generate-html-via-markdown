@@ -105,9 +105,9 @@ module.exports = {
         所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
 
         本工具专门可配置的层叠样式表类名集: {
-            __cssClassNameToRename__MarkdownChiefContentWrappingArticleTag: 'markdown-article',
-            __cssClassNameToRename__BodyTagWhenMarkdownArticleHasTOC:       'markdown-article-toc-exists',
-            __cssClassNameToRename__BackToTopAnchor:                        'markdown-article-back-to-top',
+            用于Body标签以表明文章配备了纲要列表的: 'markdown-article-toc-exists',
+            用于文章正文之根Article标签的: 'markdown-article',
+            用于具有按钮样貌的返回文章首部之链接的: 'markdown-article-back-to-top',
         },
 
         须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {

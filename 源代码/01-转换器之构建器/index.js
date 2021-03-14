@@ -317,9 +317,9 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         }
 
         const {
-            __cssClassNameToRename__BackToTopAnchor: cssClassNameOfBackToTopAnchor,
-            __cssClassNameToRename__BodyTagWhenMarkdownArticleHasTOC: cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
-            __cssClassNameToRename__MarkdownChiefContentWrappingArticleTag: cssClassNameOfMarkdownChiefContentWrappingArticleTag,
+            用于Body标签以表明文章配备了纲要列表的: cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
+            用于文章正文之根Article标签的: cssClassNameOfMarkdownChiefContentWrappingArticleTag,
+            用于具有按钮样貌的返回文章首部之链接的: cssClassNameOfBackToTopAnchor,
         } = 本工具专门可配置的层叠样式表类名集
 
 

@@ -17,19 +17,20 @@ const 替换文件名中的扩展名  = require('replace-ext')
 const { 先清除Require机制对该文件之缓存而后重新Require该文件 } = require('../../../源代码/99-辅助工具集/先清除-require-机制对某文件之缓存而后重新-require-该文件')
 
 const {
+    本NPM包之NPM名称,
     本NPM包之根文件夹之绝对路径,
 } = require('../../../源代码/面向研发阶段之配置')
 
 const {
-    allFileEntriesKeyingByFileNames: peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
-    syncGetContentStringOfOneFileEntry: peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
+    以文件名称为索引之所有文件简易描述项之字典: peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
+    获取某一已发布之文件之完整内容字符串: peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
 } = require('@wulechuan/css-stylus-markdown-themes')
 
 const 依照当前操作系统之风格拼接路径字符串 = 路径工具.join
 // const joinPathPOSIX = 路径工具.posix.join
 
 function 构造一个Gulp生态中之特型错误对象(rawError) {
-    return new GulpPluginError('@wulechuan/generate-html-via-markdown', rawError)
+    return new GulpPluginError(本NPM包之NPM名称, rawError)
 }
 
 module.exports = function 将由本工具构建之内容转换器包裹成Gulp任务管道之环节(转换器之配置项集) {

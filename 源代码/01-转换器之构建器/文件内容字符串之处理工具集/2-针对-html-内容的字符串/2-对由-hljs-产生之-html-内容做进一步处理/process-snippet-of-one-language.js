@@ -1,10 +1,15 @@
-const chalk                              = require('chalk')
+const 彩色粉笔工具 = require('chalk')
+
 const splitOneASTNodeByOpenAndCloseMarks = require('./ast/ast-generic-simple-splitter')
 
 const {
-    代码语种系以下之任一,    // eslint-disable-line no-unused-vars
+    代码语种系以下之任一, // eslint-disable-line no-unused-vars
     代码语种非以下之任一, // eslint-disable-line no-unused-vars
 } = require('./代码语种称谓比对之工具集')
+
+const {
+    本NPM包之NPM名称,
+} = require('../../../../面向研发阶段之配置')
 
 
 
@@ -121,12 +126,12 @@ function processASTNodesOfKnownHLJSTokensAndCollectUnprocessedOnes(astNodes, hlj
             astNode.openMark = `<span class="hljs-${hljsTokenName} ${additionalCSSClassName}">`
 
             if (shouldLogTip) {
-                console.log(`@wulechuan/generate-html-via-markdown:\nCSS class names of tag "${
-                    chalk.red(`.hljs-${hljsTokenName}`)
+                console.log(`${本NPM包之NPM名称} ：\nCSS class names of tag "${
+                    彩色粉笔工具.red(`.hljs-${hljsTokenName}`)
                 }" with content\n    "${
-                    chalk.green(content)
+                    彩色粉笔工具.green(content)
                 }"\nhave been adjusted to:\n    "${
-                    chalk.yellow(`.hljs-${hljsTokenName}.${additionalCSSClassName}`)
+                    彩色粉笔工具.yellow(`.hljs-${hljsTokenName}.${additionalCSSClassName}`)
                 }"\n`)
             }
         }
