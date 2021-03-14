@@ -200,9 +200,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    `./源代码/完备的默认配置集.js` 文件已尽述之。请参阅。
+    `./源代码/完备的默认配置项集.js` 文件已尽述之。请参阅。
 
-    我已将 `./源代码/完备的默认配置集.js` 文件的（几乎）完整内容复制如下：
+    我已将 `./源代码/完备的默认配置项集.js` 文件的（几乎）完整内容复制如下：
 
     ```js
     {

@@ -22,7 +22,7 @@ export = 一枚现成的自Markdown至HTML的转换器;
 
 declare namespace 一枚现成的自Markdown至HTML的转换器 {
     export const 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器: 类型定义之转换器之构建器;
-    export const 完备的默认配置集: 类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集;
+    export const 完备的默认配置项集: 类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集;
 
 
 
@@ -40,7 +40,7 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
      * 不应采用 “ typeof 一枚现成的自Markdown至HTML的转换器 ” 之写法。
      * 因为这一定义还额外包含了
      *     1） 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器
-     *     2） 完备的默认配置集
+     *     2） 完备的默认配置项集
      * 这两个属性。故而是不正确的。
      *
      * 恰恰相反，应对令上文 “ 一枚现成的自Markdown至HTML的转换器 ” 函数之定义尽可能采用下方之现成定义。此举已成。

@@ -187,9 +187,9 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    All in the `./源代码/完备的默认配置集.js` file.
+    All in the `./源代码/完备的默认配置项集.js` file.
 
-    I've copy & paste the full(almost) content of the `./源代码/完备的默认配置集.js` below.
+    I've copy & paste the full(almost) content of the `./源代码/完备的默认配置项集.js` below.
 
     ```js
     {

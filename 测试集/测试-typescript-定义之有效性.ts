@@ -65,12 +65,12 @@ const 一枚新的转换器 = 一枚现成的转换器.构建一个用于将Mark
  * 请输入以下测试性文字，并观察代码编辑器是否能给出正确的代码提示。
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * const defaultOptions = 一枚现成的转换器.完备的默认配置集
+ * const defaultOptions = 一枚现成的转换器.完备的默认配置项集
  * const html = 一枚现成的转换器('# 一篇好文\n\n中国加油！', defaultOptions)
  * const charCounts = html.length
  * */
 /** */
-const defaultOptions = 一枚现成的转换器.完备的默认配置集
+const defaultOptions = 一枚现成的转换器.完备的默认配置项集
 const html = 一枚现成的转换器('# 一篇好文\n\n中国加油！', defaultOptions)
 const charCounts = html.length
 
