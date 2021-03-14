@@ -63,6 +63,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
         peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
         不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求,
+        欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
     } = 配置项集
 
     let 完备的默认配置项集
@@ -458,10 +459,14 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         /* ****** Extract HTML title out of generated HTML raw contents ******* */
 
-        const html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(html半成品之内容字符串, {
-            客体程序指明采用的作为HTMLTitle标签内容之字符串: 产出之HTML文件之Title标签之内容字符串,
-            控制台打印信息须改用英国话,
-        })
+        let html之完整Title标签之字符串 = '<title>【验证性输出】输出内容并非正式内容</title>'
+
+        if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+            html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(html半成品之内容字符串, {
+                客体程序指明采用的作为HTMLTitle标签内容之字符串: 产出之HTML文件之Title标签之内容字符串,
+                控制台打印信息须改用英国话,
+            })
+        }
 
 
 
@@ -494,51 +499,57 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             return false
         }
 
-        内建现成的替换规则序列.forEach(某内建替换规则之名称 => {
-            const 某内建替换规则 = 所有内建替换规则之字典[某内建替换规则之名称]
-            const 已成功 = 对html半成品字符串执行某查找替换规则(某内建替换规则)
 
-            if (!已成功) {
-                throw new Error(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    给出的内建现成 HTML 替换规则之名称“${
-                    彩色粉笔工具.yellow(某内建替换规则之名称)
-                }”无效。`))
+
+        if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+            内建现成的替换规则序列.forEach(某内建替换规则之名称 => {
+                const 某内建替换规则 = 所有内建替换规则之字典[某内建替换规则之名称]
+                const 已成功 = 对html半成品字符串执行某查找替换规则(某内建替换规则)
+
+                if (!已成功) {
+                    throw new Error(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    给出的内建现成 HTML 替换规则之名称“${
+                        彩色粉笔工具.yellow(某内建替换规则之名称)
+                    }”无效。`))
+                }
+            })
+
+            额外的替换规则序列.forEach((某额外替换规则, 数组索引数) => {
+                if (!某额外替换规则) { return }
+
+                const 已成功 = 对html半成品字符串执行某查找替换规则(某额外替换规则)
+                if (!已成功) {
+                    console.log(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    用于 HTML 内容替换之额外规则序列中的第 ${
+                        彩色粉笔工具.yellow(数组索引数 + 1)
+                    } 条规则无效。`), '该无效值规则为：',  某额外替换规则)
+
+                    throw new Error(`${本NPM包之NPM名称} 出错：用于 HTML 内容替换之额外规则序列中的第 ${数组索引数 + 1} 条规则无效。`)
+                }
+            })
+
+
+
+            html半成品之内容字符串 = 处理HTML内容中之一切Pre标签(
+                html半成品之内容字符串,
+                {
+                    不应将代码块中的换行符替换成BR标签,
+                }
+            )
+
+
+
+            html半成品之内容字符串 = 将HTML之主体内容用Article标签包裹起来(
+                html半成品之内容字符串,
+
+                {
+                    cssClassNameOfMarkdownChiefContentWrappingArticleTag,
+                    cssClassNameOfArticleTOCRootTag,
+                    markdown文章中包含了TOC标记,
+                }
+            )
+
+            if (!不应注入用于返回文章起始之按钮) {
+                html半成品之内容字符串 += `\n${表达单层缩进之字符串}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
             }
-        })
-
-        额外的替换规则序列.forEach((某额外替换规则, 数组索引数) => {
-            if (!某额外替换规则) { return }
-
-            const 已成功 = 对html半成品字符串执行某查找替换规则(某额外替换规则)
-            if (!已成功) {
-                console.log(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    用于 HTML 内容替换之额外规则序列中的第 ${
-                    彩色粉笔工具.yellow(数组索引数 + 1)
-                } 条规则无效。`), '该无效值规则为：',  某额外替换规则)
-
-                throw new Error(`${本NPM包之NPM名称} 出错：用于 HTML 内容替换之额外规则序列中的第 ${数组索引数 + 1} 条规则无效。`)
-            }
-        })
-
-
-
-        html半成品之内容字符串 = 处理HTML内容中之一切Pre标签(
-            html半成品之内容字符串,
-            {
-                不应将代码块中的换行符替换成BR标签,
-            }
-        )
-
-        html半成品之内容字符串 = 将HTML之主体内容用Article标签包裹起来(
-            html半成品之内容字符串,
-
-            {
-                cssClassNameOfMarkdownChiefContentWrappingArticleTag,
-                cssClassNameOfArticleTOCRootTag,
-                markdown文章中包含了TOC标记,
-            }
-        )
-
-        if (!不应注入用于返回文章起始之按钮) {
-            html半成品之内容字符串 += `\n${表达单层缩进之字符串}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
         }
 
 
@@ -560,69 +571,73 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         })
 
 
-        let 一切须注入HTML之标签之列表 = []
+
+        let 所有层叠样式表片段之列表 = []
+        let 所有Javascript片段之列表 = []
+
+        if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+            let 一切须注入HTML之标签之列表 = []
 
 
 
+            let 所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称
 
+            if (!不应采用任何由本工具内建之层叠样式表) {
+                if (markdown文章中包含了TOC标记) {
+                    所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称
+                } else {
+                    所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称
+                }
 
-        let 所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称
-
-        if (!不应采用任何由本工具内建之层叠样式表) {
-            if (markdown文章中包含了TOC标记) {
-                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称
-            } else {
-                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称
+                if (采用由本工具内建之层叠样式表时应采用未经压缩之版本) {
+                    所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称.replace(
+                        /\.min\.css$/,
+                        '.css'
+                    )
+                }
             }
 
-            if (采用由本工具内建之层叠样式表时应采用未经压缩之版本) {
-                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称 = 所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称.replace(
-                    /\.min\.css$/,
-                    '.css'
+            if (所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称) {
+                const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
+                    所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称,
+                    读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
+                    对本工具现成提供的文章纲要做以下配置
                 )
-            }
-        }
 
-        if (所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称) {
-            const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
-                所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称,
-                读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
-                对本工具现成提供的文章纲要做以下配置
-            )
+                一切须注入HTML之标签之列表 = [
+                    ...一切须注入HTML之标签之列表,
+                    snippetEntryOfThemingCSS,
+                ]
+
+                if (snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs) {
+                    一切须注入HTML之标签之列表 = [
+                        ...一切须注入HTML之标签之列表,
+                        ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
+                            if (采用由本工具内建之Javascript时应采用未经压缩之版本) {
+                                return entryPair.unminified
+                            } else {
+                                return entryPair.minified
+                            }
+                        }),
+                    ]
+                }
+            }
 
             一切须注入HTML之标签之列表 = [
                 ...一切须注入HTML之标签之列表,
-                snippetEntryOfThemingCSS,
+                ...依次给出之外来文件之绝对路径序列
+                    .map(外来文件之绝对路径 => {
+                        return syncGetSnippetEntryOfOneExternalFile(
+                            外来文件之绝对路径,
+                            若将反复读取这些文件应禁止Require语句缓存这些文件之内容
+                        )
+                    })
+                    .filter(entry => !!entry),
             ]
 
-            if (snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs) {
-                一切须注入HTML之标签之列表 = [
-                    ...一切须注入HTML之标签之列表,
-                    ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
-                        if (采用由本工具内建之Javascript时应采用未经压缩之版本) {
-                            return entryPair.unminified
-                        } else {
-                            return entryPair.minified
-                        }
-                    }),
-                ]
-            }
+            所有层叠样式表片段之列表  = 一切须注入HTML之标签之列表.filter(entry =>  entry.内容由style标签而非script标签包裹着)
+            所有Javascript片段之列表 = 一切须注入HTML之标签之列表.filter(entry => !entry.内容由style标签而非script标签包裹着)
         }
-
-        一切须注入HTML之标签之列表 = [
-            ...一切须注入HTML之标签之列表,
-            ...依次给出之外来文件之绝对路径序列
-                .map(外来文件之绝对路径 => {
-                    return syncGetSnippetEntryOfOneExternalFile(
-                        外来文件之绝对路径,
-                        若将反复读取这些文件应禁止Require语句缓存这些文件之内容
-                    )
-                })
-                .filter(entry => !!entry),
-        ]
-
-        const 所有层叠样式表片段之列表  = 一切须注入HTML之标签之列表.filter(entry =>  entry.内容由style标签而非script标签包裹着)
-        const 所有Javascript片段之列表 = 一切须注入HTML之标签之列表.filter(entry => !entry.内容由style标签而非script标签包裹着)
 
 
 

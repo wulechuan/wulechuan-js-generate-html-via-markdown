@@ -5,7 +5,7 @@ const {
 } = require('@wulechuan/gulp-classical-task-cycle')
 
 const 专门用于将本NPM包之Peer依赖包中之Markdown范文逐一转换为HTML文件的任务闭环 = require(
-    '../02-用于构建任务闭环的工具集/build-peer-dependency-examples/building-htmls'
+    './将-peer-依赖包中之-markdown-范文逐一转换为-html-文件的任务闭环'
 )
 
 module.exports = create3HighOrderTasksUponMultipleTaskCycles({

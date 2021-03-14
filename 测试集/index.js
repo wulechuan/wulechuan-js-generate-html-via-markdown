@@ -122,7 +122,7 @@ const 由本工具之汉语版说明书产出之HTML内容字符串 = 本NPM包�
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
                 '2 额外的替换规则序列': [
                     {
-                        凡: '<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">',
+                        凡: `<link rel="stylesheet" href="./node_modules/${本NPM包之Peer依赖包之名称}/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">`,
                         替换为: '',
                     },
                 ],
