@@ -2,6 +2,10 @@
 
 作者：吴乐川
 
+中国人——特别是汉族人，理应坚持广泛、规范地使用汉语。凡非必要之情形不说外国话、不用外国字。此乃天经地义！然则每当必要，亦不排斥采用外国之语言。不妨 博世界之学问，养中国之精神 。
+
+本人亦支持少数民族坚持采用自己民族的传统语言。仍须强调，凡中国人，皆应会用汉语、积极使用汉语，此乃中华各民族之大一统之必由。
+
 § 自然语言范文
 § 《千字文》[节选]
 
@@ -40,9 +44,9 @@
 
 如果一个链接指向本文，不妨称其为文内链接，而不应生硬的由英语直译为所谓“本地链接”。另，文内链接看起来与应与指向其它文章或网址的链接稍有不同，以为明示。暗示不堪用，明示才好。小例一则：跳转至本文《程序代码片段示例集》。
 
-再来看看行文中的【代码词汇】或【术语】：例如孙行者和计算机，又如 querySelector 和 querySelectorAll 早已取代了老式的 getElementsById 和 getElementsByTagName 等。
+再来看看行文中的【代码词汇】或【术语】：例如孙行者和计算机，又如 querySelector 和 querySelectorAll 早已取代了老式的 getElementsById 和 getElementsByTagName 等。术语框中的多个连续空格也应得到保留，例如 这后面有四个空格    这前面有四个空格。
 
-计算机键盘快捷键，其视觉样式如是：Ctrl+            ；又例：如今，Ctrl+Shift+s 这一组合键早已广泛用于各种现代计算机软件中，代表（将工作内容或文件）另存为（一文件）之功能。
+计算机键盘快捷键，其视觉样式如是：Ctrl+            ；又例：如今，Ctrl+Shift+s 这一组合键早已广泛用于各种现代计算机软件中，代表（将工作内容或文件）另存为（壹文件）之功能。
 
 还有时候，有些内容会故意被“杠掉”，即被中划线划去，表示此内容不正确，不应采纳，应作废。例如：地球是平的。
 
@@ -60,9 +64,7 @@
 
 第 1 级第 3 项
 
-孔夫子热评西方美食
 周瑜正式出任新航母舰长
-李白担任北京大学名誉副校长
 岳鹏举在南方各地视察防御工事
 祖冲之发表全新论文，受到中科院表彰
 武松打虎一案受到自然保护主义者质疑，有关部门已正式展开调查
@@ -91,25 +93,21 @@
 
 第 1 级第 6 项
 
-§ 多级标题
-§ 电影《哪吒之魔童降世》的剧情简介
+§ 多级标题（这是 h3）
+§ 电影《哪吒之魔童降世》的剧情简介（这是 h4）
 
 天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3 年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？
 
-§ Web API 可以分为很多类
-§ 文档对象模型
+§ Web API 可以分为很多类（这是 h4）
+§ 文档对象模型（这是 h5）
 
 文档对象模型（DOM）将 web 页面与到脚本或编程语言连接起来。通常是指 JavaScript，但将 HTML、SVG 或 XML 文档建模为对象并不是 JavaScript 语言的一部分。DOM 模型用一个逻辑树来表示一个文档，树的每个分支的终点都是一个节点（node），每个节点都包含着对象（object）。DOM 的方法（method）让你可以用特定方式操作这个树，用这些方法你可以改变文档的结构、样式或者内容。节点可以关联上事件处理器，一旦某一事件被触发了，那些事件处理器就会被执行。[1]
 
-§ 层叠样式表对象模型
+§ 层叠样式表对象模型（这是 h5）
 
 CSS Object Model 是一组允许用 JavaScript 操纵 CSS 的 API。 它是继 DOM 和 HTML API 之后，又一个操纵 CSS 的接口，从而能够动态地读取和修改 CSS 样式。[2]
 
-§ 浏览器对象模型
-
-浏览器对象模型（BOM）指的是由 Web 浏览器暴露的所有对象组成的表示模型。BOM 与 DOM 不同，BOM 既没有标准的实现，也没有严格的定义, 所以浏览器厂商可以自由地实现 BOM。[3]
-
-§ 引用来源
+§ 引用来源（这是 h5）
 
 上文[1]来自 MDN，但故意没有作为引用段落，以便呈现正常段落文字的样貌。
 
@@ -117,15 +115,27 @@ CSS Object Model 是一组允许用 JavaScript 操纵 CSS 的 API。 它是继 D
 
 上文[2]来自 MDN，但故意没有作为引用段落，以便呈现正常段落文字的样貌。
 
- 
-
-上文[3]来自 维基百科，但故意没有作为引用段落，以便呈现正常段落文字的样貌。
-
 § 引用的文字
 
 我们还可以引用一小段文字。例如，子曰：
 
 学而时习之 不亦说乎 有朋自远方来 不亦乐乎 人不知而不愠 不亦君子乎
+
+如果引用的文字很短，我目前的设计是令它们位于同一行中。例如：
+
+circle ['sɜrk(ə)l]：圆。
+
+ 
+
+area ['eriə]：面积。
+
+出现在列表项中的引用文字：
+
+复旦大学中国研究院院长张维为教授在其所著《中国超越：一个文明型国家的光荣与梦想》中写道：
+
+中国人的爱国主义是长江、黄河、珠穆朗玛峰；是《诗经》、《楚辞》、先秦散文；是唐诗、宋词、元曲、明清小说；是屈原、岳飞、文天祥、毛泽东；是普通话、四川话、广东粤语、上海方言；是万里长城、北京故宫、桂林山水、陕西兵马俑；是川菜、粤菜、鲁菜、淮扬菜；是西湖龙井、黄山毛峰、武夷岩茶、洞庭碧螺春；是《梅花三弄》、《高山流水》、《二泉映月》、《春江花月夜》；是四合院、广东骑楼、徽派大院、江南民居；是昆剧、京剧、粤剧、黄梅戏；是南昌起义、平型关大捷、台儿庄血战、抗美援朝；是两弹一星、北斗导航、神舟号飞船、高铁八纵八横；是己所不欲，勿施于人；是四海之内皆兄弟；是胸怀祖国，放眼世界等等等等。
+
+师父，俺老孙来也！
 
 引用的文字中有时也会有较复杂的版式，见下例。
 
@@ -191,11 +201,40 @@ for (var j = 0; j < dataArray.length; j++) {
 
 § 加载失败的插图
 
+§ 视频
+在折叠内容块中的视频
 § 程序代码片段示例集
-§ Javascript 代码片段
+§ JavaScript 代码片段
+
+列表项中的代码片段
+
+function getCircleArea(r) {
+    return 3.14159265 * r * r;
+}
+
+getCircleArea(100);
+
+function getCircumference(r) {
+    return 2 * 3.14159265 * r;
+}
+
+getCircumference(100);
+
+ 
+
+circumference [sər’kʌmf(ə)rəns] 圆周长
+
+折叠内容中的代码块1
+var age = +prompt('你多大了？');
+
+
+下面是不在列表项内的代码片段。
+
+折叠内容中的代码块2
+console.log(NaN === NaN); // false
+
 // 这是一句行尾注释。好吧，我承认它恰好在这一行的开头。
 import something from 'somethingjs'
-
 var myModule = require('my-module');
 
 const author = {
@@ -213,23 +252,18 @@ var newsThatAreNotNewsAnyMore = [
     '李广在 2019 亚洲射箭锦标赛再次夺魁',
 ]
 
-
-let anUndefinedValue = undefined; // 看看语句结尾分号的效果
-let aNull = null;
-
-var anInteger = (19 + 3 * (79 - 51) + 2013) % 2
-
+let   anUndefinedValue = undefined; // 看看语句结尾分号的效果
+const aNull = null;
+var   anInteger = (19 + 3 * (79 - 51) + 2013) % 2
 anInteger++;
-
 ++anInteger;
-
 anInteger--;
 
 Math.max(anInteger, -90)
 
 const cellPhoneNumberRegExp = /^1\d{2}([- ]?\d{4}){2}$/
 
-let cellPhoneNumber = '13345678901 '
+let cellPhoneNumber = '13345678901  '
 cellPhoneNumber = cellPhoneNumber.trim()
 
 const cellPhoneNumberIsValid = cellPhoneNumberRegExp.test(cellPhoneNumber)
@@ -238,7 +272,6 @@ console.log('cellPhoneNumberIsValid', cellPhoneNumberIsValid) // true
 var aString = `Meaningless ${cellPhoneNumber} ` + !!!true +
     ' ' + 15 + ' ' + !false + Math.random().toFixed(4)
 
-
 const aBoolean = true || false && !true && !!false || !0 &&
     !!1 || 9 < 6 && 8 >= 8 || NaN === NaN && 10 > 13;
 
@@ -246,9 +279,7 @@ var a, b, c, d = 11, e = 12, f, g = anInteger <= 1024 + -1e+8;
 f = 2e-5 / 16;
 
 let isAnArray = false
-if (Array.isArray([])) {
-    isAnArray = true
-}
+if (Array.isArray([])) { isAnArray = true }
 
 const regExp = new RegExp('\\w+', 'i')
 
@@ -273,10 +304,12 @@ $(function (e) {
     console.log(window.innerHeight, window.self, global)
 })
 
-const anArrowFunction = (count) => {
+const anArrowFunction = count => {
     for (var i = 0; i<count; i++) {
-        if (i === 3) {
-            continue
+        if (i === 3) { continue }
+
+        if (i !== 6) {
+            console.log('Not six')
         }
 
         debugger
@@ -291,15 +324,12 @@ const anArrowFunction = (count) => {
                 break
         }
 
-        if (i >= 10000) {
-            break
-        }
+        if (i >= 10000) { break }
     }
 }
 
 window.tempString = '\nhello\n unnecessary escaped chars: \m \p \- \.'
 delete window.tempString
-
 
 window['temp-string-2'] = `
     multiple
@@ -309,7 +339,6 @@ window['temp-string-2'] = `
 `
 
 var num = 10;
-
 num += 2;
 num -= 2;
 num *= 2;
@@ -338,7 +367,6 @@ function addTwoNumbers(a, b) {
     if (typeof a === 'number' && typeof b === 'number') {
         return a + b
     }
-
     return NaN
 }
 
@@ -351,14 +379,12 @@ export default function isAPromiseObject(input) {
     /*
         这就是
         啰哩吧嗦的
-        多行注释
-        的效果。瞅瞅吧。
+        多行注释的效果。瞅瞅吧。
     */
     return !!input && typeof input.then === 'function' && typeof input.done === 'function'
 }
 
 module.exports = { content: 'nothing' };
-
 exports.author = 'wulechun@live.com';
 
 § HTML 代码片段
@@ -370,7 +396,7 @@ exports.author = 'wulechun@live.com';
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>乐川的示范文档</title>
     <!-- 这是简短的单行注释。 -->
-    <style>
+    <style id="my-embedded-styles">
         div {
             width:  100px;
             height: 200px;
@@ -422,33 +448,50 @@ exports.author = 'wulechun@live.com';
     <!--
         这是啰哩吧嗦的多行注释，
         写这么多行，
-        只是为了能令其
-        多占据几行。
+        只是为了能令其多占据几行。
         你瞧，大体如此。
     -->
 
     <div id="app">
         <button id="one-button">我是按钮</button><br>
-        <img id="beauty" src="./images/beauties/beauty-1.jpg" alt="此处本应有美女" tilte="一位大美女">
+        <img id="beauty" src="./images/beauties/beauty-1.jpg" alt="此处本应有美女" tilte="一位绝色美人">
     </div>
 
-    <script>
-        var button = document.querySelector('#one-button');
+    <script id="js-example-1" type="text/javascript">
         var beautyImage = document.getElementById('beauty');
-
-        button.onclick = function () {
+        document.querySelector('#one-button').onclick = function () {
             beautyImage.src = './images/beauties/beauty-2.jpg';
-            beautyImage.title = '另一位大美女';
+            beautyImage.title = '另一位绝色美人';
         };
     </script>
 
     <script>
-        const girl = document.querySelector('img')
-        girl.addEventListener('mouseover', function (event) {
-            this.src = './images/beauties/beauty-3.jpg'
-            this.title = '绝色美人'
-        })
+        var girl = {
+            buy: function ( clothesName ) {
+                if ( !this.has( clothesName ) ) {
+                    this[ clothesName ] = true;
+                    console.log('我刚买了', clothesName);
+                } else {
+                    console.log('我已经有', clothesName, '了。钱省着点花吧。');
+                }
+            },
+            has: function ( clothesName ) {
+                return !!this[ clothesName ];
+            }
+        };
+
+        girl.buy('连衣裙');
+        girl.buy('热裤');
+        girl.buy('风衣');
+        girl.buy('风衣');
+        girl.buy('羽绒服');
+        girl.buy('复古丝巾');
+        girl.buy('复古丝巾');
+        girl.buy('连衣裙');
+        girl.buy('复古丝巾');
     </script>
+
+    <script src="vue-jquery-angluar-react.min.js" async>
 </body>
 </html>
 
@@ -475,7 +518,7 @@ html, body {
 .back-to-top {
     position: fixed;
     display: block;
-    background-image: url('./images/rocket.png');
+    background-image: url('./images/black-rocket.png');
     width: 1.5rem;
     height: 1.5rem;
     overflow: hidden;
@@ -543,7 +586,6 @@ a[href^="#"] {
 }
 
 /* chief navigation */
-
 nav ul {
     display: flex;
     justify-content: space-around !important;
@@ -567,7 +609,6 @@ nav li {
 }
 
 /* news list */
-
 .news-list {
     font-size: 1.2rem;
     list-style: none;
@@ -592,13 +633,17 @@ nav li {
 
     small {
         font-size: .707em; // 想注释一下，但一时间觉得没啥好写的。
+        color blue
+    }
+
+    .blue {
+        color navy
     }
 
     /*
         这是啰哩吧嗦的多行注释，
         写这么多行，
-        只是为了能令其
-        多占据几行。
+        只是为了能令其多占据几行。
         你瞧，大体如此。
     */
 
@@ -616,15 +661,6 @@ nav li {
 <?xml version="1.0" encoding="iso-8859-1"?>
 <xsi_file type="Keymap" xsi_version="9.5.184.0" syntax_version="1.0">
    <keymap name="lechuan_si2011SAP_default">
-      <keylist name="" guid="{00000000-0000-0000-0000-000000000000}">
-         <key
-            name="Help"
-            key="VK_F1"></key>
-         <key
-            name="Save Scene"
-            key="S"
-            modifier="DSCMD_CTRL"></key>
-      </keylist>
       <keylist name="AM Transition Tool" guid="{4E7133BE-503D-41A2-84F8-48CA38BFAAAC}">
          <key
             name="Switch to Bridge transition"
@@ -650,10 +686,6 @@ nav li {
          <key
             name="Raycast Polygon Select Tool"
             key="U"></key>
-         <key
-            name="Select Parent in Branch"
-            key="VK_UP"
-            modifier="DSCMD_CTRL|DSCMD_ALT"></key>
          <key
             name="Select Tree"
             key="T"
@@ -687,10 +719,6 @@ nav li {
          <key
             name="Rotation Tool"
             key="C"></key>
-         <key
-            name="Undo"
-            key="Z"
-            modifier="DSCMD_ALT|DSCMD_SHIFT"></key>
       </keylist>
    </keymap>
 </xsi_file>
