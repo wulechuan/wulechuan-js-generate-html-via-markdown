@@ -518,6 +518,8 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
     function markAllControlCharsOfInputBeginOrEnd(astNodeForASegment) {
         let { content } = astNodeForASegment
 
+        if (typeof content !== 'string') { return }
+
         // '$' as regexp end sign
         content = content.replace(
             new RegExp('\\$', 'g'),
@@ -761,7 +763,9 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
     function markAllUnescapedControlCharsThatMustNotEscape(astNode) {
         let { content } = astNode
+
         if (!content) { return }
+        if (typeof content !== 'string') { return }
 
         REGEXP_CONTROL_CHARS_THAT_MUST_NOT_ESCAPE.forEach(rccConfig => {
             const {
@@ -816,6 +820,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
 
         const { content } = astNode
         if (!content) { return }
+        if (typeof content !== 'string') { return }
 
         const cssClassNames = [
             ccnSelectorChar,
@@ -833,6 +838,7 @@ module.exports = function parseOneRegExpASTNodeIntoHTML(astNodeForRegExp, option
     function markAllRepeatingTimeRanges(astNode) {
         const { content } = astNode
         if (!content) { return }
+        if (typeof content !== 'string') { return }
 
         astNode.content = content.replace(
             /(\{)(\d+)((,)(\d*))?(\})/g,

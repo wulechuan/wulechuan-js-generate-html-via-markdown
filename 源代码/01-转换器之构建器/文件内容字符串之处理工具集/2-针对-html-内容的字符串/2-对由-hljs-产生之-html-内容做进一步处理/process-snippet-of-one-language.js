@@ -263,6 +263,20 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
             '</span>'
         )
 
+        /** 调试代码始于此。 */
+        // let temp = astNodesRest.filter(a => {
+        //     return a.content.match('<span class="hljs-name">C</span>') && typeof a.content === 'string'
+        // })
+        // if (temp.length) {
+        //     temp = processASTNodesAndCollectUnprocessedOnes(
+        //         temp,
+        //         '<span class="hljs-tag">&lt;/<span class="hljs-name">',
+        //         '</span>&gt;</span>'
+        //     )
+        //     console.log(temp)
+        // }
+        /** 调试代码终于此。 */
+
         astNodesRest = processASTNodesAndCollectUnprocessedOnes(
             astNodesRest,
             '<span class="hljs-tag">&lt;/<span class="hljs-name">',
@@ -285,6 +299,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
             null,
             astNode => {
                 let { content } = astNode
+
+                if (typeof content !== 'string') { return }
 
                 content = content.replace(
                     /^(\[)([\w\d-]+)([\^*~$|]=)(["']?)([^"'\]])*(["']?)(\])$/g,
@@ -479,6 +495,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
         astNode => {
             let { content } = astNode
 
+            if (typeof content !== 'string') { return }
+
             content = content.replace(
                 /-/g,
                 '<span class="punctuation negative-sign">-</span>'
@@ -503,6 +521,8 @@ function processHTMLStringOfOnePureCodeLanguage(astNode, options = {}) {
     ])) {
         astNodesRest.forEach(astNode => {
             let { content } = astNode
+
+            if (typeof content !== 'string') { return }
 
             content = content.replace(
                 /([\w_$][\w_$\d]*)(\s*=\s*<span class="hljs-function)/g,

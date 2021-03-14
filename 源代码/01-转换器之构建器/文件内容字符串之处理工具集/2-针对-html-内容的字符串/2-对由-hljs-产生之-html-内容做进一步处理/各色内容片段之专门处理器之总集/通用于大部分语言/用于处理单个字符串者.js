@@ -272,6 +272,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
 
     function parseOneTemplatedString(/* astNode */) {
         // const { content } = astNode
+        // if (typeof content !== 'string') { return }
         // astNode.content = content.replace(
         //     /\${/g,
         //     [

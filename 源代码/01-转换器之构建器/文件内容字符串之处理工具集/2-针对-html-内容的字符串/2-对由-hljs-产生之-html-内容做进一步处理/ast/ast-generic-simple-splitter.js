@@ -89,129 +89,146 @@ module.exports = function splitOneASTNodeByOpenAndCloseMarks(astNode, openMark, 
     if (astNode.content && openMark) {
         const { content } = astNode
 
-        const arrayOfStage1 = content.split(openMark)
-        const firstSegOfStage1 = arrayOfStage1.shift()
+        if (typeof content !== 'string') {
+            /** 调试代码始于此。 */
+            // console.log(
+            //     '----> ASTNode content:', `<${typeof content} (is array: ${Array.isArray(content)})>`,
+            //     { ...Object.keys(astNode).reduce((d, k) => {
+            //         const v = astNode[k]
+            //         if (typeof v !== 'object') {
+            //             d[k] = v
+            //         } else {
+            //             d[k] = typeof v
+            //         }
+            //         return d
+            //     }, {}) }
+            // )
+            /** 调试代码终于此。 */
+        } else {
+            const arrayOfStage1 = content.split(openMark)
+            const firstSegOfStage1 = arrayOfStage1.shift()
 
-        const initArrayOfStage2 = []
+            const initArrayOfStage2 = []
 
-        if (firstSegOfStage1) { // might be an empty string
-            initArrayOfStage2.push({
-                isEnclosured: false,
-                openMark: '',
-                closeMark: '',
-                content: firstSegOfStage1,
-            })
-        }
-
-        let decidedEnclosuredContent = ''
-
-        const allNodesInOriginalOrder = arrayOfStage1.reduce((a2, a1Item) => {
-            if (!a1Item) { // two or more openMarks side by side during stage1
-                a2.push({
+            if (firstSegOfStage1) { // might be an empty string
+                initArrayOfStage2.push({
                     isEnclosured: false,
-                    openMark,
+                    openMark: '',
                     closeMark: '',
-                    content: '',
+                    content: firstSegOfStage1,
                 })
+            }
 
-            } else {
+            let decidedEnclosuredContent = ''
 
-                const a2NewSegs = a1Item.split(closeMark)
-                const firstNewSeg = a2NewSegs.shift()
+            const allNodesInOriginalOrder = arrayOfStage1.reduce((a2, a1Item) => {
+                if (!a1Item) { // two or more openMarks side by side during stage1
+                    a2.push({
+                        isEnclosured: false,
+                        openMark,
+                        closeMark: '',
+                        content: '',
+                    })
 
-                decidedEnclosuredContent = firstNewSeg
+                } else {
 
-                a2.push({
-                    isEnclosured: true,
-                    openMark,
-                    closeMark,
-                    content: firstNewSeg,
-                })
+                    const a2NewSegs = a1Item.split(closeMark)
+                    const firstNewSeg = a2NewSegs.shift()
 
-                if (a2NewSegs.length > 0) { // might not exist at all.
-                    if (!shouldNotForcePairing) {
+                    decidedEnclosuredContent = firstNewSeg
 
-                        const restContent = a2NewSegs.join(closeMark)
-                        if (restContent) {
-                            a2.push({
-                                isEnclosured: false,
-                                openMark: '',
-                                closeMark: '',
-                                content: restContent,
-                            })
-                        }
+                    a2.push({
+                        isEnclosured: true,
+                        openMark,
+                        closeMark,
+                        content: firstNewSeg,
+                    })
 
-                    } else {
+                    if (a2NewSegs.length > 0) { // might not exist at all.
+                        if (!shouldNotForcePairing) {
 
-                        /*
-                            Let's don't prevent a closeMark to be an openMark.
-                            So we have to deal with the last segments, as it
-                            might have no closeMark.
-                        */
-
-                        const lastNewSeg = a2NewSegs.pop()
-
-                        a2 = [
-                            ...a2,
-
-                            ...a2NewSegs.map(seg => {
-                                return {
+                            const restContent = a2NewSegs.join(closeMark)
+                            if (restContent) {
+                                a2.push({
                                     isEnclosured: false,
                                     openMark: '',
-                                    closeMark,
-                                    content: seg,
-                                }
-                            }),
-                        ]
+                                    closeMark: '',
+                                    content: restContent,
+                                })
+                            }
 
-                        if (lastNewSeg) {
-                            a2.push({
-                                isEnclosured: false,
-                                openMark: '',
-                                closeMark: '',
-                                content: lastNewSeg,
-                            })
+                        } else {
+
+                            /*
+                                Let's don't prevent a closeMark to be an openMark.
+                                So we have to deal with the last segments, as it
+                                might have no closeMark.
+                            */
+
+                            const lastNewSeg = a2NewSegs.pop()
+
+                            a2 = [
+                                ...a2,
+
+                                ...a2NewSegs.map(seg => {
+                                    return {
+                                        isEnclosured: false,
+                                        openMark: '',
+                                        closeMark,
+                                        content: seg,
+                                    }
+                                }),
+                            ]
+
+                            if (lastNewSeg) {
+                                a2.push({
+                                    isEnclosured: false,
+                                    openMark: '',
+                                    closeMark: '',
+                                    content: lastNewSeg,
+                                })
+                            }
+
                         }
-
                     }
                 }
+
+
+
+                return a2
+            }, initArrayOfStage2)
+
+
+
+            let shouldSplit = true
+            if (decidedEnclosuredContent && typeof splittingResultValidator === 'function') {
+                shouldSplit = splittingResultValidator(decidedEnclosuredContent)
             }
 
+            if (shouldSplit) {
+                if (shouldLogSampleContentsForDevMode) {
+                    printASTContentsForDebugging(allNodesInOriginalOrder, logContentSlicingWidth)
+                }
 
+                astNode.content = allNodesInOriginalOrder
 
-            return a2
-        }, initArrayOfStage2)
+                const parentSnippetCodeLanguage = astNode.codeLanguage
 
+                if (!codeLanguageOfEnclosuredNodes || typeof codeLanguageOfEnclosuredNodes !== 'string') {
+                    codeLanguageOfEnclosuredNodes = parentSnippetCodeLanguage
+                }
 
+                const nodesEnclosured    = allNodesInOriginalOrder.filter(n =>  n.isEnclosured)
+                const nodesNotEnclosured = allNodesInOriginalOrder.filter(n => !n.isEnclosured)
 
-        let shouldSplit = true
-        if (decidedEnclosuredContent && typeof splittingResultValidator === 'function') {
-            shouldSplit = splittingResultValidator(decidedEnclosuredContent)
-        }
+                nodesEnclosured   .forEach(n => { n.codeLanguage = codeLanguageOfEnclosuredNodes })
+                nodesNotEnclosured.forEach(n => { n.codeLanguage = parentSnippetCodeLanguage     })
 
-        if (shouldSplit) {
-            if (shouldLogSampleContentsForDevMode) {
-                printASTContentsForDebugging(allNodesInOriginalOrder, logContentSlicingWidth)
-            }
-
-            astNode.content = allNodesInOriginalOrder
-
-            const parentSnippetCodeLanguage = astNode.codeLanguage
-
-            if (!codeLanguageOfEnclosuredNodes || typeof codeLanguageOfEnclosuredNodes !== 'string') {
-                codeLanguageOfEnclosuredNodes = parentSnippetCodeLanguage
-            }
-
-            const nodesEnclosured    = allNodesInOriginalOrder.filter(n =>  n.isEnclosured)
-            const nodesNotEnclosured = allNodesInOriginalOrder.filter(n => !n.isEnclosured)
-
-            nodesEnclosured   .forEach(n => { n.codeLanguage = codeLanguageOfEnclosuredNodes })
-            nodesNotEnclosured.forEach(n => { n.codeLanguage = parentSnippetCodeLanguage     })
-
-            return {
-                allNodesInOriginalOrder,
-                nodesEnclosured,
-                nodesNotEnclosured,
+                return {
+                    allNodesInOriginalOrder,
+                    nodesEnclosured,
+                    nodesNotEnclosured,
+                }
             }
         }
     }

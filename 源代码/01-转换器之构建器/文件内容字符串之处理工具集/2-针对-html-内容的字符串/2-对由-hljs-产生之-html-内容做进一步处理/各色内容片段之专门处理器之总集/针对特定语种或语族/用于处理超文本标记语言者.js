@@ -5,8 +5,12 @@ module.exports = {
 
 
 function parseAnHTMLSnippetASTNode(astNode) {
-    if (!astNode.content) { return }
-    astNode.content = astNode.content
+    const { content } = astNode
+
+    if (!content) { return }
+    if (typeof content !== 'string') { return }
+
+    astNode.content = content
         .replace(
             /<span class="hljs-name">([^<]+)<\/span>/g,
             '<span class="hljs-name tag-name-$1">$1</span>'

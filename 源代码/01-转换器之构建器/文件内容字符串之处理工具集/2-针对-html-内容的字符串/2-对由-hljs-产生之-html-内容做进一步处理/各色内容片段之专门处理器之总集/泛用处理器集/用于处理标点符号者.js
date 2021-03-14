@@ -142,7 +142,9 @@ module.exports = {
 function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode) {
     let { content } = astNode
 
-    COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY.forEach(({ sign, signRegExp, cssClassNames })=> {
+    if (typeof content !== 'string') { return }
+
+    COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY.forEach(({ sign, signRegExp, cssClassNames }) => {
         content = content.replace(
             new RegExp(signRegExp || sign, 'g'),
             `<span class="${cssClassNames}">${sign}</span>`
@@ -175,6 +177,8 @@ function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode) {
 function parseAllRestPunctuationsInAnASTNodeIntoHTML(astNode) {
     const { codeLanguage } = astNode
     let { content } = astNode
+
+    if (typeof content !== 'string') { return }
 
     content = processStandaloneEqualSigns(content, codeLanguage)
     content = processSpecialPunctuationsString(content, codeLanguage)
