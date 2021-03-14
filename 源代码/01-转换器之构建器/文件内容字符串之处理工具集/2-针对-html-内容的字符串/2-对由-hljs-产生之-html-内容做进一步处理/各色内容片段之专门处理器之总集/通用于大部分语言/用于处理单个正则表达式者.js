@@ -2,9 +2,9 @@ const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messa
 
 const {
     splitRegExpASTByBraketPairs,
-} = require('../ast/ast-splitters-for-regexp')
+} = require('../../ast/ast-splitters-for-regexp')
 
-const splitASTForEscapeChars = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
+const splitASTForEscapeChars = require('../../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
 
 
 

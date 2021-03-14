@@ -1,7 +1,7 @@
 const {
     代码语种系以下之任一,    // eslint-disable-line no-unused-vars
     代码语种非以下之任一, // eslint-disable-line no-unused-vars
-} = require('../代码语种称谓比对之工具集')
+} = require('../../代码语种称谓比对之工具集')
 
 
 const COMMON_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
@@ -131,10 +131,12 @@ const SPECIAL_PUNCTUATIONS_TO_SEARCH_AND_REPLACE_DIRECTLY = [
 ]
 
 
+
 module.exports = {
     parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
     parseAllRestPunctuationsInAnASTNodeIntoHTML,
 }
+
 
 
 function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode) {

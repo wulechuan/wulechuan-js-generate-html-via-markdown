@@ -1,6 +1,7 @@
-const chalk                         = require('chalk')
+const 彩色粉笔工具 = require('chalk')
+
 const createErrorMessageBuildersFor = require('@wulechuan/meaningful-error-messages')
-const splitASTForEscapeChars        = require('../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
+const splitASTForEscapeChars        = require('../../ast/ast-splitter-for-escape-chars-in-string-or-regexp')
 
 
 
@@ -27,14 +28,14 @@ const DEFAULT_CSS_CLASS_NAMES_FOR_STRINGS = {
 
 
 const SPECIAL_ESPACED_CHARS_IN_STRINGS = [
-    { escapedChar: '\\',      /* htmlEntity: '', */ cssClassNames: 'backward-slash' },
-    { escapedChar: 'n',       /* htmlEntity: '', */ cssClassNames: 'new-line' },
-    { escapedChar: 'r',       /* htmlEntity: '', */ cssClassNames: 'carriage-return' },
-    { escapedChar: 't',       /* htmlEntity: '', */ cssClassNames: 'tab' },
-    { escapedChar: '\'',      /* htmlEntity: '', */ cssClassNames: 'single-quote' },
+    { escapedChar: '\\',     /* htmlEntity: '', */ cssClassNames: 'backward-slash' },
+    { escapedChar: 'n',      /* htmlEntity: '', */ cssClassNames: 'new-line' },
+    { escapedChar: 'r',      /* htmlEntity: '', */ cssClassNames: 'carriage-return' },
+    { escapedChar: 't',      /* htmlEntity: '', */ cssClassNames: 'tab' },
+    { escapedChar: '\'',     /* htmlEntity: '', */ cssClassNames: 'single-quote' },
     { escapedChar: '&#x27;', /* htmlEntity: '', */ cssClassNames: 'single-quote' },
-    { escapedChar: '"',       /* htmlEntity: '', */ cssClassNames: 'double-quote' },
-    { escapedChar: '/',       /* htmlEntity: '', */ cssClassNames: 'forward-mark' },
+    { escapedChar: '"',      /* htmlEntity: '', */ cssClassNames: 'double-quote' },
+    { escapedChar: '/',      /* htmlEntity: '', */ cssClassNames: 'forward-mark' },
 ]
 
 
@@ -212,7 +213,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
                 'Different opening/closing quote marks of a single string.',
                 '    opening: ' + decidedOpenQuoteSign,
                 '    closing: ' + decidedCloseQuoteSign,
-                '    string: "' + chalk.green(content) + '"',
+                '    string: "' + 彩色粉笔工具.green(content) + '"',
             ])))
         }
 
@@ -225,7 +226,7 @@ module.exports = function parseOneStringASTNodeIntoHTML(rootASTNodeForOneString,
             if (content.match(lineBreakMatchingString)) {
                 console.log(new Error (buildErrorMessage([
                     'String literal can not be multi-lined!',
-                    '    string: "' + chalk.green(content) + '"',
+                    '    string: "' + 彩色粉笔工具.green(content) + '"',
                 ])))
 
                 const lines = content.split(lineBreakMatchingString)

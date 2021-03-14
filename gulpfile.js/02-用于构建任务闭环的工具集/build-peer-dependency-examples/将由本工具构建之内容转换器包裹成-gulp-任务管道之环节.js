@@ -21,8 +21,8 @@ const {
 } = require('../../../源代码/面向研发阶段之配置')
 
 const {
-    allFileEntriesKeyingByFileNames: themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-    syncGetContentStringOfOneFileEntry: syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+    allFileEntriesKeyingByFileNames: peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
+    syncGetContentStringOfOneFileEntry: peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
 } = require('@wulechuan/css-stylus-markdown-themes')
 
 const 依照当前操作系统之风格拼接路径字符串 = 路径工具.join
@@ -50,8 +50,8 @@ module.exports = function 将由本工具构建之内容转换器包裹成Gulp�
             )
 
             const 将Markdown内容字符串转换为HTML内容的转换器 = 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器({
-                themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-                syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+                peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
+                peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
                 不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求: true,
             })
 

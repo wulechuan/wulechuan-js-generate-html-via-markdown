@@ -74,15 +74,15 @@ module.exports = createSnippetEntryGetters
 /**
  * @function createSnippetEntryGetters
  * @argument {object} options
- * @argument {object} options.themesPeerPackageAllDistFileEntriesKeyingByFileNames
- * @argument {function} options.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
+ * @argument {object} options.peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典
+ * @argument {function} options.peer依赖包提供用以获取某特定文件之完整内容字符串之函数
  *
  * @returns {SnippetEntryGetters}
  */
 function createSnippetEntryGetters(options) {
     const {
-        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+        peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
+        peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
     } = options
 
     return {
@@ -166,10 +166,10 @@ function createSnippetEntryGetters(options) {
         const { optional: optionalEntries } = allSnippetEntries
 
         if (!optionalEntries[文件名] || 不应采纳Require机制缓存之文件旧内容) {
-            const 文件之简易描述项 = themesPeerPackageAllDistFileEntriesKeyingByFileNames[文件名]
+            const 文件之简易描述项 = peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典[文件名]
 
             const 选用的HTML标签名 = 根据文件之扩展名选用包裹该文件之内容之HTML标签名(文件名)
-            const 文件之原始内容字符串 = syncGetContentStringOfOneFileOfThePeerModuleOfThemes(
+            const 文件之原始内容字符串 = peer依赖包提供用以获取某特定文件之完整内容字符串之函数(
                 文件名,
                 不应采纳Require机制缓存之文件旧内容,
                 其他选项集

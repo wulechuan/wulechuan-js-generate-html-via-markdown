@@ -1,5 +1,5 @@
 const processAllLineBreaksAndLeadingWhitespaces = require(
-    './__line-breaks-and-leading-whitespaces'
+    '../泛用处理器集/用于处理换行符以及行首空白者'
 )
 
 

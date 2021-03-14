@@ -54,14 +54,14 @@ const rerequire工具之配置项集 = {
 
 /**
  * @param {object} 配置项集
- * @param {object} 配置项集.themesPeerPackageAllDistFileEntriesKeyingByFileNames
- * @param {function} 配置项集.syncGetContentStringOfOneFileOfThePeerModuleOfThemes
+ * @param {object} 配置项集.peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典
+ * @param {function} 配置项集.peer依赖包提供用以获取某特定文件之完整内容字符串之函数
  * @returns {function} - The core converter function
  */
 module.exports = function 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器(配置项集 = {}) {
     const {
-        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+        peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
+        peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
         不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求,
     } = 配置项集
 
@@ -113,8 +113,8 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
         syncGetSnippetEntryOfOneExternalFile,
     } = require('./静态-html-片段以及动态构建的-html-片段/dynamic/create-snippet-entry-getters')({
-        themesPeerPackageAllDistFileEntriesKeyingByFileNames,
-        syncGetContentStringOfOneFileOfThePeerModuleOfThemes,
+        peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
+        peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
     })
 
 
@@ -147,14 +147,14 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitters-for-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/parse-ast-sub-tree-into-single-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/__line-breaks-and-leading-whitespaces.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/__punctuations.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-comment.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-regexp.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/_one-string.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语族之层叠样式表语族者.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语种之超文本标记语言者.js',
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语族之-javascript-语族者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/泛用处理器集/用于处理换行符以及行首空白者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/泛用处理器集/用于处理标点符号者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个注释块者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个正则表达式者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个字符串者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语种或语族/用于处理层叠样式表语族者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语种或语族/用于处理超文本标记语言者.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/针对特定语种或语族/针用于处理-javascript-语族者.js',
             ].forEach(subPath => {
                 清除Require机制对该文件之缓存(
                     遵循当前操作系统之规则拼接路径字符串(本NPM包之根文件夹之绝对路径, subPath),

@@ -9,7 +9,7 @@ const {
 
 
 const processAllLineBreaksAndLeadingWhitespaces = require(
-    './各色内容片段之专门处理器之总集/__line-breaks-and-leading-whitespaces'
+    './各色内容片段之专门处理器之总集/泛用处理器集/用于处理换行符以及行首空白者'
 )
 
 
@@ -18,25 +18,25 @@ const {
     parseVeryCommonPunctuationsInAnASTNodeIntoHTML,
     parseAllRestPunctuationsInAnASTNodeIntoHTML,
 } = require(
-    './各色内容片段之专门处理器之总集/__punctuations'
+    './各色内容片段之专门处理器之总集/泛用处理器集/用于处理标点符号者'
 )
 
 
 
 const parseOneASTNodeOfCommentIntoHTML = require(
-    './各色内容片段之专门处理器之总集/_one-comment'
+    './各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个注释块者'
 )
 
 
 
 const parseOneRegExpASTNodeIntoHTML = require(
-    './各色内容片段之专门处理器之总集/_one-regexp'
+    './各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个正则表达式者'
 )
 
 
 
 const parseOneStringASTNodeIntoHTML = require(
-    './各色内容片段之专门处理器之总集/_one-string'
+    './各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个字符串者'
 )
 
 
@@ -45,7 +45,7 @@ const {
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLBeforeProcessingPunctuations,
     parseCSSFamilyStuffsInAnASTNodeIntoHTMLAfterProcessingPunctuations,
 } = require(
-    './各色内容片段之专门处理器之总集/针对特定语族之层叠样式表语族者'
+    './各色内容片段之专门处理器之总集/针对特定语种或语族/用于处理层叠样式表语族者'
 )
 
 
@@ -53,13 +53,13 @@ const {
 const {
     parseAnHTMLSnippetASTNode,
 } = require(
-    './各色内容片段之专门处理器之总集/针对特定语种之超文本标记语言者'
+    './各色内容片段之专门处理器之总集/针对特定语种或语族/用于处理超文本标记语言者'
 )
 
 
 
 const parseJavascriptFamilyStuffsInAnASTNodeIntoHTML = require(
-    './各色内容片段之专门处理器之总集/针对特定语族之-javascript-语族者'
+    './各色内容片段之专门处理器之总集/针对特定语种或语族/用于处理-javascript-语族者'
 )
 
 

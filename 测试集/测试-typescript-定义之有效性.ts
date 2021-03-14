@@ -35,8 +35,8 @@ import {
  *
  * const 一枚新的转换器 = 一枚现成的转换器.构建一个用于将Markdown内容字符串转换为HTML字符串的转换器({
  *     不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求: true,
- *     syncGetContentStringOfOneFileOfThePeerModuleOfThemes: 获取某一已发布之文件之完整内容字符串,
- *     themesPeerPackageAllDistFileEntriesKeyingByFileNames: 以文件名称为索引之所有文件简易描述项之字典,
+ *     peer依赖包提供用以获取某特定文件之完整内容字符串之函数: 获取某一已发布之文件之完整内容字符串,
+ *     peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典: 以文件名称为索引之所有文件简易描述项之字典,
  * })
  * 一枚新的转换器('# 自我简介\n\n无。', {
  *     对HTML做进一步处理之阶段: {
@@ -47,8 +47,8 @@ import {
 /** */
 const 一枚新的转换器 = 一枚现成的转换器.构建一个用于将Markdown内容字符串转换为HTML字符串的转换器({
     不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求: true,
-    syncGetContentStringOfOneFileOfThePeerModuleOfThemes: 获取某一已发布之文件之完整内容字符串,
-    themesPeerPackageAllDistFileEntriesKeyingByFileNames: 以文件名称为索引之所有文件简易描述项之字典,
+    peer依赖包提供用以获取某特定文件之完整内容字符串之函数: 获取某一已发布之文件之完整内容字符串,
+    peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典: 以文件名称为索引之所有文件简易描述项之字典,
 })
 一枚新的转换器('# 自我简介\n\n无。', {
     对HTML做进一步处理之阶段: {
