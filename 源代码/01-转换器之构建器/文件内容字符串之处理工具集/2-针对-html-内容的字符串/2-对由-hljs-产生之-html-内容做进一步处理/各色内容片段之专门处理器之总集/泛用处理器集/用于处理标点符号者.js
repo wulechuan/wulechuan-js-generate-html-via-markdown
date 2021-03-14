@@ -151,7 +151,7 @@ function parseVeryCommonPunctuationsInAnASTNodeIntoHTML(astNode) {
 
     content = content.replace(
         /&([^#a-zA-Z])/g,
-        '<span class="punctuation ampersand11">&</span>$1'
+        '<span class="punctuation ampersand">&</span>$1'
     )
 
     content = content.replace(
