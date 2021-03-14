@@ -22,7 +22,7 @@ export = 一枚现成的自Markdown至HTML的转换器;
 
 declare namespace 一枚现成的自Markdown至HTML的转换器 {
     export const 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器: 类型定义之转换器之构建器;
-    export const 完备的默认配置集: 将Markdown字符串转换为HTML字符串之转换器之配置项集;
+    export const 完备的默认配置集: 类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集;
 
 
 
@@ -49,7 +49,7 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
 
     export type 自Markdown至HTML的转换器 = (
         markdown内容全文: string,
-        配置项集?: 一枚现成的自Markdown至HTML的转换器.将Markdown字符串转换为HTML字符串之转换器之配置项集
+        配置项集?: 一枚现成的自Markdown至HTML的转换器.类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集
     ) => string;
 
     export type 类型定义之作用于HTML内容之内建替换规则名称 = (
@@ -62,7 +62,7 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
         替换为: string;
     };
 
-    export type 将Markdown字符串转换为HTML字符串之转换器之配置项集 = {
+    export type 类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集 = {
         配置格式适用之最低版本?: number | string;
 
         须在控制台打印详尽细节?: boolean;
