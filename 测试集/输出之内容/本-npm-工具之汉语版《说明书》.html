@@ -224,7 +224,7 @@
 ><span class="inline-pre-whitespaces indentation">             </span>* -   本工具的 “ 用于文章纲要列表各级LI标签的 ” 传递到 toc 插件的 “ itemClass ”。<br
 ><span class="inline-pre-whitespaces indentation">             </span>* -   本工具的 “ 用于文章纲要列表各级LI标签内嵌之A标签的 ” 传递到 toc 插件的 “ linkClass ”。<br
 ><span class="inline-pre-whitespaces indentation">             </span>*<br
-><span class="inline-pre-whitespaces indentation">             </span>* 其中，cssClassNameOfArticleTOCRootTag 字段由本工具设计之默认值有异于 toc 插件设计之默认值。<br
+><span class="inline-pre-whitespaces indentation">             </span>* 其中，“ 用于文章纲要列表之容器的 ” 字段的由本工具设计之默认值有异于 toc 插件设计之默认值。<br
 ><span class="inline-pre-whitespaces indentation">             </span>* 其余 3 个字段，本工具并未设计默认值，故默认值均沿用 toc 插件之设计，且恰巧三者之默认值均为 undefined 。<br
 ><span class="inline-pre-whitespaces indentation">             </span>*<br
 ><span class="inline-pre-whitespaces indentation">             </span>* 参阅： https://www.npmjs.com/package/markdown-it-toc-done-right#options<br
@@ -270,7 +270,7 @@
 ><span class="inline-pre-whitespaces indentation">         </span>* 因为，一旦不采纳 require 机制之缓存， gulp 工具链才可以确保<br
 ><span class="inline-pre-whitespaces indentation">         </span>* 总是读取和处理最新版本的层叠样式表和配套 Javascript 之内容。<br
 ><span class="inline-pre-whitespaces indentation">         </span>*/</span><br
-><span class="inline-pre-whitespaces indentation">        </span>读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span>读取本工具内建之层叠样式表文件和Javascript文件时应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取到各文件最新之内容全文<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="hljs-comment">/**<br
 ><span class="inline-pre-whitespaces indentation">         </span>* 下方参数默认取空字符串。<br

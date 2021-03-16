@@ -351,7 +351,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             不应采用任何由本工具内建之层叠样式表,
             采用由本工具内建之层叠样式表时应采用未经压缩之版本,
             采用由本工具内建之Javascript时应采用未经压缩之版本,
-            读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
+            读取本工具内建之层叠样式表文件和Javascript文件时应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取到各文件最新之内容全文,
 
             产出之HTML文件之HTML标签之语言属性之取值,
             产出之HTML文件之Title标签之内容字符串,
@@ -711,7 +711,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             if (所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称) {
                 const snippetEntryOfThemingCSS = syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
                     所采用之本NPM包之Peer依赖包提供之层叠样式表文件之名称,
-                    读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容,
+                    读取本工具内建之层叠样式表文件和Javascript文件时应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取到各文件最新之内容全文,
                     对本工具现成提供的文章纲要做以下配置
                 )
 

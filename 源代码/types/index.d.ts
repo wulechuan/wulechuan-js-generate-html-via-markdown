@@ -106,7 +106,7 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
             采用由本工具内建之层叠样式表时应采用未经压缩之版本?: boolean;
             采用由本工具内建之Javascript时应采用未经压缩之版本?: boolean;
 
-            读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容?: boolean;
+            读取本工具内建之层叠样式表文件和Javascript文件时应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取到各文件最新之内容全文?: boolean;
 
             产出之HTML文件之HTML标签之语言属性之取值?: string;
 

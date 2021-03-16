@@ -291,7 +291,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
              * 因为，一旦不采纳 require 机制之缓存， gulp 工具链才可以确保
              * 总是读取和处理最新版本的层叠样式表和配套 Javascript 之内容。
              */
-            读取本工具内建之层叠样式表文件和Javascript文件时禁止Require语句缓存其内容: false,
+            读取本工具内建之层叠样式表文件和Javascript文件时应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取到各文件最新之内容全文: false,
 
             /**
              * 下方参数默认取空字符串。
