@@ -100,7 +100,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
         peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
         不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求,
-        欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
+        应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
     } = 配置项集
 
     let 完备的默认配置项集
@@ -241,6 +241,25 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                     './源代码/01-转换器之构建器/文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/处理-html-内容中之一切-pre-标签之工具.js'
                 ),
                 rerequire工具之配置项集
+            )
+        }
+
+
+
+
+
+
+
+
+
+        if (应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+            console.log('\n',
+                彩色粉笔工具.yellow(`${本NPM包之NPM名称} 提醒：\n    gulp 任务配置中的 “ ${
+                    彩色粉笔工具.magenta('应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容')
+                } ” 已启用。`),
+                '\n    上述配置项之原始值为：',
+                应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
+                '\n\n'
             )
         }
 
@@ -585,7 +604,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         let html之完整Title标签之字符串 = '<title>【验证性输出】输出内容并非正式内容</title>'
 
-        if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+        if (!应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
             html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(
                 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
 
@@ -606,7 +625,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-        if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+        if (!应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
             作用于HTML的内建现成的替换规则之名称之序列.forEach(某内建替换规则之名称 => {
                 const 某内建替换规则 = 所有作用于HTML内容之内建替换规则之字典[某内建替换规则之名称]
                 const 要么为替换结果字符串要么为False = 对某字符串执行某查找替换规则(html半成品之内容字符串, 某内建替换规则)
@@ -686,7 +705,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
         let 所有层叠样式表片段之列表 = []
         let 所有Javascript片段之列表 = []
 
-        if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
+        if (!应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
             let 一切须注入HTML之标签之列表 = []
 
 

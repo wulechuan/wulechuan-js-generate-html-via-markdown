@@ -34,7 +34,7 @@ function 构造一个Gulp生态中之特型错误对象(用以描述错误的原
 
 module.exports = function 将由本工具构建之内容转换器包裹成Gulp任务管道之环节(转换器之配置项集, 任务闭环之配置项集 = {}) {
     const {
-        欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
+        应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
     } = 任务闭环之配置项集
 
     return function pipeForConvertingMarkdownsIntoHTMLs() {
@@ -57,7 +57,7 @@ module.exports = function 将由本工具构建之内容转换器包裹成Gulp�
                 peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
                 peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
                 不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求: true,
-                欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
+                应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
             })
 
 

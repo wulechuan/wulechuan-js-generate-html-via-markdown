@@ -5,7 +5,7 @@ const {
 } = require('../../源代码/面向研发阶段之配置')
 
 module.exports = {
-    欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容: false,
+    应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容: false,
 
     针对构建范文之HTML之任务闭环之配置项集: {
         对于此任务闭环之输入文件集的易读易懂的描述: `源自 ${本NPM包之Peer依赖包之名称} 的用作范文的 Markdown 文件集`,
