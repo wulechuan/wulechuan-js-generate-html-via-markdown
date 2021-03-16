@@ -306,7 +306,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             desiredReplacementsInHTML: {
                 '1 内建现成的替换规则序列': [
                     '令所有外部链接之打开方式为 _blank',
-                    '令所有原本指向 Markdown 文件之链接改为指向同名 HTML 文件',
+                    '令所有原本指向Markdown文件之链接改为指向同名HTML文件',
                 ],
 
                 '2 额外的替换规则序列': [

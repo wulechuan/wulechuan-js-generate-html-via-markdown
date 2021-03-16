@@ -55,7 +55,7 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
 
     export type 类型定义之作用于HTML内容之内建替换规则名称 = (
         | '令所有外部链接之打开方式为 _blank'
-        | '令所有原本指向 Markdown 文件之链接改为指向同名 HTML 文件'
+        | '令所有原本指向Markdown文件之链接改为指向同名HTML文件'
     );
 
     export type 类型定义之作用于HTML内容之额外替换规则项 = {
