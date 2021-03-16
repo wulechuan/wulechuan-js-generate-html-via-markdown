@@ -245,7 +245,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                  * -   本工具的 “ 用于文章纲要列表各级LI标签的 ” 传递到 toc 插件的 “ itemClass ”。
                  * -   本工具的 “ 用于文章纲要列表各级LI标签内嵌之A标签的 ” 传递到 toc 插件的 “ linkClass ”。
                  *
-                 * 其中，cssClassNameOfArticleTOCRootTag 字段由本工具设计之默认值有异于 toc 插件设计之默认值。
+                 * 其中，“ 用于文章纲要列表之容器的 ” 字段的由本工具设计之默认值有异于 toc 插件设计之默认值。
                  * 其余 3 个字段，本工具并未设计默认值，故默认值均沿用 toc 插件之设计，且恰巧三者之默认值均为 undefined 。
                  *
                  * 参阅： https://www.npmjs.com/package/markdown-it-toc-done-right#options
