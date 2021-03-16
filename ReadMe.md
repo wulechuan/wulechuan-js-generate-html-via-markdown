@@ -318,12 +318,12 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             },
 
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
-                '1 内建现成的替换规则序列': [
+                '1 内建现成的替换规则之名称之序列': [
                     '令所有外部链接之打开方式为 _blank',
                     令所有原本指向Markdown文件之链接改为指向同名HTML文件,
                 ],
 
-                '2 额外的替换规则序列': [
+                '2 额外的替换规则之定义之序列': [
                     /**
                      * // 数据结构示例：
                      * {
@@ -364,7 +364,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
             凡内容须注入产出之HTML中之所有外来文件: {
                 依次给出之外来文件之绝对路径序列: [],
-                若将反复读取这些文件应禁止Require语句缓存这些文件之内容: false,
+                应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取用各文件最新之内容全文: false,
             },
         },
 

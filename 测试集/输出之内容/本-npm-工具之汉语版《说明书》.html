@@ -10,7 +10,6 @@
 </head>
 <body class="markdown-article-toc-exists">
     <article class="markdown-article">
-
 <h1 id="%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7"><a class="header-anchor" href="#%E5%90%B4%E4%B9%90%E5%B7%9D%E7%9A%84%E5%B0%86-markdown-%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2%E4%B8%BA-html-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具</h1>
 <blockquote>
 <p>中国人——特别是汉族人，理应坚持广泛、规范地使用汉语。凡非必要之情形不说外国话、不用外国字。此乃天经地义！然则每当必要，亦不排斥采用外国之语言。不妨 <strong>博世界之学问，养中国之精神</strong> 。</p>
@@ -298,12 +297,12 @@
 ><span class="inline-pre-whitespaces indentation">        </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span>须对产出之HTML内容字符串依次按下诸内容替换规则做修订<span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
-><span class="inline-pre-whitespaces indentation">            </span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">1 内建现成的替换规则序列</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
+><span class="inline-pre-whitespaces indentation">            </span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">1 内建现成的替换规则之名称之序列</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
 ><span class="inline-pre-whitespaces indentation">                </span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">令所有外部链接之打开方式为 _blank</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">                </span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">令所有原本指向 Markdown 文件之链接改为指向同名 HTML 文件</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">                </span>令所有原本指向Markdown文件之链接改为指向同名HTML文件<span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">            </span><span class="punctuation bracket close-bracket">]</span><span class="punctuation comma">,</span><br
 ><br
-><span class="inline-pre-whitespaces indentation">            </span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">2 额外的替换规则序列</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
+><span class="inline-pre-whitespaces indentation">            </span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">2 额外的替换规则之定义之序列</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><br
 ><span class="inline-pre-whitespaces indentation">                </span><span class="hljs-comment">/**<br
 ><span class="inline-pre-whitespaces indentation">                 </span>* // 数据结构示例：<br
 ><span class="inline-pre-whitespaces indentation">                 </span>* {<br
@@ -325,7 +324,7 @@
 ><span class="inline-pre-whitespaces indentation">                 </span>*<br
 ><span class="inline-pre-whitespaces indentation">                 </span>* // 例 2：批量令原本指向另一些 Markdown 文件的链接地址，改为指向对应的 HTML 文件。<br
 ><span class="inline-pre-whitespaces indentation">                 </span>* //      另，该例已经收录在所谓“内建现成的替换规则集”当中，<br
-><span class="inline-pre-whitespaces indentation">                 </span>* //      名为 &#x27;令所有原本指向 Markdown 文件之链接改为指向同名 HTML 文件&#x27; 。<br
+><span class="inline-pre-whitespaces indentation">                 </span>* //      名为 &#x27;令所有原本指向Markdown文件之链接改为指向同名HTML文件&#x27; 。<br
 ><span class="inline-pre-whitespaces indentation">                 </span>* {<br
 ><span class="inline-pre-whitespaces indentation">                 </span>*     凡:    /\s+href=&quot;(.+)\.md(#.*)?&quot;/gi,<br
 ><span class="inline-pre-whitespaces indentation">                 </span>*     替换为: &#x27; href=&quot;$1.html$2&quot;&#x27;,<br
@@ -344,7 +343,7 @@
 ><br
 ><span class="inline-pre-whitespaces indentation">        </span>凡内容须注入产出之HTML中之所有外来文件<span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">            </span>依次给出之外来文件之绝对路径序列<span class="punctuation colon">:</span> <span class="punctuation bracket open-bracket">[</span><span class="punctuation bracket close-bracket">]</span><span class="punctuation comma">,</span><br
-><span class="inline-pre-whitespaces indentation">            </span>若将反复读取这些文件应禁止Require语句缓存这些文件之内容<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">            </span>应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取用各文件最新之内容全文<span class="punctuation colon">:</span> <span class="hljs-literal false">false</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><br

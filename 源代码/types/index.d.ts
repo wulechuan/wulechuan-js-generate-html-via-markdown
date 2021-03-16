@@ -50,18 +50,24 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
 
     export type 自Markdown至HTML的转换器 = (
         markdown内容全文: string,
-        配置项集?: 一枚现成的自Markdown至HTML的转换器.类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集
+        配置项集?: 类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集
     ) => string;
+
+    export type 类型定义之作用于原始Markdown内容之内建替换规则名称 = (
+        | '去除Markdown中自有的用于引用内建层叠样式表文件之Style标签'
+    );
 
     export type 类型定义之作用于HTML内容之内建替换规则名称 = (
         | '令所有外部链接之打开方式为 _blank'
         | '令所有原本指向Markdown文件之链接改为指向同名HTML文件'
     );
 
-    export type 类型定义之作用于HTML内容之额外替换规则项 = {
+    export type 类型定义之作用于原始Markdown内容之额外替换规则项 = {
         凡: string | RegExp;
         替换为: string;
     };
+
+    export type 类型定义之作用于HTML内容之额外替换规则项 = 类型定义之作用于原始Markdown内容之额外替换规则项;
 
     export type 类型定义之将Markdown字符串转换为HTML字符串之转换器之配置项集 = {
         配置格式适用之最低版本?: number | string;
@@ -70,6 +76,10 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
 
         将Markdown转换为HTML之前之预备阶段?: {
             不应主动插入TOC之占位标记?: boolean;
+            须对原始Markdown内容字符串依次按下诸内容替换规则做修订?: {
+                '1 内建现成的替换规则之名称之序列': Array<>;
+                '2 额外的替换规则之定义之序列': Array<类型定义之作用于原始Markdown内容之额外替换规则项>;
+            };
         };
 
         将Markdown转换为HTML之阶段?: {
@@ -112,13 +122,13 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
             };
 
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订?: {
-                '1 内建现成的替换规则序列'?: Array<一枚现成的自Markdown至HTML的转换器.类型定义之作用于HTML内容之内建替换规则名称>;
-                '2 额外的替换规则序列'?: Array<一枚现成的自Markdown至HTML的转换器.类型定义之作用于HTML内容之额外替换规则项>;
+                '1 内建现成的替换规则之名称之序列'?: Array<类型定义之作用于HTML内容之内建替换规则名称>;
+                '2 额外的替换规则之定义之序列'?: Array<类型定义之作用于HTML内容之额外替换规则项>;
             };
 
             凡内容须注入产出之HTML中之所有外来文件?: {
                 依次给出之外来文件之绝对路径序列?: string[];
-                若将反复读取这些文件应禁止Require语句缓存这些文件之内容?: boolean;
+                应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取用各文件最新之内容全文?: boolean;
             };
         };
 

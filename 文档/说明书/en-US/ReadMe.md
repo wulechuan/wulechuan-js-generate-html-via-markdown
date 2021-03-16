@@ -299,17 +299,17 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
             internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
 
-            cssClassNameOfMarkdownChiefContentWrappingArticleTag: 'markdown-article',
-            cssClassNameOfBodyTagWhenMarkdownArticleHasTOC:       'markdown-article-toc-exists',
-            cssClassNameOfBackToTopAnchor:                        'markdown-article-back-to-top',
+            层叠样式表类名之用于文章正文之根Article标签的: 'markdown-article',
+            层叠样式表类名之用于Body标签以表明文章配备了纲要列表的:       'markdown-article-toc-exists',
+            层叠样式表类名之用于具有按钮样貌的返回文章首部之链接的:                        'markdown-article-back-to-top',
 
             desiredReplacementsInHTML: {
-                '1 内建现成的替换规则序列': [
+                '1 内建现成的替换规则之名称之序列': [
                     '令所有外部链接之打开方式为 _blank',
                     '令所有原本指向Markdown文件之链接改为指向同名HTML文件',
                 ],
 
-                '2 额外的替换规则序列': [
+                '2 额外的替换规则之定义之序列': [
                     /**
                      * // Data structure:
                      * {

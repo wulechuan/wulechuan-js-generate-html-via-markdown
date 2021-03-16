@@ -1,7 +1,7 @@
 const {
     表达单层缩进之字符串,
     表达双层缩进之字符串,
-} = require('../../../静态-html-片段以及动态构建的-html-片段/static/表达源代码缩进之字符串')
+} = require('../../../静态-html-片段以及动态构建的-html-片段/以-javascript-字符串形式给出的-html-片段集/表达源代码缩进之字符串')
 
 module.exports = function 将字符串用HTML标签包裹起来得出另一字符串({
     原始字符串,

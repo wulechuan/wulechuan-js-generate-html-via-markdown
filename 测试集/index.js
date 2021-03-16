@@ -68,7 +68,7 @@ const 由简短文章产出之甲型风貌之变种其二之HTML内容字符串 
 
     对HTML做进一步处理之阶段: {
         须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
-            '2 额外的替换规则序列': [
+            '2 额外的替换规则之定义之序列': [
                 {
                     凡: '本工具',
                     替换为: ` ${本NPM包之Package点JSON文件.name} `,
@@ -102,7 +102,7 @@ const 由简短文章产出之乙型风貌之HTML内容字符串 = 本NPM包现�
         不应注入用于返回文章起始之按钮: true,
 
         须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
-            '2 额外的替换规则序列': [
+            '2 额外的替换规则之定义之序列': [
                 {
                     凡: '本工具',
                     替换为: ` ${本NPM包之Package点JSON文件.name} `,
@@ -127,14 +127,14 @@ const 由本工具之汉语版说明书产出之HTML内容字符串 = 本NPM包�
             采用由本工具内建之层叠样式表时应采用未经压缩之版本: false,
             采用由本工具内建之Javascript时应采用未经压缩之版本: true,
 
-            须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
-                '2 额外的替换规则序列': [
-                    {
-                        凡: `<link rel="stylesheet" href="./node_modules/${本NPM包之Peer依赖包之名称}/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">`,
-                        替换为: '',
-                    },
-                ],
-            },
+            // 须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
+            //     '2 额外的替换规则之定义之序列': [
+            //         {
+            //             凡: `<link rel="stylesheet" href="./node_modules/${本NPM包之Peer依赖包之名称}/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">`,
+            //             替换为: '',
+            //         },
+            //     ],
+            // },
         },
     }
 )

@@ -64,7 +64,7 @@ const 专门用于将本NPM包之Peer依赖包中之Markdown范文逐一转换�
         {
             对HTML做进一步处理之阶段: {
                 须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
-                    '2 额外的替换规则序列': [
+                    '2 额外的替换规则之定义之序列': [
                         {
                             凡: /\.\/illustrates\//g,
                             替换为: '../../../node_modules/@wulechuan/css-stylus-markdown-themes/文档/文章排版与配色效果示例集/原始的-markdown-格式的文章/illustrates/',

@@ -27,7 +27,8 @@ const {
     本NPM包之根文件夹之绝对路径,
 } = require('../面向研发阶段之配置')
 
-const 所有内建替换规则之字典 = require('../内建现成的-html-内容替换规则集字典')
+const 所有作用于Markdown原始内容之内建替换规则之字典 = require('../内建现成的-markdown-内容替换规则集字典')
+const 所有作用于HTML内容之内建替换规则之字典 = require('../内建现成的-html-内容替换规则集字典')
 
 const {
     清除Require机制对该文件之缓存,
@@ -47,6 +48,42 @@ const rerequire工具之配置项集 = {
 
 
 
+
+
+
+
+function 该值为所谓标准对象(待检测值) {
+    return !!待检测值 && typeof 待检测值 === 'object' && !Array.isArray(待检测值)
+}
+
+function 尽量取原始值但确保最终取值为所谓标准对象(原始值) {
+    return 该值为所谓标准对象(原始值) ? 原始值 : {}
+}
+
+function 对某字符串执行某查找替换规则(欲处理之字符串, 某替换规则) {
+    if (!某替换规则) { return false }
+
+    const { 凡, 替换为 } = 某替换规则
+
+    const 查找规则系字符串 = typeof 凡 === 'string'
+    const 查找规则系正则表达式 = 凡 instanceof RegExp
+    const 替换标的系字符串 = typeof 替换为 === 'string'
+    const 替换标的系函数 = typeof 替换为 === 'function'
+
+    if (!查找规则系字符串 && !查找规则系正则表达式) { return false }
+
+    if (替换标的系字符串 || (查找规则系正则表达式 && 替换标的系函数)) {
+        if (查找规则系正则表达式 && 替换标的系函数) {
+            // 暂不支持
+            return false
+        } else {
+            const 替换后的字符串 = 欲处理之字符串.replace(凡, 替换为)
+            return 替换后的字符串
+        }
+    }
+
+    return false
+}
 
 
 
@@ -79,7 +116,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
     if (!不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
         完备的默认配置项集 = require('../完备的默认配置项集')
 
-        const tabs = require('./静态-html-片段以及动态构建的-html-片段/static/表达源代码缩进之字符串')
+        const tabs = require('./静态-html-片段以及动态构建的-html-片段/以-javascript-字符串形式给出的-html-片段集/表达源代码缩进之字符串')
         表达单层缩进之字符串 = tabs.表达单层缩进之字符串
 
 
@@ -107,13 +144,13 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
     const { // Reading these files only once is enough. Saving time.
-        syncGetSnippetEntryOfHTMLBeginning,
-        syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin,
-        syncGetSnippetEntryOfHTMLEnding,
+        阻塞式获取HTML起始片段之描述项,
+        阻塞式获取HTML自Head结束标签至Body起始标签之片段之描述项,
+        阻塞式获取HTML末尾片段之描述项,
 
         syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
-        syncGetSnippetEntryOfOneExternalFile,
-    } = require('./静态-html-片段以及动态构建的-html-片段/dynamic/create-snippet-entry-getters')({
+        阻塞式获取某文件被特定HTML标签包裹后之内容之描述项,
+    } = require('./静态-html-片段以及动态构建的-html-片段/构建一个对象用以汇总存放各色片段之获取函数')({
         peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
         peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
     })
@@ -123,19 +160,11 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
     return function 吴乐川的将以Markdown为内容之字符串转换为HTML内容之字符串的转换器(
         markdown原始文章全文之字符串,
-        转换器之配置项集 = {}
+        转换器之配置项集
     ) {
-        const {
-            须在控制台打印详尽细节,
-        } = 转换器之配置项集
+        转换器之配置项集 = 尽量取原始值但确保最终取值为所谓标准对象(转换器之配置项集)
 
-        let {
-            将Markdown转换为HTML之前之预备阶段 = {},
-            将Markdown转换为HTML之阶段 = {},
-            对HTML做进一步处理之阶段 = {},
-            对本工具现成提供的文章纲要做以下配置 = {},
-            杂项 = {},
-        } = 转换器之配置项集
+        const 须在控制台打印详尽细节 = !!转换器之配置项集.须在控制台打印详尽细节
 
 
 
@@ -176,7 +205,7 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             const tabs = 先清除Require机制对该文件之缓存而后重新Require该文件(
                 遵循当前操作系统之规则拼接路径字符串(
                     本NPM包之根文件夹之绝对路径,
-                    './源代码/01-转换器之构建器/静态-html-片段以及动态构建的-html-片段/static/表达源代码缩进之字符串.js'
+                    './源代码/01-转换器之构建器/静态-html-片段以及动态构建的-html-片段/以-javascript-字符串形式给出的-html-片段集/表达源代码缩进之字符串.js'
                 ),
                 rerequire工具之配置项集
             )
@@ -217,36 +246,78 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
+
+
+
+
+
+
         /* ************* Merge options with their default values ************** */
 
-        将Markdown转换为HTML之前之预备阶段 = {
+        const 将Markdown转换为HTML之前之预备阶段 = {
             ...完备的默认配置项集.将Markdown转换为HTML之前之预备阶段,
-            ...将Markdown转换为HTML之前之预备阶段,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                转换器之配置项集.将Markdown转换为HTML之前之预备阶段
+            ),
         }
 
-        将Markdown转换为HTML之阶段 = {
+        const 将Markdown转换为HTML之阶段 = {
             ...完备的默认配置项集.将Markdown转换为HTML之阶段,
-            ...将Markdown转换为HTML之阶段,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                转换器之配置项集.将Markdown转换为HTML之阶段
+            ),
         }
 
-        对HTML做进一步处理之阶段 = {
+        const 对HTML做进一步处理之阶段 = {
             ...完备的默认配置项集.对HTML做进一步处理之阶段,
-            ...对HTML做进一步处理之阶段,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                转换器之配置项集.对HTML做进一步处理之阶段
+            ),
         }
 
-        对本工具现成提供的文章纲要做以下配置 = {
+        const 对本工具现成提供的文章纲要做以下配置 = {
             ...完备的默认配置项集.对本工具现成提供的文章纲要做以下配置,
-            ...对本工具现成提供的文章纲要做以下配置,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                转换器之配置项集.对本工具现成提供的文章纲要做以下配置
+            ),
         }
 
-        杂项 = {
+        const 杂项 = {
             ...完备的默认配置项集.杂项,
-            ...杂项,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                转换器之配置项集.杂项
+            ),
         }
+
+
+
+
 
         const {
             不应主动插入TOC之占位标记,
         } = 将Markdown转换为HTML之前之预备阶段
+
+        const 须对原始Markdown内容字符串依次按下诸内容替换规则做修订 = 尽量取原始值但确保最终取值为所谓标准对象(
+            将Markdown转换为HTML之前之预备阶段.须对原始Markdown内容字符串依次按下诸内容替换规则做修订
+        )
+
+        let {
+            '1 内建现成的替换规则之名称之序列': 作用于原始Markdown的内建现成的替换规则之名称之序列,
+            '2 额外的替换规则之定义之序列': 作用于原始Markdown的额外的替换规则之定义之序列,
+        } = 须对原始Markdown内容字符串依次按下诸内容替换规则做修订
+
+        if (!Array.isArray(作用于原始Markdown的内建现成的替换规则之名称之序列)) {
+            作用于原始Markdown的内建现成的替换规则之名称之序列 = 完备的默认配置项集.将Markdown转换为HTML之前之预备阶段.须对原始Markdown内容字符串依次按下诸内容替换规则做修订['1 内建现成的替换规则之名称之序列']
+        }
+
+        if (!Array.isArray(作用于原始Markdown的额外的替换规则之定义之序列)) {
+            // 作用于原始Markdown的额外的替换规则之定义之序列 = 完备的默认配置项集.将Markdown转换为HTML之前之预备阶段.须对原始Markdown内容字符串依次按下诸内容替换规则做修订['2 额外的替换规则之定义之序列']
+            作用于原始Markdown的额外的替换规则之定义之序列 = []
+        }
+
+
+
+
 
         const {
             不应为各章节标题构建超链接,
@@ -255,13 +326,11 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             构建文章纲要列表时自该级别之标题始,
         } = 将Markdown转换为HTML之阶段
 
-        let {
-            针对MarkdownIt生态之诸工具的层叠样式表类名集 = {},
-        } = 将Markdown转换为HTML之阶段
-
-        针对MarkdownIt生态之诸工具的层叠样式表类名集 = {
+        const 针对MarkdownIt生态之诸工具的层叠样式表类名集 = {
             ...完备的默认配置项集.将Markdown转换为HTML之阶段.针对MarkdownIt生态之诸工具的层叠样式表类名集,
-            ...针对MarkdownIt生态之诸工具的层叠样式表类名集,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                将Markdown转换为HTML之阶段.针对MarkdownIt生态之诸工具的层叠样式表类名集
+            ),
         }
 
         const {
@@ -271,6 +340,10 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             用于文章纲要列表各级LI标签的: cssClassNameOfArticleTOCListItems,
             用于文章纲要列表各级LI标签内嵌之A标签的: cssClassNameOfArticleTOCItemAnchors,
         } = 针对MarkdownIt生态之诸工具的层叠样式表类名集
+
+
+
+
 
         const {
             不应将代码块中的换行符替换成BR标签,
@@ -287,19 +360,31 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
             所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称,
         } = 对HTML做进一步处理之阶段
 
-        let {
-            凡内容须注入产出之HTML中之所有外来文件 = {},
-            本工具专门可配置的层叠样式表类名集 = {},
-            须对产出之HTML内容字符串依次按下诸内容替换规则做修订 = {},
-        } = 对HTML做进一步处理之阶段
-
-        凡内容须注入产出之HTML中之所有外来文件 = {
+        const 凡内容须注入产出之HTML中之所有外来文件 = {
             ...完备的默认配置项集.对HTML做进一步处理之阶段.凡内容须注入产出之HTML中之所有外来文件,
-            ...凡内容须注入产出之HTML中之所有外来文件,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                对HTML做进一步处理之阶段.凡内容须注入产出之HTML中之所有外来文件
+            ),
         }
 
+        const 本工具专门可配置的层叠样式表类名集 = {
+            ...完备的默认配置项集.对HTML做进一步处理之阶段.本工具专门可配置的层叠样式表类名集,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                对HTML做进一步处理之阶段.本工具专门可配置的层叠样式表类名集
+            ),
+        }
+
+        const 须对产出之HTML内容字符串依次按下诸内容替换规则做修订 = {
+            ...完备的默认配置项集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
+            ...尽量取原始值但确保最终取值为所谓标准对象(
+                对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订
+            ),
+        }
+
+
+
         const {
-            若将反复读取这些文件应禁止Require语句缓存这些文件之内容,
+            应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取用各文件最新之内容全文,
         } = 凡内容须注入产出之HTML中之所有外来文件
 
         let {
@@ -312,37 +397,31 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-        本工具专门可配置的层叠样式表类名集 = {
-            ...完备的默认配置项集.对HTML做进一步处理之阶段.本工具专门可配置的层叠样式表类名集,
-            ...本工具专门可配置的层叠样式表类名集,
-        }
-
         const {
-            用于Body标签以表明文章配备了纲要列表的: cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
-            用于文章正文之根Article标签的: cssClassNameOfMarkdownChiefContentWrappingArticleTag,
-            用于具有按钮样貌的返回文章首部之链接的: cssClassNameOfBackToTopAnchor,
+            用于Body标签以表明文章配备了纲要列表的: 层叠样式表类名之用于Body标签以表明文章配备了纲要列表的,
+            用于文章正文之根Article标签的: 层叠样式表类名之用于文章正文之根Article标签的,
+            用于具有按钮样貌的返回文章首部之链接的: 层叠样式表类名之用于具有按钮样貌的返回文章首部之链接的,
         } = 本工具专门可配置的层叠样式表类名集
 
 
 
-        须对产出之HTML内容字符串依次按下诸内容替换规则做修订 = {
-            ...完备的默认配置项集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
-            ...须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
-        }
-
         let {
-            '1 内建现成的替换规则序列': 内建现成的替换规则序列,
-            '2 额外的替换规则序列': 额外的替换规则序列,
+            '1 内建现成的替换规则之名称之序列': 作用于HTML的内建现成的替换规则之名称之序列,
+            '2 额外的替换规则之定义之序列': 作用于HTML的额外的替换规则之定义之序列,
         } = 须对产出之HTML内容字符串依次按下诸内容替换规则做修订
 
-        if (!Array.isArray(内建现成的替换规则序列)) {
-            内建现成的替换规则序列 = 完备的默认配置项集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订.内建现成的替换规则序列
+        if (!Array.isArray(作用于HTML的内建现成的替换规则之名称之序列)) {
+            作用于HTML的内建现成的替换规则之名称之序列 = 完备的默认配置项集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订['1 内建现成的替换规则之名称之序列']
         }
 
-        if (!Array.isArray(额外的替换规则序列)) {
-            // 额外的替换规则序列 = 完备的默认配置项集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订.额外的替换规则序列
-            额外的替换规则序列 = []
+        if (!Array.isArray(作用于HTML的额外的替换规则之定义之序列)) {
+            // 作用于HTML的额外的替换规则之定义之序列 = 完备的默认配置项集.对HTML做进一步处理之阶段.须对产出之HTML内容字符串依次按下诸内容替换规则做修订['2 额外的替换规则之定义之序列']
+            作用于HTML的额外的替换规则之定义之序列 = []
         }
+
+
+
+
 
         const {
             控制台打印信息须改用英国话,
@@ -350,7 +429,16 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         if (须在控制台打印详尽细节) {
             const 最终采纳之配置之打印项 = {
-                将Markdown转换为HTML之前之预备阶段,
+                将Markdown转换为HTML之前之预备阶段: {
+                    ...将Markdown转换为HTML之前之预备阶段,
+
+                    须对原始Markdown内容字符串依次按下诸内容替换规则做修订: {
+                        ...须对原始Markdown内容字符串依次按下诸内容替换规则做修订,
+
+                        '1 内建现成的替换规则之名称之序列': 作用于原始Markdown的内建现成的替换规则之名称之序列,
+                        '2 额外的替换规则之定义之序列': 作用于原始Markdown的额外的替换规则之定义之序列,
+                    },
+                },
 
                 将Markdown转换为HTML之阶段: {
                     ...将Markdown转换为HTML之阶段,
@@ -371,8 +459,9 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
                     须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
                         ...须对产出之HTML内容字符串依次按下诸内容替换规则做修订,
-                        '1 内建现成的替换规则序列': 内建现成的替换规则序列,
-                        '2 额外的替换规则序列': 额外的替换规则序列,
+
+                        '1 内建现成的替换规则之名称之序列': 作用于HTML的内建现成的替换规则之名称之序列,
+                        '2 额外的替换规则之定义之序列': 作用于HTML的额外的替换规则之定义之序列,
                     },
                 },
             }
@@ -384,14 +473,55 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
+
+
+
+
         /* *************** Modify markdown content if necessary *************** */
+
+        let _markdown内容之半成品1 = markdown原始文章全文之字符串
+
+        作用于原始Markdown的内建现成的替换规则之名称之序列.forEach(某内建替换规则之名称 => {
+            const 某内建替换规则 = 所有作用于Markdown原始内容之内建替换规则之字典[某内建替换规则之名称]
+            const 要么为替换结果字符串要么为False = 对某字符串执行某查找替换规则(_markdown内容之半成品1, 某内建替换规则)
+
+            if (要么为替换结果字符串要么为False === false) {
+                throw new Error(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    给出的拟作用于 Markdown 原始内容之【内建现成】的【替换规则】之【名称】“${
+                    彩色粉笔工具.yellow(某内建替换规则之名称)
+                }”无效。`))
+            } else {
+                _markdown内容之半成品1 = 要么为替换结果字符串要么为False
+            }
+        })
+
+        作用于原始Markdown的额外的替换规则之定义之序列.forEach((某额外替换规则, 数组索引数) => {
+            if (!某额外替换规则) { return }
+
+            const 要么为替换结果字符串要么为False = 对某字符串执行某查找替换规则(_markdown内容之半成品1, 某额外替换规则)
+
+            if (要么为替换结果字符串要么为False === false) {
+                console.log(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    拟作用于 Markdown 原始内容之【额外】的【替换规则】序列中的第 ${
+                    彩色粉笔工具.yellow(数组索引数 + 1)
+                } 条规则无效。`), '该无效值规则为：',  某额外替换规则)
+
+                throw new Error(`${本NPM包之NPM名称} 出错：用于 HTML 内容替换之额外规则序列中的第 ${数组索引数 + 1} 条规则无效。`)
+            } else {
+                _markdown内容之半成品1 = 要么为替换结果字符串要么为False
+            }
+        })
+
+
 
         const {
             markdown内容现已包含TOC标记,
-            处理过的Markdown内容之字符串: _markdown内容之半成品1,
-        } = 按需向Markdown内容字符串中注入TOC标记(markdown原始文章全文之字符串, 不应主动插入TOC之占位标记)
+            处理过的Markdown内容之字符串: _markdown内容之半成品2,
+        } = 按需向Markdown内容字符串中注入TOC标记(_markdown内容之半成品1, 不应主动插入TOC之占位标记)
 
-        const markdown内容之最终成品之字符串 = _markdown内容之半成品1
+        const markdown内容之最终成品之字符串 = _markdown内容之半成品2
+
+
+
+
 
 
 
@@ -451,21 +581,19 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-        let html半成品之内容字符串 = 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串
-
-
-
-
-
         /* ****** Extract HTML title out of generated HTML raw contents ******* */
 
         let html之完整Title标签之字符串 = '<title>【验证性输出】输出内容并非正式内容</title>'
 
         if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
-            html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(html半成品之内容字符串, {
-                客体程序指明采用的作为HTMLTitle标签内容之字符串: 产出之HTML文件之Title标签之内容字符串,
-                控制台打印信息须改用英国话,
-            })
+            html之完整Title标签之字符串 = 构建HTML之完整Title标签之字符串(
+                借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串,
+
+                {
+                    客体程序指明采用的作为HTMLTitle标签内容之字符串: 产出之HTML文件之Title标签之内容字符串,
+                    控制台打印信息须改用英国话,
+                }
+            )
         }
 
 
@@ -474,55 +602,37 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         /* **************** Modify generated HTML raw contents **************** */
 
-        function 对html半成品字符串执行某查找替换规则(某替换规则) {
-            if (!某替换规则) { return false }
-
-            const { 凡, 替换为 } = 某替换规则
-
-            const 查找规则系字符串 = typeof 凡 === 'string'
-            const 查找规则系正则表达式 = 凡 instanceof RegExp
-            const 替换标的系字符串 = typeof 替换为 === 'string'
-            const 替换标的系函数 = typeof 替换为 === 'function'
-
-            if (!查找规则系字符串 && !查找规则系正则表达式) { return false }
-
-            if (替换标的系字符串 || (查找规则系正则表达式 && 替换标的系函数)) {
-                if (查找规则系正则表达式 && 替换标的系函数) {
-                    // 暂不支持
-                    return false
-                } else {
-                    html半成品之内容字符串 = html半成品之内容字符串.replace(凡, 替换为)
-                    return true
-                }
-            }
-
-            return false
-        }
+        let html半成品之内容字符串 = 借助MarkdownIt工具家族将Markdown内容直接转换而得的初始HTML内容字符串
 
 
 
         if (!欲输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容) {
-            内建现成的替换规则序列.forEach(某内建替换规则之名称 => {
-                const 某内建替换规则 = 所有内建替换规则之字典[某内建替换规则之名称]
-                const 已成功 = 对html半成品字符串执行某查找替换规则(某内建替换规则)
+            作用于HTML的内建现成的替换规则之名称之序列.forEach(某内建替换规则之名称 => {
+                const 某内建替换规则 = 所有作用于HTML内容之内建替换规则之字典[某内建替换规则之名称]
+                const 要么为替换结果字符串要么为False = 对某字符串执行某查找替换规则(html半成品之内容字符串, 某内建替换规则)
 
-                if (!已成功) {
-                    throw new Error(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    给出的内建现成 HTML 替换规则之名称“${
+                if (要么为替换结果字符串要么为False === false) {
+                    throw new Error(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    给出的拟作用于 HTML 内容之【内建现成】的【替换规则】之【名称】“${
                         彩色粉笔工具.yellow(某内建替换规则之名称)
                     }”无效。`))
+                } else {
+                    html半成品之内容字符串 = 要么为替换结果字符串要么为False
                 }
             })
 
-            额外的替换规则序列.forEach((某额外替换规则, 数组索引数) => {
+            作用于HTML的额外的替换规则之定义之序列.forEach((某额外替换规则, 数组索引数) => {
                 if (!某额外替换规则) { return }
 
-                const 已成功 = 对html半成品字符串执行某查找替换规则(某额外替换规则)
-                if (!已成功) {
-                    console.log(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    用于 HTML 内容替换之额外规则序列中的第 ${
+                const 要么为替换结果字符串要么为False = 对某字符串执行某查找替换规则(html半成品之内容字符串, 某额外替换规则)
+
+                if (要么为替换结果字符串要么为False === false) {
+                    console.log(彩色粉笔工具.red(`${本NPM包之NPM名称} 出错：\n    给出的拟作用于 HTML 内容之【额外】的【替换规则】序列中的第 ${
                         彩色粉笔工具.yellow(数组索引数 + 1)
                     } 条规则无效。`), '该无效值规则为：',  某额外替换规则)
 
                     throw new Error(`${本NPM包之NPM名称} 出错：用于 HTML 内容替换之额外规则序列中的第 ${数组索引数 + 1} 条规则无效。`)
+                } else {
+                    html半成品之内容字符串 = 要么为替换结果字符串要么为False
                 }
             })
 
@@ -541,14 +651,16 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 html半成品之内容字符串,
 
                 {
-                    cssClassNameOfMarkdownChiefContentWrappingArticleTag,
+                    层叠样式表类名之用于文章正文之根Article标签的,
                     cssClassNameOfArticleTOCRootTag,
                     markdown文章中包含了TOC标记,
                 }
             )
 
+
+
             if (!不应注入用于返回文章起始之按钮) {
-                html半成品之内容字符串 += `\n${表达单层缩进之字符串}<a href="#" class="${cssClassNameOfBackToTopAnchor}"></a>\n`
+                html半成品之内容字符串 += `\n${表达单层缩进之字符串}<a href="#" class="${层叠样式表类名之用于具有按钮样貌的返回文章首部之链接的}"></a>\n`
             }
         }
 
@@ -558,16 +670,15 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         /* ***************** Prepare all extra HTML snippets ****************** */
 
-        const snippetEntryOfHTMLBeginning = syncGetSnippetEntryOfHTMLBeginning({
-            本NPM包之根文件夹之绝对路径,
+        const html起始片段之描述项 = 阻塞式获取HTML起始片段之描述项({
             产出之HTML文件之HTML标签之语言属性之取值,
         })
 
-        const snippetEntryOfHTMLEnding = syncGetSnippetEntryOfHTMLEnding()
+        const html末尾片段之描述项 = 阻塞式获取HTML末尾片段之描述项()
 
-        const snippetEntryOfHTMLFromHeadEndToBodyBegin = syncGetSnippetEntryOfHTMLFromHeadEndToBodyBegin({
+        const html自Head结束标签至Body起始标签至片段之描述项 = 阻塞式获取HTML自Head结束标签至Body起始标签之片段之描述项({
             markdown文章中包含了TOC标记,
-            cssClassNameOfBodyTagWhenMarkdownArticleHasTOC,
+            层叠样式表类名之用于Body标签以表明文章配备了纲要列表的,
         })
 
 
@@ -609,14 +720,14 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                     snippetEntryOfThemingCSS,
                 ]
 
-                if (snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs) {
+                if (snippetEntryOfThemingCSS.与该文件关联的一对Javascript文件由Script标签包裹好之片段之描述项列表) {
                     一切须注入HTML之标签之列表 = [
                         ...一切须注入HTML之标签之列表,
-                        ...snippetEntryOfThemingCSS.associatedJavascriptSnippetEntryPairs.map(entryPair => {
+                        ...snippetEntryOfThemingCSS.与该文件关联的一对Javascript文件由Script标签包裹好之片段之描述项列表.map(entryPair => {
                             if (采用由本工具内建之Javascript时应采用未经压缩之版本) {
-                                return entryPair.unminified
+                                return entryPair.未经压缩之原始版本
                             } else {
-                                return entryPair.minified
+                                return entryPair.压缩过的版本
                             }
                         }),
                     ]
@@ -627,9 +738,9 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
                 ...一切须注入HTML之标签之列表,
                 ...依次给出之外来文件之绝对路径序列
                     .map(外来文件之绝对路径 => {
-                        return syncGetSnippetEntryOfOneExternalFile(
+                        return 阻塞式获取某文件被特定HTML标签包裹后之内容之描述项(
                             外来文件之绝对路径,
-                            若将反复读取这些文件应禁止Require语句缓存这些文件之内容
+                            应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取用各文件最新之内容全文
                         )
                     })
                     .filter(entry => !!entry),
@@ -647,20 +758,20 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         const 最终HTML之完整内容字符串 = [
             // <!DOCTYPE html> 之类的内容。
-            snippetEntryOfHTMLBeginning.content,
+            html起始片段之描述项.content,
 
             // 完整的 <title /> 标签。
             html之完整Title标签之字符串,
 
-            // <style /> tags
-            ...所有层叠样式表片段之列表.map(片段 => 片段.content),
+            // 所有 <style /> 标签。
+            ...所有层叠样式表片段之列表.map(片段描述项 => 片段描述项.content),
 
-            // </head><body ...>
-            snippetEntryOfHTMLFromHeadEndToBodyBegin.content,
+            // </head><body ...> 。
+            html自Head结束标签至Body起始标签至片段之描述项.content,
 
 
 
-            /* ***** chief content ***** */
+            /* ***** 文章之主体内容 ***** */
             /*                           */
             /*                           */
             html半成品之内容字符串,
@@ -670,11 +781,11 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
 
 
-            // <script /> tags
+            // 所有 <script /> 标签。
             ...所有Javascript片段之列表.map(片段 => 片段.content),
 
-            // </body></html>
-            snippetEntryOfHTMLEnding.content,
+            // </body></html> 。
+            html末尾片段之描述项.content,
         ].join('')
 
 
