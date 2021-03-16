@@ -12,6 +12,7 @@
         "doc": "文档"
     },
     "scripts": {
+        "generate-html-for-all-docs": "rimraf  ./*.html  ./文档/**/*.html    &&   wlc-md-to-html   -i ./ReadMe.md  -i ./文档/**/*.md  -o '*'",
         "eslint": "eslint    ./.eslintrc.js    ./源代码/**/*.js    ./gulpfile.js/**/*.js    ./测试集/*.js",
         "_test-with-very-simple-markdowns": "node    ./测试集/index.js",
         "_test-with-dep-package-examples": "gulp    --silent   buildExamplesOnce",

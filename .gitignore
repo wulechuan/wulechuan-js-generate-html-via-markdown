@@ -7,3 +7,7 @@ node_modules
 测试集/输出之内容/**/*.png
 测试集/输出之内容/**/*.jpg
 测试集/输出之内容/**/*.webm
+
+文档/**/*.html
+
+ReadMe*.html
