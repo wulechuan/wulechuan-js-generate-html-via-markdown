@@ -70,7 +70,7 @@
         "@wulechuan/css-stylus-markdown-themes": "^6.4.12",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
         "del": "^6.0.0",
-        "eslint": "^7.21.0",
+        "eslint": "^7.22.0",
         "gulp": "^4.0.2",
         "gulp-pipe": "^1.0.4",
         "gulp-rename": "^2.0.0",
