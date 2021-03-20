@@ -25,6 +25,14 @@
 
 
 
+## Compatibility Broken Version Warning
+
+**IMPORTANT**
+
+**As of v`3.0.0`, ALL APIs of this package are in CHINESE instead of English. In addition, the hierarchy of the interfacing properties have adjusted. For non-chinese speaker, please stick with the old v`2.x.x`. Good news is there're very few enhancements/changes to functionalities as the v3 over the v2, though some.**
+
+I do am looking forward to provide new APIs in English alongside with those in Chinese.
+
 
 ## Introduction
 
@@ -68,7 +76,7 @@ Alongside this npm package, I also maintain another npm package, named [@wulechu
 
 ## Git Repositories
 
-| <span style="display:inline-block;width:10em;">Supplier</span> | <span style="display:inline-block;width:8em;">Nation</span> | URI |
+| <span style="display:inline-block;width:6em;">Supplier</span> | <span style="display:inline-block;width:4em;">Nation</span> | URI |
 | ----------- | :-----: | ------- |
 | Gitee       |  China  | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
 | Aliyun:code |  China  | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |
