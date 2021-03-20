@@ -1,6 +1,10 @@
 .vs/**/*
 node_modules
+
 temp
+临时文件
+文档/**/*.html
+ReadMe*.html
 
 tests/output/**/*.md
 tests/output/**/*.png

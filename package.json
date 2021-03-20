@@ -2,7 +2,7 @@
     "name": "@wulechuan/generate-html-via-markdown",
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
-    "version": "2.9.11",
+    "version": "2.9.12",
     "description": "Yet another tool for converting MarkDown content into corresponding HTML content, but with gorgeous themes applied to the output HTML by default. You provide a string of MarkDown, you get a string of HTML.",
     "main": "index.js",
     "scripts": {
@@ -14,7 +14,7 @@
         "start": "npm   run  eslint    &&    gulp  --silent",
         "start2": "npm  run  eslint    &&    gulp",
         "before-git-commit": "npm  test",
-        "prepublishOnly": "npm   test"
+        "prepublishOnly": "npm     test"
     },
     "keywords": [
         "markdown",

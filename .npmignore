@@ -3,6 +3,7 @@
 .vscode
 
 temp
+临时文件
 
 .eslintignore
 .eslintrc.js
@@ -16,6 +17,7 @@ gulpfile.js
 gulpfile.esm.js
 
 文档
+ReadMe*.html
 
 tests
 测试集
