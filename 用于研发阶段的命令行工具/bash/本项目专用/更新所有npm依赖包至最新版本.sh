@@ -8,7 +8,7 @@ npm i \
     'markdown-it-highlightjs@latest' \
     'markdown-it-toc-done-right@latest'
 
-npm i -D '@wulechuan/css-stylus-markdown-themes@^6'
+npm i -D '@wulechuan/css-stylus-markdown-themes@latest'
 
 npm i -D \
     '@wulechuan/gulp-classical-task-cycle@latest' \
