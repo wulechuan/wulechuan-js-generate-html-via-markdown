@@ -77,7 +77,7 @@ declare namespace 一枚现成的自Markdown至HTML的转换器 {
         将Markdown转换为HTML之前之预备阶段?: {
             不应主动插入TOC之占位标记?: boolean;
             须对原始Markdown内容字符串依次按下诸内容替换规则做修订?: {
-                '1 内建现成的替换规则之名称之序列': Array<>;
+                '1 内建现成的替换规则之名称之序列': Array<类型定义之作用于原始Markdown内容之内建替换规则名称>;
                 '2 额外的替换规则之定义之序列': Array<类型定义之作用于原始Markdown内容之额外替换规则项>;
             };
         };
