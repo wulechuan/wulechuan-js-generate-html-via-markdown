@@ -172,11 +172,11 @@ module.exports = function 构建一个用于将Markdown内容字符串转换为H
 
         if (不应采纳本工具之源代码之缓存版本以应对本工具研发阶段之要求) {
             [
-                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/process-snippet-of-one-language.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-generic-simple-splitter.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitter-for-escape-chars-in-string-or-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/ast-splitters-for-regexp.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/ast/parse-ast-sub-tree-into-single-string.js',
+                './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/处理-html-内容中某-pre-标签中某特定语种之片段.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/泛用处理器集/用于处理换行符以及行首空白者.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/泛用处理器集/用于处理标点符号者.js',
                 './文件内容字符串之处理工具集/2-针对-html-内容的字符串/2-对由-hljs-产生之-html-内容做进一步处理/各色内容片段之专门处理器之总集/通用于大部分语言/用于处理单个注释块者.js',

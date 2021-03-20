@@ -1,7 +1,7 @@
 const createErrorMessageBuildersFor                 = require('@wulechuan/meaningful-error-messages')
 const splitOneASTNodeByOpenAndCloseMarks            = require('./ast/ast-generic-simple-splitter')
 const parseASTSubTreeIntoSingleString               = require('./ast/parse-ast-sub-tree-into-single-string')
-const processHTMLStringThatMightContainSubLanguages = require('./process-snippet-of-one-language')
+const processHTMLStringThatMightContainSubLanguages = require('./处理-html-内容中某-pre-标签中某特定语种之片段')
 
 const {
     buildErrorMessage,
