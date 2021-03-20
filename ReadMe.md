@@ -221,6 +221,22 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
              * 因此，最终输出的 HTML 仍然会配备文章纲要列表（亦称“目录”）。
              */
             不应主动插入TOC之占位标记: false,
+
+            须对原始Markdown内容字符串依次按下诸内容替换规则做修订: {
+                '1 内建现成的替换规则之名称之序列': [
+                    '去除Markdown中自有的用于引用内建层叠样式表文件之Style标签',
+                ],
+
+                '2 额外的替换规则之定义之序列': [
+                    /**
+                     * // 数据结构示例：
+                     * {
+                     *     凡:    <字符串或正则表达式>,
+                     *     替换为: <字符串>,
+                     * },
+                     */
+                ],
+            },
         },
 
         将Markdown转换为HTML之阶段: {
@@ -323,7 +339,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
             须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
                 '1 内建现成的替换规则之名称之序列': [
                     '令所有外部链接之打开方式为 _blank',
-                    令所有原本指向Markdown文件之链接改为指向同名HTML文件,
+                    '令所有原本指向Markdown文件之链接改为指向同名HTML文件',
                 ],
 
                 '2 额外的替换规则之定义之序列': [
@@ -382,7 +398,6 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         杂项: {
             控制台打印信息须改用英国话: false,
         },
-    }
     ```
 
 
