@@ -1,12 +1,13 @@
 .vs/**/*
 node_modules
 
-temp
 临时文件
-文档/**/*.html
-ReadMe*.html
 
-tests/output/**/*.md
-tests/output/**/*.png
-tests/output/**/*.jpg
-tests/output/**/*.webm
+测试集/输出之内容/**/*.md
+测试集/输出之内容/**/*.png
+测试集/输出之内容/**/*.jpg
+测试集/输出之内容/**/*.webm
+
+文档/**/*.html
+
+ReadMe*.html

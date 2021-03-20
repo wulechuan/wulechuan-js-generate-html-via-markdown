@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 # 吴乐川的将 MarkDown 代码转换为 HTML 代码的工具
@@ -29,21 +29,24 @@
 <dd><p>南昌吴乐川</p></dd>
 </dl>
 
+## 版本断代警告
+
+**重要提醒：本工具自 v`3.0.0` 版始，编程接口全面汉化，接口树之层级结构亦有调整。英语接口暂未跟进。时 2021 年 3 月 21 日。然第 3 版较之第 2 版，鲜少有实质性功能变动，徒接口语种之变更、接口结构之优化尔。**
 
 ## 源代码仓库
 
-| <span style="display:inline-block;width:180px;">提供仓库服务之组织</span> | <span style="display:inline-block;width:150px;">仓库组织之国别</span> | 仓库地址 |
-| ---------- | :----------: | ------- |
-| 码云       | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
+| <span style="display:inline-block;width:10em;">提供仓库服务之组织</span> | <span style="display:inline-block;width:9em;">仓库组织之国别</span> | 仓库地址 |
+| ------------- | :----------: | ------- |
+| 码云           | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
 | 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |
-| GitHub | 美 | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
+| GitHub         | 美           | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
 
 
 ## 简介
 
 本工具借助 [markdownIt](https://www.npmjs.com/package/markdown-it) 生态的工具集，可将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。
 
-当采用完全默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。**故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。**
+当采用默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。**故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。**
 
 > - HTML 中包含【文章目录】、“返回顶部”按钮（实则链接）等方便实用的功能。
 >
@@ -66,11 +69,15 @@
 
 上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)。
 
-<!-- 
+
 > 重要！
 >
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），暂称“甲程序”，系以所谓“peer 依赖”、“平级依赖”的方式调用上述 CSS 样式项目（称乙程序）的。
-> 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！ -->
+> 本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述 CSS 样式项目（暂称“乙程序”）之 Javascript 接口。
+> 换言之，本程序 **依赖** 乙程序。然而，为确保本程序体积尽可能小，又为不至锁死对乙程序依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
+> 本程序并不在 `package.json` 中声明对乙程序之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖乙程序。
+> 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！
+>
+> 顺便指出，本程序之源代码、文档集均多出提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。
 
 
 ### 用于 Gulpjs 生态的适配版本
@@ -114,20 +121,20 @@ const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
 const markdownContent = readFileSync('我的文章.md').toString()
 
 const htmlContent = markdownToHTMLConverter(markdownContent, {
-    shouldLogVerbosely: true,
+    须在控制台打印详尽细节: true,
 
-    conversionPreparations: {
-        shouldNotAutoInsertTOCPlaceholderIntoMarkdown: true,
+    将Markdown转换为HTML之前之预备阶段: {
+        不应主动插入TOC之占位标记: true,
     },
 
-    conversionOptions: {
-        shouldNotBuildHeadingPermanentLinks: true,
+    将Markdown转换为HTML之阶段: {
+        不应为各章节标题构建超链接: true,
     },
 
-    manipulationsOverHTML: {
-        shouldNotUseInternalCSSThemingFiles: true,
-        htmlTitleString: '一份极简的 HTML 文档',
-        shouldNotInsertBackToTopAnchor: true,
+    对HTML做进一步处理之阶段: {
+        不应采用任何由本工具内建之层叠样式表: true,
+        产出之HTML文件之Title标签之内容字符串: '一份极简的 HTML 文档',
+        不应注入用于返回文章起始之按钮: true,
     },
 })
 
@@ -148,18 +155,20 @@ const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
 const markdownContent = readFileSync('一篇好文.md').toString()
 
 const htmlContent = markdownToHTMLConverter(markdownContent, {
-    manipulationsOverHTML: {
+    对HTML做进一步处理之阶段: {
         // 1) 禁用内部 CSS 主题文件。
-        shouldNotUseInternalCSSThemingFiles: true,
+        不应采用任何由本工具内建之层叠样式表: true,
     },
 
-    absolutePathsOfExtraFilesToEmbedIntoHTML: [
-        // 2) 引入你自己设计的 CSS 文件。
-        '/d/your/work/folder/some/theme/your-splendid-theme.css',
+    凡内容须注入产出之HTML中之所有外来文件: {
+        依次给出之外来文件之绝对路径序列: [
+            // 2) 引入你自己设计的 CSS 文件。
+            '/d/your/work/folder/some/theme/your-splendid-theme.css',
 
-        // 3) 或许你也须引入你自己的 Javascript 文件。
-        '/d/your/work/folder/some/theme/your-splendid-theme.actions.js',
-    ],
+            // 3) 或许你也须引入你自己的 Javascript 文件。
+            '/d/your/work/folder/some/theme/your-splendid-theme.actions.js',
+        ],
+    },
 })
 
 writeFileSync('一篇好文.html', htmlContent)
@@ -194,131 +203,201 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 - options
 
-    `./default-options.js` 文件已尽述之。请参阅。
+    `./源代码/完备的默认配置项集.js` 文件已尽述之。请参阅。
 
-    我已将 `./default-options.js` 文件的（几乎）完整内容复制如下：
+    我已将 `./源代码/完备的默认配置项集.js` 文件的（几乎）完整内容复制如下：
 
     ```js
     {
-        shouldLogVerbosely: false,
+        配置格式适用之最低版本: 3, // 所谓“最高适用版本”不可预见。故不指明。
 
-        conversionPreparations: {
-            shouldNotAutoInsertTOCPlaceholderIntoMarkdown: false,
+        须在控制台打印详尽细节: false,
+
+        将Markdown转换为HTML之前之预备阶段: {
+            /**
+             * 即便下方字段配置为 true，
+             * 倘若 Markdown 原文已有此占位标记，
+             * 本工具亦不会粗鲁的删除之。
+             * 因此，最终输出的 HTML 仍然会配备文章纲要列表（亦称“目录”）。
+             */
+            不应主动插入TOC之占位标记: false,
+
+            须对原始Markdown内容字符串依次按下诸内容替换规则做修订: {
+                '1 内建现成的替换规则之名称之序列': [
+                    '去除Markdown中自有的用于引用内建层叠样式表文件之Style标签',
+                ],
+
+                '2 额外的替换规则之定义之序列': [
+                    /**
+                     * // 数据结构示例：
+                     * {
+                     *     凡:    <字符串或正则表达式>,
+                     *     替换为: <字符串>,
+                     * },
+                     */
+                ],
+            },
         },
 
-        conversionOptions: {
-            shouldNotBuildHeadingPermanentLinks: false,
-            headingPermanentLinkSymbolChar: '§',
+        将Markdown转换为HTML之阶段: {
+            不应为各章节标题构建超链接: false,
 
-            /*
-                该参数对应 “markdown-it-anchor” 插件的 “permalinkClass” 参数。
-                其默认值为 “'header-anchor'”。
+            /** 提醒：此值允许采用多个字符。 */
+            各章节标题超链接之符号字符串: '§',
 
-                我的所谓内部 CSS 采用其默认值。
-            */
-            cssClassNameOfHeadingPermanentLinks: undefined,
+            文章纲要列表应采用UL标签而非OL标签: false,
 
-            cssClassNameOfArticleTOCRootTag:     'markdown-article-toc',
-            cssClassNameOfArticleTOCLists:       undefined, // 作用于 <ul> 或 <ol>。
-            cssClassNameOfArticleTOCListItems:   undefined, // 作用于 <li>。
-            cssClassNameOfArticleTOCItemAnchors: undefined, // 作用于 <li> 内层的 <a>。
+            针对MarkdownIt生态之诸工具的层叠样式表类名集: {
+                /**
+                 * 该字段值会传递到 “ markdown-it-anchor ” 插件之 “ permalinkClass ” 属性上。
+                 * markdown-it-anchor 为 permalinkClass 给出的默认值为 “ header-anchor ”。
+                 * 本工具在套用 markdown-it-anchor 时，并未另设默认值，而是直接采用其原始设计之默认值。
+                 */
+                用于各级标题之超链接A标签的: undefined,
 
-            /*
-                “articleTOCBuildingHeadingLevelStartsFrom”：该参数
-                对应 “markdown-it-toc-done-right” 插件的 “level” 参数，
-                意为，从第几级标题开始往下，会构建对应的纲要列表项。
+                /**
+                 * 以下 4 个字段的值会逐一传递到 “ markdown-it-toc-done-right ” 插件（下文暂称“ toc 插件 ”）的 4 个属性上。
+                 *
+                 * 对应关系如下：
+                 * -   本工具的 “ 用于文章纲要列表之容器的 ” 传递到 toc 插件的 “ containerClass ”。
+                 * -   本工具的 “ 用于文章纲要列表各级UL或OL标签的 ” 传递到 toc 插件的 “ listClass ”。
+                 * -   本工具的 “ 用于文章纲要列表各级LI标签的 ” 传递到 toc 插件的 “ itemClass ”。
+                 * -   本工具的 “ 用于文章纲要列表各级LI标签内嵌之A标签的 ” 传递到 toc 插件的 “ linkClass ”。
+                 *
+                 * 其中，“ 用于文章纲要列表之容器的 ” 字段的由本工具设计之默认值有异于 toc 插件设计之默认值。
+                 * 其余 3 个字段，本工具并未设计默认值，故默认值均沿用 toc 插件之设计，且恰巧三者之默认值均为 undefined 。
+                 *
+                 * 参阅： https://www.npmjs.com/package/markdown-it-toc-done-right#options
+                 *
+                 * 顺便一提，
+                 * 文章纲要列表之容器默认为 <nav> 标签。
+                 * 因配置、工具而异，亦可能为 <div> 标签，
+                 * 或者干脆直接是文章纲要列表之最顶层的 <ul> 或 <ol> 标签。
+                 */
+                用于文章纲要列表之容器的: 'markdown-article-toc',
+                用于文章纲要列表各级UL或OL标签的: undefined,
+                用于文章纲要列表各级LI标签的: undefined,
+                用于文章纲要列表各级LI标签内嵌之A标签的: undefined,
+            },
 
-                例如：
-                    假定 “articleTOCBuildingHeadingLevelStartsFrom” 取值为 2。
-                    则**不会**为文章中的任何 <h1> 构建对应的纲要列表项。
-                    而从第二级标题开始的所有标题，即 <h2/>、<h3/>……等，均会构建对应纲要列表项。
-
-                另，我所设计的默认 CSS，在默认配置下会【故意】隐藏较深层的纲要列表项。
-                即，这些列表项的 HTML 标签明明存在，但被 CSS 强行隐藏不见。
-            */
-            articleTOCBuildingHeadingLevelStartsFrom: 2, // 注意：我令其默认取 2。
-            articleTOCListTagNameIsUL: false,
+            /**
+             * 该字段对应 “ markdown-it-toc-done-right ” 插件的 “ level ” 参数，
+             * 意为，从第几级标题开始往下，会构建对应的纲要列表项。
+             * 其中 <h1> 为所谓第 1 级标题， <h2> 为所谓第 2 级，依此类推。
+             *
+             * 例如：
+             *     假定 “ 构建文章纲要列表时自该级别之标题始 ” 取值为 2。
+             *     则“不会”为文章中的任何 <h1> 构建对应的纲要列表项。
+             *     而从第 2 级标题开始的所有标题，即 <h2/>、<h3/>……等，均会构建对应纲要列表项。
+             *
+             * 另，我所设计的默认 CSS，在默认配置下会【故意】隐藏较深层的纲要列表项。
+             * 即，这些列表项的 HTML 标签明明存在，但被 CSS 强行隐藏不见。
+             */
+            构建文章纲要列表时自该级别之标题始: 2, // 注意：我令其默认取 2。
         },
 
-        manipulationsOverHTML: {
-            shouldNotReplaceLineBreaksInCodeTagsWithBrTags: false,
-            shouldNotInsertBackToTopAnchor: false,
-            shouldNotUseInternalCSSThemingFiles: false,
-            shouldUseUnminifiedVersionOfInternalCSS: false,
-            shouldUseUnminifiedVersionOfInternalJavascriptIfAny: false,
+        对HTML做进一步处理之阶段: {
+            不应将代码块中的换行符替换成BR标签: false,
+            不应注入用于返回文章起始之按钮: false,
+            不应采用任何由本工具内建之层叠样式表: false,
+            采用由本工具内建之层叠样式表时应采用未经压缩之版本: false,
+            采用由本工具内建之Javascript时应采用未经压缩之版本: false,
 
-            htmlTagLanguage: '', // 默认取空字符串。此即意味着实际取值为 “'zh-hans-CN'”。该默认取值源自 “begin.html”。
-            htmlTitleString: '', // 默认取空字符串。此即意味着自动从文字中第一个 <h1> 标签中提前内容文字，作为 HTML 文档的标题（<title>）。
+            /**
+             * 研发你自己的样式集时，不免须不断修改样式表以及配套之 Javascript ，
+             * 并即时观察修订之结果。
+             * 此时，将下方该项配置为 true 将大有裨益。
+             * 因为，一旦不采纳 require 机制之缓存， gulp 工具链才可以确保
+             * 总是读取和处理最新版本的层叠样式表和配套 Javascript 之内容。
+             */
+            读取本工具内建之层叠样式表文件和Javascript文件时应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取到各文件最新之内容全文: false,
 
-            internalCSSFileNameOfTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
-            internalCSSFileNameOfThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
+            /**
+             * 下方参数默认取空字符串。
+             * 取空字符串即意味着实际取值为 “ zh-hans-CN ”。
+             * 该实际之默认值（指 “ zh-hans-CN ” ）系源自 “ begin.html ” 这一文件。
+             */
+            产出之HTML文件之HTML标签之语言属性之取值: '',
 
-            /*
-                下列两项参数已被弃用。实则更名为上方两个参数。请尽量采用上方使用新名称的两个参数。
-                一旦上方某参数配置了值，则下方对应参数的值会被忽略。
-                未来，或许我干脆不再支持使用下方两个参数名。
-            */
-            moduleCSSFileNameOfDefaultTheme:        'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
-            moduleCSSFileNameOfDefaultThemeWithTOC: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
+            /**
+             * 下方参数默认取空字符串。
+             *
+             * 取空字符串即意味着自动从文字中第一个 <h1> 标签中提前内容文字，
+             * 作为 HTML 文档的标题（ <title> ）。
+             */
+            产出之HTML文件之Title标签之内容字符串: '',
 
-            cssClassNameOfMarkdownChiefContentWrappingArticleTag: 'markdown-article',
-            cssClassNameOfBodyTagWhenMarkdownArticleHasTOC:       'markdown-article-toc-exists',
-            cssClassNameOfBackToTopAnchor:                        'markdown-article-back-to-top',
+            所采用之由本工具内建之不含文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--no-toc.min.css',
+            所采用之由本工具内建之含有文章纲要列表之定义之层叠样式表文件之名称: 'wulechuan-styles-for-html-via-markdown.default--with-toc.min.css',
 
-            desiredReplacementsInHTML: [
-            /*
-                {
-                    from: <string or RegExp>,
-                    to:   <string>,
-                },
+            本工具专门可配置的层叠样式表类名集: {
+                用于Body标签以表明文章配备了纲要列表的: 'markdown-article-toc-exists',
+                用于文章正文之根Article标签的: 'markdown-article',
+                用于具有按钮样貌的返回文章首部之链接的: 'markdown-article-back-to-top',
+            },
 
+            须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
+                '1 内建现成的替换规则之名称之序列': [
+                    '令所有外部链接之打开方式为 _blank',
+                    '令所有原本指向Markdown文件之链接改为指向同名HTML文件',
+                ],
 
+                '2 额外的替换规则之定义之序列': [
+                    /**
+                     * // 数据结构示例：
+                     * {
+                     *     凡:    <字符串或正则表达式>,
+                     *     替换为: <字符串>,
+                     * },
+                     *
+                     *
+                     *
+                     * // 例 1：令所有外部链接之打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
+                     * //      另，该例已经收录在所谓“内建现成的替换规则集”当中，
+                     * //      名为 '令所有外部链接之打开方式为 _blank' 。
+                     * {
+                     *     凡:    /\s+href="([^#./].+)/gi,
+                     *     替换为: ' target="_blank" href="$1',
+                     * },
+                     *
+                     *
+                     *
+                     * // 例 2：批量令原本指向另一些 Markdown 文件的链接地址，改为指向对应的 HTML 文件。
+                     * //      另，该例已经收录在所谓“内建现成的替换规则集”当中，
+                     * //      名为 '令所有原本指向Markdown文件之链接改为指向同名HTML文件' 。
+                     * {
+                     *     凡:    /\s+href="(.+)\.md(#.*)?"/gi,
+                     *     替换为: ' href="$1.html$2"',
+                     * },
+                     *
+                     *
+                     *
+                     * // 例 3：依照假想的特定要求批量转换链接地址。
+                     * {
+                     *     凡:    /\s+href="\.\/课件之示例集\//gi,
+                     *     替换为: ' href="../公开发表/课件之示例集/',
+                     * },
+                     */
+                ],
+            },
 
-                例 1：令所有外部链接的打开方式为 “_blank”，即在浏览器中新建窗口或页签来打开该链接。
-                {
-                    from: /\s+href="([^#\./].+)/gi,
-                    to:   ' target="_blank" href="$1',
-                },
-
-                例 2：批量令原本指向另一些 Markdown 文件的链接地址就，改为指向对应的 HTML 文件。
-                {
-                    from: /\s+href="(.+)\.md(#.*)?"/gi,
-                    to:   ' href="$1.html$2"',
-                },
-
-                例 3：批量转换链接地址。
-                {
-                    from: /\s+href="\.\/course-examples\//gi,
-                    to: ' href="../public/assets/course-examples/',
-                },
-            */
-            ],
-
-            absolutePathsOfExtraFilesToEmbedIntoHTML: [],
+            凡内容须注入产出之HTML中之所有外来文件: {
+                依次给出之外来文件之绝对路径序列: [],
+                应禁止采用Require语句对这些文件之缓存内容以确保计算机进程反复读取各文件时恒取用各文件最新之内容全文: false,
+            },
         },
 
-        /* [ DEPRECATED ]
-            Deprecated because of two typos.
-            Please avoid using this object.
-        */
-        // behaviousOfBuiltInTOC: {
-        //     shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
-        //     atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
-        //     atBeginingShouldExpandTOCWhenWindowsIsWideEnough: false,
-        // },
+        对本工具现成提供的文章纲要做以下配置: {
+            为求文章纲要列表简洁明了故意仅显示两层条目以至于较深层级条目形同作废: false,
 
-        behavioursOfBuiltInTOC: {
-            shouldShowOnlyTwoLevelsOfTOCItemsAtMost: false,
-            atBeginingShouldCollapseAllTOCItemsOfLevelsGreaterThan: 1,
-            atBeginingShouldExpandTOCWhenWindowIsWideEnough: false, // "Window" instead of "Windows".
+            // 注意： 【展开文章纲要列表面板】与【展开文章纲要列表的某一条目】并非一回事。
+            浏览器打开HTML文章最初之时文章纲要列表中凡层级深于该值之条目均应收叠: 1,
+            浏览器打开HTML文章最初之时若浏览器窗口足够宽大则直接展开文章纲要列表之面板: false,
         },
 
-        sundries: {
-            shouldConsoleLogsInChinese: false,
-            shouldDisableCachingForInternalThemeFiles: false,
-            shouldDisableCachingForExternalFiles: false,
+        杂项: {
+            控制台打印信息须改用英国话: false,
         },
-    }
     ```
 
 
