@@ -11,9 +11,13 @@ const 将由本工具构建之内容转换器包裹成Gulp任务管道之环节 
 
 
 const {
-    本NPM包之Peer依赖包之根文件夹之绝对路径,
+    本NPM包之Peer依赖包之名称,
     本NPM包之根文件夹之绝对路径,
 } = require('../../源代码/面向研发阶段之配置')
+
+const 本NPM包之Peer依赖包之根文件夹之绝对路径 = 路径工具.dirname(
+    require.resolve(`${本NPM包之Peer依赖包之名称}/package.json`)
+)
 
 
 

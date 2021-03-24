@@ -8,7 +8,6 @@ const {
     本NPM包之NPM名称,
     // 本NPM包之Package点JSON文件,
     本NPM包之Peer依赖包之名称,
-    // 本NPM包之Peer依赖包之根文件夹之绝对路径,
     // 本NPM包之根文件夹之绝对路径,
 } = require('../面向研发阶段之配置')
 
