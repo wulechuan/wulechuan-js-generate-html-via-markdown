@@ -67,7 +67,7 @@ const 专门用于将本NPM包之Peer依赖包中之Markdown范文逐一转换�
     firstPipeForProcessingSources: 将由本工具构建之内容转换器包裹成Gulp任务管道之环节(
         {
             对HTML做进一步处理之阶段: {
-                须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
+                须对产出之HTML内容字符串依次遵照下列诸内容替换规则做修订: {
                     '2 额外的替换规则之定义之序列': [
                         {
                             凡: /\.\/illustrates\//g,

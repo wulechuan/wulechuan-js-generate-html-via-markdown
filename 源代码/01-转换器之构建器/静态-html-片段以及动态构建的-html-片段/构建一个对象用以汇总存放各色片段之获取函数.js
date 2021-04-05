@@ -44,18 +44,18 @@ const html末尾片段之描述项 = {
 /**
  * @private
  */
-const allSnippetEntries = {
+const 一切HTML片段分两类集结于此容器 = {
     /** keys are combinations of several factors.
      * @enum {string}
      */
-    standard: {},
+    所谓标准片段之集结字典: {},
 
     /** keys are source file names or file paths,
      * values are HTML snippets with wrapper tags,
      * containing the content of the source file.
      * @enum {object}
      */
-    optional: {},
+    非必须之片段之集结字典: {},
 }
 
 
@@ -74,7 +74,7 @@ const allSnippetEntries = {
  * @method 阻塞式获取HTML起始片段之描述项
  * @method 阻塞式获取HTML自Head结束标签至Body起始标签之片段之描述项
  * @method 阻塞式获取HTML末尾片段之描述项
- * @method syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes
+ * @method 从Peer依赖包中阻塞式获取某个主题文件之内容全文字符串
  * @method 阻塞式获取某文件被特定HTML标签包裹后之内容之描述项
  */
 
@@ -107,7 +107,7 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
         阻塞式获取HTML自Head结束标签至Body起始标签之片段之描述项,
         阻塞式获取HTML末尾片段之描述项,
 
-        syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes,
+        从Peer依赖包中阻塞式获取某个主题文件之内容全文字符串,
         阻塞式获取某文件被特定HTML标签包裹后之内容之描述项,
     }
 
@@ -134,7 +134,7 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
 
         const entryKey = `HTML beginning snippet of language ${产出之HTML文件之HTML标签之语言属性之取值}`
 
-        const snippetsDict = allSnippetEntries.standard
+        const snippetsDict = 一切HTML片段分两类集结于此容器.所谓标准片段之集结字典
 
         if (!snippetsDict[entryKey]) {
             let 处理好的HTML起始片段之字符串 = html起始片段之原始字符串
@@ -179,11 +179,11 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
         return html末尾片段之描述项
     }
 
-    /** The said peer module below is the "@wulechuan/css-stylus-markdown-themes" */
-    function syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(文件名, 不应采纳Require机制缓存之文件旧内容, 其他选项集) {
-        const { optional: optionalEntries } = allSnippetEntries
+    function 从Peer依赖包中阻塞式获取某个主题文件之内容全文字符串(文件名, 不应采纳Require机制缓存之文件旧内容, 其他选项集) {
+        /** 本函数所提及之所谓Peer依赖包是指 “ @wulechuan/css-stylus-markdown-themes ”。 */
+        const { 非必须之片段之集结字典 } = 一切HTML片段分两类集结于此容器
 
-        if (!optionalEntries[文件名] || 不应采纳Require机制缓存之文件旧内容) {
+        if (!非必须之片段之集结字典[文件名] || 不应采纳Require机制缓存之文件旧内容) {
             const 文件之简易描述项 = peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典[文件名]
 
             const 选用的HTML标签名 = 根据文件之扩展名选用包裹该文件之内容之HTML标签名(文件名)
@@ -199,7 +199,7 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
                 包裹原始内容后原始应逐行额外缩进两层: true,
             })
 
-            const snippetEntry = {
+            const 片段描述项 = {
                 content: fileWrappedContent,
                 内容由style标签而非script标签包裹着: 选用的HTML标签名 === 'style',
             }
@@ -207,7 +207,7 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
             const { associatedJavascriptFileNames } = 文件之简易描述项
 
             if (associatedJavascriptFileNames) {
-                snippetEntry.与该文件关联的一对Javascript文件由Script标签包裹好之片段之描述项列表 = associatedJavascriptFileNames.map(给出的Javascript文件名 => {
+                片段描述项.与该文件关联的一对Javascript文件由Script标签包裹好之片段之描述项列表 = associatedJavascriptFileNames.map(给出的Javascript文件名 => {
                     const 给出的Javascript文件名系压缩过之版本之文件之名称 = !!给出的Javascript文件名.match(/\.min\.js$/)
 
                     let 压缩过之Javascript文件之名称
@@ -222,13 +222,13 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
                     }
 
                     const jsEntryPair = {
-                        压缩过的版本: syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
+                        压缩过的版本: 从Peer依赖包中阻塞式获取某个主题文件之内容全文字符串(
                             压缩过之Javascript文件之名称,
                             不应采纳Require机制缓存之文件旧内容,
                             其他选项集
                         ),
 
-                        未经压缩之原始版本: syncGetSnippetEntryOfOneFileOfThePeerDepPackageOfThemes(
+                        未经压缩之原始版本: 从Peer依赖包中阻塞式获取某个主题文件之内容全文字符串(
                             未经压缩之原始Javascript文件之名称,
                             不应采纳Require机制缓存之文件旧内容,
                             其他选项集
@@ -239,10 +239,10 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
                 })
             }
 
-            optionalEntries[文件名] = snippetEntry
+            非必须之片段之集结字典[文件名] = 片段描述项
         }
 
-        return optionalEntries[文件名]
+        return 非必须之片段之集结字典[文件名]
     }
 
     /**
@@ -251,9 +251,9 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
      * @returns {object}
      */
     function 阻塞式获取某文件被特定HTML标签包裹后之内容之描述项(文件之绝对路径, 不应采纳Require机制缓存之文件旧内容) {
-        const { optional: optionalEntries } = allSnippetEntries
+        const { 非必须之片段之集结字典 } = 一切HTML片段分两类集结于此容器
 
-        if (!optionalEntries[文件之绝对路径] || 不应采纳Require机制缓存之文件旧内容) {
+        if (!非必须之片段之集结字典[文件之绝对路径] || 不应采纳Require机制缓存之文件旧内容) {
             const 选用的HTML标签名 = 根据文件之扩展名选用包裹该文件之内容之HTML标签名(文件之绝对路径)
             const 文件之原始内容字符串 = 阻塞式读取一文本文件之完整内容字符串(文件之绝对路径)
             const fileWrappedContent = 将字符串用HTML标签包裹起来得出另一字符串({
@@ -262,14 +262,14 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
                 包裹原始内容后原始应逐行额外缩进两层: true,
             })
 
-            const snippetEntry = {
+            const 片段描述项 = {
                 content: fileWrappedContent,
                 内容由style标签而非script标签包裹着: 选用的HTML标签名 === 'style',
             }
 
-            optionalEntries[文件之绝对路径] = snippetEntry
+            非必须之片段之集结字典[文件之绝对路径] = 片段描述项
         }
 
-        return optionalEntries[文件之绝对路径]
+        return 非必须之片段之集结字典[文件之绝对路径]
     }
 }

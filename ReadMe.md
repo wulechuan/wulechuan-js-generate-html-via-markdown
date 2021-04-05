@@ -336,7 +336,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
                 用于具有按钮样貌的返回文章首部之链接的: 'markdown-article-back-to-top',
             },
 
-            须对产出之HTML内容字符串依次按下诸内容替换规则做修订: {
+            须对产出之HTML内容字符串依次遵照下列诸内容替换规则做修订: {
                 '1 内建现成的替换规则之名称之序列': [
                     '令所有外部链接之打开方式为 _blank',
                     '令所有原本指向Markdown文件之链接改为指向同名HTML文件',
