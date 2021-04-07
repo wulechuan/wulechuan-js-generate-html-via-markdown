@@ -1,5 +1,3 @@
-/// <reference path="../types/index.d.ts" />
-
 const 彩色粉笔工具 = require('chalk')
 
 
@@ -91,12 +89,6 @@ function 对某字符串执行某查找替换规则(欲处理之字符串, 某�
 
 
 
-/**
- * @param {object} 配置项集
- * @param {object} 配置项集.peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典
- * @param {function} 配置项集.peer依赖包提供用以获取某特定文件之完整内容字符串之函数
- * @returns {function} - The core converter function
- */
 module.exports = function 构建一个用于将Markdown内容字符串转换为HTML字符串的转换器(配置项集 = {}) {
     const {
         peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
