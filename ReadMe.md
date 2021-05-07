@@ -158,16 +158,16 @@ const htmlContent = markdownToHTMLConverter(markdownContent, {
     对HTML做进一步处理之阶段: {
         // 1) 禁用内部 CSS 主题文件。
         不应采用任何由本工具内建之层叠样式表: true,
-    },
 
-    凡内容须注入产出之HTML中之所有外来文件: {
-        依次给出之外来文件之绝对路径序列: [
-            // 2) 引入你自己设计的 CSS 文件。
-            '/d/your/work/folder/some/theme/your-splendid-theme.css',
+        凡内容须注入产出之HTML中之所有外来文件: {
+            依次给出之外来文件之绝对路径序列: [
+                // 2) 引入你自己设计的 CSS 文件。
+                '/d/your/work/folder/some/theme/your-splendid-theme.css',
 
-            // 3) 或许你也须引入你自己的 Javascript 文件。
-            '/d/your/work/folder/some/theme/your-splendid-theme.actions.js',
-        ],
+                // 3) 或许你也须引入你自己的 Javascript 文件。
+                '/d/your/work/folder/some/theme/your-splendid-theme.actions.js',
+            ],
+        },
     },
 })
 
