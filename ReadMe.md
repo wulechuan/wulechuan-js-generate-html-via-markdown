@@ -37,9 +37,9 @@
 
 | <span style="display:inline-block;width:10em;">提供仓库服务之组织</span> | <span style="display:inline-block;width:9em;">仓库组织之国别</span> | 仓库地址 |
 | ------------- | :----------: | ------- |
-| 码云           | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown) |
-| 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown) |
-| GitHub         | 美           | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown) |
+| 码云           | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown.git](https://gitee.com/nanchang-wulechuan/wulechuan-js-generate-html-via-markdown.git) |
+| 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown.git](https://code.aliyun.com/wulechuan/wulechuan-generate-html-via-markdown.git) |
+| GitHub         | 美           | [https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown.git](https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown.git) |
 
 
 ## 简介
@@ -54,7 +54,7 @@
 
 > - HTML 中会包含【文章目录】、“返回顶部”之按钮（看似按钮实则链接）等方便实用之功能。
 >
->   > 【文章目录】，亦称【文章纲要】，即外国话所谓 TOC。
+> > 【文章目录】，亦称【文章纲要】，即外国话所谓 TOC。
 >
 > - HTML 内嵌的 Javascript 程序用于控制该 HTML 之【文章目录】之行为。
 > - HTML 内嵌的样式令该 HTML 文章之排版完全自动适应各型宽窄屏幕尺寸。
@@ -399,6 +399,8 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
         杂项: {
             控制台打印信息须改用英国话: false,
         },
+    }
+
     ```
 
 
