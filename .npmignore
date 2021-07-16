@@ -19,4 +19,7 @@ gulpfile.esm.js
 文档
 ReadMe*.html
 
-测试集
+测试集/输出之内容
+测试集/example*
+测试集/*.js
+测试集/*.ts
