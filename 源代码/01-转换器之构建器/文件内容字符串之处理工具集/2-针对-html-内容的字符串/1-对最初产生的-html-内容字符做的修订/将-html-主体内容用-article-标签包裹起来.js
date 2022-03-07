@@ -22,14 +22,14 @@ module.exports = function 将HTML之主体内容用Article标签包裹起来(原
     let 包裹号Article标签之后的完整HTML文章字符串 = `${表达单层缩进之字符串}${文章之Article之起始标签}\n${原始的HTML文章主体内容字符串}`
 
     if (markdown文章中包含了TOC标记) {
-        const fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight = `<nav class="${cssClassNameOfArticleTOCRootTag}">`
+        const 由MarkdownItTOCDoneRight构建的文章纲要的完整起始标签字符串 = `<nav class="${cssClassNameOfArticleTOCRootTag}">`
 
         包裹号Article标签之后的完整HTML文章字符串 = 包裹号Article标签之后的完整HTML文章字符串.replace(
-            fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight,
+            由MarkdownItTOCDoneRight构建的文章纲要的完整起始标签字符串,
 
             `\n${
                 表达单层缩进之字符串}</article>\n${
-                表达单层缩进之字符串}${fullStringOfTOCRootStartTagByMarkdownItTOCDoneRight
+                表达单层缩进之字符串}${由MarkdownItTOCDoneRight构建的文章纲要的完整起始标签字符串
             }`
         )
     } else {

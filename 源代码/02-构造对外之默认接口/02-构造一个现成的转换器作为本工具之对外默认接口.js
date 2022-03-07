@@ -1,4 +1,4 @@
-/// <reference path="../types/index.d.ts" />
+/// <reference path="../index.d.ts" />
 
 /**
  * 为令 @wulechuan/css-stylus-markdown-themes 之 TypeScript 之类型定义生效，
