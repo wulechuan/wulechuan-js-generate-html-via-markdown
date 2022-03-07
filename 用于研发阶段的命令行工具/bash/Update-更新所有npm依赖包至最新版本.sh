@@ -1,8 +1,10 @@
 #!/bin/sh
 
+npm  i \
+    'chalk@4' # 不能更新至第 5 过更晚的版本。因为自第 5 版始， chalk 仅支持 ES Module 语法。
+
 npm i \
     '@wulechuan/meaningful-error-messages@latest' \
-    'chalk@latest' \
     'fs@latest' \
     'markdown-it@latest' \
     'markdown-it-anchor@latest' \
