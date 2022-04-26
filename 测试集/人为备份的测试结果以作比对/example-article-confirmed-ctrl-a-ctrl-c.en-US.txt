@@ -1,16 +1,13 @@
-§ Wulechuan’s Article CSS Styles Examples
-
+§ Wulechuan's Article CSS Styles Examples
 wulechuan@live.com
 
 § Articles
 § Linkages
-
 Aliquip proident nulla ex cillum magna. Anim culpa dolor ullamco nulla culpa labore. Lorem dolor proident qui aliquip nulla. Do ex external link 1 (www.bing.com) anim tempor do veniam duis nulla ut culpa tempor dolore. Labore dolore ex anim fake self-page link 2 (do not follow) id. Anim et ex ex labore cupidatat anim proident laboris amet fugiat aute ad. Reprehenderit dolore cupidatat sit elit esse anim est aute external link 2 (www.google.com) lorem ipsum.
 
 A link to a section of the page itselfs should look a bit different from a link to another page. A so-called page local link looks like: A Normal Image.
 
 § Lists
-
 See some lists below:
 
 Reprehenderit aute ea pariatur tempor labore. Ullamco do incididunt sint velit duis ipsum irure amet voluptate. Cupidatat et do occaecat nulla. Nulla voluptate enim aute magna do non nisi qui qui et et irure. Dolore mollit dolore adipisicing consectetur sit. Aliquip fugiat Lorem in sunt Lorem aliqua ex in sunt.
@@ -22,7 +19,6 @@ Non adipisicing consectetur laborum quis anim ea consequat.
 Aliqua excepteur nostrud ad ullamco minim commodo esse
 elit elit ea nulla.
 Sint est elit sint minim.
-
 Sunt ex eiusmod reprehenderit ullamco fugiat ex duis cupidatat velit. Cillum commodo mollit dolore occaecat. Nulla Lorem deserunt minim ea nostrud reprehenderit do qui anim duis dolor.
 
 Amet veniam exercitation aliquip enim fugiat nostrud consectetur aute mollit ullamco exercitation. Incididunt consequat Lorem veniam aute qui non occaecat est sit sint nulla ipsum duis.
@@ -35,7 +31,6 @@ Non adipisicing tempor deserunt ullamco dolore.
 Voluptate minim dolore sunt dolor cupidatat nulla duis tempor pariatur velit veniam. Commodo labore id nulla cillum incididunt nostrud laboris deserunt dolor id nisi.
 Cillum ipsum labore in ut excepteur culpa ipsum.
 Nostrud quis mollit Lorem qui ullamco dolor in mollit fugiat laborum.
-
 Et consequat eiusmod culpa eiusmod fugiat pariatur aliquip voluptate laborum. Est incididunt proident amet irure magna occaecat ad reprehenderit. Eu ullamco cupidatat qui ut ea sunt in nulla ullamco aliquip
 
 est dolore ex quis.
@@ -55,33 +50,30 @@ velit
 Ex enim cupidatat do
 laborum est deserunt
 est deserunt.
-
 Sit aute est occaecat fugiat. Eu ipsum sit qui est sunt ex velit qui dolor eu adipisicing nulla. Duis minim reprehenderit laboris duis aliquip fugiat proident reprehenderit veniam magna esse ipsum quis ex. Proident reprehenderit officia deserunt sint enim.
 
 § Inline Codes in Multiple Lines
-
 Occaecat ea Lorem ut officia ea ad nostrud. Ut deserunt irure in dolore voluptate ad reprehenderit et sit. Cupidatat nostrud tempor aliqua ad id ex labore in. Ut deserunt irure pariatur tempor ex. Ex irure sit proident consectetur ipsum pariatur.
 
 § Quoted Block
 § What is GitHub
-
 According to KORBIN BROWN:
 
 GitHub
-
 Github is a website and service that we hear geeks rave about all the time, yet a lot of people don’t really understand what it does. Want to know what all the GitHub hubbub is about? Read on to find out.
 
 See, it’s a website for anyone, but mostly engineers.
 
 § Illustrates(Images)
 § A Normal Image
+Duan er is a pretty boy
 
 § An Image that Fails to Load
+A Beauty
 
 § Videos
 A Video Nested in a Details Block
 § Code Snippets
-
 Code Snippet Nested under a List Item
 
 function getCircleArea(r) {
@@ -89,19 +81,15 @@ function getCircleArea(r) {
 }
 
 getCircleArea(100);
-
 function getCircumference(r) {
     return 2 * 3.14159265 * r;
 }
 
 getCircumference(100);
-
-
 Below is a code snippet nested under details block.
 
 Foldable Code Snippet
 console.log(NaN === NaN); // false
-
 § A JavaScript Snippet
 // This is a comment.
 import something from 'somethingjs'
@@ -280,7 +268,6 @@ export default function isAPromiseObject(input) {
 module.exports = { content: 'nothing' };
 
 exports.author = 'wulechun@live.com';
-
 § An HTML Snippet
 <!DOCTYPE html>
 <html lang="en-US">
@@ -371,7 +358,6 @@ exports.author = 'wulechun@live.com';
     </script>
 </body>
 </html>
-
 § A CSS Snippet
 html {
     font-size: 20px;
@@ -389,7 +375,7 @@ html, body {
     display: flex;
     position: relative;
     width: 100%;
-    font-family: 'Segoe UI', 'Microsoft Yahei UI', serif;
+    font-family: 'Microsoft YaHei UI', 'Segoe UI', serif;
 }
 
 .back-to-top {
@@ -420,7 +406,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline !important;
+    text-decoration-line: underline !important;
 }
 
 a[href^="#"] {
@@ -502,7 +488,6 @@ nav li {
 .news-list li:nth-child(even) {
     background-color: #d3d3d3;
 }
-
 § A Stylus(CSS) Snippet
 & {
     box-sizing: content-box !important;
@@ -531,9 +516,7 @@ nav li {
         margin-right: -0.5rem; // Compensation to the padding-right
     }
 }
-
 § XML Snippet
-
 From a keyboard mapping configuration file of SOFTIMAGE|XSI.
 
 <?xml version="1.0" encoding="iso-8859-1"?>
@@ -617,7 +600,6 @@ From a keyboard mapping configuration file of SOFTIMAGE|XSI.
       </keylist>
    </keymap>
 </xsi_file>
-
 § Table
 § A Table
 Key	Value
@@ -630,15 +612,11 @@ Loved	SOFTIMAGE|XSI
 A	B
 Javascript	
 const aSnippetInsideATable = 'hello';
-
-
 CSS	
 .wulechuan {
     color: #790319;
 }
-
-
 regular text	
 This is a sub title inside a table cell
-
 Irure aute aute aute ullamco deserunt deserunt cupidatat amet tempor eiusmod do ut quis qui. Nostrud esse irure pariatur ad aute ullamco sit reprehenderit magna. In aute enim qui veniam pariatur consectetur nulla ipsum consequat.
+

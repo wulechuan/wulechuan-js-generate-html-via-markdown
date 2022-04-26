@@ -1,5 +1,4 @@
 § 吴乐川的文章默认样式的示例
-
 作者：吴乐川
 
 中国人——特别是汉族人，理应坚持广泛、规范地使用汉语。凡非必要之情形不说外国话、不用外国字。此乃天经地义！然则每当必要，亦不排斥采用外国之语言。不妨 博世界之学问，养中国之精神 。
@@ -8,7 +7,6 @@
 
 § 自然语言范文
 § 《千字文》[节选]
-
 天地玄黄 宇宙洪荒
 日月盈昃 辰宿列张
 寒来暑往 秋收冬藏
@@ -19,7 +17,6 @@
 果珍李柰 菜重芥姜
 
 § 《日记（2019年6月18日）》[节选]
-
 出了家门，我二人在单元门的雨檐下站着，我左手挎着端儿的书包，双手用力把伞撑开。开伞时左臂自然会有些吃力，我于是小声嘟囔了一句：“这包这么重啊！现在的孩子（上）幼儿园就背这么多书！”
 
 有道是言者无意，听者有心。我这随口一句话，端儿听了立刻很认真地说：“爸爸，（书包）给我背吧。我自己来背。”我推辞说：“没事儿，爸爸可以拿。”端儿又道：“爸爸，你一只手（拿），我两只手（指双肩）！我自己能行！”
@@ -28,7 +25,6 @@
 
 § 唐诗
 § 《马诗二十三首·其五》
-
 【唐】 李贺
 
 大漠沙如雪
@@ -37,21 +33,21 @@
 快走踏清秋
 
 § 杂乱内容，仅用于视觉样式之呈示
+一段文字中会有着重的文字，也会有斜体的文字，甚至 斜体且着重的文字 以及 着重且斜体的文字。
 
-一段文字中，有时会有着重的文字，也有时会有斜体的文字。
+网页中的文章常常有【超链接】。我以前常常将代码存放在外国的GitHub上，如今则更倾向于采用中国的“码云”。“Github”一词，我本人有意将其译为【集得中心】。当然，这并非官方译法，乃鄙人之拙见。
 
-这里是 GitHub，我本人有意将其译为【吉特中心】。当然，这并非官方译法，乃鄙人之拙见。
+如果一个超链接指向本文某处，不妨称其为文内链接，而不应生硬地由英语直译为所谓“本地链接”。另，文内链接应与指向其它文章或网址的超链接在视觉表达上稍有不同，以为明示，这才好。小例一则：跳转至本文《程序代码片段示例集》。
 
-如果一个链接指向本文，不妨称其为文内链接，而不应生硬的由英语直译为所谓“本地链接”。另，文内链接看起来与应与指向其它文章或网址的链接稍有不同，以为明示。暗示不堪用，明示才好。小例一则：跳转至本文《程序代码片段示例集》。
+再来看看行文中的【代码词汇】、【专有名词】和【术语】：例如grep、孙行者和中央处理单元。又如querySelector和querySelectorAll早已取代了老式的getElementsById等函数。术语框中的多个连续空格也应得到保留，例如这后面有四个空格    这前面有四个空格。
 
-再来看看行文中的【代码词汇】或【术语】：例如孙行者和计算机，又如 querySelector 和 querySelectorAll 早已取代了老式的 getElementsById 和 getElementsByTagName 等。术语框中的多个连续空格也应得到保留，例如 这后面有四个空格    这前面有四个空格。
+术语与超链接还可组合为一体。新中国的建立和成长离不开一群功勋卓著的科学家们。例如伟大的、富有爱国主义精神和民族自信的钱学森，他是中国科学院资深院士、中国工程院资深院士。
 
-计算机键盘快捷键，其视觉样式如是：Ctrl+            ；又例：如今，Ctrl+Shift+s 这一组合键早已广泛用于各种现代计算机软件中，代表（将工作内容或文件）另存为（壹文件）之功能。
+计算机键盘快捷键，其视觉样式如是：Ctrl+            ；又例：如今，Ctrl+Shift+s这一组合键早已广泛用于各种现代计算机软件中，代表（将工作内容或文件）另存为（壹文件）之功能。
 
-还有时候，有些内容会故意被“杠掉”，即被中划线划去，表示此内容不正确，不应采纳，应作废。例如：地球是平的。
+还有些内容会故意“杠掉”，即被中划线划去，表示此内容不正确，不应采纳，应作废。例如：地球是平的。
 
 § 多级列表
-
 第 1 级第 1 项
 
 第 1 级第 2 项
@@ -60,8 +56,7 @@
 王昭君，2070 岁
 貂蝉，约 1820 岁
 杨玉环，1300 岁
-我媳妇儿，永远 20 岁
-
+你媳妇儿，永远 20 岁
 第 1 级第 3 项
 
 周瑜正式出任新航母舰长
@@ -69,7 +64,6 @@
 祖冲之发表全新论文，受到中科院表彰
 武松打虎一案受到自然保护主义者质疑，有关部门已正式展开调查
 李广在 2019 亚洲射箭锦标赛再次夺魁
-
 第 1 级第 4 项
 
 第 1 级第 5 项
@@ -90,44 +84,36 @@
 辛：元始天尊
 壬：巡海夜叉
 癸：长生云
-
 第 1 级第 6 项
 
 § 多级标题（这是 h3）
 § 电影《哪吒之魔童降世》的剧情简介（这是 h4）
-
 天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3 年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？
 
 § Web API 可以分为很多类（这是 h4）
 § 文档对象模型（这是 h5）
-
 文档对象模型（DOM）将 web 页面与到脚本或编程语言连接起来。通常是指 JavaScript，但将 HTML、SVG 或 XML 文档建模为对象并不是 JavaScript 语言的一部分。DOM 模型用一个逻辑树来表示一个文档，树的每个分支的终点都是一个节点（node），每个节点都包含着对象（object）。DOM 的方法（method）让你可以用特定方式操作这个树，用这些方法你可以改变文档的结构、样式或者内容。节点可以关联上事件处理器，一旦某一事件被触发了，那些事件处理器就会被执行。[1]
 
 § 层叠样式表对象模型（这是 h5）
-
-CSS Object Model 是一组允许用 JavaScript 操纵 CSS 的 API。 它是继 DOM 和 HTML API 之后，又一个操纵 CSS 的接口，从而能够动态地读取和修改 CSS 样式。[2]
+CSS Object Model 是一组允许用 JavaScript 操纵 CSS 的 API。 它是继 DOM 和 HTML API 之后，又一个操纵 CSS 的接口，使得我们能够动态地读取和修改 CSS 样式。[2]
 
 § 引用来源（这是 h5）
-
 上文[1]来自 MDN，但故意没有作为引用段落，以便呈现正常段落文字的样貌。
 
  
-
 上文[2]来自 MDN，但故意没有作为引用段落，以便呈现正常段落文字的样貌。
 
 § 引用的文字
-
 我们还可以引用一小段文字。例如，子曰：
 
 学而时习之 不亦说乎 有朋自远方来 不亦乐乎 人不知而不愠 不亦君子乎
 
 如果引用的文字很短，我目前的设计是令它们位于同一行中。例如：
 
-circle ['sɜrk(ə)l]：圆。
+circle ['sɜrk(ə)l] n. 圆。
 
  
-
-area ['eriə]：面积。
+area ['eriə] n. 面积。
 
 出现在列表项中的引用文字：
 
@@ -140,7 +126,6 @@ area ['eriə]：面积。
 引用的文字中有时也会有较复杂的版式，见下例。
 
 SOFTIMAGE|XSI
-
 坐落于加拿大蒙特利尔的 SOFTIMAGE Co. 公司曾是计算机画面制作工具行业的顶尖力量。多年来，该公司几经易主，母公司先后有微软（Microsoft）公司、Avid 公司，以及最终的欧特克（Autodesk）公司。
 
 早年，SOFTIMAGE 公司旗下三维动画制作软件 SOFTIMAGE|3D 曾经好莱坞业界最尖端的三维动画工具。1993 年公映的著名电影《侏罗纪公园》，其中的恐龙形象全部由该工具制作完成。
@@ -186,9 +171,7 @@ LogMessage(oIA.DataArray.Element);
 for (var j = 0; j < dataArray.length; j++) {
     LogMessage('[' + j + '] ' + dataArray[j]);
 }
-
-
-后期于 4.0、5.1、7.0 分别发力，提供了令业界赞叹的特性集。其中，自 2008 年春发布的 7.0 始，其提供的“交互式创作环境（ICE）”借助可视化节点图可轻松操控庞大的数据流，构建逻辑规则，控制粒子系统，产生变幻无穷的效果。见图（来源于维基百科）：
+后期于 4.0、5.1、7.0 分别发力，提供了令业界赞叹的特性集。其中，自 2008 年春发布的 7.0 始，其提供的“交互式创作环境（ICE）”借助可视化节点图可轻松操控庞大的数据流，构建逻辑规则，控制粒子系统，产生变幻无穷的效果。见图（来源于维基百科）：This simple ICE graph deforms an input object (in the example a sphere was used) based on its vertex indices
 
 同年（2008 年）11 月 18 日，欧特克公司宣布全资收购 SOFTIMAGE 公司，并将其所有产品更名为小写形式，如 “Softimage|xsi”。
 
@@ -198,41 +181,40 @@ for (var j = 0; j < dataArray.length; j++) {
 
 § 插图
 § 正常的插图
+端儿美丽
 
 § 加载失败的插图
+大美女
 
 § 视频
 在折叠内容块中的视频
 § 程序代码片段示例集
 § JavaScript 代码片段
-
-列表项中的代码片段
+§ 列表项中的代码片段1
+先定义一个函数：
 
 function getCircleArea(r) {
     return 3.14159265 * r * r;
 }
+然后调用它：
 
 getCircleArea(100);
-
 function getCircumference(r) {
     return 2 * 3.14159265 * r;
 }
 
 getCircumference(100);
-
  
-
-circumference [sər’kʌmf(ə)rəns] 圆周长
+circumference [sər'kʌmf(ə)rəns] n. 圆周长
 
 折叠内容中的代码块1
 var age = +prompt('你多大了？');
-
-
-下面是不在列表项内的代码片段。
+§ 叠内容中的代码块
+下面是在叠内容中的代码块。
 
 折叠内容中的代码块2
 console.log(NaN === NaN); // false
-
+§ 在行文结构之所谓“顶层”的代码块
 // 这是一句行尾注释。好吧，我承认它恰好在这一行的开头。
 import something from 'somethingjs'
 var myModule = require('my-module');
@@ -386,7 +368,6 @@ export default function isAPromiseObject(input) {
 
 module.exports = { content: 'nothing' };
 exports.author = 'wulechun@live.com';
-
 § HTML 代码片段
 <!DOCTYPE html>
 <html lang="zh-hans-CN">
@@ -394,7 +375,7 @@ exports.author = 'wulechun@live.com';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>乐川的示范文档</title>
+    <title>吴乐川的示范文档</title>
     <!-- 这是简短的单行注释。 -->
     <style id="my-embedded-styles">
         div {
@@ -494,7 +475,36 @@ exports.author = 'wulechun@live.com';
     <script src="vue-jquery-angluar-react.min.js" async>
 </body>
 </html>
-
+<!DOCTYPE html>
+<html lang="zh-hans-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>吴乐川的示范文档</title>
+</head>
+<body>
+    <h1>DOM 的概念</h1>
+    <div>我是一个DIV</div>
+    <ul>
+        <li>第一个表的第1项</li>
+        <li>第一个表的第2项</li>
+    </ul>
+    <ul>
+        <li>第二个表的第1项</li>
+        这里还有一行文字呢
+        <li>第二个表的第2项</li>
+        <li>第二个表的第3项</li>
+        <li>第二个表的第4项</li>
+        <!-- 插播一则养生广告：每天呼吸空气有助于维持生命。 -->
+        <ul>
+            <li>第三个表的第1项</li>
+            <li>第三个表的第2项</li>
+        </ul>
+        <li>第二个表的第5项</li>
+    </ul>
+</body>
+</html>
 § CSS 代码片段
 html {
     font-size: 20px;
@@ -512,7 +522,7 @@ html, body {
     display: flex;
     position: relative;
     width: 100%;
-    font-family: 'Segoe UI', '微软雅黑', serif;
+    font-family: '微软雅黑', 'Segoe UI', serif;
 }
 
 .back-to-top {
@@ -543,7 +553,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline !important;
+    text-decoration-line: underline !important;
 }
 
 a[href^="#"] {
@@ -623,7 +633,6 @@ nav li {
 .news-list li:nth-child(even) {
     background-color: #d3d3d3;
 }
-
 § Stylus(CSS) 代码片段
 & {
     box-sizing: content-box !important;
@@ -653,9 +662,7 @@ nav li {
         margin-right: -0.5rem; // 补偿 padding-right
     }
 }
-
 § XML 代码片段
-
 节选自 SOFTIMAGE|XSI 快捷键配置文件。
 
 <?xml version="1.0" encoding="iso-8859-1"?>
@@ -722,7 +729,6 @@ nav li {
       </keylist>
    </keymap>
 </xsi_file>
-
 § 表格
 § MarkDown 表格
 项目	内容
@@ -735,16 +741,12 @@ nav li {
 甲	乙
 Javascript	
 const aSnippetInsideATable = '你好';
-
-
 css	
 .wulechuan {
     color: #790319;
 }
-
-
 普通文本	
 文章段落、多级标题在表格中的效果
 《荷塘月色》[节选]
-
 曲曲折折的荷塘上面，弥望的是田田的叶子。叶子出水很高，像亭亭的舞女的裙。层层的叶子中间，零星地点缀着些白花，有袅娜地开着的，有羞涩地打着朵儿的；正如一粒粒的明珠，又如碧天里的星星，又如刚出浴的美人。微风过处，送来缕缕清香，仿佛远处高楼上渺茫的歌声似的。这时候叶子与花也有一丝的颤动，像闪电般，霎时传过荷塘的那边去了。叶子本是肩并肩密密地挨着，这便宛然有了一道凝碧的波痕。叶子底下是脉脉的流水，遮住了，不能见一些颜色；而叶子却更见风致了。
+
