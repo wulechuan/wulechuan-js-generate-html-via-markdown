@@ -11,7 +11,7 @@
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./文档/说明书/en-US/ReadMe.md)
+- [English version of this ReadMe](./文档集/说明书/en-US/ReadMe.md)
 
 
 
@@ -29,7 +29,7 @@
 <dd><p>南昌吴乐川</p></dd>
 </dl>
 
-## 版本断代警告
+## 版本断代提醒
 
 **重要提醒：本工具自 v`3.0.0` 版始，编程接口全面汉化，接口树之层级结构亦有调整。英语接口暂未跟进。时 2021 年 3 月 21 日。然第 3 版较之第 2 版，鲜少有实质性功能变动，徒接口语种之变更、接口结构之优化尔。**
 
@@ -54,10 +54,12 @@
 
 > - HTML 中会包含【文章目录】、“返回顶部”之按钮（看似按钮实则链接）等方便实用之功能。
 >
-> > 【文章目录】，亦称【文章纲要】，即外国话所谓 TOC。
+>   > 【文章目录】，亦称【文章纲要】，即外国话所谓 TOC。
 >
 > - HTML 内嵌的 Javascript 程序用于控制该 HTML 之【文章目录】之行为。
+>
 > - HTML 内嵌的样式令该 HTML 文章之排版完全自动适应各型宽窄屏幕尺寸。
+>
 > - 尽管 HTML 中已经嵌入了完整的样式定义和脚本程序，但图片、视频文件仍为该 HTML 文档之外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
 
 
@@ -68,10 +70,11 @@
 
 产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。
 
-上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://github.com/wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)。
+上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)。
 
 
-> 重要！
+
+> #### 重要！
 >
 > 本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述 CSS 样式项目（暂称“乙程序”）之 Javascript 接口。
 > 换言之，本程序 **依赖** 乙程序。然而，为确保本程序体积尽可能小，又为不至锁死对乙程序依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
@@ -415,7 +418,7 @@ const htmlString = markdownToHTMLConverter(markdownString, options)
 
 ## 本项目已知的功能缺陷
 
-见《[本项目已知的功能缺陷](./文档/本项目已知的功能缺陷/索引.md)》。
+见《[本项目已知的功能缺陷](./文档集/本项目已知的功能缺陷/索引.md)》。
 
 
 ## 未来计划

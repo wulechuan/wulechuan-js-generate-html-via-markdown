@@ -1,7 +1,7 @@
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * 我不打算以任何方式运行本 TypeScript 文件之代码。
+ * 我不打算令 nodejs 运行本 JavaScript 文件之代码。
  * 设计本文件纯粹是为了在其中测试本工具之 TypeScript 定义是否起效。
  * 具体而言，我会在本文中打字，观察我的代码编辑器（ VSCode ）能否给出正确的代码提示。
  *
@@ -17,7 +17,7 @@
 
 
 /** */
-import 一枚现成的转换器 from '..'
+import 一枚现成的转换器 from '../..'
 
 import {
     获取某一已发布之文件之完整内容字符串,
@@ -68,7 +68,7 @@ const 一枚新的转换器 = 一枚现成的转换器.构建一个用于将Mark
  * const defaultOptions = 一枚现成的转换器.完备的默认配置项集
  * const html = 一枚现成的转换器('# 一篇好文\n\n中国加油！', defaultOptions)
  * const charCounts = html.length
- * */
+ */
 /** */
 const defaultOptions = 一枚现成的转换器.完备的默认配置项集
 const html = 一枚现成的转换器('# 一篇好文\n\n中国加油！', defaultOptions)
