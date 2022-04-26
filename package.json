@@ -21,8 +21,8 @@
         "test": "npm     run  eslint    &&            npm  run  _test-all-without-linting-without-browser",
         "start": "npm    run  eslint    &&    gulp  --silent",
         "start-2": "npm  run  eslint    &&    gulp",
-        "每当制作集得之版本之前": "npm  test",
-        "prepublishOnly": "npm       test"
+        "每当制作集得之版本之前": "npm  i    &&    npm  test",
+        "prepublishOnly": "npm                       test"
     },
     "keywords": [
         "可读性改善",
@@ -71,7 +71,7 @@
         "markdown-it-toc-done-right": "^4.2.0"
     },
     "devDependencies": {
-        "@wulechuan/cli-scripts--git-push": "^2.0.0",
+        "@wulechuan/cli-scripts--git-push": "^2.0.1",
         "@wulechuan/css-stylus-markdown-themes": "^7.4.1",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
         "eslint": "^8.14.0",
