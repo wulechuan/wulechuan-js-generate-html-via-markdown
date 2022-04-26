@@ -190,7 +190,7 @@ for (var j = 0; j < dataArray.length; j++) {
 在折叠内容块中的视频
 § 程序代码片段示例集
 § JavaScript 代码片段
-§ 列表项中的代码片段1
+§ 列表项中的代码片段
 先定义一个函数：
 
 function getCircleArea(r) {
