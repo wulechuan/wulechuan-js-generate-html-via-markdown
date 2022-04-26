@@ -56,7 +56,7 @@
 <dd><p>南昌吴乐川</p></dd>
 </dl>
 <h2 id="%E7%89%88%E6%9C%AC%E6%96%AD%E4%BB%A3%E6%8F%90%E9%86%92" tabindex="-1"><a class="header-anchor" href="#%E7%89%88%E6%9C%AC%E6%96%AD%E4%BB%A3%E6%8F%90%E9%86%92">§</a> 版本断代提醒</h2>
-<p><strong>重要提醒：本工具自 v<code>3.0.0</code> 版始，编程接口全面汉化，接口树之层级结构亦有调整。英语接口暂未跟进。时 2021 年 3 月 21 日。然第 3 版较之第 2 版，鲜少有实质性功能变动，徒接口语种之变更、接口结构之优化尔。</strong></p>
+<p><strong>重要提醒：本工具自 <code>v3.0.0</code> 版始，编程接口全面汉化，接口树之层级结构亦有调整。英语接口暂未跟进。时 2021 年 3 月 21 日。然第 3 版较之第 2 版，鲜少有实质性功能变动，徒接口语种之变更、接口结构之优化尔。</strong></p>
 <h2 id="%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93" tabindex="-1"><a class="header-anchor" href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93">§</a> 源代码仓库</h2>
 <table>
 <thead>
@@ -108,22 +108,22 @@
 </li>
 </ul>
 </blockquote>
-<p>你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用来自您自定义 CSS 文件中之层叠样式表以增补或替换文章默认的样式。甚至有选项专门控制内嵌 CSS 和 Javascript 代码是否为压缩过的版本。</p>
+<p>亦可通过丰富的配置项，精准控制本工具所输出之 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用您订制的层叠样式表文件以<strong>增补</strong>或<strong>替换</strong>文章默认的样式。甚至有选项专门控制内嵌 CSS 和 Javascript 代码是否为压缩过的版本。</p>
 <h3 id="%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F" tabindex="-1"><a class="header-anchor" href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F">§</a> 内嵌样式</h3>
-<p>产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《<a target="_blank" href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》。</p>
-<p>上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 <a target="_blank" href="https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.html">该文档</a>。</p>
+<p>产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《<a target="_blank" href="https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes">@wulechuan/css-stylus-markdown-themes</a>》，暂称“项目甲”，亦称“<strong>工具甲</strong>”。</p>
+<p>工具甲之文档集中有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见《<a target="_blank" href="https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.html">关于文章排版与配色效果示例集的说明</a>》。</p>
 <blockquote>
 <h4 id="%E9%87%8D%E8%A6%81%EF%BC%81" tabindex="-1"><a class="header-anchor" href="#%E9%87%8D%E8%A6%81%EF%BC%81">§</a> 重要！</h4>
-<p>本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述 CSS 样式项目（暂称“乙程序”）之 Javascript 接口。
-换言之，本程序 <strong>依赖</strong> 乙程序。然而，为确保本程序体积尽可能小，又为不至锁死对乙程序依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
-本程序并不在 <code>package.json</code> 中声明对乙程序之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖乙程序。
-这意味着，在安装甲程序时，npm <strong>不会</strong> 自动为你一并安装上乙程序。<strong>你必须亲自手工安装乙程序</strong>！</p>
-<p>顺便指出，本程序之源代码、文档集均多出提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。</p>
+<p>本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述<strong>工具甲</strong>之 JavaScript 接口。
+换言之，本程序<strong>依赖</strong>工具甲。然而，为确保本程序体积尽可能小，又为不至锁死对工具甲依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
+本程序并不在 <code>package.json</code> 中声明对工具甲之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖工具甲。
+这意味着，在安装甲程序时，npm<strong>不会</strong>自动为你一并安装上工具甲。<strong>你必须亲自手工安装工具甲！</strong></p>
+<p>顺便指出，本程序之源代码、文档集均多处提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。</p>
 </blockquote>
-<h3 id="%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC" tabindex="-1"><a class="header-anchor" href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC">§</a> 用于 Gulpjs 生态的适配版本</h3>
-<p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a target="_blank" href="https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html">@wulechuan/gulp-markdown-to-html</a>》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 <a href="https://gulpjs.com">Gulpjs</a> 工作流的工具软件。甲软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而甲软件旨在从文件生成新文件。</strong></p>
-<h3 id="%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7" tabindex="-1"><a class="header-anchor" href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7">§</a> 用于命令行环境的工具</h3>
-<p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a target="_blank" href="https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli">@wulechuan/markdown-to-html-via-cli</a>》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中批量将 Markdown 文件转换成对应的 HTML 文件。乙软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而乙软件旨在从文件生成新文件。</strong> 乙软件异常方便，推荐诸君一试。</p>
+<h3 id="%E9%80%82%E9%85%8D-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7" tabindex="-1"><a class="header-anchor" href="#%E9%80%82%E9%85%8D-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7">§</a> 适配 Gulpjs 生态的相关工具</h3>
+<p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a target="_blank" href="https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html">@wulechuan/gulp-markdown-to-html</a>》。为方便指代，此处暂称为“工具乙”。顾名思义，工具乙是适用于 <a href="https://gulpjs.com">Gulpjs</a> 工作流的工具软件。工具乙内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而工具乙旨在从文件生成新文件。</strong></p>
+<h3 id="%E9%80%82%E9%85%8D%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7" tabindex="-1"><a class="header-anchor" href="#%E9%80%82%E9%85%8D%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7">§</a> 适配命令行环境的相关工具</h3>
+<p>本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《<a target="_blank" href="https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli">@wulechuan/markdown-to-html-via-cli</a>》。为方便指代，此处暂称为“工具丙”。顾名思义，工具丙用于在命令行环境中成批地将 Markdown 文件逐一转换成对应的 HTML 文件。工具丙内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。<strong>注意，本软件旨在从字符串生成新字符串，而工具丙旨在从文件生成新文件。</strong> 工具丙异常方便，推荐诸君一试。</p>
 <h2 id="%E7%94%A8%E6%B3%95" tabindex="-1"><a class="header-anchor" href="#%E7%94%A8%E6%B3%95">§</a> 用法</h2>
 <h3 id="%E7%A4%BA%E4%BE%8B-1" tabindex="-1"><a class="header-anchor" href="#%E7%A4%BA%E4%BE%8B-1">§</a> 示例 1</h3>
 <p>不需要带任何参数。输出完整的 HTML 内容，一切都自动包含其中。</p>
@@ -157,8 +157,8 @@
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><br
 ><span class="inline-pre-whitespaces indentation">    </span>对<span class="hljs-variable constant_">HTML</span>做进一步处理之阶段<span class="punctuation colon">:</span> <span class="punctuation curly-brace open-curly-brace">{</span><br
-><span class="inline-pre-whitespaces indentation">        </span>不应采用任何由本工具内建之层叠样式表<span class="punctuation colon">:</span> <span class="hljs-literal true">true</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span>产出之<span class="hljs-variable constant_">HTML</span>文件之<span class="hljs-title class_">Title</span>标签之内容字符串<span class="punctuation colon">:</span> <span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">一份极简的 HTML 文档</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">        </span>不应采用任何由本工具内建之层叠样式表<span class="punctuation colon">:</span> <span class="hljs-literal true">true</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">        </span>不应注入用于返回文章起始之按钮<span class="punctuation colon">:</span> <span class="hljs-literal true">true</span><span class="punctuation comma">,</span><br
 ><span class="inline-pre-whitespaces indentation">    </span><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation comma">,</span><br
 ><span class="punctuation curly-brace close-curly-brace">}</span><span class="punctuation parenthesis close-parenthesis">)</span><br
@@ -200,19 +200,24 @@
 <p>如下例所示，我将其命名为 <code>mardownToHTMLConverter</code>。</p>
 <pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> markdownToHTMLConverter <span class="punctuation equal-sign">=</span> <span class="hljs-built_in require">require</span><span class="punctuation parenthesis open-parenthesis">(</span><span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">@wulechuan/generate-html-via-markdown</span><span class="string-quote string-close-quote">&#x27;</span></span><span class="punctuation parenthesis close-parenthesis">)</span><br
 ></code></pre>
+<p>或</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword import">import</span> markdownToHTMLConverter <span class="hljs-keyword from">from</span> <span class="hljs-string"><span class="string-quote string-open-quote">&#x27;</span><span class="string-body">@wulechuan/generate-html-via-markdown</span><span class="string-quote string-close-quote">&#x27;</span></span><br
+></code></pre>
 <h3 id="%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3" tabindex="-1"><a class="header-anchor" href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3">§</a> 主函数接口</h3>
-<pre><code class="hljs language-js"><span class="hljs-keyword const">const</span> htmlString <span class="punctuation equal-sign">=</span> <span class="hljs-title function_">markdownToHTMLConverter</span><span class="punctuation parenthesis open-parenthesis">(</span>markdownString<span class="punctuation comma">,</span> options<span class="punctuation parenthesis close-parenthesis">)</span><br
+<pre><code class="hljs language-ts"><span class="hljs-keyword const">const</span> <span class="hljs-variable constant_">HTML</span>文件之内容全文<span class="punctuation colon">:</span> <span class="hljs-built_in string">string</span> <span class="punctuation equal-sign">=</span> <span class="hljs-title function_">markdownToHTMLConverter</span><span class="punctuation parenthesis open-parenthesis">(</span><br
+><span class="inline-pre-whitespaces indentation">    </span><span class="hljs-title class_">MarkDown</span>文件之内容全文<span class="punctuation colon">:</span> <span class="hljs-built_in string">string</span><span class="punctuation comma">,</span><br
+><span class="inline-pre-whitespaces indentation">    </span>配置项集<span class="punctuation colon">:</span> 范_配置项集<br
+><span class="punctuation parenthesis close-parenthesis">)</span><br
 ></code></pre>
 <h4 id="%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0" tabindex="-1"><a class="header-anchor" href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0">§</a> 入口参数</h4>
 <ul>
 <li>
-<p>markdownString</p>
+<p><code>MarkDown文件之内容全文</code></p>
 <p>一个字符串，其被视为一篇采用 MarkDown 语言撰写的文章。</p>
 </li>
 <li>
-<p>options</p>
-<p><code>./源代码/完备的默认配置项集.js</code> 文件已尽述之。请参阅。</p>
-<p>我已将 <code>./源代码/完备的默认配置项集.js</code> 文件的（几乎）完整内容复制如下：</p>
+<p><code>配置项集</code></p>
+<p><code>./源代码/完备的默认配置项集.js</code> 文件已尽述之。我已将该 JavaScript 文件的（几乎）完整内容复制如下。请参阅。</p>
 <pre><code class="hljs language-js"><span class="punctuation curly-brace open-curly-brace">{</span><br
 ><span class="inline-pre-whitespaces indentation">    </span>配置格式适用之最低版本<span class="punctuation colon">:</span> <span class="hljs-number">3</span><span class="punctuation comma">,</span> <span class="hljs-comment">// 所谓“最高适用版本”不可预见。故不指明。</span><br
 ><br
@@ -430,7 +435,7 @@
 </blockquote>
 
     </article>
-    <nav class="markdown-article-toc"><ol><li><a href="#multilingual-editions-of-this-article"> Multilingual Editions of this Article</a></li><li><a href="#npm-%E9%A1%B5"> NPM 页</a></li><li><a href="#%E7%89%88%E6%9C%AC%E6%96%AD%E4%BB%A3%E6%8F%90%E9%86%92"> 版本断代提醒</a></li><li><a href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"> 源代码仓库</a></li><li><a href="#%E7%AE%80%E4%BB%8B"> 简介</a><ol><li><a href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"> 内嵌样式</a><ol><li><a href="#%E9%87%8D%E8%A6%81%EF%BC%81"> 重要！</a></li></ol></li><li><a href="#%E7%94%A8%E4%BA%8E-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E9%80%82%E9%85%8D%E7%89%88%E6%9C%AC"> 用于 Gulpjs 生态的适配版本</a></li><li><a href="#%E7%94%A8%E4%BA%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B7%A5%E5%85%B7"> 用于命令行环境的工具</a></li></ol></li><li><a href="#%E7%94%A8%E6%B3%95"> 用法</a><ol><li><a href="#%E7%A4%BA%E4%BE%8B-1"> 示例 1</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-2"> 示例 2</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-3"> 示例 3</a></li></ol></li><li><a href="#api"> API</a><ol><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0"> 主函数</a></li><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"> 主函数接口</a><ol><li><a href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0"> 入口参数</a></li><li><a href="#%E8%BF%94%E5%9B%9E%E5%80%BC"> 返回值</a></li></ol></li></ol></li><li><a href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7"> 本项目已知的功能缺陷</a></li><li><a href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"> 未来计划</a></li><li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"> 许可证类型</a></li></ol></nav>
+    <nav class="markdown-article-toc"><ol><li><a href="#multilingual-editions-of-this-article"> Multilingual Editions of this Article</a></li><li><a href="#npm-%E9%A1%B5"> NPM 页</a></li><li><a href="#%E7%89%88%E6%9C%AC%E6%96%AD%E4%BB%A3%E6%8F%90%E9%86%92"> 版本断代提醒</a></li><li><a href="#%E6%BA%90%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"> 源代码仓库</a></li><li><a href="#%E7%AE%80%E4%BB%8B"> 简介</a><ol><li><a href="#%E5%86%85%E5%B5%8C%E6%A0%B7%E5%BC%8F"> 内嵌样式</a><ol><li><a href="#%E9%87%8D%E8%A6%81%EF%BC%81"> 重要！</a></li></ol></li><li><a href="#%E9%80%82%E9%85%8D-gulpjs-%E7%94%9F%E6%80%81%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7"> 适配 Gulpjs 生态的相关工具</a></li><li><a href="#%E9%80%82%E9%85%8D%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7"> 适配命令行环境的相关工具</a></li></ol></li><li><a href="#%E7%94%A8%E6%B3%95"> 用法</a><ol><li><a href="#%E7%A4%BA%E4%BE%8B-1"> 示例 1</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-2"> 示例 2</a></li><li><a href="#%E7%A4%BA%E4%BE%8B-3"> 示例 3</a></li></ol></li><li><a href="#api"> API</a><ol><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0"> 主函数</a></li><li><a href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"> 主函数接口</a><ol><li><a href="#%E5%85%A5%E5%8F%A3%E5%8F%82%E6%95%B0"> 入口参数</a></li><li><a href="#%E8%BF%94%E5%9B%9E%E5%80%BC"> 返回值</a></li></ol></li></ol></li><li><a href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E5%B7%B2%E7%9F%A5%E7%9A%84%E5%8A%9F%E8%83%BD%E7%BC%BA%E9%99%B7"> 本项目已知的功能缺陷</a></li><li><a href="#%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92"> 未来计划</a></li><li><a href="#%E8%AE%B8%E5%8F%AF%E8%AF%81%E7%B1%BB%E5%9E%8B"> 许可证类型</a></li></ol></nav>
     <a href="#" class="markdown-article-back-to-top"></a>
 
     <script>

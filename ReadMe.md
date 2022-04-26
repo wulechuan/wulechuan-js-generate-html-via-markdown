@@ -31,7 +31,7 @@
 
 ## 版本断代提醒
 
-**重要提醒：本工具自 v`3.0.0` 版始，编程接口全面汉化，接口树之层级结构亦有调整。英语接口暂未跟进。时 2021 年 3 月 21 日。然第 3 版较之第 2 版，鲜少有实质性功能变动，徒接口语种之变更、接口结构之优化尔。**
+**重要提醒：本工具自 `v3.0.0` 版始，编程接口全面汉化，接口树之层级结构亦有调整。英语接口暂未跟进。时 2021 年 3 月 21 日。然第 3 版较之第 2 版，鲜少有实质性功能变动，徒接口语种之变更、接口结构之优化尔。**
 
 ## 源代码仓库
 
@@ -63,35 +63,35 @@
 > - 尽管 HTML 中已经嵌入了完整的样式定义和脚本程序，但图片、视频文件仍为该 HTML 文档之外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
 
 
-你亦可通过丰富的参数项，精准控制输出 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用来自您自定义 CSS 文件中之层叠样式表以增补或替换文章默认的样式。甚至有选项专门控制内嵌 CSS 和 Javascript 代码是否为压缩过的版本。
+亦可通过丰富的配置项，精准控制本工具所输出之 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用您订制的层叠样式表文件以**增补**或**替换**文章默认的样式。甚至有选项专门控制内嵌 CSS 和 Javascript 代码是否为压缩过的版本。
 
 
 ### 内嵌样式
 
-产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》。
+产生的 HTML 文章中，内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》，暂称“项目甲”，亦称“**工具甲**”。
 
-上述项目之文档中亦有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见 [该文档](https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)。
+工具甲之文档集中有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见《[关于文章排版与配色效果示例集的说明](https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)》。
 
 
 
 > #### 重要！
 >
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述 CSS 样式项目（暂称“乙程序”）之 Javascript 接口。
-> 换言之，本程序 **依赖** 乙程序。然而，为确保本程序体积尽可能小，又为不至锁死对乙程序依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
-> 本程序并不在 `package.json` 中声明对乙程序之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖乙程序。
-> 这意味着，在安装甲程序时，npm **不会** 自动为你一并安装上乙程序。**你必须亲自手工安装乙程序**！
+> 本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述**工具甲**之 JavaScript 接口。
+> 换言之，本程序**依赖**工具甲。然而，为确保本程序体积尽可能小，又为不至锁死对工具甲依赖之版本，以向程序员提供安装、更新两款程序之灵活性，
+> 本程序并不在 `package.json` 中声明对工具甲之依赖之事实。须特别指出，本程序并未声明以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖工具甲。
+> 这意味着，在安装甲程序时，npm**不会**自动为你一并安装上工具甲。**你必须亲自手工安装工具甲！**
 >
-> 顺便指出，本程序之源代码、文档集均多出提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。
+> 顺便指出，本程序之源代码、文档集均多处提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。
 
 
-### 用于 Gulpjs 生态的适配版本
+### 适配 Gulpjs 生态的相关工具
 
-本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《[@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html)》。为方便指代，此处暂称为“甲软件”。顾名思义，甲软件是适用于 [Gulpjs](https://gulpjs.com) 工作流的工具软件。甲软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。**注意，本软件旨在从字符串生成新字符串，而甲软件旨在从文件生成新文件。**
+本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《[@wulechuan/gulp-markdown-to-html](https://www.npmjs.com/package/@wulechuan/gulp-markdown-to-html)》。为方便指代，此处暂称为“工具乙”。顾名思义，工具乙是适用于 [Gulpjs](https://gulpjs.com) 工作流的工具软件。工具乙内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。**注意，本软件旨在从字符串生成新字符串，而工具乙旨在从文件生成新文件。**
 
 
-### 用于命令行环境的工具
+### 适配命令行环境的相关工具
 
-本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《[@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli)》。为方便指代，此处暂称为“乙软件”。顾名思义，乙软件用于在命令行中批量将 Markdown 文件转换成对应的 HTML 文件。乙软件内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。**注意，本软件旨在从字符串生成新字符串，而乙软件旨在从文件生成新文件。** 乙软件异常方便，推荐诸君一试。
+本人还另行构建和维护了一个与本软件相关的 npm 项目，名为《[@wulechuan/markdown-to-html-via-cli](https://www.npmjs.com/package/@wulechuan/markdown-to-html-via-cli)》。为方便指代，此处暂称为“工具丙”。顾名思义，工具丙用于在命令行环境中成批地将 Markdown 文件逐一转换成对应的 HTML 文件。工具丙内部包含本软件，并会调用本软件之功能，实现从 Markdown 文件到 HTML 文件的批量转换。**注意，本软件旨在从字符串生成新字符串，而工具丙旨在从文件生成新文件。** 工具丙异常方便，推荐诸君一试。
 
 
 ## 用法
@@ -136,8 +136,8 @@ const htmlContent = markdownToHTMLConverter(markdownContent, {
     },
 
     对HTML做进一步处理之阶段: {
-        不应采用任何由本工具内建之层叠样式表: true,
         产出之HTML文件之Title标签之内容字符串: '一份极简的 HTML 文档',
+        不应采用任何由本工具内建之层叠样式表: true,
         不应注入用于返回文章起始之按钮: true,
     },
 })
@@ -192,24 +192,31 @@ writeFileSync('一篇好文.html', htmlContent)
 const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
 ```
 
+或
+
+```ts
+import markdownToHTMLConverter from '@wulechuan/generate-html-via-markdown'
+```
+
 ### 主函数接口
 
-```js
-const htmlString = markdownToHTMLConverter(markdownString, options)
+```ts
+const HTML文件之内容全文: string = markdownToHTMLConverter(
+    MarkDown文件之内容全文: string,
+    配置项集: 范_配置项集
+)
 ```
 
 #### 入口参数
 
-- markdownString
+- `MarkDown文件之内容全文`
 
     一个字符串，其被视为一篇采用 MarkDown 语言撰写的文章。
 
 
-- options
+- `配置项集`
 
-    `./源代码/完备的默认配置项集.js` 文件已尽述之。请参阅。
-
-    我已将 `./源代码/完备的默认配置项集.js` 文件的（几乎）完整内容复制如下：
+    `./源代码/完备的默认配置项集.js` 文件已尽述之。我已将该 JavaScript 文件的（几乎）完整内容复制如下。请参阅。
 
     ```js
     {

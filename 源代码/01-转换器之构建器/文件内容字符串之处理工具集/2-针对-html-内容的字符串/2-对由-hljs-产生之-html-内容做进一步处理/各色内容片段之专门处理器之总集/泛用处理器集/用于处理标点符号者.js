@@ -321,7 +321,7 @@ function processSpecialPunctuationsString(html , codeLanguage) {
 
 
     if (!codeLanguage) {
-        console.log(`codeLanguage = "${codeLanguage}"`)
+        console.log(`有某代码块没有之名代码种类。 codeLanguage = "${codeLanguage}"`)
     }
 
     if (代码语种非以下之任一(codeLanguage, [
