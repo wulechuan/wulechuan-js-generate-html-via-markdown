@@ -22,7 +22,7 @@
         "start": "npm    run  eslint    &&    gulp  --silent",
         "start-2": "npm  run  eslint    &&    gulp",
         "每当制作集得之版本之前": "npm  i    &&    npm  test",
-        "prepublishOnly": "npm                       test"
+        "prepublishOnly": "npm  test    &&    rimraf ReadMe.html"
     },
     "keywords": [
         "可读性改善",
