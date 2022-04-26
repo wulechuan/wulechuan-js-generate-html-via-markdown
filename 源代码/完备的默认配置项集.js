@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import('..').范_将Markdown字符串转换为HTML字符串之转换器之配置项集} */
+const 完备的默认配置项集 = {
     配置格式适用之最低版本: 3, // 此为最低版本。另，所谓“最高适用版本”不可预见。故不指明。
 
     须在控制台打印详尽细节: false,
@@ -189,3 +190,5 @@ module.exports = {
         控制台打印信息须改用英国话: false,
     },
 }
+
+module.exports = 完备的默认配置项集

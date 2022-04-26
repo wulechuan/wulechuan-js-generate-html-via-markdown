@@ -91,16 +91,16 @@ module.exports = 构建一个对象用以汇总存放各色片段之获取函数
 
 /**
  * @function 构建一个对象用以汇总存放各色片段之获取函数
- * @argument {object} options
- * @argument {object} options.peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典
- * @argument {function} options.peer依赖包提供用以获取某特定文件之完整内容字符串之函数
+ * @argument {object} 配置项集
+ * @argument {object} 配置项集.peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典
+ * @argument {function} 配置项集.peer依赖包提供用以获取某特定文件之完整内容字符串之函数
  * @returns {SnippetEntryGetters}
  */
-function 构建一个对象用以汇总存放各色片段之获取函数(options) {
+function 构建一个对象用以汇总存放各色片段之获取函数(配置项集) {
     const {
         peer依赖包提供的以文件名称为索引之所有文件简易描述项之字典,
         peer依赖包提供用以获取某特定文件之完整内容字符串之函数,
-    } = options
+    } = 配置项集
 
     return {
         阻塞式获取HTML起始片段之描述项,
@@ -114,14 +114,14 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
 
 
     /**
-     * @param {object} options
-     * @param {string} options.产出之HTML文件之HTML标签之语言属性之取值
+     * @param {object} 配置项集
+     * @param {string} 配置项集.产出之HTML文件之HTML标签之语言属性之取值
      * @returns {snippetEntry}
      */
-    function 阻塞式获取HTML起始片段之描述项(options) {
+    function 阻塞式获取HTML起始片段之描述项(配置项集) {
         const {
             产出之HTML文件之HTML标签之语言属性之取值,
-        } = options
+        } = 配置项集
 
         if (!html起始片段之原始字符串) {
             html起始片段之原始字符串 = 阻塞式读取一文本文件之完整内容字符串(
@@ -132,11 +132,11 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
             )
         }
 
-        const entryKey = `HTML beginning snippet of language ${产出之HTML文件之HTML标签之语言属性之取值}`
+        const html起始片段之唯一标识 = `HTML beginning snippet of language ${产出之HTML文件之HTML标签之语言属性之取值}`
 
-        const snippetsDict = 一切HTML片段分两类集结于此容器.所谓标准片段之集结字典
+        const html片段集 = 一切HTML片段分两类集结于此容器.所谓标准片段之集结字典
 
-        if (!snippetsDict[entryKey]) {
+        if (!html片段集[html起始片段之唯一标识]) {
             let 处理好的HTML起始片段之字符串 = html起始片段之原始字符串
 
             if (
@@ -150,19 +150,19 @@ function 构建一个对象用以汇总存放各色片段之获取函数(options
                 )
             }
 
-            snippetsDict[entryKey] = {
+            html片段集[html起始片段之唯一标识] = {
                 content: 处理好的HTML起始片段之字符串,
             }
         }
 
-        return snippetsDict[entryKey]
+        return html片段集[html起始片段之唯一标识]
     }
 
-    function 阻塞式获取HTML自Head结束标签至Body起始标签之片段之描述项(options) {
+    function 阻塞式获取HTML自Head结束标签至Body起始标签之片段之描述项(配置项集) {
         const {
             markdown文章中包含了TOC标记,
             层叠样式表类名之用于Body标签以表明文章配备了纲要列表的,
-        } = options
+        } = 配置项集
 
         if (markdown文章中包含了TOC标记) {
             return {
