@@ -220,7 +220,7 @@ const HTML文件之内容全文: string = markdownToHTMLConverter(
 
     ```js
     {
-        配置格式适用之最低版本: 3, // 所谓“最高适用版本”不可预见。故不指明。
+        配置格式适用之最低版本: 3, // 此为最低版本。另，所谓“最高适用版本”不可预见。故不指明。
 
         须在控制台打印详尽细节: false,
 
@@ -437,7 +437,7 @@ const HTML文件之内容全文: string = markdownToHTMLConverter(
 
 WTFPL
 
-> 注意：
+> ### 注意
 >
 > 我未研究过许可证的约束。因此姑且声明为 WTFPL 类型。但实际上该许可证类型可能与我采用的开源模块有冲突。
 
