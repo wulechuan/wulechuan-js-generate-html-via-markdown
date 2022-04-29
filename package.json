@@ -24,14 +24,6 @@
         "每当制作集得之版本之前": "npm  i    &&    npm  test",
         "prepublishOnly": "npm  test    &&    rimraf ReadMe.html"
     },
-    "homepage": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown.git"
-    },
-    "bugs": {
-        "url": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown/issues"
-    },
     "dependencies": {
         "@wulechuan/meaningful-error-messages": "^0.1.4",
         "chalk": "^4.1.2",
@@ -53,6 +45,14 @@
         "plugin-error": "^1.0.1",
         "replace-ext": "^2.0.0",
         "through2": "^4.0.2"
+    },
+    "homepage": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown.git"
+    },
+    "bugs": {
+        "url": "https://github.com/wulechuan/wulechuan-js-generate-html-via-markdown/issues"
     },
     "keywords": [
         "可读性改善",
