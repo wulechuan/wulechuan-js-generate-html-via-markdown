@@ -11,7 +11,7 @@
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./文档集/说明书/en-US/ReadMe.md)
+- [English edition of this ReadMe](./文档集/说明书/en-US/ReadMe.md)
 
 
 
