@@ -32,6 +32,12 @@ function 构造一个Gulp生态中之特型错误对象(用以描述错误的原
     return new GulpPluginError(本NPM包之NPM名称, 用以描述错误的原生对象)
 }
 
+
+/**
+ * @param {import('../../').范_将Markdown字符串转换为HTML字符串之转换器之配置项集} 转换器之配置项集
+ * @param {object} 任务闭环之配置项集
+ * @returns {Function}
+ */
 module.exports = function 将由本工具构建之内容转换器包裹成Gulp任务管道之环节(转换器之配置项集, 任务闭环之配置项集 = {}) {
     const {
         应输出MarkdownIt生态工具集之原始产出以便验证之而非输出正式内容,
