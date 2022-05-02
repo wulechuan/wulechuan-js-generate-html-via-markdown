@@ -36,7 +36,7 @@
     },
     "devDependencies": {
         "@wulechuan/cli-scripts--git-push": "^2.0.3",
-        "@wulechuan/css-stylus-markdown-themes": "^7.6.0",
+        "@wulechuan/css-stylus-markdown-themes": "^7.6.1",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
         "eslint": "^8.14.0",
         "gulp": "^4.0.2",
