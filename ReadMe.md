@@ -44,11 +44,11 @@
 
 ## 简介
 
-本工具借助 [markdownIt](https://www.npmjs.com/package/markdown-it) 生态的工具集，打造了一个易用的工具，用以将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。
+鄙人借助 [markdownIt](https://www.npmjs.com/package/markdown-it) 生态的工具集，打造了一个易用的工具，即本工具。本工具用以将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。
 
 **简言之，外界向本工具输入一个 MarkDown 字符串，本工具将产生一个 HTML 字符串。**
 
-调用本工具之接口函数时，除给出用以表达 Markdown 之内容之字符串外， **不须再带任何额外参数** ，即可轻松获得一份华丽的 HTML 文档（之内容）。即，该 HTML 文件自带精美主题，以及由 Javascript 程序实现的交互功能。**故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。**
+调用本工具之接口函数时，除给出用以表达 Markdown 之内容之字符串外， **不必再带任何额外参数** ，即可轻松获得一份华丽的 HTML 文档（之内容）。即，该 HTML 文件自带精美主题，以及由 Javascript 程序实现的交互功能。**故本工具可制作一篇文章的“可分发版本”。即，本工具产生的单一的 HTML 文档可独立运转。**
 
 具体而言，当采用默认的配置项时：
 
@@ -59,30 +59,30 @@
 > - HTML 内嵌的 Javascript 程序用于控制该 HTML 之【文章目录】之行为。
 >
 > - HTML 内嵌的样式令该 HTML 文章之排版完全自动适应各型宽窄屏幕尺寸。
->
-> - 尽管 HTML 中已经嵌入了完整的样式定义和脚本程序，但图片、视频文件仍为该 HTML 文档之外部资源，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
+
+> 另须知，尽管 HTML 中已经嵌入了完整的样式定义和脚本程序，但**图片、视频**等文件仍为该 HTML 之**外部资源**，须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
 
 
-亦可通过丰富的配置项，精准控制本工具所输出之 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用您订制的层叠样式表文件以**增补**或**替换**文章默认的样式。甚至有选项专门控制内嵌 CSS 和 Javascript 代码是否为压缩过的版本。
+开发者亦可通过本工具设计好的丰富的配置项，精准控制本工具所输出 HTML 之方方面面。从有否【文章目录】、【“返回顶部”之按钮】，到是否采用订制的层叠样式表文件以**增补**或**替换**本工具默认给出的样式。甚至有选项专门控制内嵌与 HTML 的 CSS 和 Javascript 代码是否为压缩过的版本。
 
 
-### 输出的 HTML 中内嵌样式之来历
+### 所产生的 HTML 中内嵌样式之来历
 
 本工具默认输出的 HTML 文件在浏览器中呈现时，堪称精美。那么，装点这些 HTML 的样式从哪里来呢？
 
-产生的 HTML 文章中的内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》，暂称“项目甲”，亦称“**工具甲**”。工具甲提供了一组现场的层叠样式表。本工具则选用了甲提供的一款浅色的默认样式。
+产生的 HTML 文章中的内嵌样式来源于本人创建和维护的另一项目，即《[@wulechuan/css-stylus-markdown-themes](https://www.npmjs.com/package/@wulechuan/css-stylus-markdown-themes)》，暂称“项目甲”，亦称“**工具甲**”。工具甲提供了一组现成的层叠样式表，其中有两款主题被甲称为所谓“*默认主题*”，一为浅色，另一为深色。本工具选用了浅色那一款，作为**本工具**所谓“默认主题”。
 
-工具甲之文档集中有若干截图，直观展示一篇文档在应用上述项目自带的两种默认主题样式后之样貌。这两种主题为浅色，另一为深色。见《[关于文章排版与配色效果示例集的说明](https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)》。
+工具甲之文档集中有若干截图，直观展示一篇文章在应用了工具甲提供的两种默认主题样式后的样貌。见工具甲的文档集中《[关于文章排版与配色效果示例集的说明](https://gitee.com/nanchang-wulechuan/wulechuan-css-stylus-themes-for-htmls-via-markdowns/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/%E6%B1%89%E8%AF%AD/%E5%85%B3%E4%BA%8E%E6%96%87%E7%AB%A0%E6%8E%92%E7%89%88%E4%B8%8E%E9%85%8D%E8%89%B2%E6%95%88%E6%9E%9C%E7%A4%BA%E4%BE%8B%E9%9B%86%E7%9A%84%E8%AF%B4%E6%98%8E.md)》一章。
 
 
 
 > #### 注意！
 >
-> 本程序包（即《@wulechuan/generate-html-via-markdown》），须调用上述**工具甲**之 JavaScript 接口。换言之，本程序**依赖**工具甲。
+> 本工具（即指《@wulechuan/generate-html-via-markdown》），取用上述**工具甲**提供的样式、JavaScript 文件时，并非人工复制粘贴做到的。本工具须调用**工具甲**之 JavaScript 编程接口，以便程序式地获得各文件之内容全文。**换言之，本工具*依赖*工具甲**。
 >
-> 然而，为确保本程序体积尽可能小，且不至锁死对工具甲依赖之版本，以向程序员提供分别安装、更新两款工具之灵活性，本工具并不在 `package.json` 中声明对工具甲之依赖之事实。这意味着，在安装甲程序时，npm**不会**自动为你一并安装上工具甲。**你必须亲自手工安装工具甲！**
+> 然而，为确保本程序体积尽可能小，且不至锁死对工具甲依赖之版本，以向程序员提供分别安装、分别更新两款工具之灵活性，本工具故意**未**在 `package.json` 中声明对工具甲之依赖之事实。这意味着，在安装甲程序时，npm**不会**自动为你一并安装上工具甲。**你必须亲自手工安装工具甲！**
 >
-> 特别指出，本程序并未声明自身以所谓“peer 依赖”（我暂译为“平级依赖”）之方式依赖工具甲。但本程序之源代码、文档集均多处提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。
+> 特别指出，本程序非但未声明对工具甲有 *【产品级依赖】（dep）* 或 *【研发级依赖】（devDep）*，甚至也未声明自身对甲有所谓“*peer 依赖*”（我暂译为 *【平级依赖】*）。但本程序之源代码、文档集均多处提及“Peer依赖包”一词，实际上是不准确、不达意的。诸君领会精神即可。
 
 
 
@@ -99,6 +99,29 @@
 
 
 ## 用法
+
+
+### 安装
+
+#### 最简安装方式
+
+这种方式仅安装本工具，但不安装配套的样式集。故产出的 HTML 不够精美。
+
+```bash
+npm  i  @wulechuan/generate-html-via-markdown
+```
+
+
+#### 推荐的安装方式
+
+这种方式同时安装**本工具**和前文所术**工具甲**两者。
+
+
+```bash
+npm  i  @wulechuan/generate-html-via-markdown  @wulechuan/css-stylus-markdown-themes
+```
+
+
 
 ### 示例集
 
@@ -190,9 +213,7 @@ writeFileSync('一篇好文.html', htmlContent)
 
 #### 主函数
 
-主函数为一个**匿名函数**。因此，欲调用之，不妨先将其命名。
-
-如下例所示，我将其命名为 `mardownToHTMLConverter`。
+本工具之主函数为一个**匿名函数**。因此，欲调用之，**须先命名之**。如下例所示，我命名其为 `mardownToHTMLConverter`。
 
 ```js
 const markdownToHTMLConverter = require('@wulechuan/generate-html-via-markdown')
@@ -210,7 +231,7 @@ import markdownToHTMLConverter from '@wulechuan/generate-html-via-markdown'
 /**
  * @returns {string} HTML文件之内容全文
  */
-markdownToHTMLConverter(
+markdownToHTMLConverter (
     MarkDown文件之内容全文: string,
     配置项集: 范_配置项集
 ): string;
@@ -425,17 +446,17 @@ markdownToHTMLConverter(
 
 ##### 主函数之返回值
 
-主函数返回一个字符串，内容为一篇完整的 HTML 文档，包含 CSS 和 Javascript。该 HTML 不需任何外部链接的样式或脚本文件。
+主函数返回一个`字符串`值，其内容为一篇完整的 HTML 文档，包含 CSS 和 Javascript。该 HTML 不需任何外部链接的样式或脚本文件。
 
 > 于最终产生的 HTML 内容，尽管样式和脚本均已完整包含其中， **但图片、视频文件仍为该 HTML 文档的外部资源，** 须确保这些外部资源文件存在，且在 HTML 中配以正确的引用路径。
 
-> 千万注意！该返回值是一个字符串，**而不是**一个文件。欲将该字符串写入磁盘永久保存，请在你自己的程序中另行调用诸如 `writeFile` 或 `writeFileSync` 之类的工具。另，输出的文件其扩展名应为 `.html`。
+> 千万注意！该函数返回一个字符串，**而不是在磁盘中写入一个文件。** 欲将该字符串写入磁盘永久保存，请在你自己的程序中另行调用诸如 `writeFile` 或 `writeFileSync` 之类的工具。另，输出的文件其扩展名应为 `.html`。
 
 
 
 ## 应用编程接口重大变更记录
 
-- 2022 年 04 月 27 日，本工具之版本从 `v3.1.2` 升迁至 `v3.2.0` 时， JavaScript 代码没有任何变动。**但针对 TypeScript 的类型定义全部更名。** 由原来的以“`类型定义之`”开头，统一变更为以“`范_`”开头。故而有此版本变动。
+- 2022 年 04 月 27 日，本工具之版本从 `v3.1.2` 升迁至 `v3.2.0` 时， JavaScript 代码没有任何变动。**但针对 TypeScript 的类型定义全部更名。** 由原来的以“`类型定义之`”开头，统一变更为以“`范_`”开头。
 
 
 
