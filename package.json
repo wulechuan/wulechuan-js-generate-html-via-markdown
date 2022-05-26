@@ -1,8 +1,8 @@
 {
     "name": "@wulechuan/generate-html-via-markdown",
+    "version": "3.2.5",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
-    "version": "3.2.5",
     "description": "此为吴乐川的《将 MarkDown 代码转换为 HTML 代码的工具》。本工具借助 markdownIt 生态的工具集，将一段 MarkDown 内容（一个字符串）转化成对应的 HTML 内容（另一字符串）。当采用默认的配置项时，本工具还会在输出的 HTML 内容中，内嵌精美的 CSS 样式集和 JavaScript 代码。故，当借助本工具来制作一篇文章的“可分发版本”时，本工具产生的单一的 HTML 文档即可独立运转。",
     "main": "源代码/index.js",
     "types": "源代码/index.d.ts",
@@ -35,10 +35,11 @@
         "markdown-it-toc-done-right": "^4.2.0"
     },
     "devDependencies": {
-        "@wulechuan/cli-scripts--git-push": "^3.0.4",
-        "@wulechuan/css-stylus-markdown-themes": "^7.8.1",
+        "@wulechuan/cli-scripts--git-push": "^6.0.6",
+        "@wulechuan/cli-scripts--npm-project-helpers": "^1.0.7",
+        "@wulechuan/css-stylus-markdown-themes": "^7.8.2",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
-        "eslint": "^8.15.0",
+        "eslint": "^8.16.0",
         "gulp": "^4.0.2",
         "gulp-pipe": "^1.0.4",
         "gulp-rename": "^2.0.0",
