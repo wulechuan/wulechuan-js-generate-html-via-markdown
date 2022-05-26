@@ -119,16 +119,17 @@ PROCESS {
                     # 如果 @wulechuan/cli-scripts--npm-project-helpers 工具集随附的 JavaScript 程序运行如期，
                     # 其将在此处插入当前 npm 项目的【研发级】依赖包的列表。    另，切勿改动该行。该行之部分文字是供 JavaScript 程序识别的特殊记号。
 
-                    '@wulechuan/cli-scripts--git-push'      = $null
-                    '@wulechuan/css-stylus-markdown-themes' = $null
-                    '@wulechuan/gulp-classical-task-cycle'  = $null
-                    'eslint'                                = $null
-                    'gulp'                                  = $null
-                    'gulp-pipe'                             = $null
-                    'gulp-rename'                           = $null
-                    'plugin-error'                          = $null
-                    'replace-ext'                           = $null
-                    'through2'                              = $null
+                    '@wulechuan/cli-scripts--git-push'            = $null
+                    '@wulechuan/cli-scripts--npm-project-helpers' = $null
+                    '@wulechuan/css-stylus-markdown-themes'       = $null
+                    '@wulechuan/gulp-classical-task-cycle'        = $null
+                    'eslint'                                      = $null
+                    'gulp'                                        = $null
+                    'gulp-pipe'                                   = $null
+                    'gulp-rename'                                 = $null
+                    'plugin-error'                                = $null
+                    'replace-ext'                                 = $null
+                    'through2'                                    = $null
                 }
             }
         )
@@ -158,11 +159,23 @@ PROCESS {
 
         } else {
 
-            # if (${script:应仅作仿真演练}) {
-            #     Write-Host  '   【仿真演练】 npx  browserslist@latest  --update-db'
-            # } else {
-            #     npx  browserslist@latest  --update-db
-            # }
+            # ───────────────────────────
+
+            if ($false) {
+                if (${script:应仅作仿真演练}) {
+                    Write-Host  -NoNewline  "   【仿真演练】`n    "
+                }
+
+                Write-Host  'npx  browserslist@latest  --update-db'
+
+                if (-not ${script:应仅作仿真演练}) {
+                    npx  browserslist@latest  --update-db
+                }
+
+                Write-Host
+            }
+
+            # ───────────────────────────
 
         }
 
@@ -190,6 +203,7 @@ PROCESS {
             # Write-Host
 
             # Write-Host '{'
+
             # Write-吴乐川打印_JSON_键          -Indent 1 '爷爷' -ValueIsObject
             # Write-吴乐川打印_JSON_键          -Indent 2 '葫芦娃' -ValueIsObject
             # Write-Host
@@ -199,7 +213,8 @@ PROCESS {
             # Write-吴乐川打印_JSON_值_文本型    -IsValueOfLastKey '力娃子'
             # Write-吴乐川打印_JSON_某字典结束    -Indent 2
             # Write-吴乐川打印_JSON_某字典结束    -Indent 1
-            # Write-吴乐川打印_JSON_某字典结束    -Indent 0
+
+            # Write-Host '}'
 
         }
 
@@ -230,7 +245,7 @@ BEGIN {
 
     if ("$PWD" -match "\\用于研发阶段的命令行工具集\\PowerShell`$") {
         ${private:执行本命令前的工作路径} = "$PWD"
-        Set-Location '..\..\' # 确保进程的当前路径为接受本工具集服务的 npm 包的根文件夹。
+        Set-Location ..\..\ # 确保进程的当前路径为接受本工具集服务的 npm 包的根文件夹。
         Write-Host "`n【当下工作路径】临时变更为：`n    '$PWD'"
     }
 
